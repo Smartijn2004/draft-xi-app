@@ -492,11 +492,6 @@ function GameContent() {
                       <span className="font-black text-sm" style={{ color: currentSpin.color }}>{currentSpin.season}</span>
                     </div>
                   </div>
-                  <button
-                    onClick={() => { setCurrentSpin(null); setDraftSub('idle'); setPendingChoice(null) }}
-                    className="text-xs text-slate-500 hover:text-white transition-colors mt-0.5">
-                    ✕ dismiss
-                  </button>
                 </div>
 
                 {pendingChoice ? (
