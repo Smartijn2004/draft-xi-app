@@ -409,7 +409,13 @@ function DraftCompare({ team, leagueId, accent }: { team: DraftedPlayer[]; leagu
         cs => cs.club === player.club && cs.season === player.season && cs.league === leagueId
       )
       if (!clubSeason) return { player, best: null, missed: 0 }
-      const samePos = clubSeason.players.filter(p => p.position === player.position)
+      const playerAltPos = player.altPositions ?? []
+      const byAlt = playerAltPos.length > 0
+        ? clubSeason.players.filter(p => (p.altPositions ?? []).some(ap => playerAltPos.includes(ap)))
+        : []
+      const samePos = byAlt.length > 0
+        ? byAlt
+        : clubSeason.players.filter(p => p.position === player.position)
       if (samePos.length === 0) return { player, best: null, missed: 0 }
       const best = samePos.reduce((b, p) => p.rating > b.rating ? p : b, samePos[0])
       const missed = best.id !== player.id ? best.rating - player.rating : 0
