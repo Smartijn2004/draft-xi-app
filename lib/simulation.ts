@@ -278,14 +278,15 @@ function buildStats(matches: MatchResult[]): { topScorers: PlayerStat[]; playerO
 function getAchievements(
   won: number, drawn: number, lost: number,
   goalsFor: number, goalsAgainst: number,
-  trophyWon: boolean, leagueId: LeagueId
+  trophyWon: boolean, leagueId: LeagueId,
+  position?: number
 ): string[] {
   const achievements: string[] = []
   if (leagueId === 'pl' || leagueId === 'laliga' || leagueId === 'seriea') {
     if (won === 38 && drawn === 0) achievements.push('PERFECT SEASON')
     else if (lost === 0) achievements.push('INVINCIBLE')
-    if (won * 3 + drawn >= 95) achievements.push('CHAMPIONS')
-    else if (won * 3 + drawn >= 79) achievements.push('TOP 4')
+    if (trophyWon) achievements.push('CHAMPIONS')
+    else if (position !== undefined && position <= 4) achievements.push('TOP 4')
     if (goalsFor >= 100) achievements.push('100 GOALS')
     if (goalsAgainst <= 20) achievements.push('FORTRESS DEFENCE')
     if (won * 3 + drawn < 30) achievements.push('RELEGATION BATTLE')
@@ -415,11 +416,13 @@ export function simulateLeagueSeason(
   const gf = matches.reduce((s, m) => s + m.myGoals, 0)
   const ga = matches.reduce((s, m) => s + m.oppGoals, 0)
   const pts = won * 3 + drawn
-  const trophyWon = pts >= 95
+
+  const leagueTable = buildLeagueTable(matches, opponents, rng)
+  const playerPosition = leagueTable.find(e => e.isPlayer)?.position ?? leagueTable.length
+  const trophyWon = playerPosition === 1
 
   const { topScorers, playerOfSeason } = buildStats(matches)
-  const achievements = getAchievements(won, drawn, lost, gf, ga, trophyWon, league)
-  const leagueTable = buildLeagueTable(matches, opponents, rng)
+  const achievements = getAchievements(won, drawn, lost, gf, ga, trophyWon, league, playerPosition)
 
   return {
     matches, points: pts, won, drawn, lost,
@@ -428,6 +431,7 @@ export function simulateLeagueSeason(
     eliminated: false,
     trophyWon,
     teamRating,
+    finalPosition: playerPosition,
     topScorers,
     playerOfSeason,
     achievements,

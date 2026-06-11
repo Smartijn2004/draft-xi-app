@@ -20,9 +20,16 @@ export function LeagueSelector() {
         <Link
           key={league.id}
           href={`/game?league=${league.id}`}
-          className="group relative flex flex-col gap-3 bg-white/3 border border-white/8 hover:border-white/20 rounded-2xl p-5 transition-all duration-200 hover:scale-[1.02] hover:bg-white/5"
+          className="group relative flex flex-col gap-3 bg-white/3 border border-white/8 rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1 hover:bg-white/5 active:scale-[0.99] overflow-hidden"
           style={{ '--accent': league.color } as React.CSSProperties}
+          onMouseEnter={e => { e.currentTarget.style.borderColor = league.color + '66'; e.currentTarget.style.boxShadow = `0 12px 32px ${league.color}1f` }}
+          onMouseLeave={e => { e.currentTarget.style.borderColor = ''; e.currentTarget.style.boxShadow = '' }}
         >
+          {/* accent gradient top edge */}
+          <div
+            className="absolute top-0 left-0 right-0 h-px opacity-60"
+            style={{ background: `linear-gradient(90deg, transparent, ${league.color}, transparent)` }}
+          />
           {/* top row */}
           <div className="flex items-center justify-between">
             <span className="text-2xl">{LEAGUE_ICONS[league.id]}</span>

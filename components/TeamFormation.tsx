@@ -6,6 +6,8 @@ type Props = {
   team: DraftedPlayer[]
   league: LeagueConfig
   compact?: boolean
+  highlightSlotIndexes?: number[]
+  onSlotClick?: (slotIndex: number) => void
 }
 
 const POS_COLORS: Record<string, string> = {
@@ -15,7 +17,7 @@ const POS_COLORS: Record<string, string> = {
   FWD: '#ef4444',
 }
 
-export function TeamFormation({ formation, team, league, compact = false }: Props) {
+export function TeamFormation({ formation, team, league, compact = false, highlightSlotIndexes, onSlotClick }: Props) {
   const slots = formation.slots
 
   const rows: typeof slots[number][][] = []
@@ -34,6 +36,16 @@ export function TeamFormation({ formation, team, league, compact = false }: Prop
       className={`relative w-full rounded-xl overflow-hidden border border-white/10 ${compact ? 'aspect-[3/4]' : 'aspect-[2/3]'}`}
       style={{ background: 'linear-gradient(180deg, #0a2e0a 0%, #0d3d0d 50%, #0a2e0a 100%)' }}
     >
+      {/* Mow stripes */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'repeating-linear-gradient(180deg, rgba(255,255,255,0.045) 0px, rgba(255,255,255,0.045) 28px, transparent 28px, transparent 56px)' }}
+      />
+      {/* Vignette */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0,0,0,0.35) 100%)' }}
+      />
       {/* Pitch markings */}
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none opacity-20">
         <div className="w-3/4 h-1/2 border border-white/40 rounded-sm" />
@@ -49,8 +61,17 @@ export function TeamFormation({ formation, team, league, compact = false }: Prop
             {row.map((slot, si) => {
               const globalIndex = slots.indexOf(slot)
               const player = team.find(p => p.slotIndex === globalIndex)
+              const highlighted = !player && (highlightSlotIndexes?.includes(globalIndex) ?? false)
               return (
-                <PlayerSlot key={si} slot={slot} player={player} league={league} compact={compact} />
+                <PlayerSlot
+                  key={si}
+                  slot={slot}
+                  player={player}
+                  league={league}
+                  compact={compact}
+                  highlighted={highlighted}
+                  onClick={highlighted && onSlotClick ? () => onSlotClick(globalIndex) : undefined}
+                />
               )
             })}
           </div>
@@ -63,7 +84,10 @@ export function TeamFormation({ formation, team, league, compact = false }: Prop
 function JerseyIcon({ color, rating, compact }: { color: string; rating: number; compact: boolean }) {
   const sz = compact ? 36 : 44
   return (
-    <div className="relative flex items-center justify-center" style={{ width: sz, height: sz }}>
+    <div
+      className="relative flex items-center justify-center"
+      style={{ width: sz, height: sz, filter: 'drop-shadow(0 3px 4px rgba(0,0,0,0.45))' }}
+    >
       <svg
         viewBox="0 0 24 26"
         style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
@@ -89,21 +113,22 @@ function JerseyIcon({ color, rating, compact }: { color: string; rating: number;
 }
 
 function PlayerSlot({
-  slot, player, league, compact
+  slot, player, league, compact, highlighted, onClick
 }: {
   slot: { position: string; label: string }
   player: DraftedPlayer | undefined
   league: LeagueConfig
   compact: boolean
+  highlighted?: boolean
+  onClick?: () => void
 }) {
   const color = POS_COLORS[slot.position] ?? '#9ca3af'
   const filled = !!player
 
-  return (
-    <div className={`flex flex-col items-center gap-0.5 ${compact ? 'w-14' : 'w-16'}`}>
-      {filled ? (
-        /* Filled — jersey icon with pop-in animation */
-        <div className="flex flex-col items-center gap-0.5 animate-slide-up">
+  if (filled) {
+    return (
+      <div className={`flex flex-col items-center gap-0.5 ${compact ? 'w-14' : 'w-16'}`}>
+        <div className="flex flex-col items-center gap-0.5 animate-pop">
           <JerseyIcon color={color} rating={player.rating} compact={compact} />
           <div
             className="text-center font-bold leading-tight truncate"
@@ -117,21 +142,46 @@ function PlayerSlot({
             </div>
           )}
         </div>
-      ) : (
-        /* Empty — dashed circle */
-        <div className="flex flex-col items-center gap-0.5 opacity-40">
-          <div
-            className={`rounded-full flex items-center justify-center font-bold border-2 border-dashed
-              ${compact ? 'w-9 h-9 text-xs' : 'w-11 h-11 text-sm'}`}
-            style={{ borderColor: color + '80', color: color + '80' }}
-          >
-            {slot.label}
-          </div>
-          {compact && (
-            <div className="text-[8px]" style={{ color: color + '60' }}>—</div>
-          )}
+      </div>
+    )
+  }
+
+  if (highlighted) {
+    // Eligible slot while choosing a position — pulsing accent ring, clickable
+    return (
+      <div className={`flex flex-col items-center gap-0.5 ${compact ? 'w-14' : 'w-16'}`}>
+        <button
+          onClick={onClick}
+          className={`rounded-full flex items-center justify-center font-black border-2 transition-transform hover:scale-110 active:scale-95
+            ${compact ? 'w-9 h-9 text-xs' : 'w-11 h-11 text-sm'}`}
+          style={{
+            borderColor: league.color,
+            color: league.color,
+            background: league.color + '22',
+            animation: 'glow-pulse 1.4s ease-in-out infinite',
+            ['--glow-color' as string]: league.color + '66',
+          }}
+        >
+          {slot.label}
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div className={`flex flex-col items-center gap-0.5 ${compact ? 'w-14' : 'w-16'}`}>
+      <div className="flex flex-col items-center gap-0.5 opacity-40">
+        <div
+          className={`rounded-full flex items-center justify-center font-bold border-2 border-dashed
+            ${compact ? 'w-9 h-9 text-xs' : 'w-11 h-11 text-sm'}`}
+          style={{ borderColor: color + '80', color: color + '80' }}
+        >
+          {slot.label}
         </div>
-      )}
+        {compact && (
+          <div className="text-[8px]" style={{ color: color + '60' }}>—</div>
+        )}
+      </div>
     </div>
   )
 }

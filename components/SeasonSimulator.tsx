@@ -1,6 +1,7 @@
 'use client'
-import { useState } from 'react'
-import type { SeasonResult, LeagueConfig, GroupStanding, GoalEvent, LeagueTableEntry, DraftedPlayer } from '@/lib/types'
+import { useEffect, useMemo, useState } from 'react'
+import type { SeasonResult, LeagueConfig, GroupStanding, GoalEvent, LeagueTableEntry, DraftedPlayer, LeagueId } from '@/lib/types'
+import { ALL_CLUB_SEASONS } from '@/lib/data'
 
 type Props = {
   result: SeasonResult
@@ -56,19 +57,25 @@ export function SeasonSimulator({ result, league, onPlayAgain, team }: Props) {
   return (
     <div className="space-y-6 w-full max-w-2xl mx-auto">
 
+      {/* ── Confetti on trophy/perfect ── */}
+      {(trophyWon || isPerfect) && <ConfettiBurst accent={accent} />}
+
       {/* ── Banner ── */}
       <div
         className="rounded-2xl p-6 text-center border"
-        style={{ background: accent + '11', borderColor: accent + '44' }}
+        style={{
+          background: `linear-gradient(135deg, ${accent}1e, ${accent}08 55%, transparent)`,
+          borderColor: accent + '44',
+        }}
       >
-        <div className="text-5xl mb-3">
+        <div className="text-5xl mb-3 animate-pop">
           {isPerfect ? '🏆' : trophyWon ? '🥇' : eliminated ? '❌' : '📊'}
         </div>
         <h2 className="text-2xl font-black text-white mb-1">
           {isPerfect
             ? `Perfect ${league.perfectLabel}!`
             : trophyWon
-            ? `${league.goalLabel.replace('Win', 'Won')}!`
+            ? `Won the ${league.name}!`
             : eliminated
             ? `Eliminated — ${eliminatedAt}`
             : 'Season Complete'}
@@ -111,9 +118,10 @@ export function SeasonSimulator({ result, league, onPlayAgain, team }: Props) {
           { label: 'Drawn', value: drawn, color: '#f59e0b' },
           { label: 'Lost',  value: lost,  color: '#ef4444' },
           { label: 'GD',    value: `${gd > 0 ? '+' : ''}${gd}`, color: '#9ca3af' },
-        ].map(s => (
-          <div key={s.label} className="bg-white/3 border border-white/8 rounded-xl p-3 text-center">
-            <div className="text-xl font-black" style={{ color: s.color }}>{s.value}</div>
+        ].map((s, i) => (
+          <div key={s.label} className="bg-white/3 border border-white/8 rounded-xl p-3 text-center animate-slide-up"
+            style={{ animationDelay: `${i * 60}ms` }}>
+            <div className="text-xl font-black tabular-nums" style={{ color: s.color }}>{s.value}</div>
             <div className="text-xs text-slate-500 mt-0.5">{s.label}</div>
           </div>
         ))}
@@ -134,6 +142,11 @@ export function SeasonSimulator({ result, league, onPlayAgain, team }: Props) {
       {/* ── H: Squad Profile ── */}
       {team && team.length > 0 && (
         <SquadProfile team={team} accent={accent} />
+      )}
+
+      {/* ── Draft Review ── */}
+      {team && team.length > 0 && (
+        <DraftCompare team={team} leagueId={league.id} accent={accent} />
       )}
 
       {/* ── Player of the Season ── */}
@@ -245,12 +258,56 @@ export function SeasonSimulator({ result, league, onPlayAgain, team }: Props) {
         <ShareButton result={result} league={league} />
         <button
           onClick={onPlayAgain}
-          className="flex-1 py-4 rounded-xl font-bold text-white text-lg transition-all hover:scale-[1.02] hover:brightness-110"
-          style={{ background: accent }}
+          className="flex-1 py-4 rounded-xl font-bold text-white text-lg transition-all hover:scale-[1.02] hover:brightness-110 active:scale-[0.98]"
+          style={{ background: accent, boxShadow: `0 8px 30px ${accent}33` }}
         >
           Play Again →
         </button>
       </div>
+    </div>
+  )
+}
+
+// ── Confetti (CSS-only, self-removing) ───────────────────────────────────────
+
+function ConfettiBurst({ accent }: { accent: string }) {
+  const [active, setActive] = useState(true)
+
+  const pieces = useMemo(() => {
+    const colors = [accent, '#f59e0b', '#10b981', '#ffffff']
+    return Array.from({ length: 40 }, (_, i) => ({
+      left: Math.random() * 100,
+      delay: Math.random() * 1.2,
+      duration: 2.4 + Math.random() * 1.6,
+      size: 5 + Math.random() * 6,
+      color: colors[i % colors.length],
+      rounded: Math.random() > 0.5,
+    }))
+  }, [accent])
+
+  useEffect(() => {
+    const id = setTimeout(() => setActive(false), 4500)
+    return () => clearTimeout(id)
+  }, [])
+
+  if (!active) return null
+
+  return (
+    <div className="pointer-events-none fixed inset-0 z-50 overflow-hidden" aria-hidden>
+      {pieces.map((p, i) => (
+        <span
+          key={i}
+          className="absolute top-0"
+          style={{
+            left: `${p.left}%`,
+            width: p.size,
+            height: p.size * (p.rounded ? 1 : 0.45),
+            background: p.color,
+            borderRadius: p.rounded ? '50%' : 1,
+            animation: `confetti-fall ${p.duration}s linear ${p.delay}s both`,
+          }}
+        />
+      ))}
     </div>
   )
 }
@@ -343,6 +400,67 @@ function SquadProfile({ team, accent }: { team: DraftedPlayer[]; accent: string 
   )
 }
 
+// ── Draft Review ─────────────────────────────────────────────────────────────
+
+function DraftCompare({ team, leagueId, accent }: { team: DraftedPlayer[]; leagueId: LeagueId; accent: string }) {
+  const comparisons = useMemo(() =>
+    team.map(player => {
+      const clubSeason = ALL_CLUB_SEASONS.find(
+        cs => cs.club === player.club && cs.season === player.season && cs.league === leagueId
+      )
+      if (!clubSeason) return { player, best: null, missed: 0 }
+      const samePos = clubSeason.players.filter(p => p.position === player.position)
+      if (samePos.length === 0) return { player, best: null, missed: 0 }
+      const best = samePos.reduce((b, p) => p.rating > b.rating ? p : b, samePos[0])
+      const missed = best.id !== player.id ? best.rating - player.rating : 0
+      return { player, best: missed > 0 ? best : null, missed }
+    })
+  , [team, leagueId])
+
+  const totalMissed = comparisons.reduce((s, c) => s + c.missed, 0)
+  const optimalCount = comparisons.filter(c => c.missed === 0).length
+
+  return (
+    <div className="space-y-2">
+      <div className="flex items-baseline justify-between">
+        <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Draft Review</h3>
+        <span className="text-xs" style={{ color: totalMissed === 0 ? '#10b981' : '#f59e0b' }}>
+          {totalMissed === 0
+            ? '🎯 Perfect draft!'
+            : `${optimalCount}/11 optimal · +${totalMissed} missed`}
+        </span>
+      </div>
+      <div className="rounded-xl border border-white/8 divide-y divide-white/5 overflow-hidden">
+        {comparisons.map(({ player, best, missed }) => (
+          <div key={player.id} className="flex items-center gap-2 px-3 py-2.5 text-xs">
+            <span
+              className="shrink-0 text-[10px] font-black px-1.5 py-0.5 rounded leading-none"
+              style={{ background: accent + '1a', color: accent }}
+            >
+              {player.position}
+            </span>
+            <div className="flex-1 min-w-0">
+              <span className="font-semibold text-white">{player.name}</span>
+              <span className="text-slate-600 ml-1.5 text-[10px]">
+                {player.club} {player.season}
+              </span>
+            </div>
+            <span className="font-black text-slate-400 tabular-nums shrink-0">{player.rating}</span>
+            {best && missed > 0 ? (
+              <div className="text-right shrink-0">
+                <span className="text-amber-400 font-black">+{missed}</span>
+                <span className="text-slate-500 ml-1">→ {best.name}</span>
+              </div>
+            ) : (
+              <span className="text-emerald-400 font-black text-[10px] shrink-0">✓ BEST</span>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── F: Highlight card ─────────────────────────────────────────────────────────
 
 function HighlightCard({
@@ -403,16 +521,16 @@ function ShareButton({ result, league }: { result: SeasonResult; league: LeagueC
     if (playerOfSeason) {
       lines.push(`🌟 POTS: ${playerOfSeason.name} (${playerOfSeason.goals}G ${playerOfSeason.assists}A)`)
     }
-    lines.push('draft-xi.vercel.app')
     return lines.join('\n')
   }
 
   const handleShare = async () => {
     const text = buildText()
+    const url = `${window.location.origin}/`
     if (navigator.share) {
-      try { await navigator.share({ text }); return } catch { /* fall through */ }
+      try { await navigator.share({ text, url }); return } catch { /* fall through */ }
     }
-    await navigator.clipboard.writeText(text)
+    await navigator.clipboard.writeText(`${text}\n${url}`)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -545,7 +663,8 @@ function LeagueTable({ entries, accent }: { entries: LeagueTableEntry[]; accent:
           {visible.map(e => {
             const gd = e.gf - e.ga
             return (
-              <tr key={e.team} className={`border-t border-white/5 ${e.isPlayer ? 'bg-white/5' : ''}`}>
+              <tr key={e.team} className={`border-t border-white/5 ${e.isPlayer ? 'bg-white/5' : ''}`}
+                style={e.isPlayer ? { boxShadow: `inset 3px 0 0 ${accent}` } : undefined}>
                 <td className="px-2 py-2 text-center">
                   <span className="font-bold text-[11px]" style={{ color: posColor(e.position) }}>
                     {e.position}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, Suspense, useEffect } from 'react'
+import { useState, useCallback, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import type { DraftedPlayer, LeagueId, ClubSeason, Player, Position, Difficulty } from '@/lib/types'
 import { FORMATIONS, FORMATION_DESCRIPTIONS } from '@/lib/types'
@@ -8,6 +8,14 @@ import { LEAGUE_CONFIGS, spinClubSeason, getClubSeasonsForLeague, ALL_CLUB_SEASO
 import { runSimulation } from '@/lib/simulation'
 import { TeamFormation } from '@/components/TeamFormation'
 import { SeasonSimulator } from '@/components/SeasonSimulator'
+import { MatchReveal } from '@/components/MatchReveal'
+
+// Page background tinted with the league's accent color
+function leagueAmbience(color: string): React.CSSProperties {
+  return {
+    background: `radial-gradient(900px 480px at 50% -120px, ${color}14, transparent), #0a0a0f`,
+  }
+}
 
 // Pre-computed career-peak rating for each player name across all leagues/seasons.
 const PRIME_RATINGS = new Map<string, number>()
@@ -32,38 +40,6 @@ const DIFFICULTY_CONFIG: Record<Difficulty, { label: string; emoji: string; desc
   hard:   { label: 'Hard',   emoji: '🔥', desc: 'No rerolls, ratings hidden', rerolls: 0, hideRatings: true  },
 }
 
-// ── Simulating progress bar ───────────────────────────────────────────────────
-
-function SimProgressBar({ duration, color }: { duration: number; color: string }) {
-  const [progress, setProgress] = useState(0)
-  useEffect(() => {
-    const start = Date.now()
-    const id = setInterval(() => {
-      const p = Math.min((Date.now() - start) / duration, 1)
-      setProgress(p)
-      if (p >= 1) clearInterval(id)
-    }, 40)
-    return () => clearInterval(id)
-  }, [duration, color])
-
-  const matchday = Math.min(Math.round(progress * 38), 38)
-
-  return (
-    <div className="space-y-3">
-      <div className="flex justify-between text-xs text-slate-500">
-        <span>Matchday {matchday} / 38</span>
-        <span>{Math.round(progress * 100)}%</span>
-      </div>
-      <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
-        <div
-          className="h-full rounded-full"
-          style={{ width: `${progress * 100}%`, background: color, transition: 'width 40ms linear' }}
-        />
-      </div>
-    </div>
-  )
-}
-
 // ── Main game content ─────────────────────────────────────────────────────────
 
 function GameContent() {
@@ -84,6 +60,10 @@ function GameContent() {
   const [rerollsLeft, setRerollsLeft] = useState(2)
   const [seasonResult, setSeasonResult] = useState<ReturnType<typeof runSimulation> | null>(null)
   const [message, setMessage] = useState<string | null>(null)
+  const [pendingChoice, setPendingChoice] = useState<{
+    player: Player
+    options: { slotIndex: number; label: string }[]
+  } | null>(null)
 
   const formation = FORMATIONS[formationName]
   const slots = formation.slots
@@ -176,30 +156,47 @@ function GameContent() {
     tick()
   }, [leagueId, usedSpins])
 
-  const handleDraftPlayer = useCallback((player: Player) => {
-    const slotIndex = slots.findIndex((s, i) => !usedSlotIndexes.includes(i) && canFillSlot(player, s))
-    if (slotIndex === -1) {
-      const posLabel = player.altPositions?.join('/') ?? player.position
-      showMessage(`No ${posLabel} slots left in your ${formationName}.`)
-      return
-    }
+  const assignToSlot = useCallback((player: Player, slotIndex: number) => {
     const slot = slots[slotIndex]
     const effectiveRating = ratingsMode === 'prime'
       ? (PRIME_RATINGS.get(player.name) ?? player.rating)
       : player.rating
     setTeam(prev => [...prev, { ...player, rating: effectiveRating, slotPosition: slot.position, slotIndex }])
+    setPendingChoice(null)
     setCurrentSpin(null)
     setDraftSub('idle')
     if (filled + 1 === totalSlots) showMessage('XI complete! Hit Simulate to play the season.')
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formationName, filled, slots, usedSlotIndexes])
+  }, [filled, slots, totalSlots, ratingsMode])
+
+  const handleDraftPlayer = useCallback((player: Player) => {
+    // All open slots this player can fill, deduped by label (three CMs = one option)
+    const options: { slotIndex: number; label: string }[] = []
+    const seenLabels = new Set<string>()
+    slots.forEach((s, i) => {
+      if (usedSlotIndexes.includes(i) || !canFillSlot(player, s)) return
+      if (seenLabels.has(s.label)) return
+      seenLabels.add(s.label)
+      options.push({ slotIndex: i, label: s.label })
+    })
+    if (options.length === 0) {
+      const posLabel = player.altPositions?.join('/') ?? player.position
+      showMessage(`No ${posLabel} slots left in your ${formationName}.`)
+      return
+    }
+    if (options.length === 1) {
+      assignToSlot(player, options[0].slotIndex)
+      return
+    }
+    setPendingChoice({ player, options })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formationName, slots, usedSlotIndexes, assignToSlot])
 
   const handleSimulate = useCallback(() => {
     if (team.length < totalSlots) return
     const result = runSimulation(team, leagueId)
     setSeasonResult(result)
     setPhase('simulating')
-    setTimeout(() => setPhase('results'), 1800)
   }, [team, leagueId, totalSlots])
 
   const handlePlayAgain = useCallback(() => {
@@ -207,6 +204,7 @@ function GameContent() {
     setPhase('setup')
     setDraftSub('idle')
     setCurrentSpin(null)
+    setPendingChoice(null)
     setUsedSpins([])
     setSeasonResult(null)
     setDifficulty(null)
@@ -218,7 +216,7 @@ function GameContent() {
   // ── Setup ────────────────────────────────────────────────────────────────
   if (phase === 'setup') {
     return (
-      <div className="min-h-screen bg-[#0a0a0f] text-slate-100 flex flex-col">
+      <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
         <GameHeader league={league} onBack={() => router.push('/')} />
         <div className="flex-1 flex items-center justify-center px-4 py-8">
           <div className="w-full max-w-lg space-y-8">
@@ -297,32 +295,12 @@ function GameContent() {
     )
   }
 
-  // ── Simulating ───────────────────────────────────────────────────────────
-  if (phase === 'simulating') {
+  // ── Simulating — sequential match reveal ─────────────────────────────────
+  if (phase === 'simulating' && seasonResult) {
     return (
-      <div className="min-h-screen bg-[#0a0a0f] text-slate-100 flex flex-col">
+      <div className="h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
         <GameHeader league={league} onBack={() => router.push('/')} />
-        <div className="flex-1 flex items-center justify-center px-6">
-          <div className="w-full max-w-sm space-y-8 text-center">
-            <div
-              className="text-6xl mx-auto leading-none"
-              style={{ animation: 'spin-in 0.4s ease both' }}>
-              ⚽
-            </div>
-            <div>
-              <h2 className="text-2xl font-black text-white mb-1">Simulating Season</h2>
-              <p className="text-slate-500 text-sm">Playing all your matches…</p>
-            </div>
-            <SimProgressBar duration={1800} color={league.color} />
-            <div className="flex justify-center gap-4 text-xs text-slate-600">
-              {team.slice(0, 4).map(p => (
-                <span key={p.id} style={{ color: POS_COLORS[p.position as Position] + '99' }}>
-                  {p.name.split(' ').pop()}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
+        <MatchReveal result={seasonResult} league={league} onDone={() => setPhase('results')} />
       </div>
     )
   }
@@ -330,9 +308,9 @@ function GameContent() {
   // ── Results ──────────────────────────────────────────────────────────────
   if (phase === 'results' && seasonResult) {
     return (
-      <div className="min-h-screen bg-[#0a0a0f] text-slate-100 flex flex-col">
+      <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
         <GameHeader league={league} onBack={() => router.push('/')} />
-        <div className="flex-1 px-4 py-8 max-w-2xl mx-auto w-full">
+        <div className="flex-1 px-4 py-8 max-w-2xl mx-auto w-full animate-slide-up">
           <SeasonSimulator result={seasonResult} league={league} onPlayAgain={handlePlayAgain} team={team} />
         </div>
       </div>
@@ -341,7 +319,7 @@ function GameContent() {
 
   // ── Draft ────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-[#0a0a0f] text-slate-100 flex flex-col">
+    <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
       <GameHeader league={league} onBack={() => router.push('/')} />
 
       {message && (
@@ -354,7 +332,7 @@ function GameContent() {
       {(draftSub === 'selecting' || draftSub === 'landed') && currentSpin && (
         <div
           className="fixed inset-0 bg-black/70 z-40 lg:hidden"
-          onClick={() => { setCurrentSpin(null); setDraftSub('idle') }}
+          onClick={() => { setCurrentSpin(null); setDraftSub('idle'); setPendingChoice(null) }}
         />
       )}
 
@@ -385,7 +363,14 @@ function GameContent() {
             </div>
           </div>
 
-          <TeamFormation formation={formation} team={team} league={league} compact />
+          <TeamFormation
+            formation={formation}
+            team={team}
+            league={league}
+            compact
+            highlightSlotIndexes={pendingChoice?.options.map(o => o.slotIndex)}
+            onSlotClick={pendingChoice ? (i) => assignToSlot(pendingChoice.player, i) : undefined}
+          />
 
           {difficulty && (
             <div className="flex items-center gap-2 bg-white/3 border border-white/8 rounded-xl px-4 py-2.5">
@@ -420,8 +405,14 @@ function GameContent() {
         <main className="flex-1 space-y-6">
           {/* Spin panel */}
           {!allFilled && (
-            <div className="rounded-2xl border p-6"
-              style={{ background: league.color + '0d', borderColor: league.color + '33' }}>
+            <div className="rounded-2xl border p-6 transition-shadow duration-500"
+              style={{
+                background: league.color + '0d',
+                borderColor: league.color + '33',
+                ...((draftSub === 'landed' || draftSub === 'selecting') && currentSpin
+                  ? { boxShadow: `0 0 44px ${league.color}26, inset 0 0 0 1px ${league.color}33` }
+                  : {}),
+              }}>
               {draftSub === 'idle' && (
                 <div className="text-center">
                   <p className="text-slate-400 text-sm mb-5">
@@ -429,7 +420,7 @@ function GameContent() {
                   </p>
                   <button onClick={() => handleSpin(false)}
                     className="px-10 py-4 rounded-xl font-black text-xl text-white transition-all hover:scale-105 active:scale-95"
-                    style={{ background: league.color }}>
+                    style={{ background: league.color, boxShadow: `0 8px 30px ${league.color}44` }}>
                     Spin ⚽
                   </button>
                 </div>
@@ -440,14 +431,14 @@ function GameContent() {
                 <div className="flex items-center justify-center gap-6 py-2 select-none">
                   <div className="text-center min-w-[130px]">
                     <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">CLUB</div>
-                    <div className="text-xl font-black text-white truncate transition-none" key={spinDisplay.club}>
+                    <div className="text-xl font-black text-white truncate animate-score-pop" key={spinDisplay.club}>
                       {spinDisplay.club || '—'}
                     </div>
                   </div>
                   <div className="text-slate-600 text-2xl font-bold shrink-0">×</div>
                   <div className="text-center min-w-[80px]">
                     <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">SEASON</div>
-                    <div className="text-xl font-black transition-none"
+                    <div className="text-xl font-black animate-score-pop"
                       style={{ color: spinDisplay.color || '#ffffff' }} key={spinDisplay.season}>
                       {spinDisplay.season || '—'}
                     </div>
@@ -502,54 +493,82 @@ function GameContent() {
                     </div>
                   </div>
                   <button
-                    onClick={() => { setCurrentSpin(null); setDraftSub('idle') }}
+                    onClick={() => { setCurrentSpin(null); setDraftSub('idle'); setPendingChoice(null) }}
                     className="text-xs text-slate-500 hover:text-white transition-colors mt-0.5">
                     ✕ dismiss
                   </button>
                 </div>
 
-                {(['GK', 'DEF', 'MID', 'FWD'] as Position[]).map(pos => {
-                  const posPlayers = currentSpin.players.filter(p => p.position === pos)
-                  if (posPlayers.length === 0) return null
-                  const allDisabled = posPlayers.every(p => !hasAvailableSlot(p))
-                  return (
-                    <div key={pos}>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-xs font-bold px-2 py-0.5 rounded-full"
-                          style={{ background: POS_COLORS[pos] + '22', color: POS_COLORS[pos] }}>
-                          {pos}
-                        </span>
-                        {allDisabled && <span className="text-xs text-slate-500">no slots available</span>}
-                      </div>
-                      <div className="grid gap-2">
-                        {posPlayers.map(player => (
-                          <PlayerRow
-                            key={player.id}
-                            player={player}
-                            disabled={!hasAvailableSlot(player)}
-                            hideRatings={hideRatings}
-                            accentColor={league.color}
-                            primeRating={ratingsMode === 'prime' ? (PRIME_RATINGS.get(player.name) ?? player.rating) : undefined}
-                            onDraft={handleDraftPlayer}
-                          />
-                        ))}
-                      </div>
+                {pendingChoice ? (
+                  /* Position chooser — player fits multiple open slots */
+                  <div className="space-y-3 animate-fade-in">
+                    <div className="text-center py-2">
+                      <div className="text-white font-black text-base">{pendingChoice.player.name}</div>
+                      <div className="text-xs text-slate-500 mt-0.5">Where do you want to play them?</div>
                     </div>
-                  )
-                })}
+                    <div className="grid grid-cols-2 gap-2">
+                      {pendingChoice.options.map(opt => (
+                        <button
+                          key={opt.slotIndex}
+                          onClick={() => assignToSlot(pendingChoice.player, opt.slotIndex)}
+                          className="min-h-[52px] rounded-xl border font-black text-lg transition-all hover:scale-[1.03] active:scale-95"
+                          style={{ background: league.color + '15', borderColor: league.color + '55', color: league.color }}>
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
+                    <button
+                      onClick={() => setPendingChoice(null)}
+                      className="w-full py-3 rounded-xl border border-white/10 text-sm text-slate-400 hover:text-white hover:border-white/20 transition-colors">
+                      ← Back to squad
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    {(['GK', 'DEF', 'MID', 'FWD'] as Position[]).map(pos => {
+                      const posPlayers = currentSpin.players.filter(p => p.position === pos)
+                      if (posPlayers.length === 0) return null
+                      const allDisabled = posPlayers.every(p => !hasAvailableSlot(p))
+                      return (
+                        <div key={pos}>
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-xs font-bold px-2 py-0.5 rounded-full"
+                              style={{ background: POS_COLORS[pos] + '22', color: POS_COLORS[pos] }}>
+                              {pos}
+                            </span>
+                            {allDisabled && <span className="text-xs text-slate-500">no slots available</span>}
+                          </div>
+                          <div className="grid gap-2">
+                            {posPlayers.map(player => (
+                              <PlayerRow
+                                key={player.id}
+                                player={player}
+                                disabled={!hasAvailableSlot(player)}
+                                hideRatings={hideRatings}
+                                accentColor={league.color}
+                                primeRating={ratingsMode === 'prime' ? (PRIME_RATINGS.get(player.name) ?? player.rating) : undefined}
+                                onDraft={handleDraftPlayer}
+                              />
+                            ))}
+                          </div>
+                        </div>
+                      )
+                    })}
 
-                <button
-                  onClick={() => handleSpin(true)}
-                  disabled={rerollsLeft <= 0}
-                  className={`w-full py-3 rounded-xl border text-sm transition-colors ${
-                    rerollsLeft > 0
-                      ? 'border-white/10 text-slate-400 hover:text-white hover:border-white/20'
-                      : 'border-white/5 text-slate-700 cursor-not-allowed'
-                  }`}>
-                  {rerollsLeft > 0
-                    ? `Re-spin — ${rerollsLeft} reroll${rerollsLeft !== 1 ? 's' : ''} left`
-                    : 'No rerolls left'}
-                </button>
+                    <button
+                      onClick={() => handleSpin(true)}
+                      disabled={rerollsLeft <= 0}
+                      className={`w-full py-3 rounded-xl border text-sm transition-colors ${
+                        rerollsLeft > 0
+                          ? 'border-white/10 text-slate-400 hover:text-white hover:border-white/20'
+                          : 'border-white/5 text-slate-700 cursor-not-allowed'
+                      }`}>
+                      {rerollsLeft > 0
+                        ? `Re-spin — ${rerollsLeft} reroll${rerollsLeft !== 1 ? 's' : ''} left`
+                        : 'No rerolls left'}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           )}
@@ -560,7 +579,7 @@ function GameContent() {
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Your XI</h3>
                 <button
-                  onClick={() => { setTeam([]); setCurrentSpin(null); setDraftSub('idle') }}
+                  onClick={() => { setTeam([]); setCurrentSpin(null); setDraftSub('idle'); setPendingChoice(null) }}
                   className="text-xs text-red-400/70 hover:text-red-400 transition-colors">
                   Clear team
                 </button>
@@ -624,7 +643,7 @@ function PlayerRow({ player, disabled, hideRatings, accentColor, primeRating, on
       className={`flex items-center gap-3 w-full text-left px-3 py-3 rounded-xl border transition-all
         ${disabled
           ? 'opacity-30 cursor-not-allowed bg-white/2 border-white/5'
-          : 'bg-white/3 border-white/8 hover:border-white/25 hover:bg-white/6 hover:scale-[1.01]'
+          : 'bg-white/3 border-white/8 hover:border-white/25 hover:bg-white/6 hover:scale-[1.01] active:scale-[0.99]'
         }`}
     >
       <span className="text-[10px] font-bold min-w-[28px] text-center shrink-0 py-0.5 px-1 rounded whitespace-nowrap"
@@ -659,7 +678,7 @@ function PlayerRow({ player, disabled, hideRatings, accentColor, primeRating, on
 
 function GameHeader({ league, onBack }: { league: import('@/lib/types').LeagueConfig; onBack: () => void }) {
   return (
-    <header className="border-b border-white/5 px-4 py-3 flex items-center gap-4">
+    <header className="sticky top-0 z-30 border-b border-white/5 px-4 py-3 flex items-center gap-4 backdrop-blur-md bg-[#0a0a0f]/70">
       <button onClick={onBack} className="text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1">
         ← Back
       </button>
