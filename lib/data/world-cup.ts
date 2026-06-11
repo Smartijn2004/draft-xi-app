@@ -1,0 +1,405 @@
+import type { ClubSeason } from '../types'
+
+export const worldCupData: ClubSeason[] = [
+  {
+    id: 'brazil-2002', club: 'Brazil', shortName: 'BRA', season: 'World Cup 2002', league: 'worldcup', color: '#009C3B',
+    players: [
+      { id: 'marcos-2002', name: 'Marcos', position: 'GK', rating: 85, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil' },
+      { id: 'cafu-bra-2002', name: 'Cafu', position: 'DEF', rating: 90, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['RB'] },
+      { id: 'lucio-bra-2002', name: 'Lúcio', position: 'DEF', rating: 87, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['CB'] },
+      { id: 'edmilson-2002', name: 'Edmílson', position: 'DEF', rating: 83, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['CB', 'DM'] },
+      { id: 'roberto-carlos-bra-2002', name: 'Roberto Carlos', position: 'DEF', rating: 91, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['LB'] },
+      { id: 'gilberto-silva-bra-2002', name: 'Gilberto Silva', position: 'MID', rating: 85, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['DM', 'CM'] },
+      { id: 'kleberson-2002', name: 'Kléberson', position: 'MID', rating: 81, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['CM', 'DM'] },
+      { id: 'ronaldinho-bra-2002', name: 'Ronaldinho', position: 'FWD', rating: 92, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['LW', 'AM'] },
+      { id: 'rivaldo-2002', name: 'Rivaldo', position: 'FWD', rating: 92, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['ST', 'AM'] },
+      { id: 'ronaldo-bra-2002', name: 'Ronaldo', position: 'FWD', rating: 97, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['ST'] },
+      { id: 'ronaldo-r9-2002', name: 'Ronaldinho Gaúcho', position: 'MID', rating: 91, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['AM', 'CM'] },
+    ]
+  },
+  {
+    id: 'france-1998', club: 'France', shortName: 'FRA', season: 'World Cup 1998', league: 'worldcup', color: '#002395',
+    players: [
+      { id: 'barthez-1998', name: 'Fabien Barthez', position: 'GK', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France' },
+      { id: 'thuram-fra-1998', name: 'Lilian Thuram', position: 'DEF', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['RB', 'CB'] },
+      { id: 'blanc-1998', name: 'Laurent Blanc', position: 'DEF', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CB'] },
+      { id: 'desailly-1998', name: 'Marcel Desailly', position: 'DEF', rating: 89, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CB', 'DM'] },
+      { id: 'lizarazu-1998', name: 'Bixente Lizarazu', position: 'DEF', rating: 86, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['LB'] },
+      { id: 'deschamps-1998', name: 'Didier Deschamps', position: 'MID', rating: 86, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['DM', 'CM'] },
+      { id: 'petit-1998', name: 'Emmanuel Petit', position: 'MID', rating: 85, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['DM', 'CM'] },
+      { id: 'zidane-fra-1998', name: 'Zinedine Zidane', position: 'MID', rating: 95, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'CM'] },
+      { id: 'djorkaeff-1998', name: 'Youri Djorkaeff', position: 'FWD', rating: 87, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'ST'] },
+      { id: 'henry-fra-1998', name: 'Thierry Henry', position: 'FWD', rating: 87, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['LW', 'ST'] },
+      { id: 'dugarry-1998', name: 'Christophe Dugarry', position: 'FWD', rating: 82, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['ST', 'RW'] },
+    ]
+  },
+  {
+    id: 'france-2018', club: 'France', shortName: 'FRA', season: 'World Cup 2018', league: 'worldcup', color: '#002395',
+    players: [
+      { id: 'lloris-fra-2018', name: 'Hugo Lloris', position: 'GK', rating: 89, club: 'France', season: 'World Cup 2018', nationality: 'France' },
+      { id: 'pavard-fra-2018', name: 'Benjamin Pavard', position: 'DEF', rating: 83, club: 'France', season: 'World Cup 2018', nationality: 'France', altPositions: ['RB', 'CB'] },
+      { id: 'varane-2018', name: 'Raphaël Varane', position: 'DEF', rating: 90, club: 'France', season: 'World Cup 2018', nationality: 'France', altPositions: ['CB'] },
+      { id: 'umtiti-2018', name: 'Samuel Umtiti', position: 'DEF', rating: 86, club: 'France', season: 'World Cup 2018', nationality: 'France', altPositions: ['CB'] },
+      { id: 'hernandez-2018', name: 'Lucas Hernández', position: 'DEF', rating: 84, club: 'France', season: 'World Cup 2018', nationality: 'France', altPositions: ['LB', 'CB'] },
+      { id: 'kante-fra-2018', name: 'N\'Golo Kanté', position: 'MID', rating: 90, club: 'France', season: 'World Cup 2018', nationality: 'France', altPositions: ['DM', 'CM'] },
+      { id: 'pogba-fra-2018', name: 'Paul Pogba', position: 'MID', rating: 88, club: 'France', season: 'World Cup 2018', nationality: 'France', altPositions: ['CM', 'AM'] },
+      { id: 'matuidi-fra-2018', name: 'Blaise Matuidi', position: 'MID', rating: 84, club: 'France', season: 'World Cup 2018', nationality: 'France', altPositions: ['CM', 'LM'] },
+      { id: 'griezmann-fra-2018', name: 'Antoine Griezmann', position: 'FWD', rating: 89, club: 'France', season: 'World Cup 2018', nationality: 'France', altPositions: ['ST', 'LW'] },
+      { id: 'mbappe-fra-2018', name: 'Kylian Mbappé', position: 'FWD', rating: 92, club: 'France', season: 'World Cup 2018', nationality: 'France', altPositions: ['ST', 'LW'] },
+      { id: 'giroud-fra-2018', name: 'Olivier Giroud', position: 'FWD', rating: 84, club: 'France', season: 'World Cup 2018', nationality: 'France', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'argentina-2022', club: 'Argentina', shortName: 'ARG', season: 'World Cup 2022', league: 'worldcup', color: '#74ACDF',
+    players: [
+      { id: 'emi-martinez-2022', name: 'Emiliano Martínez', position: 'GK', rating: 88, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina' },
+      { id: 'molina-arg-2022', name: 'Nahuel Molina', position: 'DEF', rating: 82, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina', altPositions: ['RB'] },
+      { id: 'romero-arg-2022', name: 'Cristian Romero', position: 'DEF', rating: 85, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina', altPositions: ['CB'] },
+      { id: 'otamendi-arg-2022', name: 'Nicolás Otamendi', position: 'DEF', rating: 84, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina', altPositions: ['CB'] },
+      { id: 'tagliafico-arg-2022', name: 'Nicolás Tagliafico', position: 'DEF', rating: 82, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina', altPositions: ['LB'] },
+      { id: 'de-paul-2022', name: 'Rodrigo De Paul', position: 'MID', rating: 85, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina', altPositions: ['CM', 'DM'] },
+      { id: 'mac-allister-2022', name: 'Alexis Mac Allister', position: 'MID', rating: 85, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina', altPositions: ['CM', 'AM'] },
+      { id: 'enzo-fernandez-2022', name: 'Enzo Fernández', position: 'MID', rating: 86, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina', altPositions: ['CM', 'DM'] },
+      { id: 'di-maria-2022', name: 'Ángel Di María', position: 'FWD', rating: 88, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina', altPositions: ['LW', 'RW'] },
+      { id: 'alvarez-2022', name: 'Julián Álvarez', position: 'FWD', rating: 86, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina', altPositions: ['ST'] },
+      { id: 'messi-arg-2022', name: 'Lionel Messi', position: 'FWD', rating: 96, club: 'Argentina', season: 'World Cup 2022', nationality: 'Argentina', altPositions: ['RW', 'AM', 'ST'] },
+    ]
+  },
+  {
+    id: 'germany-2014', club: 'Germany', shortName: 'GER', season: 'World Cup 2014', league: 'worldcup', color: '#000000',
+    players: [
+      { id: 'neuer-ger-2014', name: 'Manuel Neuer', position: 'GK', rating: 94, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany' },
+      { id: 'lahm-ger-2014', name: 'Philipp Lahm', position: 'DEF', rating: 91, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany', altPositions: ['RB', 'CM'] },
+      { id: 'hummels-ger-2014', name: 'Mats Hummels', position: 'DEF', rating: 89, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany', altPositions: ['CB'] },
+      { id: 'boateng-ger-2014', name: 'Jérôme Boateng', position: 'DEF', rating: 88, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany', altPositions: ['CB'] },
+      { id: 'howedes-2014', name: 'Benedikt Höwedes', position: 'DEF', rating: 83, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany', altPositions: ['CB', 'LB'] },
+      { id: 'schweinsteiger-ger-2014', name: 'Bastian Schweinsteiger', position: 'MID', rating: 89, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany', altPositions: ['CM', 'DM'] },
+      { id: 'kroos-ger-2014', name: 'Toni Kroos', position: 'MID', rating: 91, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany', altPositions: ['CM', 'DM'] },
+      { id: 'ozil-ger-2014', name: 'Mesut Özil', position: 'MID', rating: 89, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany', altPositions: ['AM', 'CM'] },
+      { id: 'muller-ger-2014', name: 'Thomas Müller', position: 'FWD', rating: 89, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany', altPositions: ['AM', 'ST'] },
+      { id: 'klose-2014', name: 'Miroslav Klose', position: 'FWD', rating: 87, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany', altPositions: ['ST'] },
+      { id: 'goetze-ger-2014', name: 'Mario Götze', position: 'FWD', rating: 87, club: 'Germany', season: 'World Cup 2014', nationality: 'Germany', altPositions: ['AM', 'LW'] },
+    ]
+  },
+  {
+    id: 'spain-2010', club: 'Spain', shortName: 'ESP', season: 'World Cup 2010', league: 'worldcup', color: '#AA151B',
+    players: [
+      { id: 'casillas-esp-2010', name: 'Iker Casillas', position: 'GK', rating: 90, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain' },
+      { id: 'sergio-ramos-esp-2010', name: 'Sergio Ramos', position: 'DEF', rating: 89, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain', altPositions: ['CB', 'RB'] },
+      { id: 'puyol-esp-2010', name: 'Carles Puyol', position: 'DEF', rating: 88, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain', altPositions: ['CB'] },
+      { id: 'pique-esp-2010', name: 'Gerard Piqué', position: 'DEF', rating: 87, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain', altPositions: ['CB'] },
+      { id: 'capdevila-2010', name: 'Joan Capdevila', position: 'DEF', rating: 81, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain', altPositions: ['LB'] },
+      { id: 'xavi-esp-2010', name: 'Xavi', position: 'MID', rating: 94, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain', altPositions: ['CM', 'AM'] },
+      { id: 'busquets-esp-2010', name: 'Sergio Busquets', position: 'MID', rating: 87, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain', altPositions: ['DM', 'CM'] },
+      { id: 'iniesta-esp-2010', name: 'Andrés Iniesta', position: 'MID', rating: 93, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain', altPositions: ['AM', 'CM'] },
+      { id: 'silva-d-esp-2010', name: 'David Silva', position: 'FWD', rating: 89, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain', altPositions: ['AM', 'LW'] },
+      { id: 'villa-esp-2010', name: 'David Villa', position: 'FWD', rating: 91, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain', altPositions: ['ST', 'LW'] },
+      { id: 'torres-esp-2010', name: 'Fernando Torres', position: 'FWD', rating: 89, club: 'Spain', season: 'World Cup 2010', nationality: 'Spain', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'italy-2006', club: 'Italy', shortName: 'ITA', season: 'World Cup 2006', league: 'worldcup', color: '#0066CC',
+    players: [
+      { id: 'buffon-ita-2006', name: 'Gianluigi Buffon', position: 'GK', rating: 91, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy' },
+      { id: 'zambrotta-ita-2006', name: 'Gianluca Zambrotta', position: 'DEF', rating: 87, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['RB', 'LB'] },
+      { id: 'cannavaro-ita-2006', name: 'Fabio Cannavaro', position: 'DEF', rating: 92, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
+      { id: 'materazzi-2006', name: 'Marco Materazzi', position: 'DEF', rating: 84, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
+      { id: 'grosso-2006', name: 'Fabio Grosso', position: 'DEF', rating: 82, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['LB'] },
+      { id: 'pirlo-ita-2006', name: 'Andrea Pirlo', position: 'MID', rating: 92, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['DM', 'CM'] },
+      { id: 'gattuso-ita-2006', name: 'Gennaro Gattuso', position: 'MID', rating: 86, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['DM', 'CM'] },
+      { id: 'camoranesi-2006', name: 'Mauro Camoranesi', position: 'MID', rating: 83, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['RM', 'CM'] },
+      { id: 'perrotta-2006', name: 'Simone Perrotta', position: 'MID', rating: 81, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CM', 'AM'] },
+      { id: 'totti-ita-2006', name: 'Francesco Totti', position: 'FWD', rating: 90, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['ST', 'AM'] },
+      { id: 'toni-2006', name: 'Luca Toni', position: 'FWD', rating: 87, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'netherlands-2010', club: 'Netherlands', shortName: 'NED', season: 'World Cup 2010', league: 'worldcup', color: '#FF6600',
+    players: [
+      { id: 'stekelenburg-2010', name: 'Maarten Stekelenburg', position: 'GK', rating: 83, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands' },
+      { id: 'van-der-wiel-2010', name: 'Gregory van der Wiel', position: 'DEF', rating: 82, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands', altPositions: ['RB'] },
+      { id: 'heitinga-2010', name: 'John Heitinga', position: 'DEF', rating: 83, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands', altPositions: ['CB', 'RB'] },
+      { id: 'mathijsen-2010', name: 'Joris Mathijsen', position: 'DEF', rating: 80, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands', altPositions: ['CB'] },
+      { id: 'van-bronckhorst-ned-2010', name: 'Giovanni van Bronckhorst', position: 'DEF', rating: 83, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands', altPositions: ['LB'] },
+      { id: 'van-bommel-2010', name: 'Mark van Bommel', position: 'MID', rating: 85, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands', altPositions: ['DM', 'CM'] },
+      { id: 'de-jong-n-2010', name: 'Nigel de Jong', position: 'MID', rating: 83, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands', altPositions: ['DM', 'CM'] },
+      { id: 'sneijder-ned-2010', name: 'Wesley Sneijder', position: 'MID', rating: 92, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands', altPositions: ['AM', 'CM'] },
+      { id: 'robben-ned-2010', name: 'Arjen Robben', position: 'FWD', rating: 91, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands', altPositions: ['RW'] },
+      { id: 'van-persie-ned-2010', name: 'Robin van Persie', position: 'FWD', rating: 89, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands', altPositions: ['ST', 'LW'] },
+      { id: 'kuyt-ned-2010', name: 'Dirk Kuyt', position: 'FWD', rating: 83, club: 'Netherlands', season: 'World Cup 2010', nationality: 'Netherlands', altPositions: ['ST', 'RW'] },
+    ]
+  },
+  {
+    id: 'portugal-2016', club: 'Portugal', shortName: 'POR', season: 'Euro 2016', league: 'worldcup', color: '#006600',
+    players: [
+      { id: 'rui-patricio-2016', name: 'Rui Patrício', position: 'GK', rating: 85, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal' },
+      { id: 'cedric-2016', name: 'Cédric Soares', position: 'DEF', rating: 79, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal', altPositions: ['RB'] },
+      { id: 'pepe-por-2016', name: 'Pepe', position: 'DEF', rating: 87, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal', altPositions: ['CB'] },
+      { id: 'jose-fonte-2016', name: 'José Fonte', position: 'DEF', rating: 82, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal', altPositions: ['CB'] },
+      { id: 'guerreiro-2016', name: 'Raphaël Guerreiro', position: 'DEF', rating: 82, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal', altPositions: ['LB'] },
+      { id: 'danilo-2016', name: 'Danilo Pereira', position: 'MID', rating: 81, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal', altPositions: ['DM', 'CM'] },
+      { id: 'moutinho-2016', name: 'João Moutinho', position: 'MID', rating: 86, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal', altPositions: ['CM', 'AM'] },
+      { id: 'adrien-2016', name: 'Adrien Silva', position: 'MID', rating: 80, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal', altPositions: ['CM', 'DM'] },
+      { id: 'quaresma-2016', name: 'Ricardo Quaresma', position: 'FWD', rating: 83, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal', altPositions: ['RW'] },
+      { id: 'nani-2016', name: 'Nani', position: 'FWD', rating: 83, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal', altPositions: ['LW', 'RW'] },
+      { id: 'ronaldo-por-2016', name: 'Cristiano Ronaldo', position: 'FWD', rating: 93, club: 'Portugal', season: 'Euro 2016', nationality: 'Portugal', altPositions: ['LW', 'ST'] },
+    ]
+  },
+  {
+    id: 'croatia-2018', club: 'Croatia', shortName: 'CRO', season: 'World Cup 2018', league: 'worldcup', color: '#FF0000',
+    players: [
+      { id: 'subasic-2018', name: 'Danijel Subašić', position: 'GK', rating: 83, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia' },
+      { id: 'vrsaljko-2018', name: 'Šime Vrsaljko', position: 'DEF', rating: 81, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia', altPositions: ['RB'] },
+      { id: 'vida-2018', name: 'Domagoj Vida', position: 'DEF', rating: 83, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia', altPositions: ['CB'] },
+      { id: 'lovren-2018', name: 'Dejan Lovren', position: 'DEF', rating: 82, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia', altPositions: ['CB'] },
+      { id: 'strinic-2018', name: 'Ivan Strinić', position: 'DEF', rating: 79, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia', altPositions: ['LB'] },
+      { id: 'modric-cro-2018', name: 'Luka Modrić', position: 'MID', rating: 94, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia', altPositions: ['CM', 'AM'] },
+      { id: 'rakitic-2018', name: 'Ivan Rakitić', position: 'MID', rating: 89, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia', altPositions: ['CM', 'AM'] },
+      { id: 'brozovic-2018', name: 'Marcelo Brozović', position: 'MID', rating: 87, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia', altPositions: ['DM', 'CM'] },
+      { id: 'rebic-2018', name: 'Ante Rebić', position: 'FWD', rating: 83, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia', altPositions: ['LW', 'ST'] },
+      { id: 'perisic-cro-2018', name: 'Ivan Perišić', position: 'FWD', rating: 86, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia', altPositions: ['LW', 'LM'] },
+      { id: 'mandzukic-cro-2018', name: 'Mario Mandžukić', position: 'FWD', rating: 85, club: 'Croatia', season: 'World Cup 2018', nationality: 'Croatia', altPositions: ['ST', 'LW'] },
+    ]
+  },
+  // --- NEW ENTRIES ---
+  {
+    id: 'brazil-1970', club: 'Brazil', shortName: 'BRA', season: 'World Cup 1970', league: 'worldcup', color: '#009C3B',
+    players: [
+      { id: 'felix-bra-1970', name: 'Félix', position: 'GK', rating: 82, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil' },
+      { id: 'carlos-alberto-bra-1970', name: 'Carlos Alberto', position: 'DEF', rating: 88, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['RB'] },
+      { id: 'brito-bra-1970', name: 'Brito', position: 'DEF', rating: 83, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['CB'] },
+      { id: 'piazza-bra-1970', name: 'Piazza', position: 'DEF', rating: 81, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['CB'] },
+      { id: 'everaldo-bra-1970', name: 'Everaldo', position: 'DEF', rating: 80, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['LB'] },
+      { id: 'clodoaldo-bra-1970', name: 'Clodoaldo', position: 'MID', rating: 82, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['DM', 'CM'] },
+      { id: 'gerson-bra-1970', name: 'Gérson', position: 'MID', rating: 87, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['CM', 'AM'] },
+      { id: 'jairzinho-bra-1970', name: 'Jairzinho', position: 'FWD', rating: 91, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['RW', 'ST'] },
+      { id: 'tostao-bra-1970', name: 'Tostão', position: 'FWD', rating: 88, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['ST', 'AM'] },
+      { id: 'pele-bra-1970', name: 'Pelé', position: 'FWD', rating: 99, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['ST', 'RW'] },
+      { id: 'rivelino-bra-1970', name: 'Rivelino', position: 'MID', rating: 90, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['LM', 'AM'] },
+    ]
+  },
+  {
+    id: 'argentina-1986', club: 'Argentina', shortName: 'ARG', season: 'World Cup 1986', league: 'worldcup', color: '#74ACDF',
+    players: [
+      { id: 'pumpido-arg-1986', name: 'Nery Pumpido', position: 'GK', rating: 82, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina' },
+      { id: 'cuciuffo-arg-1986', name: 'José Luis Cuciuffo', position: 'DEF', rating: 78, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['RB'] },
+      { id: 'brown-arg-1986', name: 'José Luis Brown', position: 'DEF', rating: 82, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CB'] },
+      { id: 'ruggeri-arg-1986', name: 'Oscar Ruggeri', position: 'DEF', rating: 84, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CB'] },
+      { id: 'olarticoechea-arg-1986', name: 'Julio Olarticoechea', position: 'DEF', rating: 80, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['LB'] },
+      { id: 'batista-arg-1986', name: 'Sergio Batista', position: 'MID', rating: 79, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['DM', 'CM'] },
+      { id: 'burruchaga-arg-1986', name: 'Jorge Burruchaga', position: 'MID', rating: 85, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CM', 'AM'] },
+      { id: 'enrique-arg-1986', name: 'Héctor Enrique', position: 'MID', rating: 82, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CM'] },
+      { id: 'valdano-arg-1986', name: 'Jorge Valdano', position: 'FWD', rating: 85, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['ST', 'LW'] },
+      { id: 'maradona-arg-1986', name: 'Diego Maradona', position: 'FWD', rating: 99, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['AM', 'ST'] },
+      { id: 'pasculli-arg-1986', name: 'Pedro Pasculli', position: 'FWD', rating: 78, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'germany-1974', club: 'West Germany', shortName: 'GER', season: 'World Cup 1974', league: 'worldcup', color: '#000000',
+    players: [
+      { id: 'maier-ger-1974', name: 'Sepp Maier', position: 'GK', rating: 88, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany' },
+      { id: 'vogts-ger-1974', name: 'Berti Vogts', position: 'DEF', rating: 84, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['RB'] },
+      { id: 'beckenbauer-ger-1974', name: 'Franz Beckenbauer', position: 'DEF', rating: 95, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['CB', 'DM'] },
+      { id: 'schwarzenbeck-ger-1974', name: 'Hans-Georg Schwarzenbeck', position: 'DEF', rating: 82, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['CB'] },
+      { id: 'breitner-ger-1974', name: 'Paul Breitner', position: 'DEF', rating: 86, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['LB', 'CM'] },
+      { id: 'bonhof-ger-1974', name: 'Rainer Bonhof', position: 'MID', rating: 83, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['CM', 'DM'] },
+      { id: 'overath-ger-1974', name: 'Wolfgang Overath', position: 'MID', rating: 87, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['CM', 'AM'] },
+      { id: 'hoeness-ger-1974', name: 'Uli Hoeneß', position: 'MID', rating: 83, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['CM', 'RM'] },
+      { id: 'holzenbein-ger-1974', name: 'Bernd Hölzenbein', position: 'FWD', rating: 81, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['LW'] },
+      { id: 'muller-gerd-ger-1974', name: 'Gerd Müller', position: 'FWD', rating: 93, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['ST'] },
+      { id: 'grabowski-ger-1974', name: 'Jürgen Grabowski', position: 'FWD', rating: 82, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['RW', 'AM'] },
+    ]
+  },
+  {
+    id: 'italy-1982', club: 'Italy', shortName: 'ITA', season: 'World Cup 1982', league: 'worldcup', color: '#0066CC',
+    players: [
+      { id: 'zoff-ita-1982', name: 'Dino Zoff', position: 'GK', rating: 87, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy' },
+      { id: 'gentile-ita-1982', name: 'Claudio Gentile', position: 'DEF', rating: 83, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['RB', 'CB'] },
+      { id: 'scirea-ita-1982', name: 'Gaetano Scirea', position: 'DEF', rating: 88, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['CB'] },
+      { id: 'collovati-ita-1982', name: 'Fulvio Collovati', position: 'DEF', rating: 81, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['CB'] },
+      { id: 'cabrini-ita-1982', name: 'Antonio Cabrini', position: 'DEF', rating: 84, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['LB'] },
+      { id: 'tardelli-ita-1982', name: 'Marco Tardelli', position: 'MID', rating: 84, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['CM', 'DM'] },
+      { id: 'conti-ita-1982', name: 'Bruno Conti', position: 'MID', rating: 83, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['RM', 'AM'] },
+      { id: 'antognoni-ita-1982', name: 'Giancarlo Antognoni', position: 'MID', rating: 85, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['AM', 'CM'] },
+      { id: 'rossi-ita-1982', name: 'Paolo Rossi', position: 'FWD', rating: 88, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['ST'] },
+      { id: 'graziani-ita-1982', name: 'Francesco Graziani', position: 'FWD', rating: 82, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['ST'] },
+      { id: 'altobelli-ita-1982', name: 'Alessandro Altobelli', position: 'FWD', rating: 83, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'england-1966', club: 'England', shortName: 'ENG', season: 'World Cup 1966', league: 'worldcup', color: '#003090',
+    players: [
+      { id: 'banks-eng-1966', name: 'Gordon Banks', position: 'GK', rating: 91, club: 'England', season: 'World Cup 1966', nationality: 'England' },
+      { id: 'cohen-eng-1966', name: 'George Cohen', position: 'DEF', rating: 80, club: 'England', season: 'World Cup 1966', nationality: 'England', altPositions: ['RB'] },
+      { id: 'jack-charlton-eng-1966', name: 'Jack Charlton', position: 'DEF', rating: 84, club: 'England', season: 'World Cup 1966', nationality: 'England', altPositions: ['CB'] },
+      { id: 'moore-eng-1966', name: 'Bobby Moore', position: 'DEF', rating: 92, club: 'England', season: 'World Cup 1966', nationality: 'England', altPositions: ['CB'] },
+      { id: 'wilson-eng-1966', name: 'Ray Wilson', position: 'DEF', rating: 81, club: 'England', season: 'World Cup 1966', nationality: 'England', altPositions: ['LB'] },
+      { id: 'stiles-eng-1966', name: 'Nobby Stiles', position: 'MID', rating: 82, club: 'England', season: 'World Cup 1966', nationality: 'England', altPositions: ['DM', 'CM'] },
+      { id: 'bobby-charlton-eng-1966', name: 'Bobby Charlton', position: 'MID', rating: 91, club: 'England', season: 'World Cup 1966', nationality: 'England', altPositions: ['CM', 'AM'] },
+      { id: 'ball-eng-1966', name: 'Alan Ball', position: 'MID', rating: 83, club: 'England', season: 'World Cup 1966', nationality: 'England', altPositions: ['RM', 'CM'] },
+      { id: 'peters-eng-1966', name: 'Martin Peters', position: 'MID', rating: 82, club: 'England', season: 'World Cup 1966', nationality: 'England', altPositions: ['CM', 'AM'] },
+      { id: 'hurst-eng-1966', name: 'Geoff Hurst', position: 'FWD', rating: 85, club: 'England', season: 'World Cup 1966', nationality: 'England', altPositions: ['ST'] },
+      { id: 'hunt-eng-1966', name: 'Roger Hunt', position: 'FWD', rating: 80, club: 'England', season: 'World Cup 1966', nationality: 'England', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'netherlands-1974', club: 'Netherlands', shortName: 'NED', season: 'World Cup 1974', league: 'worldcup', color: '#FF6600',
+    players: [
+      { id: 'jongbloed-ned-1974', name: 'Jan Jongbloed', position: 'GK', rating: 81, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands' },
+      { id: 'suurbier-ned-1974', name: 'Wim Suurbier', position: 'DEF', rating: 81, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands', altPositions: ['RB'] },
+      { id: 'rijsbergen-ned-1974', name: 'Wim Rijsbergen', position: 'DEF', rating: 82, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands', altPositions: ['CB'] },
+      { id: 'haan-ned-1974', name: 'Arie Haan', position: 'DEF', rating: 83, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands', altPositions: ['CB', 'DM'] },
+      { id: 'krol-ned-1974', name: 'Ruud Krol', position: 'DEF', rating: 87, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands', altPositions: ['LB', 'CB'] },
+      { id: 'neeskens-ned-1974', name: 'Johan Neeskens', position: 'MID', rating: 89, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands', altPositions: ['CM', 'DM'] },
+      { id: 'van-hanegem-ned-1974', name: 'Wim van Hanegem', position: 'MID', rating: 86, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands', altPositions: ['CM', 'AM'] },
+      { id: 'jansen-ned-1974', name: 'Wim Jansen', position: 'MID', rating: 82, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands', altPositions: ['CM'] },
+      { id: 'rep-ned-1974', name: 'Johnny Rep', position: 'FWD', rating: 83, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands', altPositions: ['RW', 'ST'] },
+      { id: 'cruyff-ned-1974', name: 'Johan Cruyff', position: 'FWD', rating: 97, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands', altPositions: ['ST', 'AM'] },
+      { id: 'rensenbrink-ned-1974', name: 'Rob Rensenbrink', position: 'FWD', rating: 84, club: 'Netherlands', season: 'World Cup 1974', nationality: 'Netherlands', altPositions: ['LW', 'AM'] },
+    ]
+  },
+  {
+    id: 'brazil-1982', club: 'Brazil', shortName: 'BRA', season: 'World Cup 1982', league: 'worldcup', color: '#009C3B',
+    players: [
+      { id: 'waldir-peres-1982', name: 'Waldir Peres', position: 'GK', rating: 81, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil' },
+      { id: 'leandro-bra-1982', name: 'Leandro', position: 'DEF', rating: 82, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['RB'] },
+      { id: 'oscar-bra-1982', name: 'Oscar', position: 'DEF', rating: 81, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['CB'] },
+      { id: 'luizinho-bra-1982', name: 'Luizinho', position: 'DEF', rating: 79, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['CB'] },
+      { id: 'junior-bra-1982', name: 'Júnior', position: 'DEF', rating: 85, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['LB', 'DM'] },
+      { id: 'cerezo-bra-1982', name: 'Toninho Cerezo', position: 'MID', rating: 84, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['DM', 'CM'] },
+      { id: 'falcao-bra-1982', name: 'Falcão', position: 'MID', rating: 93, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['CM', 'AM'] },
+      { id: 'socrates-bra-1982', name: 'Sócrates', position: 'MID', rating: 90, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['AM', 'CM'] },
+      { id: 'eder-bra-1982', name: 'Éder', position: 'FWD', rating: 87, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['LW', 'ST'] },
+      { id: 'zico-bra-1982', name: 'Zico', position: 'FWD', rating: 95, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['AM', 'ST'] },
+      { id: 'serginho-bra-1982', name: 'Serginho', position: 'FWD', rating: 80, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['ST', 'LW'] },
+    ]
+  },
+  {
+    id: 'netherlands-1978', club: 'Netherlands', shortName: 'NED', season: 'World Cup 1978', league: 'worldcup', color: '#FF6600',
+    players: [
+      { id: 'jongbloed-1978', name: 'Jan Jongbloed', position: 'GK', rating: 81, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands' },
+      { id: 'suurbier-1978', name: 'Wim Suurbier', position: 'DEF', rating: 80, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands', altPositions: ['RB'] },
+      { id: 'brandts-1978', name: 'Ernie Brandts', position: 'DEF', rating: 83, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands', altPositions: ['CB', 'RM'] },
+      { id: 'haan-1978', name: 'Arie Haan', position: 'DEF', rating: 83, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands', altPositions: ['CB', 'DM'] },
+      { id: 'krol-1978', name: 'Ruud Krol', position: 'DEF', rating: 86, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands', altPositions: ['LB', 'CB'] },
+      { id: 'neeskens-1978', name: 'Johan Neeskens', position: 'MID', rating: 88, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands', altPositions: ['CM', 'DM'] },
+      { id: 'van-hanegem-1978', name: 'Wim van Hanegem', position: 'MID', rating: 83, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands', altPositions: ['CM', 'AM'] },
+      { id: 'vdkerkhof-w-1978', name: 'Willy van der Kerkhof', position: 'MID', rating: 82, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands', altPositions: ['RM', 'AM'] },
+      { id: 'rep-1978', name: 'Johnny Rep', position: 'FWD', rating: 83, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands', altPositions: ['RW', 'ST'] },
+      { id: 'rensenbrink-1978', name: 'Rob Rensenbrink', position: 'FWD', rating: 87, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands', altPositions: ['LW', 'AM'] },
+      { id: 'nanninga-1978', name: 'Dick Nanninga', position: 'FWD', rating: 80, club: 'Netherlands', season: 'World Cup 1978', nationality: 'Netherlands', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'england-1990', club: 'England', shortName: 'ENG', season: 'World Cup 1990', league: 'worldcup', color: '#003090',
+    players: [
+      { id: 'shilton-1990', name: 'Peter Shilton', position: 'GK', rating: 89, club: 'England', season: 'World Cup 1990', nationality: 'England' },
+      { id: 'stevens-ge-1990', name: 'Gary Stevens', position: 'DEF', rating: 81, club: 'England', season: 'World Cup 1990', nationality: 'England', altPositions: ['RB'] },
+      { id: 'wright-m-1990', name: 'Mark Wright', position: 'DEF', rating: 83, club: 'England', season: 'World Cup 1990', nationality: 'England', altPositions: ['CB'] },
+      { id: 'butcher-1990', name: 'Terry Butcher', position: 'DEF', rating: 84, club: 'England', season: 'World Cup 1990', nationality: 'England', altPositions: ['CB'] },
+      { id: 'pearce-1990', name: 'Stuart Pearce', position: 'DEF', rating: 83, club: 'England', season: 'World Cup 1990', nationality: 'England', altPositions: ['LB'] },
+      { id: 'gascoigne-1990', name: 'Paul Gascoigne', position: 'MID', rating: 90, club: 'England', season: 'World Cup 1990', nationality: 'England', altPositions: ['AM', 'CM'] },
+      { id: 'waddle-1990', name: 'Chris Waddle', position: 'MID', rating: 85, club: 'England', season: 'World Cup 1990', nationality: 'England', altPositions: ['LW', 'RM'] },
+      { id: 'platt-1990', name: 'David Platt', position: 'MID', rating: 84, club: 'England', season: 'World Cup 1990', nationality: 'England', altPositions: ['CM', 'AM'] },
+      { id: 'beardsley-1990', name: 'Peter Beardsley', position: 'FWD', rating: 86, club: 'England', season: 'World Cup 1990', nationality: 'England', altPositions: ['AM', 'ST'] },
+      { id: 'lineker-1990', name: 'Gary Lineker', position: 'FWD', rating: 90, club: 'England', season: 'World Cup 1990', nationality: 'England', altPositions: ['ST'] },
+      { id: 'barnes-j-1990', name: 'John Barnes', position: 'FWD', rating: 84, club: 'England', season: 'World Cup 1990', nationality: 'England', altPositions: ['LW', 'AM'] },
+    ]
+  },
+  {
+    id: 'portugal-2022', club: 'Portugal', shortName: 'POR', season: 'World Cup 2022', league: 'worldcup', color: '#006600',
+    players: [
+      { id: 'patricio-por-2022', name: 'Rui Patrício', position: 'GK', rating: 85, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal' },
+      { id: 'cancelo-por-2022', name: 'João Cancelo', position: 'DEF', rating: 87, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['RB', 'LB'] },
+      { id: 'pepe-por-2022', name: 'Pepe', position: 'DEF', rating: 84, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['CB'] },
+      { id: 'dias-r-por-2022', name: 'Rúben Dias', position: 'DEF', rating: 88, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['CB'] },
+      { id: 'guerreiro-por-2022', name: 'Raphaël Guerreiro', position: 'DEF', rating: 83, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['LB'] },
+      { id: 'w-carvalho-2022', name: 'William Carvalho', position: 'MID', rating: 82, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['DM', 'CM'] },
+      { id: 'vitinha-por-2022', name: 'Vitinha', position: 'MID', rating: 84, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['CM', 'DM'] },
+      { id: 'b-fernandes-2022', name: 'Bruno Fernandes', position: 'MID', rating: 88, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['AM', 'CM'] },
+      { id: 'felix-j-2022', name: 'João Félix', position: 'FWD', rating: 87, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['AM', 'ST'] },
+      { id: 'leao-r-2022', name: 'Rafael Leão', position: 'FWD', rating: 87, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['LW', 'ST'] },
+      { id: 'ronaldo-por-2022', name: 'Cristiano Ronaldo', position: 'FWD', rating: 88, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['LW', 'ST'] },
+    ]
+  },
+  {
+    id: 'belgium-2018', club: 'Belgium', shortName: 'BEL', season: 'World Cup 2018', league: 'worldcup', color: '#000000',
+    players: [
+      { id: 'courtois-bel-2018', name: 'Thibaut Courtois', position: 'GK', rating: 91, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium' },
+      { id: 'meunier-bel-2018', name: 'Thomas Meunier', position: 'DEF', rating: 82, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium', altPositions: ['RB'] },
+      { id: 'alderweireld-bel-2018', name: 'Toby Alderweireld', position: 'DEF', rating: 87, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium', altPositions: ['CB'] },
+      { id: 'vertonghen-bel-2018', name: 'Jan Vertonghen', position: 'DEF', rating: 86, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium', altPositions: ['CB', 'LB'] },
+      { id: 'chadli-bel-2018', name: 'Nacer Chadli', position: 'DEF', rating: 80, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium', altPositions: ['LB', 'LW'] },
+      { id: 'witsel-bel-2018', name: 'Axel Witsel', position: 'MID', rating: 85, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium', altPositions: ['DM', 'CM'] },
+      { id: 'fellaini-bel-2018', name: 'Marouane Fellaini', position: 'MID', rating: 81, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium', altPositions: ['DM', 'CM'] },
+      { id: 'de-bruyne-bel-2018', name: 'Kevin De Bruyne', position: 'MID', rating: 91, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium', altPositions: ['CM', 'AM'] },
+      { id: 'hazard-bel-2018', name: 'Eden Hazard', position: 'FWD', rating: 91, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium', altPositions: ['LW', 'AM'] },
+      { id: 'lukaku-bel-2018', name: 'Romelu Lukaku', position: 'FWD', rating: 89, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium', altPositions: ['ST'] },
+      { id: 'mertens-bel-2018', name: 'Dries Mertens', position: 'FWD', rating: 83, club: 'Belgium', season: 'World Cup 2018', nationality: 'Belgium', altPositions: ['ST', 'AM'] },
+    ]
+  },
+  {
+    id: 'west-germany-1974', club: 'West Germany', shortName: 'WGR', season: 'World Cup 1974', league: 'worldcup', color: '#FFFFFF',
+    players: [
+      { id: 'maier-wg-1974', name: 'Sepp Maier', position: 'GK', rating: 90, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany' },
+      { id: 'vogts-1974', name: 'Berti Vogts', position: 'DEF', rating: 84, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['RB'] },
+      { id: 'schwarzenbeck-1974', name: 'Hans-Georg Schwarzenbeck', position: 'DEF', rating: 82, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['CB'] },
+      { id: 'beckenbauer-1974', name: 'Franz Beckenbauer', position: 'DEF', rating: 95, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['CB', 'DM'] },
+      { id: 'breitner-1974', name: 'Paul Breitner', position: 'DEF', rating: 87, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['LB', 'CM'] },
+      { id: 'bonhof-1974', name: 'Rainer Bonhof', position: 'MID', rating: 83, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['CM', 'DM'] },
+      { id: 'overath-1974', name: 'Wolfgang Overath', position: 'MID', rating: 86, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['CM', 'AM'] },
+      { id: 'grabowski-1974', name: 'Jürgen Grabowski', position: 'MID', rating: 82, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['RM', 'AM'] },
+      { id: 'hoeness-u-1974', name: 'Uli Hoeneß', position: 'FWD', rating: 84, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['ST', 'LW'] },
+      { id: 'muller-g-1974', name: 'Gerd Müller', position: 'FWD', rating: 96, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['ST'] },
+      { id: 'holzenbein-1974', name: 'Bernd Hölzenbein', position: 'FWD', rating: 82, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['LW', 'ST'] },
+    ]
+  },
+  {
+    id: 'argentina-1986', club: 'Argentina', shortName: 'ARG', season: 'World Cup 1986', league: 'worldcup', color: '#74ACDF',
+    players: [
+      { id: 'pumpido-arg-1986', name: 'Nery Pumpido', position: 'GK', rating: 82, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina' },
+      { id: 'cuciuffo-1986', name: 'José Cuciuffo', position: 'DEF', rating: 78, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['RB'] },
+      { id: 'brown-j-1986', name: 'José Luis Brown', position: 'DEF', rating: 80, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CB'] },
+      { id: 'ruggeri-1986', name: 'Oscar Ruggeri', position: 'DEF', rating: 83, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CB'] },
+      { id: 'olarticoechea-1986', name: 'Julio Olarticoechea', position: 'DEF', rating: 78, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['LB'] },
+      { id: 'batista-s-1986', name: 'Sergio Batista', position: 'MID', rating: 80, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['DM', 'CM'] },
+      { id: 'giusti-1986', name: 'Ricardo Giusti', position: 'MID', rating: 79, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CM', 'DM'] },
+      { id: 'burruchaga-1986', name: 'Jorge Burruchaga', position: 'MID', rating: 85, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CM', 'AM'] },
+      { id: 'valdano-1986', name: 'Jorge Valdano', position: 'FWD', rating: 85, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['ST', 'LW'] },
+      { id: 'enrique-j-1986', name: 'Jorge Enrique', position: 'FWD', rating: 79, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['LW', 'ST'] },
+      { id: 'maradona-arg-1986', name: 'Diego Maradona', position: 'FWD', rating: 98, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['AM', 'ST'] },
+    ]
+  },
+  {
+    id: 'france-1998', club: 'France', shortName: 'FRA', season: 'World Cup 1998', league: 'worldcup', color: '#002395',
+    players: [
+      { id: 'barthez-fra-1998', name: 'Fabien Barthez', position: 'GK', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France' },
+      { id: 'thuram-1998', name: 'Lilian Thuram', position: 'DEF', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['RB', 'CB'] },
+      { id: 'blanc-l-1998', name: 'Laurent Blanc', position: 'DEF', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CB'] },
+      { id: 'desailly-fra-1998', name: 'Marcel Desailly', position: 'DEF', rating: 89, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CB', 'DM'] },
+      { id: 'lizarazu-1998', name: 'Bixente Lizarazu', position: 'DEF', rating: 85, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['LB'] },
+      { id: 'deschamps-1998', name: 'Didier Deschamps', position: 'MID', rating: 86, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['DM', 'CM'] },
+      { id: 'vieira-fra-1998', name: 'Patrick Vieira', position: 'MID', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CM', 'DM'] },
+      { id: 'zidane-1998', name: 'Zinedine Zidane', position: 'MID', rating: 95, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'CM'] },
+      { id: 'djorkaeff-1998', name: 'Youri Djorkaeff', position: 'FWD', rating: 87, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'LW'] },
+      { id: 'henry-fra-1998', name: 'Thierry Henry', position: 'FWD', rating: 87, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['LW', 'ST'] },
+      { id: 'trezeguet-1998', name: 'David Trezeguet', position: 'FWD', rating: 84, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'italy-2006', club: 'Italy', shortName: 'ITA', season: 'World Cup 2006', league: 'worldcup', color: '#009246',
+    players: [
+      { id: 'buffon-ita-2006', name: 'Gianluigi Buffon', position: 'GK', rating: 93, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy' },
+      { id: 'zaccardo-2006', name: 'Cristian Zaccardo', position: 'DEF', rating: 77, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['RB', 'CB'] },
+      { id: 'cannavaro-2006', name: 'Fabio Cannavaro', position: 'DEF', rating: 93, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
+      { id: 'nesta-ita-2006', name: 'Alessandro Nesta', position: 'DEF', rating: 90, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
+      { id: 'zambrotta-2006', name: 'Gianluca Zambrotta', position: 'DEF', rating: 87, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['LB', 'RB'] },
+      { id: 'pirlo-ita-2006', name: 'Andrea Pirlo', position: 'MID', rating: 93, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['DM', 'CM'] },
+      { id: 'gattuso-ita-2006', name: 'Gennaro Gattuso', position: 'MID', rating: 84, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['DM', 'CM'] },
+      { id: 'camoranesi-2006', name: 'Mauro Camoranesi', position: 'MID', rating: 82, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['RM', 'CM'] },
+      { id: 'de-rossi-2006', name: 'Daniele De Rossi', position: 'MID', rating: 87, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CM', 'DM'] },
+      { id: 'toni-2006', name: 'Luca Toni', position: 'FWD', rating: 84, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['ST'] },
+      { id: 'del-piero-ita-2006', name: 'Alessandro Del Piero', position: 'FWD', rating: 88, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['ST', 'AM'] },
+    ]
+  },
+]

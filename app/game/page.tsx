@@ -1,0 +1,690 @@
+'use client'
+
+import { useState, useCallback, Suspense, useEffect } from 'react'
+import { useSearchParams, useRouter } from 'next/navigation'
+import type { DraftedPlayer, LeagueId, ClubSeason, Player, Position, Difficulty } from '@/lib/types'
+import { FORMATIONS, FORMATION_DESCRIPTIONS } from '@/lib/types'
+import { LEAGUE_CONFIGS, spinClubSeason, getClubSeasonsForLeague, ALL_CLUB_SEASONS } from '@/lib/data'
+import { runSimulation } from '@/lib/simulation'
+import { TeamFormation } from '@/components/TeamFormation'
+import { SeasonSimulator } from '@/components/SeasonSimulator'
+
+// Pre-computed career-peak rating for each player name across all leagues/seasons.
+const PRIME_RATINGS = new Map<string, number>()
+for (const cs of ALL_CLUB_SEASONS) {
+  for (const p of cs.players) {
+    if (p.rating > (PRIME_RATINGS.get(p.name) ?? 0)) PRIME_RATINGS.set(p.name, p.rating)
+  }
+}
+
+export type RatingsMode = 'season' | 'prime'
+
+const POS_COLORS: Record<Position, string> = {
+  GK: '#f59e0b',
+  DEF: '#3b82f6',
+  MID: '#10b981',
+  FWD: '#ef4444',
+}
+
+const DIFFICULTY_CONFIG: Record<Difficulty, { label: string; emoji: string; desc: string; rerolls: number; hideRatings: boolean }> = {
+  easy:   { label: 'Easy',   emoji: '😌', desc: '5 rerolls, ratings visible', rerolls: 5, hideRatings: false },
+  normal: { label: 'Normal', emoji: '⚽', desc: '2 rerolls, ratings visible', rerolls: 2, hideRatings: false },
+  hard:   { label: 'Hard',   emoji: '🔥', desc: 'No rerolls, ratings hidden', rerolls: 0, hideRatings: true  },
+}
+
+// ── Simulating progress bar ───────────────────────────────────────────────────
+
+function SimProgressBar({ duration, color }: { duration: number; color: string }) {
+  const [progress, setProgress] = useState(0)
+  useEffect(() => {
+    const start = Date.now()
+    const id = setInterval(() => {
+      const p = Math.min((Date.now() - start) / duration, 1)
+      setProgress(p)
+      if (p >= 1) clearInterval(id)
+    }, 40)
+    return () => clearInterval(id)
+  }, [duration, color])
+
+  const matchday = Math.min(Math.round(progress * 38), 38)
+
+  return (
+    <div className="space-y-3">
+      <div className="flex justify-between text-xs text-slate-500">
+        <span>Matchday {matchday} / 38</span>
+        <span>{Math.round(progress * 100)}%</span>
+      </div>
+      <div className="h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+        <div
+          className="h-full rounded-full"
+          style={{ width: `${progress * 100}%`, background: color, transition: 'width 40ms linear' }}
+        />
+      </div>
+    </div>
+  )
+}
+
+// ── Main game content ─────────────────────────────────────────────────────────
+
+function GameContent() {
+  const params = useSearchParams()
+  const router = useRouter()
+  const leagueId = (params.get('league') ?? 'pl') as LeagueId
+  const league = LEAGUE_CONFIGS[leagueId] ?? LEAGUE_CONFIGS.pl
+
+  const [phase, setPhase] = useState<'setup' | 'draft' | 'simulating' | 'results'>('setup')
+  const [difficulty, setDifficulty] = useState<Difficulty | null>(null)
+  const [ratingsMode, setRatingsMode] = useState<RatingsMode>('season')
+  const [formationName, setFormationName] = useState('4-3-3')
+  const [team, setTeam] = useState<DraftedPlayer[]>([])
+  const [draftSub, setDraftSub] = useState<'idle' | 'spinning' | 'landed' | 'selecting'>('idle')
+  const [currentSpin, setCurrentSpin] = useState<ClubSeason | null>(null)
+  const [spinDisplay, setSpinDisplay] = useState<{ club: string; season: string; color: string }>({ club: '', season: '', color: '#fff' })
+  const [usedSpins, setUsedSpins] = useState<string[]>([])
+  const [rerollsLeft, setRerollsLeft] = useState(2)
+  const [seasonResult, setSeasonResult] = useState<ReturnType<typeof runSimulation> | null>(null)
+  const [message, setMessage] = useState<string | null>(null)
+
+  const formation = FORMATIONS[formationName]
+  const slots = formation.slots
+  const totalSlots = slots.length
+  const filled = team.length
+  const hideRatings = difficulty ? DIFFICULTY_CONFIG[difficulty].hideRatings : false
+
+  const emptyCounts: Record<Position, number> = { GK: 0, DEF: 0, MID: 0, FWD: 0 }
+  slots.forEach(s => { emptyCounts[s.position as Position]++ })
+  team.forEach(p => { emptyCounts[p.slotPosition as Position]-- })
+  const allFilled = filled === totalSlots
+
+  const usedSlotIndexes = team.map(p => p.slotIndex)
+
+  // Which player positions are accepted by each slot label.
+  // CM is flexible (all midfielders fit). Wings and ST are strict.
+  const SLOT_ACCEPTS: Record<string, string[]> = {
+    GK:  ['GK'],
+    LB:  ['LB', 'LWB'],
+    CB:  ['CB'],
+    RB:  ['RB', 'RWB'],
+    LWB: ['LWB', 'LB'],
+    RWB: ['RWB', 'RB'],
+    DM:  ['DM', 'CM'],
+    CM:  ['CM', 'DM', 'AM', 'LM', 'RM'],   // central mid slot is flexible
+    AM:  ['AM', 'CM', 'LM', 'RM'],
+    LM:  ['LM', 'CM'],
+    RM:  ['RM', 'CM'],
+    LW:  ['LW', 'LM'],
+    RW:  ['RW', 'RM'],
+    ST:  ['ST'],                              // pure strikers only
+  }
+
+  // A player can fill a slot if their altPositions overlaps with the slot's accept list,
+  // or (if no altPositions) their broad position matches the slot position.
+  function canFillSlot(player: import('@/lib/types').Player, slot: typeof slots[number]): boolean {
+    if (player.altPositions?.length) {
+      const accepted = SLOT_ACCEPTS[slot.label] ?? [slot.label]
+      return player.altPositions.some(p => accepted.includes(p))
+    }
+    return player.position === slot.position
+  }
+
+  function hasAvailableSlot(player: import('@/lib/types').Player): boolean {
+    return slots.some((slot, i) => !usedSlotIndexes.includes(i) && canFillSlot(player, slot))
+  }
+
+  const showMessage = (msg: string) => {
+    setMessage(msg)
+    setTimeout(() => setMessage(null), 2500)
+  }
+
+  const handleStartDraft = () => {
+    if (!difficulty) return
+    setRerollsLeft(DIFFICULTY_CONFIG[difficulty].rerolls)
+    setPhase('draft')
+  }
+
+  // Slot machine spin effect
+  const handleSpin = useCallback((isReroll = false) => {
+    if (isReroll) setRerollsLeft(r => r - 1)
+    setDraftSub('spinning')
+    setCurrentSpin(null)
+
+    const pool = getClubSeasonsForLeague(leagueId)
+    const start = Date.now()
+    const total = 900 + Math.random() * 500
+
+    function tick() {
+      const elapsed = Date.now() - start
+      const progress = elapsed / total
+      if (progress < 1) {
+        const item = pool[Math.floor(Math.random() * pool.length)]
+        setSpinDisplay({ club: item.club, season: item.season, color: item.color })
+        // Ease out: ~60ms at start → ~280ms at end
+        setTimeout(tick, 60 + Math.pow(progress, 1.8) * 220)
+      } else {
+        const result = spinClubSeason(leagueId, usedSpins)
+        if (result) {
+          setCurrentSpin(result)
+          setUsedSpins(prev => [...prev, result.id])
+          setSpinDisplay({ club: result.club, season: result.season, color: result.color })
+        }
+        setDraftSub('landed')
+        // 1-second pause so the result feels special before players appear
+        setTimeout(() => setDraftSub('selecting'), 1000)
+      }
+    }
+
+    tick()
+  }, [leagueId, usedSpins])
+
+  const handleDraftPlayer = useCallback((player: Player) => {
+    const slotIndex = slots.findIndex((s, i) => !usedSlotIndexes.includes(i) && canFillSlot(player, s))
+    if (slotIndex === -1) {
+      const posLabel = player.altPositions?.join('/') ?? player.position
+      showMessage(`No ${posLabel} slots left in your ${formationName}.`)
+      return
+    }
+    const slot = slots[slotIndex]
+    const effectiveRating = ratingsMode === 'prime'
+      ? (PRIME_RATINGS.get(player.name) ?? player.rating)
+      : player.rating
+    setTeam(prev => [...prev, { ...player, rating: effectiveRating, slotPosition: slot.position, slotIndex }])
+    setCurrentSpin(null)
+    setDraftSub('idle')
+    if (filled + 1 === totalSlots) showMessage('XI complete! Hit Simulate to play the season.')
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [formationName, filled, slots, usedSlotIndexes])
+
+  const handleSimulate = useCallback(() => {
+    if (team.length < totalSlots) return
+    const result = runSimulation(team, leagueId)
+    setSeasonResult(result)
+    setPhase('simulating')
+    setTimeout(() => setPhase('results'), 1800)
+  }, [team, leagueId, totalSlots])
+
+  const handlePlayAgain = useCallback(() => {
+    setTeam([])
+    setPhase('setup')
+    setDraftSub('idle')
+    setCurrentSpin(null)
+    setUsedSpins([])
+    setSeasonResult(null)
+    setDifficulty(null)
+  }, [])
+
+  const posNeeds = (Object.entries(emptyCounts) as [Position, number][])
+    .filter(([, n]) => n > 0).map(([pos, n]) => `${n}× ${pos}`).join(', ')
+
+  // ── Setup ────────────────────────────────────────────────────────────────
+  if (phase === 'setup') {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] text-slate-100 flex flex-col">
+        <GameHeader league={league} onBack={() => router.push('/')} />
+        <div className="flex-1 flex items-center justify-center px-4 py-8">
+          <div className="w-full max-w-lg space-y-8">
+            <div className="text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold mb-3"
+                style={{ background: league.color + '22', color: league.color }}>
+                {league.name}
+              </div>
+              <h1 className="text-3xl font-black text-white">Build Your XI</h1>
+              <p className="text-slate-500 text-sm mt-1">{league.tagline}</p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Difficulty</div>
+              <div className="grid grid-cols-3 gap-3">
+                {(Object.entries(DIFFICULTY_CONFIG) as [Difficulty, typeof DIFFICULTY_CONFIG[Difficulty]][]).map(([key, cfg]) => (
+                  <button key={key} onClick={() => setDifficulty(key)}
+                    className={`rounded-xl border p-4 text-center transition-all hover:scale-[1.02] ${
+                      difficulty === key ? 'border-transparent' : 'border-white/10 bg-white/3 hover:bg-white/5'
+                    }`}
+                    style={difficulty === key ? { background: league.color + '22', borderColor: league.color + '66' } : {}}>
+                    <div className="text-2xl mb-1">{cfg.emoji}</div>
+                    <div className="text-sm font-black text-white">{cfg.label}</div>
+                    <div className="text-[10px] text-slate-500 mt-1 leading-tight">{cfg.desc}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Player Ratings</div>
+              <div className="grid grid-cols-2 gap-3">
+                {([
+                  { key: 'season' as RatingsMode, emoji: '📅', label: 'Season Form',   desc: 'Rated as in that season' },
+                  { key: 'prime'  as RatingsMode, emoji: '⚡', label: 'Prime Ratings', desc: 'Each player at career peak' },
+                ] as const).map(({ key, emoji, label, desc }) => (
+                  <button key={key} onClick={() => setRatingsMode(key)}
+                    className={`rounded-xl border p-4 text-center transition-all hover:scale-[1.02] ${
+                      ratingsMode === key ? 'border-transparent' : 'border-white/10 bg-white/3 hover:bg-white/5'
+                    }`}
+                    style={ratingsMode === key ? { background: league.color + '22', borderColor: league.color + '66' } : {}}>
+                    <div className="text-2xl mb-1">{emoji}</div>
+                    <div className="text-sm font-black text-white">{label}</div>
+                    <div className="text-[10px] text-slate-500 mt-1 leading-tight">{desc}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Formation</div>
+              <div className="flex flex-wrap gap-2">
+                {Object.keys(FORMATIONS).map(f => (
+                  <button key={f} onClick={() => setFormationName(f)}
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all hover:scale-105 ${
+                      formationName === f ? 'text-white' : 'text-slate-400 bg-white/5 hover:bg-white/8'
+                    }`}
+                    style={formationName === f ? { background: league.color } : {}}>
+                    {f}
+                  </button>
+                ))}
+              </div>
+              <p className="text-xs text-slate-500">{FORMATION_DESCRIPTIONS[formationName]}</p>
+            </div>
+
+            <button onClick={handleStartDraft} disabled={!difficulty}
+              className={`w-full py-4 rounded-xl font-black text-white text-lg transition-all ${
+                difficulty ? 'hover:scale-[1.02] hover:brightness-110' : 'opacity-30 cursor-not-allowed'
+              }`}
+              style={{ background: league.color }}>
+              {difficulty ? 'Start Drafting →' : 'Choose a difficulty first'}
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ── Simulating ───────────────────────────────────────────────────────────
+  if (phase === 'simulating') {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] text-slate-100 flex flex-col">
+        <GameHeader league={league} onBack={() => router.push('/')} />
+        <div className="flex-1 flex items-center justify-center px-6">
+          <div className="w-full max-w-sm space-y-8 text-center">
+            <div
+              className="text-6xl mx-auto leading-none"
+              style={{ animation: 'spin-in 0.4s ease both' }}>
+              ⚽
+            </div>
+            <div>
+              <h2 className="text-2xl font-black text-white mb-1">Simulating Season</h2>
+              <p className="text-slate-500 text-sm">Playing all your matches…</p>
+            </div>
+            <SimProgressBar duration={1800} color={league.color} />
+            <div className="flex justify-center gap-4 text-xs text-slate-600">
+              {team.slice(0, 4).map(p => (
+                <span key={p.id} style={{ color: POS_COLORS[p.position as Position] + '99' }}>
+                  {p.name.split(' ').pop()}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // ── Results ──────────────────────────────────────────────────────────────
+  if (phase === 'results' && seasonResult) {
+    return (
+      <div className="min-h-screen bg-[#0a0a0f] text-slate-100 flex flex-col">
+        <GameHeader league={league} onBack={() => router.push('/')} />
+        <div className="flex-1 px-4 py-8 max-w-2xl mx-auto w-full">
+          <SeasonSimulator result={seasonResult} league={league} onPlayAgain={handlePlayAgain} team={team} />
+        </div>
+      </div>
+    )
+  }
+
+  // ── Draft ────────────────────────────────────────────────────────────────
+  return (
+    <div className="min-h-screen bg-[#0a0a0f] text-slate-100 flex flex-col">
+      <GameHeader league={league} onBack={() => router.push('/')} />
+
+      {message && (
+        <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-slate-800 border border-white/10 text-white text-sm px-4 py-2 rounded-full shadow-lg animate-fade-in">
+          {message}
+        </div>
+      )}
+
+      {/* Mobile bottom sheet backdrop */}
+      {(draftSub === 'selecting' || draftSub === 'landed') && currentSpin && (
+        <div
+          className="fixed inset-0 bg-black/70 z-40 lg:hidden"
+          onClick={() => { setCurrentSpin(null); setDraftSub('idle') }}
+        />
+      )}
+
+      <div className="flex-1 flex flex-col lg:flex-row gap-6 px-4 py-6 max-w-6xl mx-auto w-full">
+        {/* LEFT sidebar */}
+        <aside className="w-full lg:w-72 shrink-0 space-y-4">
+          <div className="bg-white/3 border border-white/8 rounded-xl p-4 space-y-3">
+            <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Formation</div>
+            <div className="flex flex-wrap gap-1.5">
+              {Object.keys(FORMATIONS).map(f => (
+                <button key={f}
+                  onClick={() => {
+                    if (team.length > 0) { showMessage('Clear your team first to change formation.'); return }
+                    setFormationName(f)
+                  }}
+                  className={`px-2.5 py-1 rounded-full text-[11px] font-bold transition-all ${
+                    formationName === f ? 'text-white' : 'text-slate-500 bg-white/5 hover:text-white hover:bg-white/8'
+                  }`}
+                  style={formationName === f ? { background: league.color } : {}}>
+                  {f}
+                </button>
+              ))}
+            </div>
+            <p className="text-[11px] text-slate-500">{FORMATION_DESCRIPTIONS[formationName]}</p>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-slate-500">{filled}/{totalSlots} drafted</span>
+              <span style={{ color: league.color }}>{posNeeds || '✓ XI complete'}</span>
+            </div>
+          </div>
+
+          <TeamFormation formation={formation} team={team} league={league} compact />
+
+          {difficulty && (
+            <div className="flex items-center gap-2 bg-white/3 border border-white/8 rounded-xl px-4 py-2.5">
+              <span className="text-base">{DIFFICULTY_CONFIG[difficulty].emoji}</span>
+              <div className="flex-1">
+                <div className="text-xs font-bold text-white">
+                  {DIFFICULTY_CONFIG[difficulty].label}
+                  {ratingsMode === 'prime' && (
+                    <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded"
+                      style={{ background: league.color + '33', color: league.color }}>
+                      ⚡ Prime
+                    </span>
+                  )}
+                </div>
+                <div className="text-[10px] text-slate-500">
+                  {rerollsLeft > 0 ? `${rerollsLeft} reroll${rerollsLeft !== 1 ? 's' : ''} left` : 'No rerolls'}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {allFilled && (
+            <button onClick={handleSimulate}
+              className="w-full py-4 rounded-xl font-bold text-white text-lg transition-all hover:scale-[1.02] animate-slide-up"
+              style={{ background: league.color }}>
+              Simulate Season →
+            </button>
+          )}
+        </aside>
+
+        {/* RIGHT: Draft area */}
+        <main className="flex-1 space-y-6">
+          {/* Spin panel */}
+          {!allFilled && (
+            <div className="rounded-2xl border p-6"
+              style={{ background: league.color + '0d', borderColor: league.color + '33' }}>
+              {draftSub === 'idle' && (
+                <div className="text-center">
+                  <p className="text-slate-400 text-sm mb-5">
+                    Still need: <span className="text-white font-semibold">{posNeeds}</span>
+                  </p>
+                  <button onClick={() => handleSpin(false)}
+                    className="px-10 py-4 rounded-xl font-black text-xl text-white transition-all hover:scale-105 active:scale-95"
+                    style={{ background: league.color }}>
+                    Spin ⚽
+                  </button>
+                </div>
+              )}
+
+              {/* Slot machine — live cycling display */}
+              {draftSub === 'spinning' && (
+                <div className="flex items-center justify-center gap-6 py-2 select-none">
+                  <div className="text-center min-w-[130px]">
+                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">CLUB</div>
+                    <div className="text-xl font-black text-white truncate transition-none" key={spinDisplay.club}>
+                      {spinDisplay.club || '—'}
+                    </div>
+                  </div>
+                  <div className="text-slate-600 text-2xl font-bold shrink-0">×</div>
+                  <div className="text-center min-w-[80px]">
+                    <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">SEASON</div>
+                    <div className="text-xl font-black transition-none"
+                      style={{ color: spinDisplay.color || '#ffffff' }} key={spinDisplay.season}>
+                      {spinDisplay.season || '—'}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {(draftSub === 'landed' || draftSub === 'selecting') && currentSpin && (
+                <div className="animate-spin-in flex flex-col items-center gap-3 py-2">
+                  <div className="flex items-center justify-center gap-6">
+                    <div className="text-center">
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">CLUB</div>
+                      <div className="text-xl font-black text-white">{currentSpin.club}</div>
+                    </div>
+                    <div className="text-slate-500 text-2xl font-bold">×</div>
+                    <div className="text-center">
+                      <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">SEASON</div>
+                      <div className="text-xl font-black" style={{ color: currentSpin.color }}>{currentSpin.season}</div>
+                    </div>
+                  </div>
+                  {draftSub === 'landed' && (
+                    <div className="text-xs text-slate-600 animate-pulse">Loading squad…</div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Player pick panel — bottom sheet on mobile, inline on desktop */}
+          {draftSub === 'selecting' && currentSpin && (
+            <div className={[
+              'fixed bottom-0 left-0 right-0 z-50',
+              'bg-[#0e0e1c] border-t border-white/10 rounded-t-2xl',
+              'max-h-[82vh] overflow-y-auto overscroll-contain',
+              'lg:static lg:z-auto lg:bg-transparent lg:border-0',
+              'lg:rounded-none lg:max-h-none lg:overflow-visible',
+              'lg:animate-fade-in',
+            ].join(' ')}>
+              {/* Drag handle — mobile only */}
+              <div className="flex justify-center pt-3 pb-1 lg:hidden">
+                <div className="w-12 h-1 bg-white/20 rounded-full" />
+              </div>
+
+              <div className="px-4 pb-8 lg:px-0 lg:pb-0 space-y-3 pt-2">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Pick a player</h3>
+                    <div className="flex items-center gap-2 mt-1 lg:hidden">
+                      <span className="font-black text-white text-sm">{currentSpin.club}</span>
+                      <span className="text-slate-600 text-sm">×</span>
+                      <span className="font-black text-sm" style={{ color: currentSpin.color }}>{currentSpin.season}</span>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => { setCurrentSpin(null); setDraftSub('idle') }}
+                    className="text-xs text-slate-500 hover:text-white transition-colors mt-0.5">
+                    ✕ dismiss
+                  </button>
+                </div>
+
+                {(['GK', 'DEF', 'MID', 'FWD'] as Position[]).map(pos => {
+                  const posPlayers = currentSpin.players.filter(p => p.position === pos)
+                  if (posPlayers.length === 0) return null
+                  const allDisabled = posPlayers.every(p => !hasAvailableSlot(p))
+                  return (
+                    <div key={pos}>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full"
+                          style={{ background: POS_COLORS[pos] + '22', color: POS_COLORS[pos] }}>
+                          {pos}
+                        </span>
+                        {allDisabled && <span className="text-xs text-slate-500">no slots available</span>}
+                      </div>
+                      <div className="grid gap-2">
+                        {posPlayers.map(player => (
+                          <PlayerRow
+                            key={player.id}
+                            player={player}
+                            disabled={!hasAvailableSlot(player)}
+                            hideRatings={hideRatings}
+                            accentColor={league.color}
+                            primeRating={ratingsMode === 'prime' ? (PRIME_RATINGS.get(player.name) ?? player.rating) : undefined}
+                            onDraft={handleDraftPlayer}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  )
+                })}
+
+                <button
+                  onClick={() => handleSpin(true)}
+                  disabled={rerollsLeft <= 0}
+                  className={`w-full py-3 rounded-xl border text-sm transition-colors ${
+                    rerollsLeft > 0
+                      ? 'border-white/10 text-slate-400 hover:text-white hover:border-white/20'
+                      : 'border-white/5 text-slate-700 cursor-not-allowed'
+                  }`}>
+                  {rerollsLeft > 0
+                    ? `Re-spin — ${rerollsLeft} reroll${rerollsLeft !== 1 ? 's' : ''} left`
+                    : 'No rerolls left'}
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Team list */}
+          {team.length > 0 && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Your XI</h3>
+                <button
+                  onClick={() => { setTeam([]); setCurrentSpin(null); setDraftSub('idle') }}
+                  className="text-xs text-red-400/70 hover:text-red-400 transition-colors">
+                  Clear team
+                </button>
+              </div>
+              <div className="grid gap-1">
+                {team.map(p => (
+                  <div key={p.id} className="flex items-center gap-3 bg-white/3 border border-white/5 rounded-lg px-3 py-2">
+                    <span className="text-xs font-bold w-10 text-center shrink-0 px-1.5 py-0.5 rounded"
+                      style={{ background: POS_COLORS[p.position as Position] + '22', color: POS_COLORS[p.position as Position] }}>
+                      {p.position}
+                    </span>
+                    <span className="text-white text-sm flex-1 font-medium">{p.name}</span>
+                    <span className="text-slate-500 text-xs hidden sm:block">{p.club} · {p.season}</span>
+                    {!hideRatings && (
+                      <span className="text-xs font-bold w-8 text-center shrink-0" style={{ color: league.color }}>
+                        {p.rating}
+                      </span>
+                    )}
+                    <button
+                      onClick={() => setTeam(prev => prev.filter(x => x.id !== p.id))}
+                      className="text-slate-600 hover:text-red-400 transition-colors text-sm ml-1">
+                      ✕
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {allFilled && (
+            <div className="lg:hidden">
+              <button onClick={handleSimulate}
+                className="w-full py-4 rounded-xl font-bold text-white text-lg transition-all hover:scale-[1.02]"
+                style={{ background: league.color }}>
+                Simulate Season →
+              </button>
+            </div>
+          )}
+        </main>
+      </div>
+    </div>
+  )
+}
+
+// ── Player row in pick panel ──────────────────────────────────────────────────
+
+function PlayerRow({ player, disabled, hideRatings, accentColor, primeRating, onDraft }: {
+  player: Player; disabled: boolean; hideRatings: boolean; accentColor: string
+  primeRating?: number; onDraft: (p: Player) => void
+}) {
+  const posColor = POS_COLORS[player.position as Position] ?? '#9ca3af'
+  const posLabel = player.altPositions?.length ? player.altPositions.join('/') : player.position
+  const isPrime = primeRating !== undefined
+  const displayRating = isPrime ? primeRating : player.rating
+  const isBoosted = isPrime && primeRating > player.rating
+
+  return (
+    <button
+      onClick={() => !disabled && onDraft(player)}
+      disabled={disabled}
+      className={`flex items-center gap-3 w-full text-left px-3 py-3 rounded-xl border transition-all
+        ${disabled
+          ? 'opacity-30 cursor-not-allowed bg-white/2 border-white/5'
+          : 'bg-white/3 border-white/8 hover:border-white/25 hover:bg-white/6 hover:scale-[1.01]'
+        }`}
+    >
+      <span className="text-[10px] font-bold min-w-[28px] text-center shrink-0 py-0.5 px-1 rounded whitespace-nowrap"
+        style={{ background: posColor + '22', color: posColor }}>
+        {posLabel}
+      </span>
+      <div className="flex-1 min-w-0">
+        <div className="text-white font-semibold text-sm truncate">{player.name}</div>
+        <div className="text-xs truncate" style={{ color: isBoosted ? accentColor + 'aa' : undefined }}>
+          {isBoosted
+            ? <span><span className="text-slate-600">{player.rating}</span> → <span style={{ color: accentColor }}>{primeRating} peak</span></span>
+            : <span className="text-slate-500">{player.club} · {player.season}</span>
+          }
+        </div>
+      </div>
+      {!hideRatings && (
+        <div className="text-sm font-black shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
+          style={{ background: accentColor + '22', color: accentColor }}>
+          {displayRating}
+        </div>
+      )}
+      {!disabled && (
+        <svg className="w-4 h-4 shrink-0 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+        </svg>
+      )}
+    </button>
+  )
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+
+function GameHeader({ league, onBack }: { league: import('@/lib/types').LeagueConfig; onBack: () => void }) {
+  return (
+    <header className="border-b border-white/5 px-4 py-3 flex items-center gap-4">
+      <button onClick={onBack} className="text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1">
+        ← Back
+      </button>
+      <div className="flex items-center gap-2 flex-1">
+        <span className="font-black text-white">{league.name}</span>
+        <span className="text-xs font-bold px-2 py-0.5 rounded-full"
+          style={{ background: league.color + '22', color: league.color }}>
+          {league.perfectLabel}
+        </span>
+      </div>
+      <span className="text-xs text-slate-500 hidden sm:block">{league.tagline}</span>
+    </header>
+  )
+}
+
+// ── Page wrapper ──────────────────────────────────────────────────────────────
+
+export default function GamePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center text-slate-400">
+        Loading…
+      </div>
+    }>
+      <GameContent />
+    </Suspense>
+  )
+}
