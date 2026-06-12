@@ -1,4 +1,5 @@
 import { LeagueSelector } from '@/components/LeagueSelector'
+import { DailyChallengeCard } from '@/components/DailyChallengeCard'
 
 export default function HomePage() {
   return (
@@ -45,6 +46,11 @@ export default function HomePage() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Daily challenge */}
+      <section className="relative z-10 px-6">
+        <DailyChallengeCard />
       </section>
 
       {/* League picker */}

@@ -1,11 +1,17 @@
 'use client'
 
-import { useState, useCallback, Suspense } from 'react'
+import { useState, useCallback, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import type { DraftedPlayer, LeagueId, ClubSeason, Player, Position, Difficulty } from '@/lib/types'
 import { FORMATIONS, FORMATION_DESCRIPTIONS } from '@/lib/types'
 import { LEAGUE_CONFIGS, spinClubSeason, getClubSeasonsForLeague, ALL_CLUB_SEASONS } from '@/lib/data'
 import { runSimulation } from '@/lib/simulation'
+import {
+  recordSeason, recordDaily, getDailyRecord, getTodayKey, getDailyLeague,
+  getDailyChallengeNumber, getStreak, dateSeed, seededRng,
+  type SeasonRecordOutcome, type DailyRecord, type StoredState,
+} from '@/lib/storage'
+import { emojiGrid, dailyStatusLine, dailyShareText } from '@/lib/share'
 import { TeamFormation } from '@/components/TeamFormation'
 import { SeasonSimulator } from '@/components/SeasonSimulator'
 import { MatchReveal } from '@/components/MatchReveal'
@@ -45,7 +51,9 @@ const DIFFICULTY_CONFIG: Record<Difficulty, { label: string; emoji: string; desc
 function GameContent() {
   const params = useSearchParams()
   const router = useRouter()
-  const leagueId = (params.get('league') ?? 'pl') as LeagueId
+  const isDaily = params.get('daily') === '1'
+  const todayKey = getTodayKey()
+  const leagueId = isDaily ? getDailyLeague(todayKey) : ((params.get('league') ?? 'pl') as LeagueId)
   const league = LEAGUE_CONFIGS[leagueId] ?? LEAGUE_CONFIGS.pl
 
   const [phase, setPhase] = useState<'setup' | 'draft' | 'simulating' | 'results'>('setup')
@@ -64,6 +72,31 @@ function GameContent() {
     player: Player
     options: { slotIndex: number; label: string }[]
   } | null>(null)
+
+  // ── Daily challenge state ──
+  // dailyDone is read from localStorage in an effect (not during render) to
+  // keep server and client first paint identical.
+  const [dailyDone, setDailyDone] = useState<DailyRecord | null>(null)
+  const [dailyChecked, setDailyChecked] = useState(false)
+  const [careerOutcome, setCareerOutcome] = useState<SeasonRecordOutcome | null>(null)
+  const [dailyStreak, setDailyStreak] = useState<StoredState['streak'] | null>(null)
+  const dailyRngRef = useRef<(() => number) | null>(null)
+
+  useEffect(() => {
+    if (!isDaily) return
+    setDailyDone(getDailyRecord(todayKey))
+    setDailyChecked(true)
+  }, [isDaily, todayKey])
+
+  // Daily plays under fixed rules: normal difficulty, 4-3-3, season ratings.
+  useEffect(() => {
+    if (!isDaily) return
+    setDifficulty('normal')
+    setRatingsMode('season')
+    setFormationName('4-3-3')
+    setRerollsLeft(2)
+    setPhase(p => (p === 'setup' ? 'draft' : p))
+  }, [isDaily])
 
   const formation = FORMATIONS[formationName]
   const slots = formation.slots
@@ -141,7 +174,17 @@ function GameContent() {
         // Ease out: ~60ms at start → ~280ms at end
         setTimeout(tick, 60 + Math.pow(progress, 1.8) * 220)
       } else {
-        const result = spinClubSeason(leagueId, usedSpins)
+        let result: ClubSeason | null
+        if (isDaily) {
+          // Seeded by today's date: every player gets the same spin sequence.
+          if (!dailyRngRef.current) dailyRngRef.current = seededRng(dateSeed(getTodayKey()))
+          const all = getClubSeasonsForLeague(leagueId)
+          const available = all.filter(cs => !usedSpins.includes(cs.id))
+          const from = available.length > 0 ? available : all
+          result = from[Math.floor(dailyRngRef.current() * from.length)]
+        } else {
+          result = spinClubSeason(leagueId, usedSpins)
+        }
         if (result) {
           setCurrentSpin(result)
           setUsedSpins(prev => [...prev, result.id])
@@ -154,7 +197,7 @@ function GameContent() {
     }
 
     tick()
-  }, [leagueId, usedSpins])
+  }, [leagueId, usedSpins, isDaily])
 
   const assignToSlot = useCallback((player: Player, slotIndex: number) => {
     const slot = slots[slotIndex]
@@ -194,12 +237,34 @@ function GameContent() {
 
   const handleSimulate = useCallback(() => {
     if (team.length < totalSlots) return
-    const result = runSimulation(team, leagueId)
+    const result = runSimulation(team, leagueId, isDaily ? dateSeed(getTodayKey()) : undefined)
     setSeasonResult(result)
     setPhase('simulating')
-  }, [team, leagueId, totalSlots])
+
+    // Record once, at simulation time — backing out mid-reveal still counts.
+    setCareerOutcome(recordSeason(result, leagueId, team))
+    if (isDaily) {
+      const record: DailyRecord = {
+        date: getTodayKey(),
+        leagueId,
+        won: result.won,
+        drawn: result.drawn,
+        lost: result.lost,
+        points: result.won * 3 + result.drawn,
+        trophyWon: result.trophyWon,
+        isPerfect: result.isPerfect,
+        finalPosition: result.finalPosition,
+        eliminated: result.eliminated || undefined,
+        eliminatedAt: result.eliminatedAt,
+        results: result.matches.map(m => m.result),
+      }
+      setDailyStreak(recordDaily(record))
+      setDailyDone(record)
+    }
+  }, [team, leagueId, totalSlots, isDaily])
 
   const handlePlayAgain = useCallback(() => {
+    if (isDaily) { router.push('/'); return } // one attempt per day
     setTeam([])
     setPhase('setup')
     setDraftSub('idle')
@@ -208,10 +273,31 @@ function GameContent() {
     setUsedSpins([])
     setSeasonResult(null)
     setDifficulty(null)
-  }, [])
+    setCareerOutcome(null)
+  }, [isDaily, router])
 
   const posNeeds = (Object.entries(emptyCounts) as [Position, number][])
     .filter(([, n]) => n > 0).map(([pos, n]) => `${n}× ${pos}`).join(', ')
+
+  // ── Daily: already played today → recap ──────────────────────────────────
+  if (isDaily && dailyChecked && dailyDone && phase !== 'simulating' && phase !== 'results') {
+    return (
+      <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
+        <GameHeader league={league} onBack={() => router.push('/')} />
+        <DailyRecap record={dailyDone} league={league} onHome={() => router.push('/')} />
+      </div>
+    )
+  }
+
+  // Daily mode: wait for the localStorage check before showing the draft so a
+  // returning player never flashes a fresh board they can't actually play.
+  if (isDaily && !dailyChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-slate-500" style={leagueAmbience(league.color)}>
+        Loading today&apos;s challenge…
+      </div>
+    )
+  }
 
   // ── Setup ────────────────────────────────────────────────────────────────
   if (phase === 'setup') {
@@ -311,7 +397,14 @@ function GameContent() {
       <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
         <GameHeader league={league} onBack={() => router.push('/')} />
         <div className="flex-1 px-4 py-8 max-w-2xl mx-auto w-full animate-slide-up">
-          <SeasonSimulator result={seasonResult} league={league} onPlayAgain={handlePlayAgain} team={team} />
+          <SeasonSimulator
+            result={seasonResult}
+            league={league}
+            onPlayAgain={handlePlayAgain}
+            team={team}
+            careerOutcome={careerOutcome}
+            daily={isDaily ? { number: getDailyChallengeNumber(todayKey), streak: dailyStreak?.current ?? 1 } : undefined}
+          />
         </div>
       </div>
     )
@@ -666,6 +759,83 @@ function PlayerRow({ player, disabled, hideRatings, accentColor, primeRating, on
         </svg>
       )}
     </button>
+  )
+}
+
+// ── Daily recap (already played today) ────────────────────────────────────────
+
+function DailyRecap({ record, league, onHome }: {
+  record: DailyRecord
+  league: import('@/lib/types').LeagueConfig
+  onHome: () => void
+}) {
+  const [copied, setCopied] = useState(false)
+  // Re-render every 30s so the countdown stays fresh.
+  const [now, setNow] = useState(() => Date.now())
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 30000)
+    return () => clearInterval(id)
+  }, [])
+
+  const streak = getStreak()
+  const n = getDailyChallengeNumber(record.date)
+
+  const utcNow = new Date(now)
+  const nextMidnight = Date.UTC(utcNow.getUTCFullYear(), utcNow.getUTCMonth(), utcNow.getUTCDate() + 1)
+  const msLeft = Math.max(0, nextMidnight - now)
+  const hoursLeft = Math.floor(msLeft / 3600000)
+  const minsLeft = Math.floor((msLeft % 3600000) / 60000)
+
+  const handleShare = async () => {
+    const text = dailyShareText(record, league.name, streak.current)
+    const url = `${window.location.origin}/`
+    if (navigator.share) {
+      try { await navigator.share({ text, url }); return } catch { /* fall through */ }
+    }
+    await navigator.clipboard.writeText(`${text}\n${url}`)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <div className="flex-1 flex items-center justify-center px-4 py-8">
+      <div className="w-full max-w-md space-y-5 text-center animate-slide-up">
+        <div>
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold mb-3"
+            style={{ background: league.color + '22', color: league.color }}>
+            Daily Challenge #{n} · {league.name}
+          </div>
+          <h1 className="text-2xl font-black text-white">✓ Played today</h1>
+          <p className="text-slate-500 text-sm mt-1">One attempt per day — come back tomorrow!</p>
+        </div>
+
+        <div className="rounded-2xl border p-5 space-y-3"
+          style={{ background: league.color + '0d', borderColor: league.color + '33' }}>
+          <div className="text-base leading-relaxed whitespace-pre-line">{emojiGrid(record.results)}</div>
+          <div className="font-black text-white">{dailyStatusLine(record)}</div>
+          <div className="text-xs text-slate-400">
+            {record.won}W {record.drawn}D {record.lost}L
+            {streak.current > 1 && <span className="ml-2">🔥 {streak.current}-day streak</span>}
+          </div>
+        </div>
+
+        <div className="text-sm text-slate-500">
+          Next challenge in <span className="text-white font-bold">{hoursLeft}h {minsLeft}m</span>
+        </div>
+
+        <div className="flex gap-3">
+          <button onClick={handleShare}
+            className="px-6 py-3.5 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0">
+            {copied ? '✓ Copied!' : '↑ Share'}
+          </button>
+          <button onClick={onHome}
+            className="flex-1 py-3.5 rounded-xl font-bold text-white transition-all hover:scale-[1.02] hover:brightness-110"
+            style={{ background: league.color }}>
+            Play casual mode →
+          </button>
+        </div>
+      </div>
+    </div>
   )
 }
 

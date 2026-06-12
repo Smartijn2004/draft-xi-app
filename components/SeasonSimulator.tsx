@@ -2,12 +2,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { SeasonResult, LeagueConfig, GroupStanding, GoalEvent, LeagueTableEntry, DraftedPlayer, LeagueId } from '@/lib/types'
 import { ALL_CLUB_SEASONS } from '@/lib/data'
+import type { SeasonRecordOutcome } from '@/lib/storage'
+import { emojiGrid } from '@/lib/share'
 
 type Props = {
   result: SeasonResult
   league: LeagueConfig
   onPlayAgain: () => void
   team?: DraftedPlayer[]
+  careerOutcome?: SeasonRecordOutcome | null
+  daily?: { number: number; streak: number }
 }
 
 function lastName(name: string) {
@@ -31,7 +35,7 @@ function positionBadge(pos: number, total: number): { color: string; bg: string;
   return { color: '#94a3b8', bg: '#6b728022', border: '#6b728033', label: '' }
 }
 
-export function SeasonSimulator({ result, league, onPlayAgain, team }: Props) {
+export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutcome, daily }: Props) {
   const {
     matches, won, drawn, lost, goalsFor, goalsAgainst, isPerfect, trophyWon,
     teamRating, eliminated, eliminatedAt, groupStandings,
@@ -68,6 +72,11 @@ export function SeasonSimulator({ result, league, onPlayAgain, team }: Props) {
           borderColor: accent + '44',
         }}
       >
+        {daily && (
+          <div className="text-xs font-black uppercase tracking-widest mb-2" style={{ color: accent }}>
+            Daily Challenge #{daily.number}{daily.streak > 1 ? ` · 🔥 ${daily.streak}-day streak` : ''}
+          </div>
+        )}
         <div className="text-5xl mb-3 animate-pop">
           {isPerfect ? '🏆' : trophyWon ? '🥇' : eliminated ? '❌' : '📊'}
         </div>
@@ -138,6 +147,11 @@ export function SeasonSimulator({ result, league, onPlayAgain, team }: Props) {
           <div className="text-xs text-slate-500">Goals conceded</div>
         </div>
       </div>
+
+      {/* ── Career strip ── */}
+      {careerOutcome && (
+        <CareerStrip outcome={careerOutcome} accent={accent} points={points} />
+      )}
 
       {/* ── H: Squad Profile ── */}
       {team && team.length > 0 && (
@@ -255,7 +269,7 @@ export function SeasonSimulator({ result, league, onPlayAgain, team }: Props) {
 
       {/* ── Share + Play Again ── */}
       <div className="flex gap-3">
-        <ShareButton result={result} league={league} />
+        <ShareButton result={result} league={league} daily={daily} />
         <button
           onClick={onPlayAgain}
           className="flex-1 py-4 rounded-xl font-bold text-white text-lg transition-all hover:scale-[1.02] hover:brightness-110 active:scale-[0.98]"
@@ -418,7 +432,9 @@ function DraftCompare({ team, leagueId, accent }: { team: DraftedPlayer[]; leagu
         : clubSeason.players.filter(p => p.position === player.position)
       if (samePos.length === 0) return { player, best: null, missed: 0 }
       const best = samePos.reduce((b, p) => p.rating > b.rating ? p : b, samePos[0])
-      const missed = best.id !== player.id ? best.rating - player.rating : 0
+      // Compare by name: data contains duplicate club-season entries with
+      // different ids, so an id check can pit a player against himself.
+      const missed = best.name !== player.name ? best.rating - player.rating : 0
       return { player, best: missed > 0 ? best : null, missed }
     })
   , [team, leagueId])
@@ -501,13 +517,52 @@ function HighlightCard({
   )
 }
 
+// ── Career strip ──────────────────────────────────────────────────────────────
+
+function CareerStrip({ outcome, accent, points }: {
+  outcome: SeasonRecordOutcome; accent: string; points: number
+}) {
+  const { career, newBestPoints, firstTrophy } = outcome
+  const note = firstTrophy
+    ? '🎉 First career trophy!'
+    : newBestPoints && career.seasonsPlayed > 1
+    ? `🎉 New personal best — ${points} pts!`
+    : null
+
+  return (
+    <div className="bg-white/3 border border-white/8 rounded-xl px-4 py-3">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Career</span>
+        {note && (
+          <span className="text-[11px] font-black animate-pop" style={{ color: accent }}>{note}</span>
+        )}
+      </div>
+      <div className="flex gap-5 text-center">
+        {[
+          { label: 'Seasons', value: career.seasonsPlayed },
+          { label: 'Trophies', value: career.trophies },
+          { label: 'Invincible', value: career.invincibles },
+          { label: 'Best pts', value: career.bestPoints },
+        ].map(s => (
+          <div key={s.label} className="flex-1">
+            <div className="text-base font-black text-white tabular-nums">{s.value}</div>
+            <div className="text-[10px] text-slate-500">{s.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── Share ─────────────────────────────────────────────────────────────────────
 
-function ShareButton({ result, league }: { result: SeasonResult; league: LeagueConfig }) {
+function ShareButton({ result, league, daily }: {
+  result: SeasonResult; league: LeagueConfig; daily?: { number: number; streak: number }
+}) {
   const [copied, setCopied] = useState(false)
 
   const buildText = () => {
-    const { won, drawn, lost, goalsFor, goalsAgainst, trophyWon, isPerfect, eliminated, eliminatedAt, playerOfSeason, leagueTable } = result
+    const { won, drawn, lost, goalsFor, goalsAgainst, trophyWon, isPerfect, eliminated, eliminatedAt, playerOfSeason, leagueTable, matches } = result
     const pts = won * 3 + drawn
     const gd = goalsFor - goalsAgainst
     const tablePos = leagueTable?.find(e => e.isPlayer)?.position
@@ -520,12 +575,18 @@ function ShareButton({ result, league }: { result: SeasonResult; league: LeagueC
       : `${ordinal(tablePos ?? 0)} place · ${pts} pts`
 
     const lines = [
-      `⚽ Draft XI — ${league.name}`,
+      daily
+        ? `⚽ Draft XI Daily #${daily.number} — ${league.name}`
+        : `⚽ Draft XI — ${league.name}`,
+      emojiGrid(matches.map(m => m.result)),
       status,
       `${won}W ${drawn}D ${lost}L · GD ${gd > 0 ? '+' : ''}${gd}`,
     ]
     if (playerOfSeason) {
       lines.push(`🌟 POTS: ${playerOfSeason.name} (${playerOfSeason.goals}G ${playerOfSeason.assists}A)`)
+    }
+    if (daily && daily.streak > 1) {
+      lines.push(`🔥 ${daily.streak}-day streak`)
     }
     return lines.join('\n')
   }

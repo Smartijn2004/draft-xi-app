@@ -14,8 +14,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://draft-xi-app.vercel.app"),
   title: "Draft XI — Multi-League Football Draft",
   description: "Build your ultimate XI from Premier League, La Liga, Serie A, Champions League or World Cup legends and simulate the season.",
+  openGraph: {
+    title: "Draft XI — Multi-League Football Draft",
+    description: "Spin the wheel, draft legends, simulate the season. Can you go unbeaten?",
+    url: "/",
+    siteName: "Draft XI",
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "Draft XI — football draft game" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Draft XI — Multi-League Football Draft",
+    description: "Spin the wheel, draft legends, simulate the season. Can you go unbeaten?",
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({
