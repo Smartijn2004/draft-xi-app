@@ -359,4 +359,38 @@ export const championsLeagueData: ClubSeason[] = [
       { id: 'carrasco-ucl-1516', name: 'Yannick Carrasco', position: 'FWD', rating: 81, club: 'Atletico Madrid', season: '2015-16', altPositions: ['LW', 'AM'] },
     ]
   },
+  {
+    id: 'real-madrid-ucl-2023-24', club: 'Real Madrid', shortName: 'RMA', season: '2023-24', league: 'ucl', color: '#FEBE10',
+    players: [
+      { id: 'courtois-ucl-2324', name: 'Thibaut Courtois', position: 'GK', rating: 88, club: 'Real Madrid', season: '2023-24' },
+      { id: 'carvajal-ucl-2324', name: 'Dani Carvajal', position: 'DEF', rating: 86, club: 'Real Madrid', season: '2023-24', altPositions: ['RB'] },
+      { id: 'rudiger-ucl-2324', name: 'Antonio Rüdiger', position: 'DEF', rating: 87, club: 'Real Madrid', season: '2023-24', altPositions: ['CB'] },
+      { id: 'nacho-ucl-2324', name: 'Nacho Fernández', position: 'DEF', rating: 83, club: 'Real Madrid', season: '2023-24', altPositions: ['CB'] },
+      { id: 'mendy-ucl-2324', name: 'Ferland Mendy', position: 'DEF', rating: 83, club: 'Real Madrid', season: '2023-24', altPositions: ['LB'] },
+      { id: 'valverde-ucl-2324', name: 'Federico Valverde', position: 'MID', rating: 89, club: 'Real Madrid', season: '2023-24', altPositions: ['CM', 'DM'] },
+      { id: 'kroos-ucl-2324', name: 'Toni Kroos', position: 'MID', rating: 90, club: 'Real Madrid', season: '2023-24', altPositions: ['CM', 'DM'] },
+      { id: 'camavinga-ucl-2324', name: 'Eduardo Camavinga', position: 'MID', rating: 85, club: 'Real Madrid', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'bellingham-ucl-2324', name: 'Jude Bellingham', position: 'MID', rating: 91, club: 'Real Madrid', season: '2023-24', altPositions: ['AM', 'CM'] },
+      { id: 'vinicius-ucl-2324', name: 'Vinícius Júnior', position: 'FWD', rating: 92, club: 'Real Madrid', season: '2023-24', altPositions: ['LW'] },
+      { id: 'rodrygo-ucl-2324', name: 'Rodrygo', position: 'FWD', rating: 86, club: 'Real Madrid', season: '2023-24', altPositions: ['RW', 'LW'] },
+      { id: 'joselu-ucl-2324', name: 'Joselu', position: 'FWD', rating: 80, club: 'Real Madrid', season: '2023-24', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'psg-ucl-2024-25', club: 'Paris Saint-Germain', shortName: 'PSG', season: '2024-25', league: 'ucl', color: '#004170',
+    players: [
+      { id: 'donnarumma-ucl-2425', name: 'Gianluigi Donnarumma', position: 'GK', rating: 90, club: 'Paris Saint-Germain', season: '2024-25' },
+      { id: 'hakimi-ucl-2425', name: 'Achraf Hakimi', position: 'DEF', rating: 88, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['RB', 'RWB'] },
+      { id: 'marquinhos-ucl-2425', name: 'Marquinhos', position: 'DEF', rating: 86, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['CB'] },
+      { id: 'pacho-ucl-2425', name: 'Willian Pacho', position: 'DEF', rating: 84, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['CB'] },
+      { id: 'nunomendes-ucl-2425', name: 'Nuno Mendes', position: 'DEF', rating: 87, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['LB', 'LWB'] },
+      { id: 'vitinha-ucl-2425', name: 'Vitinha', position: 'MID', rating: 89, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['CM', 'DM'] },
+      { id: 'joaoneves-ucl-2425', name: 'João Neves', position: 'MID', rating: 87, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['CM', 'DM'] },
+      { id: 'fabian-ucl-2425', name: 'Fabián Ruiz', position: 'MID', rating: 85, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['CM', 'AM'] },
+      { id: 'dembele-ucl-2425', name: 'Ousmane Dembélé', position: 'FWD', rating: 91, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['ST', 'RW'] },
+      { id: 'kvara-ucl-2425', name: 'Khvicha Kvaratskhelia', position: 'FWD', rating: 88, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['LW'] },
+      { id: 'doue-ucl-2425', name: 'Désiré Doué', position: 'FWD', rating: 87, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['RW', 'AM'] },
+      { id: 'barcola-ucl-2425', name: 'Bradley Barcola', position: 'FWD', rating: 84, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['LW'] },
+    ]
+  },
 ]

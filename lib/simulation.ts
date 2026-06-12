@@ -34,17 +34,94 @@ const ASSIST_WEIGHTS: Record<Position, number> = {
   GK: 0, DEF: 0.5, MID: 2.5, FWD: 2.0
 }
 
-// Generic opponent scorer surnames. Deliberately NO recognizable stars —
-// a famous name would imply that player is at the opponent club, which is
-// usually wrong (e.g. Havertz scoring for AC Milan).
-const OPP_SCORER_NAMES = [
-  'Silva', 'Santos', 'Costa', 'Moreno', 'Fernández', 'López', 'Ramírez', 'Vargas',
-  'Rossi', 'Bianchi', 'Romano', 'Ricci', 'Esposito', 'Greco',
-  'Müller', 'Schmidt', 'Weber', 'Keller', 'Hoffmann',
-  'Janssen', 'De Vries', 'Visser', 'Dubois', 'Laurent', 'Girard', 'Lefèvre',
-  'Petrov', 'Novák', 'Horvat', 'Kowalski', 'Andersen', 'Nilsson', 'Eriksson', 'Jensen',
-  'Murphy', 'Doyle', 'Hughes', 'Walsh', 'Mensah', 'Okoro', 'Tanaka', 'Sato',
-]
+// Real current-era (2023–25) scorers per opponent club/nation, so opponent
+// goals are credited to players who actually play there. Falls back to the
+// club name itself if a team is ever missing from this map.
+const OPP_SQUADS: Record<string, string[]> = {
+  // Premier League
+  'Manchester City': ['Haaland', 'Foden', 'Marmoush', 'Doku', 'Bernardo Silva', 'Cherki'],
+  'Liverpool': ['Salah', 'Isak', 'Wirtz', 'Gakpo', 'Szoboszlai', 'Ekitiké'],
+  'Arsenal': ['Saka', 'Ødegaard', 'Gyökeres', 'Martinelli', 'Trossard', 'Eze'],
+  'Chelsea': ['Palmer', 'João Pedro', 'Neto', 'Enzo Fernández', 'Garnacho'],
+  'Manchester United': ['Bruno Fernandes', 'Šeško', 'Mbeumo', 'Cunha', 'Amad'],
+  'Tottenham': ['Richarlison', 'Kudus', 'Johnson', 'Kulusevski', 'Solanke'],
+  'Newcastle': ['Gordon', 'Woltemade', 'Barnes', 'Tonali', 'Wissa'],
+  'Aston Villa': ['Watkins', 'Rogers', 'McGinn', 'Malen', 'Buendía'],
+  'West Ham': ['Bowen', 'Paquetá', 'Füllkrug', 'Summerville', 'Wilson'],
+  'Brighton': ['Mitoma', 'Welbeck', 'Rutter', 'Minteh', 'Adingra'],
+  'Wolves': ['Strand Larsen', 'Munetsi', 'Bellegarde', 'Arias', 'Hwang'],
+  'Everton': ['Ndiaye', 'Beto', 'McNeil', 'Grealish', 'Barry'],
+  'Fulham': ['Jiménez', 'Iwobi', 'Muniz', 'Smith Rowe', 'King'],
+  'Brentford': ['Thiago', 'Schade', 'Ouattara', 'Damsgaard', 'Janelt'],
+  'Crystal Palace': ['Mateta', 'Sarr', 'Muñoz', 'Pino', 'Kamada'],
+  'Leicester City': ['Vardy', 'Mavididi', 'El Khannouss', 'Daka', 'Ayew'],
+  'Nottm Forest': ['Wood', 'Gibbs-White', 'Hudson-Odoi', 'Awoniyi', 'Ndoye'],
+  'Burnley': ['Flemming', 'Foster', 'Edwards', 'Anthony', 'Brun Larsen'],
+  'Luton Town': ['Morris', 'Adebayo', 'Clark', 'Doughty', 'Townsend'],
+  // La Liga
+  'Real Madrid': ['Mbappé', 'Vinícius Júnior', 'Bellingham', 'Rodrygo', 'Güler'],
+  'Barcelona': ['Yamal', 'Lewandowski', 'Raphinha', 'Olmo', 'Ferran Torres'],
+  'Atletico Madrid': ['Griezmann', 'Álvarez', 'Sørloth', 'Llorente', 'Baena'],
+  'Athletic Bilbao': ['Nico Williams', 'Iñaki Williams', 'Sancet', 'Guruzeta', 'Berenguer'],
+  'Real Sociedad': ['Oyarzabal', 'Kubo', 'Barrenetxea', 'Óskarsson', 'Brais Méndez'],
+  'Villarreal': ['Pépé', 'Mikautadze', 'Moleiro', 'Buchanan', 'Parejo'],
+  'Sevilla': ['Lukebakio', 'Romero', 'Vargas', 'Agoumé', 'Ejuke'],
+  'Valencia': ['Hugo Duro', 'Diego López', 'Pepelu', 'Danjuma', 'Sadiq'],
+  'Betis': ['Isco', 'Antony', 'Lo Celso', 'Fornals', 'Bakambu'],
+  'Osasuna': ['Budimir', 'Oroz', 'Moncayola', 'Bryan Zaragoza', 'Rubén García'],
+  'Celta Vigo': ['Aspas', 'Borja Iglesias', 'Swedberg', 'Bamba', 'Durán'],
+  'Getafe': ['Mayoral', 'Uche', 'Arambarri', 'Milla', 'Liso'],
+  'Las Palmas': ['Sandro', 'Munir', 'Viera', 'McBurnie', 'Fuster'],
+  'Girona': ['Stuani', 'Tsygankov', 'Vanat', 'Gil', 'Portu'],
+  'Mallorca': ['Muriqi', 'Larin', 'Darder', 'Asano', 'Dani Rodríguez'],
+  'Rayo Vallecano': ['Camello', 'Isi Palazón', 'De Frutos', 'Embarba', 'Álvaro García'],
+  'Alaves': ['Kike García', 'Vicente', 'Guridi', 'Rebbach', 'Boyé'],
+  'Cadiz': ['Chris Ramos', 'Sobrino', 'Juanmi', 'Roger Martí', 'Guardiola'],
+  'Granada': ['Uzuni', 'Boyé', 'Puertas', 'Pellistri', 'Weissman'],
+  // Serie A
+  'Inter Milan': ['Lautaro Martínez', 'Thuram', 'Barella', 'Çalhanoğlu', 'Esposito'],
+  'AC Milan': ['Leão', 'Pulisic', 'Giménez', 'Modrić', 'Loftus-Cheek'],
+  'Juventus': ['Vlahović', 'Yıldız', 'David', 'Openda', 'Conceição'],
+  'Napoli': ['Højlund', 'McTominay', 'Lukaku', 'Politano', 'Neres'],
+  'Roma': ['Dybala', 'Soulé', 'Dovbyk', 'Pellegrini', 'Ferguson'],
+  'Lazio': ['Castellanos', 'Zaccagni', 'Dia', 'Pedro', 'Isaksen'],
+  'Atalanta': ['Lookman', 'De Ketelaere', 'Scamacca', 'Pašalić', 'Krstović'],
+  'Fiorentina': ['Kean', 'Gudmundsson', 'Piccoli', 'Beltrán', 'Fagioli'],
+  'Torino': ['Zapata', 'Vlašić', 'Adams', 'Simeone', 'Ngonge'],
+  'Bologna': ['Orsolini', 'Castro', 'Dallinga', 'Odgaard', 'Cambiaghi'],
+  'Udinese': ['Davis', 'Zaniolo', 'Bravo', 'Atta', 'Ekkelenkamp'],
+  'Sassuolo': ['Berardi', 'Pinamonti', 'Laurienté', 'Thorstvedt', 'Volpato'],
+  'Sampdoria': ['Coda', 'Tutino', 'Borini', 'De Luca', 'Henderson'],
+  'Empoli': ['Colombo', 'Fazzini', 'Cancellieri', 'Caputo', 'Anjorin'],
+  'Hellas Verona': ['Orban', 'Giovane', 'Sarr', 'Suslov', 'Tengstedt'],
+  'Lecce': ['Camarda', 'Banda', 'Pierotti', 'Stulić', 'Tete Morente'],
+  'Monza': ['Colpani', 'Dany Mota', 'Caprari', 'Đurić', 'Maldini'],
+  'Salernitana': ['Candreva', 'Tchaouna', 'Ikwuemesi', 'Botheim', 'Simy'],
+  'Cagliari': ['Luvumbo', 'Viola', 'Esposito', 'Felici', 'Borrelli'],
+  // Champions League extras
+  'Bayern Munich': ['Kane', 'Musiala', 'Olise', 'Gnabry', 'Luis Díaz'],
+  'PSG': ['Dembélé', 'Doué', 'Kvaratskhelia', 'Barcola', 'Ramos'],
+  'Borussia Dortmund': ['Guirassy', 'Adeyemi', 'Brandt', 'Beier', 'Nmecha'],
+  'Ajax': ['Weghorst', 'Berghuis', 'Taylor', 'Godts', 'Klaassen'],
+  'Porto': ['Samu', 'Pepê', 'Veiga', 'Borges', 'Eustáquio'],
+  'Benfica': ['Pavlidis', 'Aktürkoğlu', 'Aursnes', 'Schjelderup', 'Ríos'],
+  // World Cup nations
+  'Brazil': ['Vinícius Júnior', 'Raphinha', 'Rodrygo', 'Cunha', 'Estêvão'],
+  'Argentina': ['Messi', 'Lautaro Martínez', 'Álvarez', 'Mac Allister', 'De Paul'],
+  'France': ['Mbappé', 'Dembélé', 'Thuram', 'Olise', 'Doué'],
+  'Germany': ['Wirtz', 'Musiala', 'Havertz', 'Füllkrug', 'Gnabry'],
+  'Spain': ['Yamal', 'Olmo', 'Morata', 'Oyarzabal', 'Nico Williams'],
+  'England': ['Kane', 'Saka', 'Bellingham', 'Foden', 'Palmer'],
+  'Italy': ['Retegui', 'Chiesa', 'Barella', 'Scamacca', 'Raspadori'],
+  'Netherlands': ['Depay', 'Gakpo', 'Simons', 'Weghorst', 'Reijnders'],
+  'Portugal': ['Ronaldo', 'Bruno Fernandes', 'Leão', 'Ramos', 'Neto'],
+  'Croatia': ['Modrić', 'Kramarić', 'Perišić', 'Budimir', 'Pašalić'],
+  'Uruguay': ['Núñez', 'Valverde', 'Pellistri', 'Aguirre', 'Olivera'],
+  'Belgium': ['De Bruyne', 'Lukaku', 'Doku', 'Trossard', 'Openda'],
+  'Colombia': ['Luis Díaz', 'James Rodríguez', 'Durán', 'Córdoba', 'Arias'],
+  'Senegal': ['Mané', 'Sarr', 'Jackson', 'Ndiaye', 'Gueye'],
+  'Morocco': ['Hakimi', 'Ziyech', 'En-Nesyri', 'Ezzalzouli', 'Rahimi'],
+}
 
 function pickScorer(
   players: DraftedPlayer[],
@@ -81,11 +158,14 @@ function generateMyGoalEvents(
   return events.sort((a, b) => a.minute - b.minute)
 }
 
-function generateOppGoalEvents(count: number, rng: () => number): GoalEvent[] {
+function generateOppGoalEvents(count: number, rng: () => number, oppName?: string): GoalEvent[] {
+  const pool = oppName ? OPP_SQUADS[oppName] : undefined
   const events: GoalEvent[] = []
   for (let i = 0; i < count; i++) {
     const minute = Math.floor(90 * rng()) + 1
-    const scorer = OPP_SCORER_NAMES[Math.floor(rng() * OPP_SCORER_NAMES.length)]
+    const scorer = pool
+      ? pool[Math.floor(rng() * pool.length)]
+      : oppName ?? 'Goal'
     events.push({ minute, scorer })
   }
   return events.sort((a, b) => a.minute - b.minute)
@@ -98,7 +178,8 @@ function simulateMatch(
   myRating: number,
   oppRating: number,
   rng: () => number,
-  players?: DraftedPlayer[]
+  players?: DraftedPlayer[],
+  oppName?: string
 ): { result: 'W' | 'D' | 'L'; myGoals: number; oppGoals: number; scorers: GoalEvent[]; opponentScorers: GoalEvent[] } {
   const effectiveRating = myRating + PLAYER_ADVANTAGE
   const diff = (effectiveRating - oppRating) / 9
@@ -131,7 +212,7 @@ function simulateMatch(
   const scorers = players
     ? generateMyGoalEvents(myGoals, players, rng)
     : Array.from({ length: myGoals }, (_, i) => ({ minute: Math.floor(90 * rng()) + 1, scorer: 'Goal' }))
-  const opponentScorers = generateOppGoalEvents(oppGoals, rng)
+  const opponentScorers = generateOppGoalEvents(oppGoals, rng, oppName)
 
   return { result, myGoals, oppGoals, scorers, opponentScorers }
 }
@@ -400,7 +481,7 @@ export function simulateLeagueSeason(
   const matches: MatchResult[] = fixtures.map(f => {
     const homeBonus = f.isHome ? 2 : -2
     const { result, myGoals, oppGoals, scorers, opponentScorers } =
-      simulateMatch(teamRating + homeBonus, f.rating, rng, players)
+      simulateMatch(teamRating + homeBonus, f.rating, rng, players, f.name)
     return {
       opponent: f.name,
       opponentRating: f.rating,
@@ -458,7 +539,7 @@ function groupSimulate(
 
   groupOpps.forEach((opp, idx) => {
     const { result, myGoals, oppGoals, scorers, opponentScorers } =
-      simulateMatch(teamRating, opp.rating, rng, players)
+      simulateMatch(teamRating, opp.rating, rng, players, opp.name)
     matches.push({
       opponent: opp.name, opponentRating: opp.rating, result, myGoals, oppGoals,
       scorers, opponentScorers,
@@ -517,7 +598,7 @@ export function simulateUCL(players: DraftedPlayer[], seed?: number): SeasonResu
       const opp = oppPool[i] ?? { name: 'Unknown Opponent', rating: 85 + i * 2 }
       const bonus = i * 1.5
       const { result, myGoals, oppGoals, scorers, opponentScorers } =
-        simulateMatch(teamRating, opp.rating + bonus, rng, players)
+        simulateMatch(teamRating, opp.rating + bonus, rng, players, opp.name)
       allMatches.push({ opponent: opp.name, opponentRating: opp.rating, result, myGoals, oppGoals, scorers, opponentScorers, round })
       if (result !== 'W') { eliminated = true; eliminatedAt = round }
     })
@@ -564,7 +645,7 @@ export function simulateWorldCup(players: DraftedPlayer[], seed?: number): Seaso
       if (eliminated) return
       const opp = oppPool[i] ?? { name: 'Unknown', rating: 83 + i * 2 }
       const { result, myGoals, oppGoals, scorers, opponentScorers } =
-        simulateMatch(teamRating, opp.rating + i * 2, rng, players)
+        simulateMatch(teamRating, opp.rating + i * 2, rng, players, opp.name)
       allMatches.push({ opponent: opp.name, opponentRating: opp.rating, result, myGoals, oppGoals, scorers, opponentScorers, round })
       if (result === 'L') { eliminated = true; eliminatedAt = round }
     })

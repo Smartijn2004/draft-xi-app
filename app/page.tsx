@@ -37,7 +37,7 @@ export default function HomePage() {
             {[
               { value: '5', label: 'Leagues' },
               { value: '1,200+', label: 'Player Seasons' },
-              { value: '1992–2024', label: 'Eras' },
+              { value: '1966–2025', label: 'Eras' },
             ].map(s => (
               <div key={s.label}>
                 <div className="text-2xl font-bold text-white">{s.value}</div>

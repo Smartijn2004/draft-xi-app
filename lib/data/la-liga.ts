@@ -455,4 +455,37 @@ export const laLigaData: ClubSeason[] = [
       { id: 'morata-atm-2324', name: 'Álvaro Morata', position: 'FWD', rating: 84, club: 'Atletico Madrid', season: '2023-24', altPositions: ['ST'] },
     ]
   },
+  {
+    id: 'barcelona-2024-25', club: 'Barcelona', shortName: 'BAR', season: '2024-25', league: 'laliga', color: '#A50044',
+    players: [
+      { id: 'szczesny-2425', name: 'Wojciech Szczęsny', position: 'GK', rating: 84, club: 'Barcelona', season: '2024-25' },
+      { id: 'kounde-2425', name: 'Jules Koundé', position: 'DEF', rating: 86, club: 'Barcelona', season: '2024-25', altPositions: ['RB', 'CB'] },
+      { id: 'cubarsi-2425', name: 'Pau Cubarsí', position: 'DEF', rating: 85, club: 'Barcelona', season: '2024-25', altPositions: ['CB'] },
+      { id: 'inigo-2425', name: 'Íñigo Martínez', position: 'DEF', rating: 85, club: 'Barcelona', season: '2024-25', altPositions: ['CB'] },
+      { id: 'balde-2425', name: 'Alejandro Balde', position: 'DEF', rating: 84, club: 'Barcelona', season: '2024-25', altPositions: ['LB'] },
+      { id: 'pedri-2425', name: 'Pedri', position: 'MID', rating: 91, club: 'Barcelona', season: '2024-25', altPositions: ['CM', 'AM'] },
+      { id: 'dejong-2425', name: 'Frenkie de Jong', position: 'MID', rating: 86, club: 'Barcelona', season: '2024-25', altPositions: ['CM', 'DM'] },
+      { id: 'olmo-2425', name: 'Dani Olmo', position: 'MID', rating: 86, club: 'Barcelona', season: '2024-25', altPositions: ['AM', 'CM'] },
+      { id: 'yamal-2425', name: 'Lamine Yamal', position: 'FWD', rating: 92, club: 'Barcelona', season: '2024-25', altPositions: ['RW'] },
+      { id: 'lewandowski-2425', name: 'Robert Lewandowski', position: 'FWD', rating: 89, club: 'Barcelona', season: '2024-25', altPositions: ['ST'] },
+      { id: 'raphinha-2425', name: 'Raphinha', position: 'FWD', rating: 91, club: 'Barcelona', season: '2024-25', altPositions: ['LW', 'RW'] },
+      { id: 'ferran-2425', name: 'Ferran Torres', position: 'FWD', rating: 84, club: 'Barcelona', season: '2024-25', altPositions: ['ST', 'LW'] },
+    ]
+  },
+  {
+    id: 'real-madrid-2024-25', club: 'Real Madrid', shortName: 'RMA', season: '2024-25', league: 'laliga', color: '#FEBE10',
+    players: [
+      { id: 'courtois-2425', name: 'Thibaut Courtois', position: 'GK', rating: 89, club: 'Real Madrid', season: '2024-25' },
+      { id: 'carvajal-2425', name: 'Dani Carvajal', position: 'DEF', rating: 84, club: 'Real Madrid', season: '2024-25', altPositions: ['RB'] },
+      { id: 'rudiger-2425', name: 'Antonio Rüdiger', position: 'DEF', rating: 86, club: 'Real Madrid', season: '2024-25', altPositions: ['CB'] },
+      { id: 'militao-2425', name: 'Éder Militão', position: 'DEF', rating: 84, club: 'Real Madrid', season: '2024-25', altPositions: ['CB'] },
+      { id: 'frangarcia-2425', name: 'Fran García', position: 'DEF', rating: 80, club: 'Real Madrid', season: '2024-25', altPositions: ['LB'] },
+      { id: 'valverde-2425', name: 'Federico Valverde', position: 'MID', rating: 89, club: 'Real Madrid', season: '2024-25', altPositions: ['CM', 'DM'] },
+      { id: 'tchouameni-2425', name: 'Aurélien Tchouaméni', position: 'MID', rating: 85, club: 'Real Madrid', season: '2024-25', altPositions: ['DM', 'CM'] },
+      { id: 'bellingham-2425', name: 'Jude Bellingham', position: 'MID', rating: 90, club: 'Real Madrid', season: '2024-25', altPositions: ['AM', 'CM'] },
+      { id: 'mbappe-2425', name: 'Kylian Mbappé', position: 'FWD', rating: 93, club: 'Real Madrid', season: '2024-25', altPositions: ['ST', 'LW'] },
+      { id: 'vinicius-2425', name: 'Vinícius Júnior', position: 'FWD', rating: 92, club: 'Real Madrid', season: '2024-25', altPositions: ['LW'] },
+      { id: 'rodrygo-2425', name: 'Rodrygo', position: 'FWD', rating: 87, club: 'Real Madrid', season: '2024-25', altPositions: ['RW', 'LW'] },
+    ]
+  },
 ]

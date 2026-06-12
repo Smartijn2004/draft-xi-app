@@ -685,7 +685,7 @@ function GoalRow({ event, color, opponent }: { event: GoalEvent; color: string; 
       <span className="text-base">⚽</span>
       <span className="tabular-nums text-slate-500 w-7 shrink-0">{event.minute}'</span>
       <span className="font-semibold" style={{ color }}>
-        {opponent ? lastName(event.scorer) : event.scorer}
+        {event.scorer}
       </span>
       {event.assist && !opponent && (
         <span className="text-slate-500">

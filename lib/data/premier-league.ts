@@ -555,4 +555,71 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'jimenez-wol-1819', name: 'Raúl Jiménez', position: 'FWD', rating: 84, club: 'Wolverhampton', season: '2018-19', altPositions: ['ST'] },
     ]
   },
+  {
+    id: 'mancity-2023-24', club: 'Manchester City', shortName: 'MCI', season: '2023-24', league: 'pl', color: '#6CABDD',
+    players: [
+      { id: 'ederson-2324', name: 'Ederson', position: 'GK', rating: 88, club: 'Manchester City', season: '2023-24' },
+      { id: 'walker-2324', name: 'Kyle Walker', position: 'DEF', rating: 86, club: 'Manchester City', season: '2023-24', altPositions: ['RB'] },
+      { id: 'dias-r-2324', name: 'Rúben Dias', position: 'DEF', rating: 89, club: 'Manchester City', season: '2023-24', altPositions: ['CB'] },
+      { id: 'ake-2324', name: 'Nathan Aké', position: 'DEF', rating: 84, club: 'Manchester City', season: '2023-24', altPositions: ['CB', 'LB'] },
+      { id: 'gvardiol-2324', name: 'Joško Gvardiol', position: 'DEF', rating: 85, club: 'Manchester City', season: '2023-24', altPositions: ['LB', 'CB'] },
+      { id: 'rodri-2324', name: 'Rodri', position: 'MID', rating: 93, club: 'Manchester City', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'debruyne-2324', name: 'Kevin De Bruyne', position: 'MID', rating: 91, club: 'Manchester City', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'bernardo-2324', name: 'Bernardo Silva', position: 'MID', rating: 88, club: 'Manchester City', season: '2023-24', altPositions: ['AM', 'CM'] },
+      { id: 'foden-2324', name: 'Phil Foden', position: 'FWD', rating: 90, club: 'Manchester City', season: '2023-24', altPositions: ['RW', 'AM'] },
+      { id: 'haaland-2324', name: 'Erling Haaland', position: 'FWD', rating: 94, club: 'Manchester City', season: '2023-24', altPositions: ['ST'] },
+      { id: 'doku-2324', name: 'Jérémy Doku', position: 'FWD', rating: 84, club: 'Manchester City', season: '2023-24', altPositions: ['LW'] },
+      { id: 'alvarez-2324', name: 'Julián Álvarez', position: 'FWD', rating: 85, club: 'Manchester City', season: '2023-24', altPositions: ['ST', 'AM'] },
+    ]
+  },
+  {
+    id: 'arsenal-2023-24', club: 'Arsenal', shortName: 'ARS', season: '2023-24', league: 'pl', color: '#EF0107',
+    players: [
+      { id: 'raya-2324', name: 'David Raya', position: 'GK', rating: 85, club: 'Arsenal', season: '2023-24' },
+      { id: 'white-2324', name: 'Ben White', position: 'DEF', rating: 84, club: 'Arsenal', season: '2023-24', altPositions: ['RB', 'CB'] },
+      { id: 'saliba-2324', name: 'William Saliba', position: 'DEF', rating: 88, club: 'Arsenal', season: '2023-24', altPositions: ['CB'] },
+      { id: 'gabriel-2324', name: 'Gabriel Magalhães', position: 'DEF', rating: 87, club: 'Arsenal', season: '2023-24', altPositions: ['CB'] },
+      { id: 'zinchenko-2324', name: 'Oleksandr Zinchenko', position: 'DEF', rating: 82, club: 'Arsenal', season: '2023-24', altPositions: ['LB'] },
+      { id: 'rice-2324', name: 'Declan Rice', position: 'MID', rating: 89, club: 'Arsenal', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'odegaard-2324', name: 'Martin Ødegaard', position: 'MID', rating: 90, club: 'Arsenal', season: '2023-24', altPositions: ['AM', 'CM'] },
+      { id: 'havertz-2324', name: 'Kai Havertz', position: 'FWD', rating: 85, club: 'Arsenal', season: '2023-24', altPositions: ['ST', 'AM'] },
+      { id: 'saka-2324', name: 'Bukayo Saka', position: 'FWD', rating: 90, club: 'Arsenal', season: '2023-24', altPositions: ['RW'] },
+      { id: 'martinelli-2324', name: 'Gabriel Martinelli', position: 'FWD', rating: 85, club: 'Arsenal', season: '2023-24', altPositions: ['LW'] },
+      { id: 'trossard-2324', name: 'Leandro Trossard', position: 'FWD', rating: 84, club: 'Arsenal', season: '2023-24', altPositions: ['LW', 'ST'] },
+      { id: 'jesus-g-2324', name: 'Gabriel Jesus', position: 'FWD', rating: 83, club: 'Arsenal', season: '2023-24', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'liverpool-2024-25', club: 'Liverpool', shortName: 'LIV', season: '2024-25', league: 'pl', color: '#C8102E',
+    players: [
+      { id: 'alisson-2425', name: 'Alisson', position: 'GK', rating: 89, club: 'Liverpool', season: '2024-25' },
+      { id: 'taa-2425', name: 'Trent Alexander-Arnold', position: 'DEF', rating: 87, club: 'Liverpool', season: '2024-25', altPositions: ['RB'] },
+      { id: 'konate-2425', name: 'Ibrahima Konaté', position: 'DEF', rating: 86, club: 'Liverpool', season: '2024-25', altPositions: ['CB'] },
+      { id: 'vandijk-2425', name: 'Virgil van Dijk', position: 'DEF', rating: 90, club: 'Liverpool', season: '2024-25', altPositions: ['CB'] },
+      { id: 'robertson-2425', name: 'Andrew Robertson', position: 'DEF', rating: 84, club: 'Liverpool', season: '2024-25', altPositions: ['LB'] },
+      { id: 'gravenberch-2425', name: 'Ryan Gravenberch', position: 'MID', rating: 87, club: 'Liverpool', season: '2024-25', altPositions: ['DM', 'CM'] },
+      { id: 'macallister-2425', name: 'Alexis Mac Allister', position: 'MID', rating: 88, club: 'Liverpool', season: '2024-25', altPositions: ['CM', 'DM'] },
+      { id: 'szoboszlai-2425', name: 'Dominik Szoboszlai', position: 'MID', rating: 85, club: 'Liverpool', season: '2024-25', altPositions: ['AM', 'CM'] },
+      { id: 'salah-2425', name: 'Mohamed Salah', position: 'FWD', rating: 94, club: 'Liverpool', season: '2024-25', altPositions: ['RW'] },
+      { id: 'gakpo-2425', name: 'Cody Gakpo', position: 'FWD', rating: 85, club: 'Liverpool', season: '2024-25', altPositions: ['LW', 'ST'] },
+      { id: 'diaz-l-2425', name: 'Luis Díaz', position: 'FWD', rating: 86, club: 'Liverpool', season: '2024-25', altPositions: ['LW', 'ST'] },
+    ]
+  },
+  {
+    id: 'chelsea-2023-24', club: 'Chelsea', shortName: 'CHE', season: '2023-24', league: 'pl', color: '#034694',
+    players: [
+      { id: 'petrovic-2324', name: 'Đorđe Petrović', position: 'GK', rating: 80, club: 'Chelsea', season: '2023-24' },
+      { id: 'gusto-2324', name: 'Malo Gusto', position: 'DEF', rating: 81, club: 'Chelsea', season: '2023-24', altPositions: ['RB'] },
+      { id: 'disasi-2324', name: 'Axel Disasi', position: 'DEF', rating: 80, club: 'Chelsea', season: '2023-24', altPositions: ['CB'] },
+      { id: 'colwill-2324', name: 'Levi Colwill', position: 'DEF', rating: 81, club: 'Chelsea', season: '2023-24', altPositions: ['CB', 'LB'] },
+      { id: 'chilwell-2324', name: 'Ben Chilwell', position: 'DEF', rating: 81, club: 'Chelsea', season: '2023-24', altPositions: ['LB'] },
+      { id: 'caicedo-2324', name: 'Moisés Caicedo', position: 'MID', rating: 84, club: 'Chelsea', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'enzo-2324', name: 'Enzo Fernández', position: 'MID', rating: 84, club: 'Chelsea', season: '2023-24', altPositions: ['CM', 'DM'] },
+      { id: 'gallagher-2324', name: 'Conor Gallagher', position: 'MID', rating: 82, club: 'Chelsea', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'palmer-2324', name: 'Cole Palmer', position: 'MID', rating: 89, club: 'Chelsea', season: '2023-24', altPositions: ['AM', 'RW'] },
+      { id: 'jackson-2324', name: 'Nicolas Jackson', position: 'FWD', rating: 82, club: 'Chelsea', season: '2023-24', altPositions: ['ST'] },
+      { id: 'sterling-che-2324', name: 'Raheem Sterling', position: 'FWD', rating: 83, club: 'Chelsea', season: '2023-24', altPositions: ['LW', 'RW'] },
+      { id: 'mudryk-2324', name: 'Mykhailo Mudryk', position: 'FWD', rating: 79, club: 'Chelsea', season: '2023-24', altPositions: ['LW'] },
+    ]
+  },
 ]

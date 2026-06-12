@@ -407,4 +407,53 @@ export const serieAData: ClubSeason[] = [
       { id: 'el-shaarawy-2122', name: 'Stephan El Shaarawy', position: 'FWD', rating: 81, club: 'AS Roma', season: '2021-22', altPositions: ['LW', 'ST'] },
     ]
   },
+  {
+    id: 'inter-2023-24', club: 'Inter Milan', shortName: 'INT', season: '2023-24', league: 'seriea', color: '#0068A8',
+    players: [
+      { id: 'sommer-2324', name: 'Yann Sommer', position: 'GK', rating: 85, club: 'Inter Milan', season: '2023-24' },
+      { id: 'pavard-int-2324', name: 'Benjamin Pavard', position: 'DEF', rating: 84, club: 'Inter Milan', season: '2023-24', altPositions: ['CB', 'RB'] },
+      { id: 'acerbi-2324', name: 'Francesco Acerbi', position: 'DEF', rating: 84, club: 'Inter Milan', season: '2023-24', altPositions: ['CB'] },
+      { id: 'bastoni-2324', name: 'Alessandro Bastoni', position: 'DEF', rating: 87, club: 'Inter Milan', season: '2023-24', altPositions: ['CB'] },
+      { id: 'dumfries-2324', name: 'Denzel Dumfries', position: 'MID', rating: 83, club: 'Inter Milan', season: '2023-24', altPositions: ['RWB', 'RB'] },
+      { id: 'dimarco-2324', name: 'Federico Dimarco', position: 'MID', rating: 86, club: 'Inter Milan', season: '2023-24', altPositions: ['LWB', 'LB'] },
+      { id: 'barella-2324', name: 'Nicolò Barella', position: 'MID', rating: 88, club: 'Inter Milan', season: '2023-24', altPositions: ['CM'] },
+      { id: 'calhanoglu-2324', name: 'Hakan Çalhanoğlu', position: 'MID', rating: 89, club: 'Inter Milan', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'mkhitaryan-int-2324', name: 'Henrikh Mkhitaryan', position: 'MID', rating: 84, club: 'Inter Milan', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'lautaro-2324', name: 'Lautaro Martínez', position: 'FWD', rating: 90, club: 'Inter Milan', season: '2023-24', altPositions: ['ST'] },
+      { id: 'thuram-2324', name: 'Marcus Thuram', position: 'FWD', rating: 86, club: 'Inter Milan', season: '2023-24', altPositions: ['ST', 'LW'] },
+    ]
+  },
+  {
+    id: 'napoli-2024-25', club: 'Napoli', shortName: 'NAP', season: '2024-25', league: 'seriea', color: '#12A0C3',
+    players: [
+      { id: 'meret-2425', name: 'Alex Meret', position: 'GK', rating: 84, club: 'Napoli', season: '2024-25' },
+      { id: 'dilorenzo-2425', name: 'Giovanni Di Lorenzo', position: 'DEF', rating: 85, club: 'Napoli', season: '2024-25', altPositions: ['RB', 'CB'] },
+      { id: 'rrahmani-2425', name: 'Amir Rrahmani', position: 'DEF', rating: 84, club: 'Napoli', season: '2024-25', altPositions: ['CB'] },
+      { id: 'buongiorno-2425', name: 'Alessandro Buongiorno', position: 'DEF', rating: 85, club: 'Napoli', season: '2024-25', altPositions: ['CB'] },
+      { id: 'olivera-2425', name: 'Mathías Olivera', position: 'DEF', rating: 82, club: 'Napoli', season: '2024-25', altPositions: ['LB', 'CB'] },
+      { id: 'lobotka-2425', name: 'Stanislav Lobotka', position: 'MID', rating: 86, club: 'Napoli', season: '2024-25', altPositions: ['DM', 'CM'] },
+      { id: 'anguissa-2425', name: 'André-Frank Zambo Anguissa', position: 'MID', rating: 85, club: 'Napoli', season: '2024-25', altPositions: ['CM', 'DM'] },
+      { id: 'mctominay-2425', name: 'Scott McTominay', position: 'MID', rating: 88, club: 'Napoli', season: '2024-25', altPositions: ['CM', 'AM'] },
+      { id: 'politano-2425', name: 'Matteo Politano', position: 'FWD', rating: 83, club: 'Napoli', season: '2024-25', altPositions: ['RW'] },
+      { id: 'lukaku-nap-2425', name: 'Romelu Lukaku', position: 'FWD', rating: 85, club: 'Napoli', season: '2024-25', altPositions: ['ST'] },
+      { id: 'kvara-2425', name: 'Khvicha Kvaratskhelia', position: 'FWD', rating: 88, club: 'Napoli', season: '2024-25', altPositions: ['LW'] },
+    ]
+  },
+  {
+    id: 'atalanta-2023-24', club: 'Atalanta', shortName: 'ATL', season: '2023-24', league: 'seriea', color: '#1E4CA1',
+    players: [
+      { id: 'carnesecchi-2324', name: 'Marco Carnesecchi', position: 'GK', rating: 81, club: 'Atalanta', season: '2023-24' },
+      { id: 'djimsiti-2324', name: 'Berat Djimsiti', position: 'DEF', rating: 81, club: 'Atalanta', season: '2023-24', altPositions: ['CB'] },
+      { id: 'hien-2324', name: 'Isak Hien', position: 'DEF', rating: 82, club: 'Atalanta', season: '2023-24', altPositions: ['CB'] },
+      { id: 'kolasinac-2324', name: 'Sead Kolašinac', position: 'DEF', rating: 82, club: 'Atalanta', season: '2023-24', altPositions: ['CB', 'LB'] },
+      { id: 'zappacosta-2324', name: 'Davide Zappacosta', position: 'MID', rating: 81, club: 'Atalanta', season: '2023-24', altPositions: ['RWB', 'RB'] },
+      { id: 'ruggeri-2324', name: 'Matteo Ruggeri', position: 'MID', rating: 80, club: 'Atalanta', season: '2023-24', altPositions: ['LWB', 'LB'] },
+      { id: 'ederson-ata-2324', name: 'Éderson', position: 'MID', rating: 85, club: 'Atalanta', season: '2023-24', altPositions: ['CM', 'DM'] },
+      { id: 'koopmeiners-2324', name: 'Teun Koopmeiners', position: 'MID', rating: 87, club: 'Atalanta', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'pasalic-2324', name: 'Mario Pašalić', position: 'MID', rating: 82, club: 'Atalanta', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'lookman-2324', name: 'Ademola Lookman', position: 'FWD', rating: 88, club: 'Atalanta', season: '2023-24', altPositions: ['LW', 'ST'] },
+      { id: 'deketelaere-2324', name: 'Charles De Ketelaere', position: 'FWD', rating: 84, club: 'Atalanta', season: '2023-24', altPositions: ['ST', 'AM'] },
+      { id: 'scamacca-2324', name: 'Gianluca Scamacca', position: 'FWD', rating: 84, club: 'Atalanta', season: '2023-24', altPositions: ['ST'] },
+    ]
+  },
 ]

@@ -55,7 +55,7 @@ export const LEAGUE_CONFIGS: Record<LeagueId, LeagueConfig> = {
     perfectLabel: '38-0-0',
     goalLabel: 'Win La Liga unbeaten',
     clubs: 28,
-    seasons: '1999–2024',
+    seasons: '1999–2025',
     tagline: 'Can you win all 38?',
   },
   seriea: {
@@ -73,7 +73,7 @@ export const LEAGUE_CONFIGS: Record<LeagueId, LeagueConfig> = {
     perfectLabel: '38-0-0',
     goalLabel: 'Win Serie A unbeaten',
     clubs: 25,
-    seasons: '1986–2023',
+    seasons: '1986–2025',
     tagline: 'Can you win all 38?',
   },
   ucl: {
@@ -91,7 +91,7 @@ export const LEAGUE_CONFIGS: Record<LeagueId, LeagueConfig> = {
     perfectLabel: '10-0',
     goalLabel: 'Lift the trophy unbeaten',
     clubs: 22,
-    seasons: '1994–2023',
+    seasons: '1994–2025',
     tagline: 'Can you go all the way unbeaten?',
     groupStageGames: 3,
     knockoutRounds: ['Round of 16', 'Quarter-Final', 'Semi-Final', 'Final'],
