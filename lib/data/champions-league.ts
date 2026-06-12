@@ -15,6 +15,7 @@ export const championsLeagueData: ClubSeason[] = [
       { id: 'ribery-1213', name: 'Franck Ribéry', position: 'FWD', rating: 92, club: 'Bayern Munich', season: '2012-13', altPositions: ['LW'] },
       { id: 'kroos-t-1213', name: 'Toni Kroos', position: 'MID', rating: 88, club: 'Bayern Munich', season: '2012-13', altPositions: ['CM', 'DM'] },
       { id: 'mandzukic-bay-1213', name: 'Mario Mandžukić', position: 'FWD', rating: 84, club: 'Bayern Munich', season: '2012-13', altPositions: ['ST'] },
+      { id: 'muller-bay-1213', name: 'Thomas Müller', position: 'FWD', rating: 89, club: 'Bayern Munich', season: '2012-13', altPositions: ['AM', 'ST'] },
     ]
   },
   {
@@ -95,6 +96,7 @@ export const championsLeagueData: ClubSeason[] = [
       { id: 'grosskreutz-1213', name: 'Kevin Großkreutz', position: 'MID', rating: 79, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['RM', 'RB'] },
       { id: 'lewandowski-bvb-1213', name: 'Robert Lewandowski', position: 'FWD', rating: 89, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['ST'] },
       { id: 'goetze-1213', name: 'Mario Götze', position: 'FWD', rating: 88, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['AM', 'LW'] },
+      { id: 'blaszczykowski-1213', name: 'Jakub Błaszczykowski', position: 'FWD', rating: 82, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['RW', 'AM'] },
     ]
   },
   {
@@ -105,12 +107,14 @@ export const championsLeagueData: ClubSeason[] = [
       { id: 'terry-ucl-1112', name: 'John Terry', position: 'DEF', rating: 88, club: 'Chelsea', season: '2011-12', altPositions: ['CB'] },
       { id: 'cahill-ucl-1112', name: 'Gary Cahill', position: 'DEF', rating: 84, club: 'Chelsea', season: '2011-12', altPositions: ['CB'] },
       { id: 'cole-j-ucl-1112', name: 'Ashley Cole', position: 'DEF', rating: 87, club: 'Chelsea', season: '2011-12', altPositions: ['LB'] },
+      { id: 'bosingwa-ucl-1112', name: 'José Bosingwa', position: 'DEF', rating: 80, club: 'Chelsea', season: '2011-12', altPositions: ['RB'] },
       { id: 'mikel-ucl-1112', name: 'John Obi Mikel', position: 'MID', rating: 81, club: 'Chelsea', season: '2011-12', altPositions: ['DM', 'CM'] },
       { id: 'lampard-ucl-1112', name: 'Frank Lampard', position: 'MID', rating: 88, club: 'Chelsea', season: '2011-12', altPositions: ['CM', 'AM'] },
       { id: 'ramires-ucl-1112', name: 'Ramires', position: 'MID', rating: 83, club: 'Chelsea', season: '2011-12', altPositions: ['CM', 'RM'] },
       { id: 'mata-ucl-1112', name: 'Juan Mata', position: 'FWD', rating: 87, club: 'Chelsea', season: '2011-12', altPositions: ['AM', 'RW'] },
       { id: 'drogba-ucl-1112', name: 'Didier Drogba', position: 'FWD', rating: 90, club: 'Chelsea', season: '2011-12', altPositions: ['ST'] },
       { id: 'torres-ucl-1112', name: 'Fernando Torres', position: 'FWD', rating: 84, club: 'Chelsea', season: '2011-12', altPositions: ['ST'] },
+      { id: 'malouda-ucl-1112', name: 'Florent Malouda', position: 'FWD', rating: 82, club: 'Chelsea', season: '2011-12', altPositions: ['LW', 'AM'] },
     ]
   },
   {
@@ -157,6 +161,7 @@ export const championsLeagueData: ClubSeason[] = [
       { id: 'xabi-alonso-ucl-rm-1314', name: 'Xabi Alonso', position: 'MID', rating: 90, club: 'Real Madrid', season: '2013-14', altPositions: ['DM', 'CM'] },
       { id: 'modric-ucl-rm-1314', name: 'Luka Modrić', position: 'MID', rating: 91, club: 'Real Madrid', season: '2013-14', altPositions: ['CM', 'AM'] },
       { id: 'di-maria-ucl-rm-1314', name: 'Ángel Di María', position: 'MID', rating: 88, club: 'Real Madrid', season: '2013-14', altPositions: ['LM', 'AM'] },
+      { id: 'khedira-rm-ucl-1314', name: 'Sami Khedira', position: 'MID', rating: 84, club: 'Real Madrid', season: '2013-14', altPositions: ['CM', 'DM'] },
       { id: 'bale-ucl-rm-1314', name: 'Gareth Bale', position: 'FWD', rating: 89, club: 'Real Madrid', season: '2013-14', altPositions: ['LW', 'ST'] },
       { id: 'benzema-ucl-rm-1314', name: 'Karim Benzema', position: 'FWD', rating: 87, club: 'Real Madrid', season: '2013-14', altPositions: ['ST', 'AM'] },
       { id: 'ronaldo-ucl-rm-1314', name: 'Cristiano Ronaldo', position: 'FWD', rating: 96, club: 'Real Madrid', season: '2013-14', altPositions: ['LW', 'ST'] },
@@ -352,70 +357,6 @@ export const championsLeagueData: ClubSeason[] = [
       { id: 'griezmann-ucl-1516', name: 'Antoine Griezmann', position: 'FWD', rating: 89, club: 'Atletico Madrid', season: '2015-16', altPositions: ['ST', 'LW'] },
       { id: 'torres-f-ucl-1516', name: 'Fernando Torres', position: 'FWD', rating: 82, club: 'Atletico Madrid', season: '2015-16', altPositions: ['ST'] },
       { id: 'carrasco-ucl-1516', name: 'Yannick Carrasco', position: 'FWD', rating: 81, club: 'Atletico Madrid', season: '2015-16', altPositions: ['LW', 'AM'] },
-    ]
-  },
-  {
-    id: 'real-madrid-2013-14-ucl', club: 'Real Madrid', shortName: 'RMA', season: '2013-14', league: 'ucl', color: '#FEBE10',
-    players: [
-      { id: 'casillas-rm-ucl-1314', name: 'Iker Casillas', position: 'GK', rating: 89, club: 'Real Madrid', season: '2013-14' },
-      { id: 'carvajal-rm-ucl-1314', name: 'Dani Carvajal', position: 'DEF', rating: 83, club: 'Real Madrid', season: '2013-14', altPositions: ['RB'] },
-      { id: 'varane-rm-ucl-1314', name: 'Raphaël Varane', position: 'DEF', rating: 87, club: 'Real Madrid', season: '2013-14', altPositions: ['CB'] },
-      { id: 'ramos-rm-ucl-1314', name: 'Sergio Ramos', position: 'DEF', rating: 90, club: 'Real Madrid', season: '2013-14', altPositions: ['CB', 'RB'] },
-      { id: 'marcelo-rm-ucl-1314', name: 'Marcelo', position: 'DEF', rating: 87, club: 'Real Madrid', season: '2013-14', altPositions: ['LB'] },
-      { id: 'alonso-x-rm-ucl-1314', name: 'Xabi Alonso', position: 'MID', rating: 90, club: 'Real Madrid', season: '2013-14', altPositions: ['DM', 'CM'] },
-      { id: 'khedira-rm-ucl-1314', name: 'Sami Khedira', position: 'MID', rating: 84, club: 'Real Madrid', season: '2013-14', altPositions: ['CM', 'DM'] },
-      { id: 'modric-rm-ucl-1314', name: 'Luka Modrić', position: 'MID', rating: 90, club: 'Real Madrid', season: '2013-14', altPositions: ['CM', 'AM'] },
-      { id: 'di-maria-rm-ucl-1314', name: 'Ángel Di María', position: 'FWD', rating: 89, club: 'Real Madrid', season: '2013-14', altPositions: ['RW', 'LW', 'AM'] },
-      { id: 'bale-ucl-rm-1314', name: 'Gareth Bale', position: 'FWD', rating: 91, club: 'Real Madrid', season: '2013-14', altPositions: ['LW', 'RW'] },
-      { id: 'ronaldo-rm-ucl-1314', name: 'Cristiano Ronaldo', position: 'FWD', rating: 96, club: 'Real Madrid', season: '2013-14', altPositions: ['LW', 'ST'] },
-    ]
-  },
-  {
-    id: 'bayern-2012-13-ucl', club: 'Bayern Munich', shortName: 'BAY', season: '2012-13', league: 'ucl', color: '#DC052D',
-    players: [
-      { id: 'neuer-bay-1213', name: 'Manuel Neuer', position: 'GK', rating: 94, club: 'Bayern Munich', season: '2012-13' },
-      { id: 'lahm-1213', name: 'Philipp Lahm', position: 'DEF', rating: 90, club: 'Bayern Munich', season: '2012-13', altPositions: ['RB', 'CB'] },
-      { id: 'dante-bay-1213', name: 'Dante', position: 'DEF', rating: 84, club: 'Bayern Munich', season: '2012-13', altPositions: ['CB'] },
-      { id: 'boateng-j-1213', name: 'Jérôme Boateng', position: 'DEF', rating: 88, club: 'Bayern Munich', season: '2012-13', altPositions: ['CB'] },
-      { id: 'alaba-bay-1213', name: 'David Alaba', position: 'DEF', rating: 86, club: 'Bayern Munich', season: '2012-13', altPositions: ['LB', 'CB'] },
-      { id: 'martinez-j-1213', name: 'Javi Martínez', position: 'MID', rating: 86, club: 'Bayern Munich', season: '2012-13', altPositions: ['DM', 'CM'] },
-      { id: 'schweinsteiger-1213', name: 'Bastian Schweinsteiger', position: 'MID', rating: 91, club: 'Bayern Munich', season: '2012-13', altPositions: ['CM', 'DM'] },
-      { id: 'robben-bay-1213', name: 'Arjen Robben', position: 'FWD', rating: 91, club: 'Bayern Munich', season: '2012-13', altPositions: ['RW', 'LW'] },
-      { id: 'muller-bay-1213', name: 'Thomas Müller', position: 'FWD', rating: 89, club: 'Bayern Munich', season: '2012-13', altPositions: ['AM', 'ST'] },
-      { id: 'ribery-1213', name: 'Franck Ribéry', position: 'FWD', rating: 91, club: 'Bayern Munich', season: '2012-13', altPositions: ['LW', 'AM'] },
-      { id: 'mandzukic-1213', name: 'Mario Mandžukić', position: 'FWD', rating: 85, club: 'Bayern Munich', season: '2012-13', altPositions: ['ST'] },
-    ]
-  },
-  {
-    id: 'chelsea-2011-12-ucl', club: 'Chelsea', shortName: 'CHE', season: '2011-12', league: 'ucl', color: '#034694',
-    players: [
-      { id: 'cech-ucl-che-1112', name: 'Petr Čech', position: 'GK', rating: 89, club: 'Chelsea', season: '2011-12' },
-      { id: 'bosingwa-ucl-1112', name: 'José Bosingwa', position: 'DEF', rating: 80, club: 'Chelsea', season: '2011-12', altPositions: ['RB'] },
-      { id: 'cahill-g-ucl-1112', name: 'Gary Cahill', position: 'DEF', rating: 85, club: 'Chelsea', season: '2011-12', altPositions: ['CB'] },
-      { id: 'terry-ucl-1112', name: 'John Terry', position: 'DEF', rating: 89, club: 'Chelsea', season: '2011-12', altPositions: ['CB'] },
-      { id: 'cole-a-ucl-1112', name: 'Ashley Cole', position: 'DEF', rating: 88, club: 'Chelsea', season: '2011-12', altPositions: ['LB'] },
-      { id: 'mikel-ucl-1112', name: 'John Obi Mikel', position: 'MID', rating: 82, club: 'Chelsea', season: '2011-12', altPositions: ['DM', 'CM'] },
-      { id: 'lampard-ucl-1112', name: 'Frank Lampard', position: 'MID', rating: 89, club: 'Chelsea', season: '2011-12', altPositions: ['CM', 'AM'] },
-      { id: 'mata-ucl-1112', name: 'Juan Mata', position: 'MID', rating: 89, club: 'Chelsea', season: '2011-12', altPositions: ['AM', 'CM'] },
-      { id: 'ramires-ucl-1112', name: 'Ramires', position: 'MID', rating: 83, club: 'Chelsea', season: '2011-12', altPositions: ['CM', 'RW'] },
-      { id: 'malouda-ucl-1112', name: 'Florent Malouda', position: 'FWD', rating: 82, club: 'Chelsea', season: '2011-12', altPositions: ['LW', 'AM'] },
-      { id: 'drogba-ucl-che-1112', name: 'Didier Drogba', position: 'FWD', rating: 92, club: 'Chelsea', season: '2011-12', altPositions: ['ST'] },
-    ]
-  },
-  {
-    id: 'dortmund-2012-13-ucl', club: 'Borussia Dortmund', shortName: 'BVB', season: '2012-13', league: 'ucl', color: '#FDE100',
-    players: [
-      { id: 'weidenfeller-bvb-1213', name: 'Roman Weidenfeller', position: 'GK', rating: 83, club: 'Borussia Dortmund', season: '2012-13' },
-      { id: 'piszczek-bvb-1213', name: 'Łukasz Piszczek', position: 'DEF', rating: 84, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['RB', 'RWB'] },
-      { id: 'subotic-bvb-1213', name: 'Neven Subotić', position: 'DEF', rating: 84, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['CB'] },
-      { id: 'hummels-bvb-1213', name: 'Mats Hummels', position: 'DEF', rating: 89, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['CB'] },
-      { id: 'schmelzer-bvb-1213', name: 'Marcel Schmelzer', position: 'DEF', rating: 82, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['LB'] },
-      { id: 'bender-s-bvb-1213', name: 'Sven Bender', position: 'MID', rating: 82, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['DM', 'CM'] },
-      { id: 'gundogan-bvb-1213', name: 'İlkay Gündoğan', position: 'MID', rating: 87, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['CM', 'AM'] },
-      { id: 'blaszczykowski-1213', name: 'Jakub Błaszczykowski', position: 'FWD', rating: 82, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['RW', 'AM'] },
-      { id: 'gotze-bvb-1213', name: 'Mario Götze', position: 'FWD', rating: 88, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['AM', 'LW'] },
-      { id: 'reus-bvb-1213', name: 'Marco Reus', position: 'FWD', rating: 91, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['LW', 'AM'] },
-      { id: 'lewandowski-bvb-1213', name: 'Robert Lewandowski', position: 'FWD', rating: 88, club: 'Borussia Dortmund', season: '2012-13', altPositions: ['ST'] },
     ]
   },
 ]

@@ -28,9 +28,11 @@ export const worldCupData: ClubSeason[] = [
       { id: 'deschamps-1998', name: 'Didier Deschamps', position: 'MID', rating: 86, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['DM', 'CM'] },
       { id: 'petit-1998', name: 'Emmanuel Petit', position: 'MID', rating: 85, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['DM', 'CM'] },
       { id: 'zidane-fra-1998', name: 'Zinedine Zidane', position: 'MID', rating: 95, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'CM'] },
+      { id: 'vieira-fra-1998', name: 'Patrick Vieira', position: 'MID', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CM', 'DM'] },
       { id: 'djorkaeff-1998', name: 'Youri Djorkaeff', position: 'FWD', rating: 87, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'ST'] },
       { id: 'henry-fra-1998', name: 'Thierry Henry', position: 'FWD', rating: 87, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['LW', 'ST'] },
       { id: 'dugarry-1998', name: 'Christophe Dugarry', position: 'FWD', rating: 82, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['ST', 'RW'] },
+      { id: 'trezeguet-1998', name: 'David Trezeguet', position: 'FWD', rating: 84, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['ST'] },
     ]
   },
   {
@@ -105,12 +107,16 @@ export const worldCupData: ClubSeason[] = [
       { id: 'cannavaro-ita-2006', name: 'Fabio Cannavaro', position: 'DEF', rating: 92, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
       { id: 'materazzi-2006', name: 'Marco Materazzi', position: 'DEF', rating: 84, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
       { id: 'grosso-2006', name: 'Fabio Grosso', position: 'DEF', rating: 82, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['LB'] },
+      { id: 'zaccardo-2006', name: 'Cristian Zaccardo', position: 'DEF', rating: 77, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['RB', 'CB'] },
+      { id: 'nesta-ita-2006', name: 'Alessandro Nesta', position: 'DEF', rating: 90, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
       { id: 'pirlo-ita-2006', name: 'Andrea Pirlo', position: 'MID', rating: 92, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['DM', 'CM'] },
       { id: 'gattuso-ita-2006', name: 'Gennaro Gattuso', position: 'MID', rating: 86, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['DM', 'CM'] },
       { id: 'camoranesi-2006', name: 'Mauro Camoranesi', position: 'MID', rating: 83, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['RM', 'CM'] },
       { id: 'perrotta-2006', name: 'Simone Perrotta', position: 'MID', rating: 81, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CM', 'AM'] },
+      { id: 'de-rossi-2006', name: 'Daniele De Rossi', position: 'MID', rating: 87, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CM', 'DM'] },
       { id: 'totti-ita-2006', name: 'Francesco Totti', position: 'FWD', rating: 90, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['ST', 'AM'] },
       { id: 'toni-2006', name: 'Luca Toni', position: 'FWD', rating: 87, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['ST'] },
+      { id: 'del-piero-ita-2006', name: 'Alessandro Del Piero', position: 'FWD', rating: 88, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['ST', 'AM'] },
     ]
   },
   {
@@ -189,25 +195,10 @@ export const worldCupData: ClubSeason[] = [
       { id: 'batista-arg-1986', name: 'Sergio Batista', position: 'MID', rating: 79, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['DM', 'CM'] },
       { id: 'burruchaga-arg-1986', name: 'Jorge Burruchaga', position: 'MID', rating: 85, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CM', 'AM'] },
       { id: 'enrique-arg-1986', name: 'Héctor Enrique', position: 'MID', rating: 82, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CM'] },
+      { id: 'giusti-1986', name: 'Ricardo Giusti', position: 'MID', rating: 79, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CM', 'DM'] },
       { id: 'valdano-arg-1986', name: 'Jorge Valdano', position: 'FWD', rating: 85, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['ST', 'LW'] },
       { id: 'maradona-arg-1986', name: 'Diego Maradona', position: 'FWD', rating: 99, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['AM', 'ST'] },
       { id: 'pasculli-arg-1986', name: 'Pedro Pasculli', position: 'FWD', rating: 78, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['ST'] },
-    ]
-  },
-  {
-    id: 'germany-1974', club: 'West Germany', shortName: 'GER', season: 'World Cup 1974', league: 'worldcup', color: '#000000',
-    players: [
-      { id: 'maier-ger-1974', name: 'Sepp Maier', position: 'GK', rating: 88, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany' },
-      { id: 'vogts-ger-1974', name: 'Berti Vogts', position: 'DEF', rating: 84, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['RB'] },
-      { id: 'beckenbauer-ger-1974', name: 'Franz Beckenbauer', position: 'DEF', rating: 95, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['CB', 'DM'] },
-      { id: 'schwarzenbeck-ger-1974', name: 'Hans-Georg Schwarzenbeck', position: 'DEF', rating: 82, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['CB'] },
-      { id: 'breitner-ger-1974', name: 'Paul Breitner', position: 'DEF', rating: 86, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['LB', 'CM'] },
-      { id: 'bonhof-ger-1974', name: 'Rainer Bonhof', position: 'MID', rating: 83, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['CM', 'DM'] },
-      { id: 'overath-ger-1974', name: 'Wolfgang Overath', position: 'MID', rating: 87, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['CM', 'AM'] },
-      { id: 'hoeness-ger-1974', name: 'Uli Hoeneß', position: 'MID', rating: 83, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['CM', 'RM'] },
-      { id: 'holzenbein-ger-1974', name: 'Bernd Hölzenbein', position: 'FWD', rating: 81, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['LW'] },
-      { id: 'muller-gerd-ger-1974', name: 'Gerd Müller', position: 'FWD', rating: 93, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['ST'] },
-      { id: 'grabowski-ger-1974', name: 'Jürgen Grabowski', position: 'FWD', rating: 82, club: 'West Germany', season: 'World Cup 1974', nationality: 'Germany', altPositions: ['RW', 'AM'] },
     ]
   },
   {
@@ -352,54 +343,6 @@ export const worldCupData: ClubSeason[] = [
       { id: 'hoeness-u-1974', name: 'Uli Hoeneß', position: 'FWD', rating: 84, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['ST', 'LW'] },
       { id: 'muller-g-1974', name: 'Gerd Müller', position: 'FWD', rating: 96, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['ST'] },
       { id: 'holzenbein-1974', name: 'Bernd Hölzenbein', position: 'FWD', rating: 82, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['LW', 'ST'] },
-    ]
-  },
-  {
-    id: 'argentina-1986', club: 'Argentina', shortName: 'ARG', season: 'World Cup 1986', league: 'worldcup', color: '#74ACDF',
-    players: [
-      { id: 'pumpido-arg-1986', name: 'Nery Pumpido', position: 'GK', rating: 82, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina' },
-      { id: 'cuciuffo-1986', name: 'José Cuciuffo', position: 'DEF', rating: 78, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['RB'] },
-      { id: 'brown-j-1986', name: 'José Luis Brown', position: 'DEF', rating: 80, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CB'] },
-      { id: 'ruggeri-1986', name: 'Oscar Ruggeri', position: 'DEF', rating: 83, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CB'] },
-      { id: 'olarticoechea-1986', name: 'Julio Olarticoechea', position: 'DEF', rating: 78, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['LB'] },
-      { id: 'batista-s-1986', name: 'Sergio Batista', position: 'MID', rating: 80, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['DM', 'CM'] },
-      { id: 'giusti-1986', name: 'Ricardo Giusti', position: 'MID', rating: 79, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CM', 'DM'] },
-      { id: 'burruchaga-1986', name: 'Jorge Burruchaga', position: 'MID', rating: 85, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['CM', 'AM'] },
-      { id: 'valdano-1986', name: 'Jorge Valdano', position: 'FWD', rating: 85, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['ST', 'LW'] },
-      { id: 'enrique-j-1986', name: 'Jorge Enrique', position: 'FWD', rating: 79, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['LW', 'ST'] },
-      { id: 'maradona-arg-1986', name: 'Diego Maradona', position: 'FWD', rating: 98, club: 'Argentina', season: 'World Cup 1986', nationality: 'Argentina', altPositions: ['AM', 'ST'] },
-    ]
-  },
-  {
-    id: 'france-1998', club: 'France', shortName: 'FRA', season: 'World Cup 1998', league: 'worldcup', color: '#002395',
-    players: [
-      { id: 'barthez-fra-1998', name: 'Fabien Barthez', position: 'GK', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France' },
-      { id: 'thuram-1998', name: 'Lilian Thuram', position: 'DEF', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['RB', 'CB'] },
-      { id: 'blanc-l-1998', name: 'Laurent Blanc', position: 'DEF', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CB'] },
-      { id: 'desailly-fra-1998', name: 'Marcel Desailly', position: 'DEF', rating: 89, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CB', 'DM'] },
-      { id: 'lizarazu-1998', name: 'Bixente Lizarazu', position: 'DEF', rating: 85, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['LB'] },
-      { id: 'deschamps-1998', name: 'Didier Deschamps', position: 'MID', rating: 86, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['DM', 'CM'] },
-      { id: 'vieira-fra-1998', name: 'Patrick Vieira', position: 'MID', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CM', 'DM'] },
-      { id: 'zidane-1998', name: 'Zinedine Zidane', position: 'MID', rating: 95, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'CM'] },
-      { id: 'djorkaeff-1998', name: 'Youri Djorkaeff', position: 'FWD', rating: 87, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'LW'] },
-      { id: 'henry-fra-1998', name: 'Thierry Henry', position: 'FWD', rating: 87, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['LW', 'ST'] },
-      { id: 'trezeguet-1998', name: 'David Trezeguet', position: 'FWD', rating: 84, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['ST'] },
-    ]
-  },
-  {
-    id: 'italy-2006', club: 'Italy', shortName: 'ITA', season: 'World Cup 2006', league: 'worldcup', color: '#009246',
-    players: [
-      { id: 'buffon-ita-2006', name: 'Gianluigi Buffon', position: 'GK', rating: 93, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy' },
-      { id: 'zaccardo-2006', name: 'Cristian Zaccardo', position: 'DEF', rating: 77, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['RB', 'CB'] },
-      { id: 'cannavaro-2006', name: 'Fabio Cannavaro', position: 'DEF', rating: 93, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
-      { id: 'nesta-ita-2006', name: 'Alessandro Nesta', position: 'DEF', rating: 90, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
-      { id: 'zambrotta-2006', name: 'Gianluca Zambrotta', position: 'DEF', rating: 87, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['LB', 'RB'] },
-      { id: 'pirlo-ita-2006', name: 'Andrea Pirlo', position: 'MID', rating: 93, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['DM', 'CM'] },
-      { id: 'gattuso-ita-2006', name: 'Gennaro Gattuso', position: 'MID', rating: 84, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['DM', 'CM'] },
-      { id: 'camoranesi-2006', name: 'Mauro Camoranesi', position: 'MID', rating: 82, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['RM', 'CM'] },
-      { id: 'de-rossi-2006', name: 'Daniele De Rossi', position: 'MID', rating: 87, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CM', 'DM'] },
-      { id: 'toni-2006', name: 'Luca Toni', position: 'FWD', rating: 84, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['ST'] },
-      { id: 'del-piero-ita-2006', name: 'Alessandro Del Piero', position: 'FWD', rating: 88, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['ST', 'AM'] },
     ]
   },
 ]

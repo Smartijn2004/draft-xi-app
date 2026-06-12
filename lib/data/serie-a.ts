@@ -105,11 +105,13 @@ export const serieAData: ClubSeason[] = [
       { id: 'lucio-0910', name: 'Lúcio', position: 'DEF', rating: 87, club: 'Inter Milan', season: '2009-10', altPositions: ['CB'] },
       { id: 'samuel-0910', name: 'Walter Samuel', position: 'DEF', rating: 86, club: 'Inter Milan', season: '2009-10', altPositions: ['CB'] },
       { id: 'zanetti-0910', name: 'Javier Zanetti', position: 'DEF', rating: 87, club: 'Inter Milan', season: '2009-10', altPositions: ['RB', 'DM'] },
+      { id: 'chivu-int-0910', name: 'Cristian Chivu', position: 'DEF', rating: 82, club: 'Inter Milan', season: '2009-10', altPositions: ['LB', 'CB'] },
       { id: 'cambiasso-0910', name: 'Esteban Cambiasso', position: 'MID', rating: 87, club: 'Inter Milan', season: '2009-10', altPositions: ['DM', 'CM'] },
       { id: 'motta-0910', name: 'Thiago Motta', position: 'MID', rating: 83, club: 'Inter Milan', season: '2009-10', altPositions: ['DM', 'CM'] },
       { id: 'sneijder-0910', name: 'Wesley Sneijder', position: 'MID', rating: 93, club: 'Inter Milan', season: '2009-10', altPositions: ['AM', 'CM'] },
       { id: 'stankovic-0910', name: 'Dejan Stanković', position: 'MID', rating: 85, club: 'Inter Milan', season: '2009-10', altPositions: ['CM', 'DM'] },
       { id: 'milito-0910', name: 'Diego Milito', position: 'FWD', rating: 90, club: 'Inter Milan', season: '2009-10', altPositions: ['ST'] },
+      { id: 'pandev-int-0910', name: 'Goran Pandev', position: 'FWD', rating: 82, club: 'Inter Milan', season: '2009-10', altPositions: ['LW', 'AM'] },
       { id: 'eto-o-int-0910', name: 'Samuel Eto\'o', position: 'FWD', rating: 91, club: 'Inter Milan', season: '2009-10', altPositions: ['ST'] },
     ]
   },
@@ -156,9 +158,11 @@ export const serieAData: ClubSeason[] = [
       { id: 'emerson-0001', name: 'Emerson', position: 'MID', rating: 84, club: 'AS Roma', season: '2000-01', altPositions: ['DM', 'CM'] },
       { id: 'de-rossi-0001', name: 'Daniele De Rossi', position: 'MID', rating: 80, club: 'AS Roma', season: '2000-01', altPositions: ['DM', 'CM'] },
       { id: 'nakata-0001', name: 'Hidetoshi Nakata', position: 'MID', rating: 84, club: 'AS Roma', season: '2000-01', altPositions: ['CM', 'AM'] },
+      { id: 'tommasi-rom-0001', name: 'Damiano Tommasi', position: 'MID', rating: 82, club: 'AS Roma', season: '2000-01', altPositions: ['CM', 'DM'] },
       { id: 'totti-0001', name: 'Francesco Totti', position: 'FWD', rating: 93, club: 'AS Roma', season: '2000-01', altPositions: ['ST', 'AM'] },
       { id: 'batistuta-0001', name: 'Gabriel Batistuta', position: 'FWD', rating: 92, club: 'AS Roma', season: '2000-01', altPositions: ['ST'] },
       { id: 'montella-0001', name: 'Vincenzo Montella', position: 'FWD', rating: 85, club: 'AS Roma', season: '2000-01', altPositions: ['ST'] },
+      { id: 'delvecchio-0001', name: 'Marco Delvecchio', position: 'FWD', rating: 82, club: 'AS Roma', season: '2000-01', altPositions: ['ST', 'AM'] },
     ]
   },
   {
@@ -169,12 +173,14 @@ export const serieAData: ClubSeason[] = [
       { id: 'nesta-laz-9900', name: 'Alessandro Nesta', position: 'DEF', rating: 92, club: 'Lazio', season: '1999-00', altPositions: ['CB'] },
       { id: 'mihajlovic-9900', name: 'Siniša Mihajlović', position: 'DEF', rating: 86, club: 'Lazio', season: '1999-00', altPositions: ['CB', 'LB'] },
       { id: 'favalli-9900', name: 'Giuseppe Favalli', position: 'DEF', rating: 81, club: 'Lazio', season: '1999-00', altPositions: ['LB'] },
+      { id: 'couto-laz-0000', name: 'Fernando Couto', position: 'DEF', rating: 83, club: 'Lazio', season: '1999-00', altPositions: ['CB'] },
       { id: 'veron-9900', name: 'Juan Sebastián Verón', position: 'MID', rating: 92, club: 'Lazio', season: '1999-00', altPositions: ['CM', 'AM'] },
       { id: 'almeyda-9900', name: 'Matías Almeyda', position: 'MID', rating: 82, club: 'Lazio', season: '1999-00', altPositions: ['DM', 'CM'] },
       { id: 'stankovic-laz-9900', name: 'Dejan Stanković', position: 'MID', rating: 83, club: 'Lazio', season: '1999-00', altPositions: ['CM', 'DM'] },
       { id: 'crespo-9900', name: 'Hernán Crespo', position: 'FWD', rating: 90, club: 'Lazio', season: '1999-00', altPositions: ['ST'] },
       { id: 'salas-9900', name: 'Marcelo Salas', position: 'FWD', rating: 85, club: 'Lazio', season: '1999-00', altPositions: ['ST'] },
       { id: 'boksic-9900', name: 'Alen Bokšić', position: 'FWD', rating: 84, club: 'Lazio', season: '1999-00', altPositions: ['ST'] },
+      { id: 'nedved-laz-0000', name: 'Pavel Nedvěd', position: 'MID', rating: 91, club: 'Lazio', season: '1999-00', altPositions: ['LM', 'AM'] },
     ]
   },
   // --- NEW ENTRIES ---
@@ -400,70 +406,6 @@ export const serieAData: ClubSeason[] = [
       { id: 'zaniolo-2122', name: 'Nicolò Zaniolo', position: 'FWD', rating: 84, club: 'AS Roma', season: '2021-22', altPositions: ['RW', 'AM'] },
       { id: 'abraham-2122', name: 'Tammy Abraham', position: 'FWD', rating: 84, club: 'AS Roma', season: '2021-22', altPositions: ['ST'] },
       { id: 'el-shaarawy-2122', name: 'Stephan El Shaarawy', position: 'FWD', rating: 81, club: 'AS Roma', season: '2021-22', altPositions: ['LW', 'ST'] },
-    ]
-  },
-  {
-    id: 'inter-2009-10', club: 'Inter Milan', shortName: 'INT', season: '2009-10', league: 'seriea', color: '#0068A8',
-    players: [
-      { id: 'julio-cesar-int-0910', name: 'Júlio César', position: 'GK', rating: 86, club: 'Inter Milan', season: '2009-10' },
-      { id: 'maicon-int-0910', name: 'Maicon', position: 'DEF', rating: 89, club: 'Inter Milan', season: '2009-10', altPositions: ['RB', 'RWB'] },
-      { id: 'lucio-int-0910', name: 'Lúcio', position: 'DEF', rating: 88, club: 'Inter Milan', season: '2009-10', altPositions: ['CB'] },
-      { id: 'samuel-int-0910', name: 'Walter Samuel', position: 'DEF', rating: 86, club: 'Inter Milan', season: '2009-10', altPositions: ['CB'] },
-      { id: 'chivu-int-0910', name: 'Cristian Chivu', position: 'DEF', rating: 82, club: 'Inter Milan', season: '2009-10', altPositions: ['LB', 'CB'] },
-      { id: 'cambiasso-0910', name: 'Esteban Cambiasso', position: 'MID', rating: 88, club: 'Inter Milan', season: '2009-10', altPositions: ['DM', 'CM'] },
-      { id: 'zanetti-int-0910', name: 'Javier Zanetti', position: 'MID', rating: 85, club: 'Inter Milan', season: '2009-10', altPositions: ['CM', 'DM'] },
-      { id: 'sneijder-0910', name: 'Wesley Sneijder', position: 'MID', rating: 92, club: 'Inter Milan', season: '2009-10', altPositions: ['AM', 'CM'] },
-      { id: 'eto-o-int-0910', name: "Samuel Eto'o", position: 'FWD', rating: 88, club: 'Inter Milan', season: '2009-10', altPositions: ['ST', 'LW'] },
-      { id: 'milito-0910', name: 'Diego Milito', position: 'FWD', rating: 89, club: 'Inter Milan', season: '2009-10', altPositions: ['ST'] },
-      { id: 'pandev-int-0910', name: 'Goran Pandev', position: 'FWD', rating: 82, club: 'Inter Milan', season: '2009-10', altPositions: ['LW', 'AM'] },
-    ]
-  },
-  {
-    id: 'roma-2000-01', club: 'AS Roma', shortName: 'ROM', season: '2000-01', league: 'seriea', color: '#8B1A14',
-    players: [
-      { id: 'antonioli-rom-0001', name: 'Francesco Antonioli', position: 'GK', rating: 83, club: 'AS Roma', season: '2000-01' },
-      { id: 'cafu-rom-0001', name: 'Cafu', position: 'DEF', rating: 89, club: 'AS Roma', season: '2000-01', altPositions: ['RB'] },
-      { id: 'aldair-rom-0001', name: 'Aldair', position: 'DEF', rating: 84, club: 'AS Roma', season: '2000-01', altPositions: ['CB'] },
-      { id: 'samuel-rom-0001', name: 'Walter Samuel', position: 'DEF', rating: 83, club: 'AS Roma', season: '2000-01', altPositions: ['CB'] },
-      { id: 'candela-rom-0001', name: 'Vincent Candela', position: 'DEF', rating: 83, club: 'AS Roma', season: '2000-01', altPositions: ['LB'] },
-      { id: 'emerson-rom-0001', name: 'Emerson', position: 'MID', rating: 84, club: 'AS Roma', season: '2000-01', altPositions: ['DM', 'CM'] },
-      { id: 'tommasi-rom-0001', name: 'Damiano Tommasi', position: 'MID', rating: 82, club: 'AS Roma', season: '2000-01', altPositions: ['CM', 'DM'] },
-      { id: 'totti-0001', name: 'Francesco Totti', position: 'MID', rating: 92, club: 'AS Roma', season: '2000-01', altPositions: ['AM', 'ST'] },
-      { id: 'delvecchio-0001', name: 'Marco Delvecchio', position: 'FWD', rating: 82, club: 'AS Roma', season: '2000-01', altPositions: ['ST', 'AM'] },
-      { id: 'montella-0001', name: 'Vincenzo Montella', position: 'FWD', rating: 84, club: 'AS Roma', season: '2000-01', altPositions: ['ST'] },
-      { id: 'batistuta-0001', name: 'Gabriel Batistuta', position: 'FWD', rating: 93, club: 'AS Roma', season: '2000-01', altPositions: ['ST'] },
-    ]
-  },
-  {
-    id: 'lazio-1999-00', club: 'Lazio', shortName: 'LAZ', season: '1999-00', league: 'seriea', color: '#87D8F7',
-    players: [
-      { id: 'marchegiani-laz-0000', name: 'Luca Marchegiani', position: 'GK', rating: 82, club: 'Lazio', season: '1999-00' },
-      { id: 'pancaro-laz-0000', name: 'Giuseppe Pancaro', position: 'DEF', rating: 78, club: 'Lazio', season: '1999-00', altPositions: ['RB'] },
-      { id: 'nesta-laz-0000', name: 'Alessandro Nesta', position: 'DEF', rating: 92, club: 'Lazio', season: '1999-00', altPositions: ['CB'] },
-      { id: 'couto-laz-0000', name: 'Fernando Couto', position: 'DEF', rating: 83, club: 'Lazio', season: '1999-00', altPositions: ['CB'] },
-      { id: 'favalli-laz-0000', name: 'Giuseppe Favalli', position: 'DEF', rating: 81, club: 'Lazio', season: '1999-00', altPositions: ['LB'] },
-      { id: 'mihajlovic-laz-0000', name: 'Siniša Mihajlović', position: 'MID', rating: 86, club: 'Lazio', season: '1999-00', altPositions: ['DM', 'CM'] },
-      { id: 'almeyda-laz-0000', name: 'Matías Almeyda', position: 'MID', rating: 81, club: 'Lazio', season: '1999-00', altPositions: ['DM', 'CM'] },
-      { id: 'stankovic-laz-0000', name: 'Dejan Stanković', position: 'MID', rating: 83, club: 'Lazio', season: '1999-00', altPositions: ['CM', 'AM'] },
-      { id: 'nedved-laz-0000', name: 'Pavel Nedvěd', position: 'FWD', rating: 91, club: 'Lazio', season: '1999-00', altPositions: ['LW', 'AM'] },
-      { id: 'crespo-laz-0000', name: 'Hernán Crespo', position: 'FWD', rating: 88, club: 'Lazio', season: '1999-00', altPositions: ['ST'] },
-      { id: 'salas-laz-0000', name: 'Marcelo Salas', position: 'FWD', rating: 84, club: 'Lazio', season: '1999-00', altPositions: ['ST', 'LW'] },
-    ]
-  },
-  {
-    id: 'ac-milan-2003-04', club: 'AC Milan', shortName: 'MIL', season: '2003-04', league: 'seriea', color: '#FB090B',
-    players: [
-      { id: 'dida-mil-0304', name: 'Dida', position: 'GK', rating: 86, club: 'AC Milan', season: '2003-04' },
-      { id: 'cafu-mil-0304', name: 'Cafu', position: 'DEF', rating: 87, club: 'AC Milan', season: '2003-04', altPositions: ['RB'] },
-      { id: 'nesta-mil-0304', name: 'Alessandro Nesta', position: 'DEF', rating: 91, club: 'AC Milan', season: '2003-04', altPositions: ['CB'] },
-      { id: 'stam-mil-0304', name: 'Jaap Stam', position: 'DEF', rating: 85, club: 'AC Milan', season: '2003-04', altPositions: ['CB'] },
-      { id: 'maldini-mil-0304', name: 'Paolo Maldini', position: 'DEF', rating: 90, club: 'AC Milan', season: '2003-04', altPositions: ['LB', 'CB'] },
-      { id: 'pirlo-mil-0304', name: 'Andrea Pirlo', position: 'MID', rating: 91, club: 'AC Milan', season: '2003-04', altPositions: ['DM', 'CM'] },
-      { id: 'gattuso-mil-0304', name: 'Gennaro Gattuso', position: 'MID', rating: 84, club: 'AC Milan', season: '2003-04', altPositions: ['DM', 'CM'] },
-      { id: 'seedorf-mil-0304', name: 'Clarence Seedorf', position: 'MID', rating: 87, club: 'AC Milan', season: '2003-04', altPositions: ['CM', 'AM'] },
-      { id: 'kaka-mil-0304', name: 'Kaká', position: 'FWD', rating: 89, club: 'AC Milan', season: '2003-04', altPositions: ['AM', 'ST'] },
-      { id: 'shevchenko-0304', name: 'Andriy Shevchenko', position: 'FWD', rating: 93, club: 'AC Milan', season: '2003-04', altPositions: ['ST'] },
-      { id: 'inzaghi-0304', name: 'Filippo Inzaghi', position: 'FWD', rating: 85, club: 'AC Milan', season: '2003-04', altPositions: ['ST'] },
     ]
   },
 ]

@@ -25,12 +25,15 @@ export const laLigaData: ClubSeason[] = [
       { id: 'ramos-1112', name: 'Sergio Ramos', position: 'DEF', rating: 91, club: 'Real Madrid', season: '2011-12', altPositions: ['CB', 'RB'] },
       { id: 'pepe-1112', name: 'Pepe', position: 'DEF', rating: 88, club: 'Real Madrid', season: '2011-12', altPositions: ['CB'] },
       { id: 'marcelo-1112', name: 'Marcelo', position: 'DEF', rating: 89, club: 'Real Madrid', season: '2011-12', altPositions: ['LB'] },
+      { id: 'coentrao-1112', name: 'Fábio Coentrão', position: 'DEF', rating: 84, club: 'Real Madrid', season: '2011-12', altPositions: ['LB'] },
       { id: 'alonso-x-rm-1112', name: 'Xabi Alonso', position: 'MID', rating: 91, club: 'Real Madrid', season: '2011-12', altPositions: ['DM', 'CM'] },
       { id: 'khedira-1112', name: 'Sami Khedira', position: 'MID', rating: 86, club: 'Real Madrid', season: '2011-12', altPositions: ['DM', 'CM'] },
       { id: 'modric-1112', name: 'Luka Modrić', position: 'MID', rating: 90, club: 'Real Madrid', season: '2011-12', altPositions: ['CM', 'AM'] },
       { id: 'ozil-1112', name: 'Mesut Özil', position: 'MID', rating: 90, club: 'Real Madrid', season: '2011-12', altPositions: ['AM', 'CM'] },
       { id: 'ronaldo-cr-1112', name: 'Cristiano Ronaldo', position: 'FWD', rating: 96, club: 'Real Madrid', season: '2011-12', altPositions: ['LW', 'ST'] },
       { id: 'higuain-1112', name: 'Gonzalo Higuaín', position: 'FWD', rating: 88, club: 'Real Madrid', season: '2011-12', altPositions: ['ST'] },
+      { id: 'di-maria-rm-1112', name: 'Ángel Di María', position: 'FWD', rating: 88, club: 'Real Madrid', season: '2011-12', altPositions: ['RW', 'LW'] },
+      { id: 'benzema-rm-1112', name: 'Karim Benzema', position: 'FWD', rating: 86, club: 'Real Madrid', season: '2011-12', altPositions: ['ST', 'AM'] },
     ]
   },
   {
@@ -124,9 +127,11 @@ export const laLigaData: ClubSeason[] = [
       { id: 'tiago-atm-1314', name: 'Tiago', position: 'MID', rating: 83, club: 'Atletico Madrid', season: '2013-14', altPositions: ['CM', 'DM'] },
       { id: 'gabi-1314', name: 'Gabi', position: 'MID', rating: 83, club: 'Atletico Madrid', season: '2013-14', altPositions: ['CM', 'DM'] },
       { id: 'koke-1314', name: 'Koke', position: 'MID', rating: 86, club: 'Atletico Madrid', season: '2013-14', altPositions: ['CM', 'RM'] },
+      { id: 'mario-suarez-1314', name: 'Mario Suárez', position: 'MID', rating: 80, club: 'Atletico Madrid', season: '2013-14', altPositions: ['DM', 'CM'] },
       { id: 'villa-atm-1314', name: 'David Villa', position: 'FWD', rating: 87, club: 'Atletico Madrid', season: '2013-14', altPositions: ['ST', 'LW'] },
       { id: 'griezmann-1314', name: 'Antoine Griezmann', position: 'FWD', rating: 87, club: 'Atletico Madrid', season: '2013-14', altPositions: ['ST', 'LW'] },
       { id: 'diego-costa-atm-1314', name: 'Diego Costa', position: 'FWD', rating: 90, club: 'Atletico Madrid', season: '2013-14', altPositions: ['ST'] },
+      { id: 'turan-atm-1314', name: 'Arda Turan', position: 'FWD', rating: 85, club: 'Atletico Madrid', season: '2013-14', altPositions: ['LW', 'AM'] },
     ]
   },
   {
@@ -448,54 +453,6 @@ export const laLigaData: ClubSeason[] = [
       { id: 'llorente-atm-2324', name: 'Marcos Llorente', position: 'MID', rating: 83, club: 'Atletico Madrid', season: '2023-24', altPositions: ['CM', 'RW'] },
       { id: 'griezmann-atm-2324', name: 'Antoine Griezmann', position: 'FWD', rating: 89, club: 'Atletico Madrid', season: '2023-24', altPositions: ['ST', 'LW', 'AM'] },
       { id: 'morata-atm-2324', name: 'Álvaro Morata', position: 'FWD', rating: 84, club: 'Atletico Madrid', season: '2023-24', altPositions: ['ST'] },
-    ]
-  },
-  {
-    id: 'atletico-2013-14', club: 'Atletico Madrid', shortName: 'ATM', season: '2013-14', league: 'laliga', color: '#CB3524',
-    players: [
-      { id: 'courtois-atm-1314', name: 'Thibaut Courtois', position: 'GK', rating: 88, club: 'Atletico Madrid', season: '2013-14' },
-      { id: 'juanfran-atm-1314', name: 'Juanfran', position: 'DEF', rating: 83, club: 'Atletico Madrid', season: '2013-14', altPositions: ['RB'] },
-      { id: 'miranda-atm-1314', name: 'Miranda', position: 'DEF', rating: 85, club: 'Atletico Madrid', season: '2013-14', altPositions: ['CB'] },
-      { id: 'godin-atm-1314', name: 'Diego Godín', position: 'DEF', rating: 90, club: 'Atletico Madrid', season: '2013-14', altPositions: ['CB'] },
-      { id: 'filipe-luis-atm-1314', name: 'Filipe Luís', position: 'DEF', rating: 85, club: 'Atletico Madrid', season: '2013-14', altPositions: ['LB'] },
-      { id: 'gabi-atm-1314', name: 'Gabi', position: 'MID', rating: 85, club: 'Atletico Madrid', season: '2013-14', altPositions: ['CM', 'DM'] },
-      { id: 'mario-suarez-1314', name: 'Mario Suárez', position: 'MID', rating: 80, club: 'Atletico Madrid', season: '2013-14', altPositions: ['DM', 'CM'] },
-      { id: 'koke-atm-1314', name: 'Koke', position: 'MID', rating: 84, club: 'Atletico Madrid', season: '2013-14', altPositions: ['CM', 'RM'] },
-      { id: 'turan-atm-1314', name: 'Arda Turan', position: 'FWD', rating: 85, club: 'Atletico Madrid', season: '2013-14', altPositions: ['LW', 'AM'] },
-      { id: 'villa-d-atm-1314', name: 'David Villa', position: 'FWD', rating: 87, club: 'Atletico Madrid', season: '2013-14', altPositions: ['ST', 'LW'] },
-      { id: 'diego-costa-1314', name: 'Diego Costa', position: 'FWD', rating: 91, club: 'Atletico Madrid', season: '2013-14', altPositions: ['ST'] },
-    ]
-  },
-  {
-    id: 'real-madrid-2011-12', club: 'Real Madrid', shortName: 'RMA', season: '2011-12', league: 'laliga', color: '#FEBE10',
-    players: [
-      { id: 'casillas-rm-1112', name: 'Iker Casillas', position: 'GK', rating: 91, club: 'Real Madrid', season: '2011-12' },
-      { id: 'arbeloa-1112', name: 'Álvaro Arbeloa', position: 'DEF', rating: 81, club: 'Real Madrid', season: '2011-12', altPositions: ['RB'] },
-      { id: 'ramos-rm-1112', name: 'Sergio Ramos', position: 'DEF', rating: 90, club: 'Real Madrid', season: '2011-12', altPositions: ['CB', 'RB'] },
-      { id: 'pepe-rm-1112', name: 'Pepe', position: 'DEF', rating: 86, club: 'Real Madrid', season: '2011-12', altPositions: ['CB'] },
-      { id: 'coentrao-1112', name: 'Fábio Coentrão', position: 'DEF', rating: 84, club: 'Real Madrid', season: '2011-12', altPositions: ['LB'] },
-      { id: 'alonso-x-rm-1112', name: 'Xabi Alonso', position: 'MID', rating: 89, club: 'Real Madrid', season: '2011-12', altPositions: ['DM', 'CM'] },
-      { id: 'khedira-rm-1112', name: 'Sami Khedira', position: 'MID', rating: 85, club: 'Real Madrid', season: '2011-12', altPositions: ['CM', 'DM'] },
-      { id: 'ozil-rm-1112', name: 'Mesut Özil', position: 'MID', rating: 90, club: 'Real Madrid', season: '2011-12', altPositions: ['AM', 'CM'] },
-      { id: 'di-maria-rm-1112', name: 'Ángel Di María', position: 'FWD', rating: 88, club: 'Real Madrid', season: '2011-12', altPositions: ['RW', 'LW'] },
-      { id: 'benzema-rm-1112', name: 'Karim Benzema', position: 'FWD', rating: 86, club: 'Real Madrid', season: '2011-12', altPositions: ['ST', 'AM'] },
-      { id: 'ronaldo-rm-1112', name: 'Cristiano Ronaldo', position: 'FWD', rating: 95, club: 'Real Madrid', season: '2011-12', altPositions: ['LW', 'ST'] },
-    ]
-  },
-  {
-    id: 'valencia-2003-04', club: 'Valencia', shortName: 'VAL', season: '2003-04', league: 'laliga', color: '#FF7F00',
-    players: [
-      { id: 'canizares-val-0304', name: 'Santiago Cañizares', position: 'GK', rating: 85, club: 'Valencia', season: '2003-04' },
-      { id: 'angloma-val-0304', name: 'Jocelyn Angloma', position: 'DEF', rating: 78, club: 'Valencia', season: '2003-04', altPositions: ['RB'] },
-      { id: 'marchena-val-0304', name: 'Carlos Marchena', position: 'DEF', rating: 81, club: 'Valencia', season: '2003-04', altPositions: ['CB'] },
-      { id: 'ayala-val-0304', name: 'Roberto Ayala', position: 'DEF', rating: 85, club: 'Valencia', season: '2003-04', altPositions: ['CB'] },
-      { id: 'carboni-val-0304', name: 'Amedeo Carboni', position: 'DEF', rating: 79, club: 'Valencia', season: '2003-04', altPositions: ['LB'] },
-      { id: 'albelda-val-0304', name: 'David Albelda', position: 'MID', rating: 82, club: 'Valencia', season: '2003-04', altPositions: ['DM', 'CM'] },
-      { id: 'baraja-val-0304', name: 'Rubén Baraja', position: 'MID', rating: 84, club: 'Valencia', season: '2003-04', altPositions: ['CM', 'DM'] },
-      { id: 'aimar-val-0304', name: 'Pablo Aimar', position: 'MID', rating: 85, club: 'Valencia', season: '2003-04', altPositions: ['AM', 'CM'] },
-      { id: 'joaquin-val-0304', name: 'Joaquín', position: 'FWD', rating: 84, club: 'Valencia', season: '2003-04', altPositions: ['RW', 'LW'] },
-      { id: 'vicente-val-0304', name: 'Vicente', position: 'FWD', rating: 83, club: 'Valencia', season: '2003-04', altPositions: ['LW', 'RW'] },
-      { id: 'mista-val-0304', name: 'Mista', position: 'FWD', rating: 82, club: 'Valencia', season: '2003-04', altPositions: ['ST'] },
     ]
   },
 ]
