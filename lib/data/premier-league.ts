@@ -14,7 +14,7 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'pires-0304', name: 'Robert Pires', position: 'MID', rating: 89, club: 'Arsenal', season: '2003-04', altPositions: ['LM', 'AM'] },
       { id: 'ljungberg-0304', name: 'Freddie Ljungberg', position: 'MID', rating: 86, club: 'Arsenal', season: '2003-04', altPositions: ['RM', 'CM'] },
       { id: 'henry-0304', name: 'Thierry Henry', position: 'FWD', rating: 96, club: 'Arsenal', season: '2003-04', altPositions: ['ST', 'LW'] },
-      { id: 'bergkamp-0304', name: 'Dennis Bergkamp', position: 'FWD', rating: 90, club: 'Arsenal', season: '2003-04', altPositions: ['ST', 'AM'] },
+      { id: 'bergkamp-0304', name: 'Dennis Bergkamp', position: 'FWD', rating: 88, club: 'Arsenal', season: '2003-04', altPositions: ['ST', 'AM'] },
       { id: 'reyes-0304', name: 'José Antonio Reyes', position: 'FWD', rating: 83, club: 'Arsenal', season: '2003-04', altPositions: ['LW', 'ST'] },
     ]
   },
@@ -62,10 +62,10 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'clichy-mc-1112', name: 'Gaël Clichy', position: 'DEF', rating: 83, club: 'Manchester City', season: '2011-12', altPositions: ['LB'] },
       { id: 'silva-d-1112', name: 'David Silva', position: 'MID', rating: 92, club: 'Manchester City', season: '2011-12', altPositions: ['AM', 'CM'] },
       { id: 'barry-1112', name: 'Gareth Barry', position: 'MID', rating: 82, club: 'Manchester City', season: '2011-12', altPositions: ['DM', 'CM'] },
-      { id: 'yaya-1112', name: 'Yaya Touré', position: 'MID', rating: 92, club: 'Manchester City', season: '2011-12', altPositions: ['CM', 'DM', 'AM'] },
+      { id: 'yaya-1112', name: 'Yaya Touré', position: 'MID', rating: 91, club: 'Manchester City', season: '2011-12', altPositions: ['CM', 'DM', 'AM'] },
       { id: 'nasri-1112', name: 'Samir Nasri', position: 'MID', rating: 85, club: 'Manchester City', season: '2011-12', altPositions: ['AM', 'CM'] },
-      { id: 'aguero-1112', name: 'Sergio Agüero', position: 'FWD', rating: 93, club: 'Manchester City', season: '2011-12', altPositions: ['ST'] },
-      { id: 'tevez-1112', name: 'Carlos Tévez', position: 'FWD', rating: 91, club: 'Manchester City', season: '2011-12', altPositions: ['ST', 'AM'] },
+      { id: 'aguero-1112', name: 'Sergio Agüero', position: 'FWD', rating: 92, club: 'Manchester City', season: '2011-12', altPositions: ['ST'] },
+      { id: 'tevez-1112', name: 'Carlos Tévez', position: 'FWD', rating: 87, club: 'Manchester City', season: '2011-12', altPositions: ['ST', 'AM'] },
       { id: 'balotelli-1112', name: 'Mario Balotelli', position: 'FWD', rating: 84, club: 'Manchester City', season: '2011-12', altPositions: ['ST'] },
     ]
   },
@@ -105,10 +105,10 @@ export const premierLeagueData: ClubSeason[] = [
   {
     id: 'liverpool-2019-20', club: 'Liverpool', shortName: 'LIV', season: '2019-20', league: 'pl', color: '#C8102E',
     players: [
-      { id: 'alisson-1920', name: 'Alisson', position: 'GK', rating: 90, club: 'Liverpool', season: '2019-20' },
+      { id: 'alisson-1920', name: 'Alisson', position: 'GK', rating: 91, club: 'Liverpool', season: '2019-20' },
       { id: 'trent-1920', name: 'Trent Alexander-Arnold', position: 'DEF', rating: 90, club: 'Liverpool', season: '2019-20', altPositions: ['RB'] },
       { id: 'gomez-1920', name: 'Joe Gomez', position: 'DEF', rating: 85, club: 'Liverpool', season: '2019-20', altPositions: ['CB', 'RB'] },
-      { id: 'van-dijk-1920', name: 'Virgil van Dijk', position: 'DEF', rating: 90, club: 'Liverpool', season: '2019-20', altPositions: ['CB'] },
+      { id: 'van-dijk-1920', name: 'Virgil van Dijk', position: 'DEF', rating: 92, club: 'Liverpool', season: '2019-20', altPositions: ['CB'] },
       { id: 'robertson-1920', name: 'Andrew Robertson', position: 'DEF', rating: 89, club: 'Liverpool', season: '2019-20', altPositions: ['LB'] },
       { id: 'henderson-1920', name: 'Jordan Henderson', position: 'MID', rating: 86, club: 'Liverpool', season: '2019-20', altPositions: ['CM', 'DM'] },
       { id: 'fabinho-1920', name: 'Fabinho', position: 'MID', rating: 89, club: 'Liverpool', season: '2019-20', altPositions: ['DM', 'CM'] },
@@ -138,12 +138,12 @@ export const premierLeagueData: ClubSeason[] = [
   {
     id: 'man-utd-1998-99', club: 'Manchester United', shortName: 'MUN', season: '1998-99', league: 'pl', color: '#DA291C',
     players: [
-      { id: 'schmeichel-9899', name: 'Peter Schmeichel', position: 'GK', rating: 91, club: 'Manchester United', season: '1998-99' },
+      { id: 'schmeichel-9899', name: 'Peter Schmeichel', position: 'GK', rating: 92, club: 'Manchester United', season: '1998-99' },
       { id: 'neville-g-9899', name: 'Gary Neville', position: 'DEF', rating: 86, club: 'Manchester United', season: '1998-99', altPositions: ['RB'] },
       { id: 'stam-9899', name: 'Jaap Stam', position: 'DEF', rating: 91, club: 'Manchester United', season: '1998-99', altPositions: ['CB'] },
       { id: 'johnsen-9899', name: 'Ronny Johnsen', position: 'DEF', rating: 83, club: 'Manchester United', season: '1998-99', altPositions: ['CB'] },
-      { id: 'irwin-9899', name: 'Denis Irwin', position: 'DEF', rating: 87, club: 'Manchester United', season: '1998-99', altPositions: ['LB', 'RB'] },
-      { id: 'keane-r-9899', name: 'Roy Keane', position: 'MID', rating: 94, club: 'Manchester United', season: '1998-99', altPositions: ['CM', 'DM'] },
+      { id: 'irwin-9899', name: 'Denis Irwin', position: 'DEF', rating: 86, club: 'Manchester United', season: '1998-99', altPositions: ['LB', 'RB'] },
+      { id: 'keane-r-9899', name: 'Roy Keane', position: 'MID', rating: 93, club: 'Manchester United', season: '1998-99', altPositions: ['CM', 'DM'] },
       { id: 'beckham-9899', name: 'David Beckham', position: 'MID', rating: 90, club: 'Manchester United', season: '1998-99', altPositions: ['RM', 'CM'] },
       { id: 'scholes-9899', name: 'Paul Scholes', position: 'MID', rating: 89, club: 'Manchester United', season: '1998-99', altPositions: ['CM', 'AM'] },
       { id: 'giggs-9899', name: 'Ryan Giggs', position: 'MID', rating: 91, club: 'Manchester United', season: '1998-99', altPositions: ['LM', 'LW'] },
@@ -177,7 +177,7 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'pallister-9293', name: 'Gary Pallister', position: 'DEF', rating: 87, club: 'Manchester United', season: '1992-93', altPositions: ['CB'] },
       { id: 'bruce-9293', name: 'Steve Bruce', position: 'DEF', rating: 86, club: 'Manchester United', season: '1992-93', altPositions: ['CB'] },
       { id: 'irwin-9293', name: 'Denis Irwin', position: 'DEF', rating: 85, club: 'Manchester United', season: '1992-93', altPositions: ['LB', 'RB'] },
-      { id: 'keane-r-9293', name: 'Roy Keane', position: 'MID', rating: 88, club: 'Manchester United', season: '1992-93', altPositions: ['CM', 'DM'] },
+      { id: 'mcclair-9293', name: 'Brian McClair', position: 'MID', rating: 84, club: 'Manchester United', season: '1992-93', altPositions: ['CM', 'ST'] },
       { id: 'ince-9293', name: 'Paul Ince', position: 'MID', rating: 87, club: 'Manchester United', season: '1992-93', altPositions: ['CM', 'DM'] },
       { id: 'giggs-9293', name: 'Ryan Giggs', position: 'MID', rating: 88, club: 'Manchester United', season: '1992-93', altPositions: ['LM', 'LW'] },
       { id: 'cantona-9293', name: 'Eric Cantona', position: 'FWD', rating: 92, club: 'Manchester United', season: '1992-93', altPositions: ['ST', 'AM'] },
@@ -197,8 +197,8 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'makelele-0405', name: 'Claude Makélélé', position: 'MID', rating: 90, club: 'Chelsea', season: '2004-05', altPositions: ['DM', 'CM'] },
       { id: 'lampard-0405', name: 'Frank Lampard', position: 'MID', rating: 92, club: 'Chelsea', season: '2004-05', altPositions: ['CM', 'AM'] },
       { id: 'tiago-0405', name: 'Tiago', position: 'MID', rating: 82, club: 'Chelsea', season: '2004-05', altPositions: ['CM', 'DM'] },
-      { id: 'duff-0405', name: 'Damien Duff', position: 'FWD', rating: 83, club: 'Chelsea', season: '2004-05', altPositions: ['LW'] },
-      { id: 'drogba-0405', name: 'Didier Drogba', position: 'FWD', rating: 89, club: 'Chelsea', season: '2004-05', altPositions: ['ST'] },
+      { id: 'duff-0405', name: 'Damien Duff', position: 'FWD', rating: 85, club: 'Chelsea', season: '2004-05', altPositions: ['LW'] },
+      { id: 'drogba-0405', name: 'Didier Drogba', position: 'FWD', rating: 87, club: 'Chelsea', season: '2004-05', altPositions: ['ST'] },
       { id: 'robben-0405', name: 'Arjen Robben', position: 'FWD', rating: 88, club: 'Chelsea', season: '2004-05', altPositions: ['RW'] },
     ]
   },
@@ -230,7 +230,7 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'wanyama-1617', name: 'Victor Wanyama', position: 'MID', rating: 82, club: 'Tottenham', season: '2016-17', altPositions: ['DM', 'CM'] },
       { id: 'eriksen-1617', name: 'Christian Eriksen', position: 'MID', rating: 88, club: 'Tottenham', season: '2016-17', altPositions: ['AM', 'CM'] },
       { id: 'son-1617', name: 'Son Heung-min', position: 'FWD', rating: 87, club: 'Tottenham', season: '2016-17', altPositions: ['LW', 'ST'] },
-      { id: 'kane-1617', name: 'Harry Kane', position: 'FWD', rating: 91, club: 'Tottenham', season: '2016-17', altPositions: ['ST'] },
+      { id: 'kane-1617', name: 'Harry Kane', position: 'FWD', rating: 93, club: 'Tottenham', season: '2016-17', altPositions: ['ST'] },
       { id: 'alli-1617', name: 'Dele Alli', position: 'FWD', rating: 86, club: 'Tottenham', season: '2016-17', altPositions: ['AM', 'ST'] },
     ]
   },
@@ -325,8 +325,8 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'mikel-0910', name: 'John Obi Mikel', position: 'MID', rating: 81, club: 'Chelsea', season: '2009-10', altPositions: ['DM', 'CM'] },
       { id: 'ballack-0910', name: 'Michael Ballack', position: 'MID', rating: 87, club: 'Chelsea', season: '2009-10', altPositions: ['CM', 'DM'] },
       { id: 'lampard-0910', name: 'Frank Lampard', position: 'MID', rating: 92, club: 'Chelsea', season: '2009-10', altPositions: ['CM', 'AM'] },
-      { id: 'malouda-0910', name: 'Florent Malouda', position: 'MID', rating: 83, club: 'Chelsea', season: '2009-10', altPositions: ['LM', 'AM'] },
-      { id: 'essien-0910', name: 'Michael Essien', position: 'MID', rating: 87, club: 'Chelsea', season: '2009-10', altPositions: ['CM', 'DM'] },
+      { id: 'malouda-0910', name: 'Florent Malouda', position: 'MID', rating: 85, club: 'Chelsea', season: '2009-10', altPositions: ['LM', 'AM'] },
+      { id: 'essien-0910', name: 'Michael Essien', position: 'MID', rating: 85, club: 'Chelsea', season: '2009-10', altPositions: ['CM', 'DM'] },
       { id: 'drogba-0910', name: 'Didier Drogba', position: 'FWD', rating: 93, club: 'Chelsea', season: '2009-10', altPositions: ['ST'] },
       { id: 'anelka-0910', name: 'Nicolas Anelka', position: 'FWD', rating: 84, club: 'Chelsea', season: '2009-10', altPositions: ['ST', 'RW'] },
     ]
@@ -392,7 +392,7 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'eriksen-1819', name: 'Christian Eriksen', position: 'MID', rating: 89, club: 'Tottenham', season: '2018-19', altPositions: ['AM', 'CM'] },
       { id: 'alli-1819', name: 'Dele Alli', position: 'FWD', rating: 85, club: 'Tottenham', season: '2018-19', altPositions: ['AM', 'ST'] },
       { id: 'son-1819', name: 'Son Heung-min', position: 'FWD', rating: 89, club: 'Tottenham', season: '2018-19', altPositions: ['LW', 'ST'] },
-      { id: 'kane-1819', name: 'Harry Kane', position: 'FWD', rating: 93, club: 'Tottenham', season: '2018-19', altPositions: ['ST'] },
+      { id: 'kane-1819', name: 'Harry Kane', position: 'FWD', rating: 90, club: 'Tottenham', season: '2018-19', altPositions: ['ST'] },
     ]
   },
   {
@@ -408,7 +408,7 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'mount-2122', name: 'Mason Mount', position: 'MID', rating: 86, club: 'Chelsea', season: '2021-22', altPositions: ['AM', 'CM'] },
       { id: 'havertz-2122', name: 'Kai Havertz', position: 'FWD', rating: 86, club: 'Chelsea', season: '2021-22', altPositions: ['AM', 'ST'] },
       { id: 'werner-2122', name: 'Timo Werner', position: 'FWD', rating: 83, club: 'Chelsea', season: '2021-22', altPositions: ['ST', 'LW'] },
-      { id: 'lukaku-che-2122', name: 'Romelu Lukaku', position: 'FWD', rating: 88, club: 'Chelsea', season: '2021-22', altPositions: ['ST'] },
+      { id: 'lukaku-che-2122', name: 'Romelu Lukaku', position: 'FWD', rating: 85, club: 'Chelsea', season: '2021-22', altPositions: ['ST'] },
     ]
   },
   {
@@ -517,7 +517,7 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'pistone-0405', name: 'Alessandro Pistone', position: 'DEF', rating: 76, club: 'Everton', season: '2004-05', altPositions: ['LB'] },
       { id: 'carsley-0405', name: 'Lee Carsley', position: 'MID', rating: 80, club: 'Everton', season: '2004-05', altPositions: ['DM', 'CM'] },
       { id: 'gravesen-0405', name: 'Thomas Gravesen', position: 'MID', rating: 82, club: 'Everton', season: '2004-05', altPositions: ['CM', 'DM'] },
-      { id: 'arteta-0405', name: 'Mikel Arteta', position: 'MID', rating: 86, club: 'Everton', season: '2004-05', altPositions: ['AM', 'CM'] },
+      { id: 'arteta-0405', name: 'Mikel Arteta', position: 'MID', rating: 82, club: 'Everton', season: '2004-05', altPositions: ['AM', 'CM'] },
       { id: 'kilbane-0405', name: 'Kevin Kilbane', position: 'MID', rating: 76, club: 'Everton', season: '2004-05', altPositions: ['LM'] },
       { id: 'cahill-t-0405', name: 'Tim Cahill', position: 'FWD', rating: 83, club: 'Everton', season: '2004-05', altPositions: ['ST', 'AM'] },
       { id: 'bent-m-0405', name: 'Marcus Bent', position: 'FWD', rating: 79, club: 'Everton', season: '2004-05', altPositions: ['ST'] },

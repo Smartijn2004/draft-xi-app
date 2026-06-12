@@ -43,10 +43,10 @@ export const serieAData: ClubSeason[] = [
       { id: 'alex-sandro-1819', name: 'Alex Sandro', position: 'DEF', rating: 84, club: 'Juventus', season: '2018-19', altPositions: ['LB'] },
       { id: 'pjanic-1819', name: 'Miralem Pjanić', position: 'MID', rating: 87, club: 'Juventus', season: '2018-19', altPositions: ['DM', 'CM'] },
       { id: 'matuidi-1819', name: 'Blaise Matuidi', position: 'MID', rating: 84, club: 'Juventus', season: '2018-19', altPositions: ['CM', 'LM'] },
-      { id: 'dybala-1819', name: 'Paulo Dybala', position: 'FWD', rating: 88, club: 'Juventus', season: '2018-19', altPositions: ['AM', 'ST'] },
+      { id: 'dybala-1819', name: 'Paulo Dybala', position: 'FWD', rating: 85, club: 'Juventus', season: '2018-19', altPositions: ['AM', 'ST'] },
       { id: 'costa-d-1819', name: 'Douglas Costa', position: 'FWD', rating: 84, club: 'Juventus', season: '2018-19', altPositions: ['RW', 'LW'] },
       { id: 'mandzukic-1819', name: 'Mario Mandžukić', position: 'FWD', rating: 84, club: 'Juventus', season: '2018-19', altPositions: ['ST', 'LW'] },
-      { id: 'ronaldo-juv-1819', name: 'Cristiano Ronaldo', position: 'FWD', rating: 95, club: 'Juventus', season: '2018-19', altPositions: ['LW', 'ST'] },
+      { id: 'ronaldo-juv-1819', name: 'Cristiano Ronaldo', position: 'FWD', rating: 93, club: 'Juventus', season: '2018-19', altPositions: ['LW', 'ST'] },
     ]
   },
   {
@@ -127,7 +127,7 @@ export const serieAData: ClubSeason[] = [
       { id: 'barella-2223', name: 'Nicolò Barella', position: 'MID', rating: 88, club: 'Inter Milan', season: '2022-23', altPositions: ['CM', 'AM'] },
       { id: 'mkhitaryan-2223', name: 'Henrikh Mkhitaryan', position: 'MID', rating: 83, club: 'Inter Milan', season: '2022-23', altPositions: ['CM', 'AM'] },
       { id: 'perisic-2223', name: 'Ivan Perišić', position: 'MID', rating: 85, club: 'Inter Milan', season: '2022-23', altPositions: ['LWB', 'LM'] },
-      { id: 'lukaku-2223', name: 'Romelu Lukaku', position: 'FWD', rating: 88, club: 'Inter Milan', season: '2022-23', altPositions: ['ST'] },
+      { id: 'lukaku-2223', name: 'Romelu Lukaku', position: 'FWD', rating: 85, club: 'Inter Milan', season: '2022-23', altPositions: ['ST'] },
       { id: 'lautaro-2223', name: 'Lautaro Martínez', position: 'FWD', rating: 90, club: 'Inter Milan', season: '2022-23', altPositions: ['ST'] },
     ]
   },
@@ -156,7 +156,6 @@ export const serieAData: ClubSeason[] = [
       { id: 'aldair-0001', name: 'Aldair', position: 'DEF', rating: 84, club: 'AS Roma', season: '2000-01', altPositions: ['CB'] },
       { id: 'candela-0001', name: 'Vincent Candela', position: 'DEF', rating: 83, club: 'AS Roma', season: '2000-01', altPositions: ['LB'] },
       { id: 'emerson-0001', name: 'Emerson', position: 'MID', rating: 84, club: 'AS Roma', season: '2000-01', altPositions: ['DM', 'CM'] },
-      { id: 'de-rossi-0001', name: 'Daniele De Rossi', position: 'MID', rating: 80, club: 'AS Roma', season: '2000-01', altPositions: ['DM', 'CM'] },
       { id: 'nakata-0001', name: 'Hidetoshi Nakata', position: 'MID', rating: 84, club: 'AS Roma', season: '2000-01', altPositions: ['CM', 'AM'] },
       { id: 'tommasi-rom-0001', name: 'Damiano Tommasi', position: 'MID', rating: 82, club: 'AS Roma', season: '2000-01', altPositions: ['CM', 'DM'] },
       { id: 'totti-0001', name: 'Francesco Totti', position: 'FWD', rating: 93, club: 'AS Roma', season: '2000-01', altPositions: ['ST', 'AM'] },
@@ -180,7 +179,7 @@ export const serieAData: ClubSeason[] = [
       { id: 'crespo-9900', name: 'Hernán Crespo', position: 'FWD', rating: 90, club: 'Lazio', season: '1999-00', altPositions: ['ST'] },
       { id: 'salas-9900', name: 'Marcelo Salas', position: 'FWD', rating: 85, club: 'Lazio', season: '1999-00', altPositions: ['ST'] },
       { id: 'boksic-9900', name: 'Alen Bokšić', position: 'FWD', rating: 84, club: 'Lazio', season: '1999-00', altPositions: ['ST'] },
-      { id: 'nedved-laz-0000', name: 'Pavel Nedvěd', position: 'MID', rating: 91, club: 'Lazio', season: '1999-00', altPositions: ['LM', 'AM'] },
+      { id: 'nedved-laz-0000', name: 'Pavel Nedvěd', position: 'MID', rating: 89, club: 'Lazio', season: '1999-00', altPositions: ['LM', 'AM'] },
     ]
   },
   // --- NEW ENTRIES ---
@@ -190,7 +189,7 @@ export const serieAData: ClubSeason[] = [
       { id: 'peruzzi-juv-9697', name: 'Angelo Peruzzi', position: 'GK', rating: 86, club: 'Juventus', season: '1996-97' },
       { id: 'torricelli-juv-9697', name: 'Moreno Torricelli', position: 'DEF', rating: 80, club: 'Juventus', season: '1996-97', altPositions: ['RB'] },
       { id: 'ferrara-juv-9697', name: 'Ciro Ferrara', position: 'DEF', rating: 85, club: 'Juventus', season: '1996-97', altPositions: ['CB'] },
-      { id: 'julio-cesar-juv-9697', name: 'Júlio César', position: 'DEF', rating: 82, club: 'Juventus', season: '1996-97', altPositions: ['CB'] },
+      { id: 'julio-cesar-juv-9697', name: 'Júlio César Silva', position: 'DEF', rating: 82, club: 'Juventus', season: '1996-97', altPositions: ['CB'] },
       { id: 'pessotto-juv-9697', name: 'Gianluca Pessotto', position: 'DEF', rating: 80, club: 'Juventus', season: '1996-97', altPositions: ['LB'] },
       { id: 'deschamps-juv-9697', name: 'Didier Deschamps', position: 'MID', rating: 87, club: 'Juventus', season: '1996-97', altPositions: ['DM', 'CM'] },
       { id: 'zidane-juv-9697', name: 'Zinedine Zidane', position: 'MID', rating: 90, club: 'Juventus', season: '1996-97', altPositions: ['AM', 'CM'] },
@@ -318,7 +317,7 @@ export const serieAData: ClubSeason[] = [
       { id: 'de-sanctis-nap-1112', name: 'Morgan De Sanctis', position: 'GK', rating: 83, club: 'Napoli', season: '2011-12' },
       { id: 'maggio-nap-1112', name: 'Christian Maggio', position: 'DEF', rating: 81, club: 'Napoli', season: '2011-12', altPositions: ['RB'] },
       { id: 'campagnaro-nap-1112', name: 'Hugo Campagnaro', position: 'DEF', rating: 80, club: 'Napoli', season: '2011-12', altPositions: ['CB'] },
-      { id: 'cannavaro-f-nap-1112', name: 'Federico Cannavaro', position: 'DEF', rating: 84, club: 'Napoli', season: '2011-12', altPositions: ['CB'] },
+      { id: 'cannavaro-f-nap-1112', name: 'Paolo Cannavaro', position: 'DEF', rating: 84, club: 'Napoli', season: '2011-12', altPositions: ['CB'] },
       { id: 'zuniga-nap-1112', name: 'Juan Zúñiga', position: 'DEF', rating: 80, club: 'Napoli', season: '2011-12', altPositions: ['LB', 'RB'] },
       { id: 'inler-nap-1112', name: 'Gökhan Inler', position: 'MID', rating: 83, club: 'Napoli', season: '2011-12', altPositions: ['DM', 'CM'] },
       { id: 'gargano-nap-1112', name: 'Walter Gargano', position: 'MID', rating: 80, club: 'Napoli', season: '2011-12', altPositions: ['DM', 'CM'] },
@@ -331,11 +330,11 @@ export const serieAData: ClubSeason[] = [
   {
     id: 'napoli-1986-87', club: 'Napoli', shortName: 'NAP', season: '1986-87', league: 'seriea', color: '#12A0C3',
     players: [
-      { id: 'garella-8687', name: 'Giulio Garella', position: 'GK', rating: 80, club: 'Napoli', season: '1986-87' },
+      { id: 'garella-8687', name: 'Claudio Garella', position: 'GK', rating: 80, club: 'Napoli', season: '1986-87' },
       { id: 'bruscolotti-8687', name: 'Giuseppe Bruscolotti', position: 'DEF', rating: 78, club: 'Napoli', season: '1986-87', altPositions: ['RB'] },
       { id: 'renica-8687', name: 'Alessandro Renica', position: 'DEF', rating: 79, club: 'Napoli', season: '1986-87', altPositions: ['CB'] },
-      { id: 'ferrario-8687', name: 'Ciro Ferrario', position: 'DEF', rating: 77, club: 'Napoli', season: '1986-87', altPositions: ['CB'] },
-      { id: 'bianchi-8687', name: 'Bruno Bianchi', position: 'DEF', rating: 76, club: 'Napoli', season: '1986-87', altPositions: ['LB'] },
+      { id: 'ferrario-8687', name: 'Ciro Ferrara', position: 'DEF', rating: 77, club: 'Napoli', season: '1986-87', altPositions: ['CB'] },
+      { id: 'bianchi-8687', name: 'Giuseppe Volpecina', position: 'DEF', rating: 76, club: 'Napoli', season: '1986-87', altPositions: ['LB'] },
       { id: 'bagni-8687', name: 'Salvatore Bagni', position: 'MID', rating: 79, club: 'Napoli', season: '1986-87', altPositions: ['DM', 'CM'] },
       { id: 'de-napoli-8687', name: 'Fernando De Napoli', position: 'MID', rating: 80, club: 'Napoli', season: '1986-87', altPositions: ['CM', 'DM'] },
       { id: 'alemao-8687', name: 'Alemão', position: 'MID', rating: 83, club: 'Napoli', season: '1986-87', altPositions: ['CM', 'AM'] },

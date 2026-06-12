@@ -14,7 +14,7 @@ export const worldCupData: ClubSeason[] = [
       { id: 'ronaldinho-bra-2002', name: 'Ronaldinho', position: 'FWD', rating: 92, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['LW', 'AM'] },
       { id: 'rivaldo-2002', name: 'Rivaldo', position: 'FWD', rating: 92, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['ST', 'AM'] },
       { id: 'ronaldo-bra-2002', name: 'Ronaldo', position: 'FWD', rating: 97, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['ST'] },
-      { id: 'ronaldo-r9-2002', name: 'Ronaldinho Gaúcho', position: 'MID', rating: 91, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil', altPositions: ['AM', 'CM'] },
+      { id: 'juninho-2002', name: 'Juninho Paulista', position: 'MID', rating: 82, club: 'Brazil', season: 'World Cup 2002', altPositions: ['AM', 'CM'] },
     ]
   },
   {
@@ -27,12 +27,12 @@ export const worldCupData: ClubSeason[] = [
       { id: 'lizarazu-1998', name: 'Bixente Lizarazu', position: 'DEF', rating: 86, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['LB'] },
       { id: 'deschamps-1998', name: 'Didier Deschamps', position: 'MID', rating: 86, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['DM', 'CM'] },
       { id: 'petit-1998', name: 'Emmanuel Petit', position: 'MID', rating: 85, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['DM', 'CM'] },
-      { id: 'zidane-fra-1998', name: 'Zinedine Zidane', position: 'MID', rating: 95, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'CM'] },
-      { id: 'vieira-fra-1998', name: 'Patrick Vieira', position: 'MID', rating: 88, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CM', 'DM'] },
+      { id: 'zidane-fra-1998', name: 'Zinedine Zidane', position: 'MID', rating: 96, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'CM'] },
+      { id: 'vieira-fra-1998', name: 'Patrick Vieira', position: 'MID', rating: 84, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['CM', 'DM'] },
       { id: 'djorkaeff-1998', name: 'Youri Djorkaeff', position: 'FWD', rating: 87, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['AM', 'ST'] },
-      { id: 'henry-fra-1998', name: 'Thierry Henry', position: 'FWD', rating: 87, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['LW', 'ST'] },
+      { id: 'henry-fra-1998', name: 'Thierry Henry', position: 'FWD', rating: 84, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['LW', 'ST'] },
       { id: 'dugarry-1998', name: 'Christophe Dugarry', position: 'FWD', rating: 82, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['ST', 'RW'] },
-      { id: 'trezeguet-1998', name: 'David Trezeguet', position: 'FWD', rating: 84, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['ST'] },
+      { id: 'trezeguet-1998', name: 'David Trezeguet', position: 'FWD', rating: 82, club: 'France', season: 'World Cup 1998', nationality: 'France', altPositions: ['ST'] },
     ]
   },
   {
@@ -102,9 +102,9 @@ export const worldCupData: ClubSeason[] = [
   {
     id: 'italy-2006', club: 'Italy', shortName: 'ITA', season: 'World Cup 2006', league: 'worldcup', color: '#0066CC',
     players: [
-      { id: 'buffon-ita-2006', name: 'Gianluigi Buffon', position: 'GK', rating: 91, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy' },
+      { id: 'buffon-ita-2006', name: 'Gianluigi Buffon', position: 'GK', rating: 92, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy' },
       { id: 'zambrotta-ita-2006', name: 'Gianluca Zambrotta', position: 'DEF', rating: 87, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['RB', 'LB'] },
-      { id: 'cannavaro-ita-2006', name: 'Fabio Cannavaro', position: 'DEF', rating: 92, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
+      { id: 'cannavaro-ita-2006', name: 'Fabio Cannavaro', position: 'DEF', rating: 93, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
       { id: 'materazzi-2006', name: 'Marco Materazzi', position: 'DEF', rating: 84, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['CB'] },
       { id: 'grosso-2006', name: 'Fabio Grosso', position: 'DEF', rating: 82, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['LB'] },
       { id: 'zaccardo-2006', name: 'Cristian Zaccardo', position: 'DEF', rating: 77, club: 'Italy', season: 'World Cup 2006', nationality: 'Italy', altPositions: ['RB', 'CB'] },
@@ -171,7 +171,7 @@ export const worldCupData: ClubSeason[] = [
   {
     id: 'brazil-1970', club: 'Brazil', shortName: 'BRA', season: 'World Cup 1970', league: 'worldcup', color: '#009C3B',
     players: [
-      { id: 'felix-bra-1970', name: 'Félix', position: 'GK', rating: 82, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil' },
+      { id: 'felix-bra-1970', name: 'Félix', position: 'GK', rating: 78, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil' },
       { id: 'carlos-alberto-bra-1970', name: 'Carlos Alberto', position: 'DEF', rating: 88, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['RB'] },
       { id: 'brito-bra-1970', name: 'Brito', position: 'DEF', rating: 83, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['CB'] },
       { id: 'piazza-bra-1970', name: 'Piazza', position: 'DEF', rating: 81, club: 'Brazil', season: 'World Cup 1970', nationality: 'Brazil', altPositions: ['CB'] },
@@ -210,9 +210,9 @@ export const worldCupData: ClubSeason[] = [
       { id: 'collovati-ita-1982', name: 'Fulvio Collovati', position: 'DEF', rating: 81, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['CB'] },
       { id: 'cabrini-ita-1982', name: 'Antonio Cabrini', position: 'DEF', rating: 84, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['LB'] },
       { id: 'tardelli-ita-1982', name: 'Marco Tardelli', position: 'MID', rating: 84, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['CM', 'DM'] },
-      { id: 'conti-ita-1982', name: 'Bruno Conti', position: 'MID', rating: 83, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['RM', 'AM'] },
+      { id: 'conti-ita-1982', name: 'Bruno Conti', position: 'MID', rating: 85, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['RM', 'AM'] },
       { id: 'antognoni-ita-1982', name: 'Giancarlo Antognoni', position: 'MID', rating: 85, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['AM', 'CM'] },
-      { id: 'rossi-ita-1982', name: 'Paolo Rossi', position: 'FWD', rating: 88, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['ST'] },
+      { id: 'rossi-ita-1982', name: 'Paolo Rossi', position: 'FWD', rating: 89, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['ST'] },
       { id: 'graziani-ita-1982', name: 'Francesco Graziani', position: 'FWD', rating: 82, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['ST'] },
       { id: 'altobelli-ita-1982', name: 'Alessandro Altobelli', position: 'FWD', rating: 83, club: 'Italy', season: 'World Cup 1982', nationality: 'Italy', altPositions: ['ST'] },
     ]
@@ -254,7 +254,7 @@ export const worldCupData: ClubSeason[] = [
     players: [
       { id: 'waldir-peres-1982', name: 'Waldir Peres', position: 'GK', rating: 81, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil' },
       { id: 'leandro-bra-1982', name: 'Leandro', position: 'DEF', rating: 82, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['RB'] },
-      { id: 'oscar-bra-1982', name: 'Oscar', position: 'DEF', rating: 81, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['CB'] },
+      { id: 'oscar-bra-1982', name: 'Oscar Bernardi', position: 'DEF', rating: 81, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['CB'] },
       { id: 'luizinho-bra-1982', name: 'Luizinho', position: 'DEF', rating: 79, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['CB'] },
       { id: 'junior-bra-1982', name: 'Júnior', position: 'DEF', rating: 85, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['LB', 'DM'] },
       { id: 'cerezo-bra-1982', name: 'Toninho Cerezo', position: 'MID', rating: 84, club: 'Brazil', season: 'World Cup 1982', nationality: 'Brazil', altPositions: ['DM', 'CM'] },
@@ -310,7 +310,7 @@ export const worldCupData: ClubSeason[] = [
       { id: 'b-fernandes-2022', name: 'Bruno Fernandes', position: 'MID', rating: 88, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['AM', 'CM'] },
       { id: 'felix-j-2022', name: 'João Félix', position: 'FWD', rating: 87, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['AM', 'ST'] },
       { id: 'leao-r-2022', name: 'Rafael Leão', position: 'FWD', rating: 87, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['LW', 'ST'] },
-      { id: 'ronaldo-por-2022', name: 'Cristiano Ronaldo', position: 'FWD', rating: 88, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['LW', 'ST'] },
+      { id: 'ronaldo-por-2022', name: 'Cristiano Ronaldo', position: 'FWD', rating: 85, club: 'Portugal', season: 'World Cup 2022', nationality: 'Portugal', altPositions: ['LW', 'ST'] },
     ]
   },
   {

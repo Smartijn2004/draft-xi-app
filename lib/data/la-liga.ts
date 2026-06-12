@@ -10,7 +10,7 @@ export const laLigaData: ClubSeason[] = [
       { id: 'hierro-0304', name: 'Fernando Hierro', position: 'DEF', rating: 85, club: 'Real Madrid', season: '2003-04', altPositions: ['CB'] },
       { id: 'roberto-carlos-0304', name: 'Roberto Carlos', position: 'DEF', rating: 91, club: 'Real Madrid', season: '2003-04', altPositions: ['LB'] },
       { id: 'makelele-rm-0304', name: 'Claude Makélélé', position: 'MID', rating: 88, club: 'Real Madrid', season: '2003-04', altPositions: ['DM', 'CM'] },
-      { id: 'zidane-0304', name: 'Zinedine Zidane', position: 'MID', rating: 96, club: 'Real Madrid', season: '2003-04', altPositions: ['AM', 'CM'] },
+      { id: 'zidane-0304', name: 'Zinedine Zidane', position: 'MID', rating: 95, club: 'Real Madrid', season: '2003-04', altPositions: ['AM', 'CM'] },
       { id: 'beckham-rm-0304', name: 'David Beckham', position: 'MID', rating: 88, club: 'Real Madrid', season: '2003-04', altPositions: ['RM', 'CM'] },
       { id: 'figo-0304', name: 'Luís Figo', position: 'FWD', rating: 92, club: 'Real Madrid', season: '2003-04', altPositions: ['RW', 'AM'] },
       { id: 'ronaldo-rm-0304', name: 'Ronaldo', position: 'FWD', rating: 93, club: 'Real Madrid', season: '2003-04', altPositions: ['ST'] },
@@ -218,7 +218,7 @@ export const laLigaData: ClubSeason[] = [
   {
     id: 'real-madrid-2013-14', club: 'Real Madrid', shortName: 'RMA', season: '2013-14', league: 'laliga', color: '#FEBE10',
     players: [
-      { id: 'casillas-rm-1314', name: 'Iker Casillas', position: 'GK', rating: 89, club: 'Real Madrid', season: '2013-14' },
+      { id: 'casillas-rm-1314', name: 'Iker Casillas', position: 'GK', rating: 85, club: 'Real Madrid', season: '2013-14' },
       { id: 'carvajal-rm-1314', name: 'Dani Carvajal', position: 'DEF', rating: 84, club: 'Real Madrid', season: '2013-14', altPositions: ['RB'] },
       { id: 'varane-rm-1314', name: 'Raphaël Varane', position: 'DEF', rating: 88, club: 'Real Madrid', season: '2013-14', altPositions: ['CB'] },
       { id: 'ramos-rm-1314', name: 'Sergio Ramos', position: 'DEF', rating: 92, club: 'Real Madrid', season: '2013-14', altPositions: ['CB', 'RB'] },
@@ -272,10 +272,10 @@ export const laLigaData: ClubSeason[] = [
       { id: 'pique-bar-1011', name: 'Gerard Piqué', position: 'DEF', rating: 87, club: 'Barcelona', season: '2010-11', altPositions: ['CB'] },
       { id: 'abidal-bar-1011', name: 'Eric Abidal', position: 'DEF', rating: 85, club: 'Barcelona', season: '2010-11', altPositions: ['LB', 'CB'] },
       { id: 'xavi-bar-1011', name: 'Xavi', position: 'MID', rating: 92, club: 'Barcelona', season: '2010-11', altPositions: ['CM', 'AM'] },
-      { id: 'iniesta-bar-1011', name: 'Andrés Iniesta', position: 'MID', rating: 90, club: 'Barcelona', season: '2010-11', altPositions: ['AM', 'CM'] },
-      { id: 'busquets-bar-1011', name: 'Sergio Busquets', position: 'MID', rating: 87, club: 'Barcelona', season: '2010-11', altPositions: ['DM', 'CM'] },
+      { id: 'iniesta-bar-1011', name: 'Andrés Iniesta', position: 'MID', rating: 91, club: 'Barcelona', season: '2010-11', altPositions: ['AM', 'CM'] },
+      { id: 'busquets-bar-1011', name: 'Sergio Busquets', position: 'MID', rating: 88, club: 'Barcelona', season: '2010-11', altPositions: ['DM', 'CM'] },
       { id: 'pedro-bar-1011', name: 'Pedro', position: 'FWD', rating: 83, club: 'Barcelona', season: '2010-11', altPositions: ['RW', 'LW', 'ST'] },
-      { id: 'villa-bar-1011', name: 'David Villa', position: 'FWD', rating: 89, club: 'Barcelona', season: '2010-11', altPositions: ['ST', 'LW'] },
+      { id: 'villa-bar-1011', name: 'David Villa', position: 'FWD', rating: 90, club: 'Barcelona', season: '2010-11', altPositions: ['ST', 'LW'] },
       { id: 'messi-bar-1011', name: 'Lionel Messi', position: 'FWD', rating: 96, club: 'Barcelona', season: '2010-11', altPositions: ['RW', 'ST', 'AM'] },
     ]
   },
@@ -292,7 +292,7 @@ export const laLigaData: ClubSeason[] = [
       { id: 'busquets-bar-1213', name: 'Sergio Busquets', position: 'MID', rating: 88, club: 'Barcelona', season: '2012-13', altPositions: ['DM', 'CM'] },
       { id: 'pedro-bar-1213', name: 'Pedro', position: 'FWD', rating: 82, club: 'Barcelona', season: '2012-13', altPositions: ['RW', 'LW', 'ST'] },
       { id: 'villa-bar-1213', name: 'David Villa', position: 'FWD', rating: 86, club: 'Barcelona', season: '2012-13', altPositions: ['ST', 'LW'] },
-      { id: 'messi-bar-1213', name: 'Lionel Messi', position: 'FWD', rating: 96, club: 'Barcelona', season: '2012-13', altPositions: ['RW', 'ST', 'AM'] },
+      { id: 'messi-bar-1213', name: 'Lionel Messi', position: 'FWD', rating: 97, club: 'Barcelona', season: '2012-13', altPositions: ['RW', 'ST', 'AM'] },
     ]
   },
   {
@@ -300,15 +300,15 @@ export const laLigaData: ClubSeason[] = [
     players: [
       { id: 'oblak-atm-1516', name: 'Jan Oblak', position: 'GK', rating: 89, club: 'Atletico Madrid', season: '2015-16' },
       { id: 'vrsaljko-atm-1516', name: 'Šime Vrsaljko', position: 'DEF', rating: 81, club: 'Atletico Madrid', season: '2015-16', altPositions: ['RB'] },
-      { id: 'godin-atm-1516', name: 'Diego Godín', position: 'DEF', rating: 89, club: 'Atletico Madrid', season: '2015-16', altPositions: ['CB'] },
+      { id: 'godin-atm-1516', name: 'Diego Godín', position: 'DEF', rating: 90, club: 'Atletico Madrid', season: '2015-16', altPositions: ['CB'] },
       { id: 'gimenez-atm-1516', name: 'José Giménez', position: 'DEF', rating: 83, club: 'Atletico Madrid', season: '2015-16', altPositions: ['CB'] },
       { id: 'filipe-luis-atm-1516', name: 'Filipe Luís', position: 'DEF', rating: 85, club: 'Atletico Madrid', season: '2015-16', altPositions: ['LB'] },
       { id: 'koke-atm-1516', name: 'Koke', position: 'MID', rating: 85, club: 'Atletico Madrid', season: '2015-16', altPositions: ['CM', 'RM'] },
       { id: 'gabi-atm-1516', name: 'Gabi', position: 'MID', rating: 83, club: 'Atletico Madrid', season: '2015-16', altPositions: ['CM', 'DM'] },
       { id: 'saul-atm-1516', name: 'Saúl Ñíguez', position: 'MID', rating: 83, club: 'Atletico Madrid', season: '2015-16', altPositions: ['CM', 'DM'] },
-      { id: 'griezmann-atm-1516', name: 'Antoine Griezmann', position: 'FWD', rating: 88, club: 'Atletico Madrid', season: '2015-16', altPositions: ['ST', 'LW'] },
+      { id: 'griezmann-atm-1516', name: 'Antoine Griezmann', position: 'FWD', rating: 89, club: 'Atletico Madrid', season: '2015-16', altPositions: ['ST', 'LW'] },
       { id: 'torres-atm-1516', name: 'Fernando Torres', position: 'FWD', rating: 82, club: 'Atletico Madrid', season: '2015-16', altPositions: ['ST'] },
-      { id: 'carrasco-atm-1516', name: 'Yannick Carrasco', position: 'FWD', rating: 80, club: 'Atletico Madrid', season: '2015-16', altPositions: ['LW'] },
+      { id: 'carrasco-atm-1516', name: 'Yannick Carrasco', position: 'FWD', rating: 81, club: 'Atletico Madrid', season: '2015-16', altPositions: ['LW'] },
     ]
   },
   {
@@ -339,7 +339,7 @@ export const laLigaData: ClubSeason[] = [
       { id: 'cazorla-vil-0506', name: 'Santi Cazorla', position: 'MID', rating: 83, club: 'Villarreal', season: '2005-06', altPositions: ['AM', 'CM'] },
       { id: 'josico-vil-0506', name: 'Josico', position: 'MID', rating: 79, club: 'Villarreal', season: '2005-06', altPositions: ['CM'] },
       { id: 'riquelme-vil-0506', name: 'Juan Román Riquelme', position: 'FWD', rating: 90, club: 'Villarreal', season: '2005-06', altPositions: ['AM', 'ST'] },
-      { id: 'forlan-vil-0506', name: 'Diego Forlán', position: 'FWD', rating: 89, club: 'Villarreal', season: '2005-06', altPositions: ['ST', 'AM'] },
+      { id: 'forlan-vil-0506', name: 'Diego Forlán', position: 'FWD', rating: 87, club: 'Villarreal', season: '2005-06', altPositions: ['ST', 'AM'] },
       { id: 'luque-vil-0506', name: 'Albert Luque', position: 'FWD', rating: 80, club: 'Villarreal', season: '2005-06', altPositions: ['RW', 'ST'] },
     ]
   },
@@ -383,7 +383,7 @@ export const laLigaData: ClubSeason[] = [
       { id: 'pique-bar-1516', name: 'Gerard Piqué', position: 'DEF', rating: 89, club: 'Barcelona', season: '2015-16', altPositions: ['CB'] },
       { id: 'mascherano-bar-1516', name: 'Javier Mascherano', position: 'DEF', rating: 87, club: 'Barcelona', season: '2015-16', altPositions: ['CB', 'DM'] },
       { id: 'alba-bar-1516', name: 'Jordi Alba', position: 'DEF', rating: 88, club: 'Barcelona', season: '2015-16', altPositions: ['LB'] },
-      { id: 'busquets-bar-1516', name: 'Sergio Busquets', position: 'MID', rating: 92, club: 'Barcelona', season: '2015-16', altPositions: ['DM', 'CM'] },
+      { id: 'busquets-bar-1516', name: 'Sergio Busquets', position: 'MID', rating: 89, club: 'Barcelona', season: '2015-16', altPositions: ['DM', 'CM'] },
       { id: 'rakitic-bar-1516', name: 'Ivan Rakitić', position: 'MID', rating: 88, club: 'Barcelona', season: '2015-16', altPositions: ['CM', 'AM'] },
       { id: 'iniesta-bar-1516', name: 'Andrés Iniesta', position: 'MID', rating: 92, club: 'Barcelona', season: '2015-16', altPositions: ['AM', 'CM'] },
       { id: 'neymar-bar-1516', name: 'Neymar Jr.', position: 'FWD', rating: 93, club: 'Barcelona', season: '2015-16', altPositions: ['LW', 'ST'] },
