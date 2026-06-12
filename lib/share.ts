@@ -25,12 +25,22 @@ export function dailyStatusLine(record: DailyRecord): string {
   return `${record.points} pts`
 }
 
+// Compact one-line XI: last names with ratings.
+export function teamLine(team: { name: string; rating: number }[]): string {
+  const lastName = (n: string) => {
+    const parts = n.trim().split(' ')
+    return parts.length > 1 ? parts[parts.length - 1] : n
+  }
+  return `XI: ${team.map(p => `${lastName(p.name)} ${p.rating}`).join(' · ')}`
+}
+
 export function dailyShareText(record: DailyRecord, leagueName: string, streak: number): string {
   const lines = [
     `⚽ Draft XI Daily #${getDailyChallengeNumber(record.date)} — ${leagueName}`,
-    emojiGrid(record.results),
     dailyStatusLine(record),
+    `${record.won}W ${record.drawn}D ${record.lost}L`,
   ]
+  if (record.team && record.team.length > 0) lines.push(teamLine(record.team))
   if (streak > 1) lines.push(`🔥 ${streak}-day streak`)
   return lines.join('\n')
 }

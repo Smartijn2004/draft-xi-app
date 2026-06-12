@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import type { SeasonResult, LeagueConfig, GroupStanding, GoalEvent, LeagueTableEntry, DraftedPlayer, LeagueId } from '@/lib/types'
 import { ALL_CLUB_SEASONS } from '@/lib/data'
 import type { SeasonRecordOutcome } from '@/lib/storage'
-import { emojiGrid } from '@/lib/share'
+import { teamLine } from '@/lib/share'
 
 type Props = {
   result: SeasonResult
@@ -269,7 +269,7 @@ export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutco
 
       {/* ── Share + Play Again ── */}
       <div className="flex gap-3">
-        <ShareButton result={result} league={league} daily={daily} />
+        <ShareButton result={result} league={league} daily={daily} team={team} />
         <button
           onClick={onPlayAgain}
           className="flex-1 py-4 rounded-xl font-bold text-white text-lg transition-all hover:scale-[1.02] hover:brightness-110 active:scale-[0.98]"
@@ -556,20 +556,21 @@ function CareerStrip({ outcome, accent, points }: {
 
 // ── Share ─────────────────────────────────────────────────────────────────────
 
-function ShareButton({ result, league, daily }: {
+function ShareButton({ result, league, daily, team }: {
   result: SeasonResult; league: LeagueConfig; daily?: { number: number; streak: number }
+  team?: DraftedPlayer[]
 }) {
   const [copied, setCopied] = useState(false)
 
   const buildText = () => {
-    const { won, drawn, lost, goalsFor, goalsAgainst, trophyWon, isPerfect, eliminated, eliminatedAt, playerOfSeason, leagueTable, matches } = result
+    const { won, drawn, lost, goalsFor, goalsAgainst, trophyWon, isPerfect, eliminated, eliminatedAt, playerOfSeason, leagueTable } = result
     const pts = won * 3 + drawn
     const gd = goalsFor - goalsAgainst
     const tablePos = leagueTable?.find(e => e.isPlayer)?.position
     const status = isPerfect
-      ? `Perfect ${league.perfectLabel}! 🏆`
+      ? `Perfect ${league.perfectLabel}! 🏆 · ${pts} pts`
       : trophyWon
-      ? `Won the ${league.name}! 🥇`
+      ? `Won the ${league.name}! 🥇 · ${pts} pts`
       : eliminated
       ? `Eliminated at ${eliminatedAt}`
       : `${ordinal(tablePos ?? 0)} place · ${pts} pts`
@@ -578,10 +579,10 @@ function ShareButton({ result, league, daily }: {
       daily
         ? `⚽ Draft XI Daily #${daily.number} — ${league.name}`
         : `⚽ Draft XI — ${league.name}`,
-      emojiGrid(matches.map(m => m.result)),
       status,
       `${won}W ${drawn}D ${lost}L · GD ${gd > 0 ? '+' : ''}${gd}`,
     ]
+    if (team && team.length > 0) lines.push(teamLine(team))
     if (playerOfSeason) {
       lines.push(`🌟 POTS: ${playerOfSeason.name} (${playerOfSeason.goals}G ${playerOfSeason.assists}A)`)
     }

@@ -37,6 +37,7 @@ export type DailyRecord = {
   eliminated?: boolean
   eliminatedAt?: string
   results: ('W' | 'D' | 'L')[]
+  team?: { name: string; rating: number }[]
 }
 
 export type StoredState = {

@@ -34,13 +34,16 @@ const ASSIST_WEIGHTS: Record<Position, number> = {
   GK: 0, DEF: 0.5, MID: 2.5, FWD: 2.0
 }
 
-// Generic opponent scorer names pool
+// Generic opponent scorer surnames. Deliberately NO recognizable stars —
+// a famous name would imply that player is at the opponent club, which is
+// usually wrong (e.g. Havertz scoring for AC Milan).
 const OPP_SCORER_NAMES = [
-  'Silva', 'Martinez', 'Garcia', 'Fernandez', 'Müller', 'Kane', 'Salah', 'Benzema',
-  'Lewandowski', 'De Bruyne', 'Mané', 'Son', 'Firmino', 'Sterling', 'Vardy',
-  'Werner', 'Havertz', 'Grealish', 'Rashford', 'Bruno', 'Mount', 'Saka',
-  'Bellingham', 'Gnabry', 'Sancho', 'Diallo', 'Osimhen', 'Vlahovic', 'Lautaro',
-  'Giroud', 'Morata', 'Aubameyang', 'Lacazette', 'Cavani', 'Suárez', 'Falcao',
+  'Silva', 'Santos', 'Costa', 'Moreno', 'Fernández', 'López', 'Ramírez', 'Vargas',
+  'Rossi', 'Bianchi', 'Romano', 'Ricci', 'Esposito', 'Greco',
+  'Müller', 'Schmidt', 'Weber', 'Keller', 'Hoffmann',
+  'Janssen', 'De Vries', 'Visser', 'Dubois', 'Laurent', 'Girard', 'Lefèvre',
+  'Petrov', 'Novák', 'Horvat', 'Kowalski', 'Andersen', 'Nilsson', 'Eriksson', 'Jensen',
+  'Murphy', 'Doyle', 'Hughes', 'Walsh', 'Mensah', 'Okoro', 'Tanaka', 'Sato',
 ]
 
 function pickScorer(

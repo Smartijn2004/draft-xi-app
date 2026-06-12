@@ -121,10 +121,10 @@ function GameContent() {
     LWB: ['LWB', 'LB'],
     RWB: ['RWB', 'RB'],
     DM:  ['DM', 'CM'],
-    CM:  ['CM', 'DM', 'AM', 'LM', 'RM'],   // central mid slot is flexible
-    AM:  ['AM', 'CM', 'LM', 'RM'],
-    LM:  ['LM', 'CM'],
-    RM:  ['RM', 'CM'],
+    CM:  ['CM', 'DM', 'AM'],   // central mids are interchangeable
+    AM:  ['AM', 'CM'],
+    LM:  ['LM', 'LW'],         // wide slots need genuine wide players
+    RM:  ['RM', 'RW'],
     LW:  ['LW', 'LM'],
     RW:  ['RW', 'RM'],
     ST:  ['ST'],                              // pure strikers only
@@ -143,6 +143,19 @@ function GameContent() {
   function hasAvailableSlot(player: import('@/lib/types').Player): boolean {
     return slots.some((slot, i) => !usedSlotIndexes.includes(i) && canFillSlot(player, slot))
   }
+
+  // Same legend in two different seasons is still the same player — one XI spot each.
+  function isAlreadyDrafted(player: Player): boolean {
+    return team.some(t => t.name === player.name)
+  }
+
+  function isPickable(player: Player): boolean {
+    return hasAvailableSlot(player) && !isAlreadyDrafted(player)
+  }
+
+  // Dead spin: no one in this squad can join the XI → offer a free re-spin.
+  const noFits = draftSub === 'selecting' && currentSpin != null && !allFilled
+    && currentSpin.players.every(p => !isPickable(p))
 
   const showMessage = (msg: string) => {
     setMessage(msg)
@@ -213,6 +226,10 @@ function GameContent() {
   }, [filled, slots, totalSlots, ratingsMode])
 
   const handleDraftPlayer = useCallback((player: Player) => {
+    if (team.some(t => t.name === player.name)) {
+      showMessage(`${player.name} is already in your XI.`)
+      return
+    }
     // All open slots this player can fill, deduped by label (three CMs = one option)
     const options: { slotIndex: number; label: string }[] = []
     const seenLabels = new Set<string>()
@@ -233,7 +250,7 @@ function GameContent() {
     }
     setPendingChoice({ player, options })
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [formationName, slots, usedSlotIndexes, assignToSlot])
+  }, [formationName, slots, usedSlotIndexes, assignToSlot, team])
 
   const handleSimulate = useCallback(() => {
     if (team.length < totalSlots) return
@@ -257,6 +274,7 @@ function GameContent() {
         eliminated: result.eliminated || undefined,
         eliminatedAt: result.eliminatedAt,
         results: result.matches.map(m => m.result),
+        team: team.map(p => ({ name: p.name, rating: p.rating })),
       }
       setDailyStreak(recordDaily(record))
       setDailyDone(record)
@@ -438,6 +456,7 @@ function GameContent() {
               {Object.keys(FORMATIONS).map(f => (
                 <button key={f}
                   onClick={() => {
+                    if (isDaily) { showMessage('Daily challenge is locked to 4-3-3.'); return }
                     if (team.length > 0) { showMessage('Clear your team first to change formation.'); return }
                     setFormationName(f)
                   }}
@@ -616,7 +635,7 @@ function GameContent() {
                     {(['GK', 'DEF', 'MID', 'FWD'] as Position[]).map(pos => {
                       const posPlayers = currentSpin.players.filter(p => p.position === pos)
                       if (posPlayers.length === 0) return null
-                      const allDisabled = posPlayers.every(p => !hasAvailableSlot(p))
+                      const allDisabled = posPlayers.every(p => !isPickable(p))
                       return (
                         <div key={pos}>
                           <div className="flex items-center gap-2 mb-2">
@@ -631,7 +650,8 @@ function GameContent() {
                               <PlayerRow
                                 key={player.id}
                                 player={player}
-                                disabled={!hasAvailableSlot(player)}
+                                disabled={!isPickable(player)}
+                                alreadyDrafted={isAlreadyDrafted(player)}
                                 hideRatings={hideRatings}
                                 accentColor={league.color}
                                 primeRating={ratingsMode === 'prime' ? (PRIME_RATINGS.get(player.name) ?? player.rating) : undefined}
@@ -643,18 +663,27 @@ function GameContent() {
                       )
                     })}
 
-                    <button
-                      onClick={() => handleSpin(true)}
-                      disabled={rerollsLeft <= 0}
-                      className={`w-full py-3 rounded-xl border text-sm transition-colors ${
-                        rerollsLeft > 0
-                          ? 'border-white/10 text-slate-400 hover:text-white hover:border-white/20'
-                          : 'border-white/5 text-slate-700 cursor-not-allowed'
-                      }`}>
-                      {rerollsLeft > 0
-                        ? `Re-spin — ${rerollsLeft} reroll${rerollsLeft !== 1 ? 's' : ''} left`
-                        : 'No rerolls left'}
-                    </button>
+                    {noFits ? (
+                      <button
+                        onClick={() => handleSpin(false)}
+                        className="w-full py-3 rounded-xl border text-sm font-bold transition-all hover:scale-[1.01]"
+                        style={{ borderColor: league.color + '66', color: league.color, background: league.color + '11' }}>
+                        No one here fits your XI — free re-spin ↻
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleSpin(true)}
+                        disabled={rerollsLeft <= 0}
+                        className={`w-full py-3 rounded-xl border text-sm transition-colors ${
+                          rerollsLeft > 0
+                            ? 'border-white/10 text-slate-400 hover:text-white hover:border-white/20'
+                            : 'border-white/5 text-slate-700 cursor-not-allowed'
+                        }`}>
+                        {rerollsLeft > 0
+                          ? `Re-spin — ${rerollsLeft} reroll${rerollsLeft !== 1 ? 's' : ''} left`
+                          : 'No rerolls left'}
+                      </button>
+                    )}
                   </>
                 )}
               </div>
@@ -714,8 +743,8 @@ function GameContent() {
 
 // ── Player row in pick panel ──────────────────────────────────────────────────
 
-function PlayerRow({ player, disabled, hideRatings, accentColor, primeRating, onDraft }: {
-  player: Player; disabled: boolean; hideRatings: boolean; accentColor: string
+function PlayerRow({ player, disabled, alreadyDrafted, hideRatings, accentColor, primeRating, onDraft }: {
+  player: Player; disabled: boolean; alreadyDrafted?: boolean; hideRatings: boolean; accentColor: string
   primeRating?: number; onDraft: (p: Player) => void
 }) {
   const posColor = POS_COLORS[player.position as Position] ?? '#9ca3af'
@@ -747,6 +776,9 @@ function PlayerRow({ player, disabled, hideRatings, accentColor, primeRating, on
           }
         </div>
       </div>
+      {alreadyDrafted && (
+        <span className="text-[10px] font-bold text-slate-500 shrink-0">✓ in your XI</span>
+      )}
       {!hideRatings && (
         <div className="text-sm font-black shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
           style={{ background: accentColor + '22', color: accentColor }}>
