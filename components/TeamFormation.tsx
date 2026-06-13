@@ -20,13 +20,25 @@ const POS_COLORS: Record<string, string> = {
 export function TeamFormation({ formation, team, league, compact = false, highlightSlotIndexes, onSlotClick }: Props) {
   const slots = formation.slots
 
+  // Vertical band each slot sits in. Splitting MID into a defensive (DM) band
+  // and the rest keeps a 4-2-3-1 looking like one — holding pair behind an
+  // attacking three — instead of a flat five. Every other formation keeps a
+  // single midfield row since they have no DM slots.
+  const tierOf = (slot: { position: string; label: string }) => {
+    if (slot.position === 'GK') return 0
+    if (slot.position === 'DEF') return 1
+    if (slot.position === 'MID') return slot.label === 'DM' ? 2 : 3
+    return 4 // FWD
+  }
+
   const rows: typeof slots[number][][] = []
   let current: typeof slots[number][] = []
-  let lastPos = ''
+  let lastTier = -1
   slots.forEach(slot => {
-    if (slot.position !== lastPos && current.length > 0) { rows.push(current); current = [] }
+    const tier = tierOf(slot)
+    if (tier !== lastTier && current.length > 0) { rows.push(current); current = [] }
     current.push(slot)
-    lastPos = slot.position
+    lastTier = tier
   })
   if (current.length > 0) rows.push(current)
   rows.reverse()

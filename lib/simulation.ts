@@ -131,11 +131,16 @@ function pickScorer(
 ): string {
   const eligible = players.filter(p => p.name !== exclude && weights[p.position as Position] > 0)
   if (eligible.length === 0) return players[0]?.name ?? 'Unknown'
-  const totalW = eligible.reduce((s, p) => s + weights[p.position as Position], 0)
+  // Weight by position AND rating above a 75 baseline, so a 95-rated striker
+  // clearly out-scores an 82-rated one in the same role and a recognisable
+  // Golden Boot race emerges instead of an even split across the front line.
+  const wOf = (p: DraftedPlayer) =>
+    weights[p.position as Position] * (1 + Math.max(0, p.rating - 75) / 12)
+  const totalW = eligible.reduce((s, p) => s + wOf(p), 0)
   if (totalW === 0) return eligible[Math.floor(rng() * eligible.length)].name
   let r = rng() * totalW
   for (const p of eligible) {
-    r -= weights[p.position as Position]
+    r -= wOf(p)
     if (r <= 0) return p.name
   }
   return eligible[eligible.length - 1].name
@@ -193,11 +198,16 @@ function simulateMatch(
   else if (r < win + draw) result = 'D'
   else result = 'L'
 
+  // Goal expectancy. Base ~0.95 per side widens with the rating gap; attack
+  // scales faster (/15) than the opponent's defensive suppression (/19). After
+  // the win/draw/loss reconciliation below, a dominant XI averages ~2.3 goals
+  // and racks up ~85–95 across a 38-game season, while mid-table sides land
+  // around 50–60 — realistic top-flight numbers.
   const effectiveDiff = effectiveRating - oppRating
-  const λMy = 0.6 + effectiveDiff / 30
-  const λOpp = 0.6 - effectiveDiff / 30
-  let myGoals = poissonSample(Math.max(0.1, λMy), rng)
-  let oppGoals = poissonSample(Math.max(0.05, λOpp), rng)
+  const λMy = 0.95 + effectiveDiff / 15
+  const λOpp = 0.95 - effectiveDiff / 19
+  let myGoals = poissonSample(Math.max(0.2, λMy), rng)
+  let oppGoals = poissonSample(Math.max(0.18, λOpp), rng)
 
   // Reconcile goals with result
   if (result === 'W' && myGoals <= oppGoals) {
@@ -391,8 +401,8 @@ function simulateMatchWithScore(
   const win = Math.max(0.05, rawWin * (1 - draw))
   const r = rng()
   const result: 'W' | 'D' | 'L' = r < win ? 'W' : r < win + draw ? 'D' : 'L'
-  let goalsA = poissonSample(Math.max(0.1, 0.6 + (ratingA - ratingB) / 30), rng)
-  let goalsB = poissonSample(Math.max(0.05, 0.6 - (ratingA - ratingB) / 30), rng)
+  let goalsA = poissonSample(Math.max(0.2, 0.95 + (ratingA - ratingB) / 15), rng)
+  let goalsB = poissonSample(Math.max(0.18, 0.95 - (ratingA - ratingB) / 19), rng)
   if (result === 'W' && goalsA <= goalsB) goalsA = goalsB + 1
   else if (result === 'D') { const g = Math.max(goalsA, goalsB); goalsA = g; goalsB = g }
   else if (result === 'L' && goalsA >= goalsB) goalsB = goalsA + 1
