@@ -49,6 +49,7 @@ export type LeagueConfig = {
 export type DraftedPlayer = Player & {
   slotPosition: Position
   slotIndex: number
+  slotLabel: string
 }
 
 export type Formation = {

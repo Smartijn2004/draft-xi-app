@@ -6,6 +6,7 @@ import type { DraftedPlayer, LeagueId, ClubSeason, Player, Position, Difficulty 
 import { FORMATIONS, FORMATION_DESCRIPTIONS } from '@/lib/types'
 import { LEAGUE_CONFIGS, spinClubSeason, getClubSeasonsForLeague, ALL_CLUB_SEASONS } from '@/lib/data'
 import { runSimulation } from '@/lib/simulation'
+import { SLOT_ACCEPTS } from '@/lib/positions'
 import {
   recordSeason, recordDaily, getDailyRecord, getTodayKey, getDailyLeague,
   getDailyChallengeNumber, getStreak, dateSeed, seededRng,
@@ -111,25 +112,6 @@ function GameContent() {
 
   const usedSlotIndexes = team.map(p => p.slotIndex)
 
-  // Which player positions are accepted by each slot label.
-  // CM is flexible (all midfielders fit). Wings and ST are strict.
-  const SLOT_ACCEPTS: Record<string, string[]> = {
-    GK:  ['GK'],
-    LB:  ['LB', 'LWB'],
-    CB:  ['CB'],
-    RB:  ['RB', 'RWB'],
-    LWB: ['LWB', 'LB'],
-    RWB: ['RWB', 'RB'],
-    DM:  ['DM', 'CM'],
-    CM:  ['CM', 'DM', 'AM'],   // central mids are interchangeable
-    AM:  ['AM', 'CM'],
-    LM:  ['LM', 'LW'],         // wide slots need genuine wide players
-    RM:  ['RM', 'RW'],
-    LW:  ['LW', 'LM'],
-    RW:  ['RW', 'RM'],
-    ST:  ['ST'],                              // pure strikers only
-  }
-
   // A player can fill a slot if their altPositions overlaps with the slot's accept list,
   // or (if no altPositions) their broad position matches the slot position.
   function canFillSlot(player: import('@/lib/types').Player, slot: typeof slots[number]): boolean {
@@ -217,7 +199,7 @@ function GameContent() {
     const effectiveRating = ratingsMode === 'prime'
       ? (PRIME_RATINGS.get(player.name) ?? player.rating)
       : player.rating
-    setTeam(prev => [...prev, { ...player, rating: effectiveRating, slotPosition: slot.position, slotIndex }])
+    setTeam(prev => [...prev, { ...player, rating: effectiveRating, slotPosition: slot.position, slotIndex, slotLabel: slot.label }])
     setPendingChoice(null)
     setCurrentSpin(null)
     setDraftSub('idle')
@@ -439,11 +421,12 @@ function GameContent() {
         </div>
       )}
 
-      {/* Mobile bottom sheet backdrop */}
+      {/* Mobile bottom sheet backdrop — dismissing keeps the spin active so you
+          can't escape it for a free re-spin; reopen via "Resume pick". */}
       {(draftSub === 'selecting' || draftSub === 'landed') && currentSpin && (
         <div
           className="fixed inset-0 bg-black/70 z-40 lg:hidden"
-          onClick={() => { setCurrentSpin(null); setDraftSub('idle'); setPendingChoice(null) }}
+          onClick={() => { setDraftSub('idle'); setPendingChoice(null) }}
         />
       )}
 
@@ -525,7 +508,24 @@ function GameContent() {
                   ? { boxShadow: `0 0 44px ${league.color}26, inset 0 0 0 1px ${league.color}33` }
                   : {}),
               }}>
-              {draftSub === 'idle' && (
+              {draftSub === 'idle' && currentSpin && (
+                /* A spin was dismissed without picking — resume it (no free re-spin). */
+                <div className="text-center">
+                  <p className="text-slate-400 text-sm mb-1">You spun</p>
+                  <div className="flex items-center justify-center gap-2 mb-5">
+                    <span className="font-black text-white">{currentSpin.club}</span>
+                    <span className="text-slate-600">×</span>
+                    <span className="font-black" style={{ color: currentSpin.color }}>{currentSpin.season}</span>
+                  </div>
+                  <button onClick={() => setDraftSub('selecting')}
+                    className="px-10 py-4 rounded-xl font-black text-xl text-white transition-all hover:scale-105 active:scale-95"
+                    style={{ background: league.color, boxShadow: `0 8px 30px ${league.color}44` }}>
+                    Resume pick →
+                  </button>
+                </div>
+              )}
+
+              {draftSub === 'idle' && !currentSpin && (
                 <div className="text-center">
                   <p className="text-slate-400 text-sm mb-5">
                     Still need: <span className="text-white font-semibold">{posNeeds}</span>

@@ -1,11 +1,15 @@
 import { ALL_CLUB_SEASONS } from './data'
+import { canFillSlotLabel } from './positions'
 import type { DraftedPlayer, LeagueId, Player } from './types'
 
 export type DraftComparison = { player: DraftedPlayer; best: Player | null; missed: number }
 
-// Compares each drafted player against the best alternative who could fill the
-// same sub-position in that club-season. Shared by the results screen's Draft
-// Review and the "Perfect Draft" achievement so both agree exactly.
+// Compares each drafted player against the best alternative who could ACTUALLY
+// have filled the same slot from that club-season — i.e. a player you could
+// genuinely have picked at that moment. Restricting to same-slot-eligible
+// squadmates means the "better pick" is always a real, fieldable option, not
+// a higher-rated player in a different role you had no room for.
+// Shared by the results screen and the "Perfect Draft" achievement.
 export function computeDraftReview(team: DraftedPlayer[], leagueId: LeagueId): {
   comparisons: DraftComparison[]
   totalMissed: number
@@ -13,19 +17,24 @@ export function computeDraftReview(team: DraftedPlayer[], leagueId: LeagueId): {
   isPerfect: boolean
 } {
   const comparisons: DraftComparison[] = team.map(player => {
-    const clubSeason = ALL_CLUB_SEASONS.find(
-      cs => cs.club === player.club && cs.season === player.season && cs.league === leagueId
-    )
+    // Prefer the club-season from this league; fall back to any league (e.g.
+    // legends mode, which draws players from every competition).
+    const clubSeason =
+      ALL_CLUB_SEASONS.find(cs => cs.club === player.club && cs.season === player.season && cs.league === leagueId) ??
+      ALL_CLUB_SEASONS.find(cs => cs.club === player.club && cs.season === player.season)
     if (!clubSeason) return { player, best: null, missed: 0 }
-    const playerAltPos = player.altPositions ?? []
-    const byAlt = playerAltPos.length > 0
-      ? clubSeason.players.filter(p => (p.altPositions ?? []).some(ap => playerAltPos.includes(ap)))
+
+    // Candidates = squadmates who could fill the exact slot this player took.
+    let candidates = player.slotLabel
+      ? clubSeason.players.filter(p => canFillSlotLabel(p, player.slotLabel))
       : []
-    const samePos = byAlt.length > 0
-      ? byAlt
-      : clubSeason.players.filter(p => p.position === player.position)
-    if (samePos.length === 0) return { player, best: null, missed: 0 }
-    const best = samePos.reduce((b, p) => (p.rating > b.rating ? p : b), samePos[0])
+    if (candidates.length === 0) {
+      // Fallback for older data without a slot label: same broad position.
+      candidates = clubSeason.players.filter(p => p.position === player.position)
+    }
+    if (candidates.length === 0) return { player, best: null, missed: 0 }
+
+    const best = candidates.reduce((b, p) => (p.rating > b.rating ? p : b), candidates[0])
     // Compare by name: data may carry duplicate ids, so an id check can pit a
     // player against himself.
     const missed = best.name !== player.name ? best.rating - player.rating : 0
