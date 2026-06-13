@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
 import type { SeasonResult, LeagueConfig, GroupStanding, GoalEvent, LeagueTableEntry, DraftedPlayer, LeagueId } from '@/lib/types'
-import { ALL_CLUB_SEASONS } from '@/lib/data'
 import type { SeasonRecordOutcome } from '@/lib/storage'
+import { computeDraftReview } from '@/lib/draftReview'
 import { teamLine } from '@/lib/share'
 
 type Props = {
@@ -104,6 +104,29 @@ export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutco
           </div>
         )}
       </div>
+
+      {/* ── Newly unlocked badges ── */}
+      {careerOutcome && careerOutcome.newAchievements.length > 0 && (
+        <div
+          className="rounded-2xl border p-4 animate-slide-up"
+          style={{ background: '#f59e0b12', borderColor: '#f59e0b44' }}
+        >
+          <div className="text-xs font-black text-amber-400 uppercase tracking-widest mb-3">
+            🎉 {careerOutcome.newAchievements.length} New Achievement{careerOutcome.newAchievements.length > 1 ? 's' : ''} Unlocked
+          </div>
+          <div className="flex flex-col gap-2">
+            {careerOutcome.newAchievements.map(a => (
+              <div key={a.id} className="flex items-center gap-3 animate-pop">
+                <span className="text-2xl shrink-0">{a.emoji}</span>
+                <div className="min-w-0">
+                  <div className="text-sm font-black text-white">{a.name}</div>
+                  <div className="text-[11px] text-slate-400">{a.description}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ── Achievements ── */}
       {achievements.length > 0 && (
@@ -417,30 +440,10 @@ function SquadProfile({ team, accent }: { team: DraftedPlayer[]; accent: string 
 // ── Draft Review ─────────────────────────────────────────────────────────────
 
 function DraftCompare({ team, leagueId, accent }: { team: DraftedPlayer[]; leagueId: LeagueId; accent: string }) {
-  const comparisons = useMemo(() =>
-    team.map(player => {
-      const clubSeason = ALL_CLUB_SEASONS.find(
-        cs => cs.club === player.club && cs.season === player.season && cs.league === leagueId
-      )
-      if (!clubSeason) return { player, best: null, missed: 0 }
-      const playerAltPos = player.altPositions ?? []
-      const byAlt = playerAltPos.length > 0
-        ? clubSeason.players.filter(p => (p.altPositions ?? []).some(ap => playerAltPos.includes(ap)))
-        : []
-      const samePos = byAlt.length > 0
-        ? byAlt
-        : clubSeason.players.filter(p => p.position === player.position)
-      if (samePos.length === 0) return { player, best: null, missed: 0 }
-      const best = samePos.reduce((b, p) => p.rating > b.rating ? p : b, samePos[0])
-      // Compare by name: data contains duplicate club-season entries with
-      // different ids, so an id check can pit a player against himself.
-      const missed = best.name !== player.name ? best.rating - player.rating : 0
-      return { player, best: missed > 0 ? best : null, missed }
-    })
-  , [team, leagueId])
-
-  const totalMissed = comparisons.reduce((s, c) => s + c.missed, 0)
-  const optimalCount = comparisons.filter(c => c.missed === 0).length
+  const { comparisons, totalMissed, optimalCount } = useMemo(
+    () => computeDraftReview(team, leagueId),
+    [team, leagueId],
+  )
 
   return (
     <div className="space-y-2">

@@ -1,4 +1,6 @@
 import type { LeagueId, SeasonResult, DraftedPlayer } from './types'
+import { evaluateAchievements, getAchievement, type Achievement } from './achievements'
+import { computeDraftReview } from './draftReview'
 
 // All persistence lives under a single versioned key. Every read/write is
 // guarded: SSR (no window) and private-mode (storage throws) both degrade
@@ -12,6 +14,11 @@ export type CareerStats = {
   perfectSeasons: number
   bestPoints: number
   bestPointsLeague: LeagueId | null
+  totalWon: number
+  totalDrawn: number
+  totalLost: number
+  goalsFor: number
+  goalsAgainst: number
 }
 
 export type HallOfFameEntry = {
@@ -40,11 +47,22 @@ export type DailyRecord = {
   team?: { name: string; rating: number }[]
 }
 
+export type LeagueStats = {
+  seasonsPlayed: number
+  trophies: number
+  invincibles: number
+  bestPoints: number
+  bestFinish: number | null // leagues: best (lowest) final position; tournaments: 1 if ever won
+  bestTeam: HallOfFameEntry | null // best XI drafted in this competition, by points
+}
+
 export type StoredState = {
   career: CareerStats
   streak: { current: number; best: number; lastDate: string | null }
   hallOfFame: HallOfFameEntry[]
   daily: Record<string, DailyRecord>
+  leagues: Partial<Record<LeagueId, LeagueStats>>
+  achievements: Record<string, string> // achievementId -> ISO date unlocked
 }
 
 const DEFAULT_STATE: StoredState = {
@@ -55,10 +73,17 @@ const DEFAULT_STATE: StoredState = {
     perfectSeasons: 0,
     bestPoints: 0,
     bestPointsLeague: null,
+    totalWon: 0,
+    totalDrawn: 0,
+    totalLost: 0,
+    goalsFor: 0,
+    goalsAgainst: 0,
   },
   streak: { current: 0, best: 0, lastDate: null },
   hallOfFame: [],
   daily: {},
+  leagues: {},
+  achievements: {},
 }
 
 export function loadState(): StoredState {
@@ -72,6 +97,8 @@ export function loadState(): StoredState {
       streak: { ...DEFAULT_STATE.streak, ...parsed.streak },
       hallOfFame: Array.isArray(parsed.hallOfFame) ? parsed.hallOfFame : [],
       daily: parsed.daily && typeof parsed.daily === 'object' ? parsed.daily : {},
+      leagues: parsed.leagues && typeof parsed.leagues === 'object' ? parsed.leagues : {},
+      achievements: parsed.achievements && typeof parsed.achievements === 'object' ? parsed.achievements : {},
     }
   } catch {
     return structuredClone(DEFAULT_STATE)
@@ -93,7 +120,10 @@ export type SeasonRecordOutcome = {
   career: CareerStats
   newBestPoints: boolean
   firstTrophy: boolean
+  newAchievements: Achievement[]
 }
+
+const TOURNAMENT_LEAGUES: LeagueId[] = ['ucl', 'worldcup']
 
 export function recordSeason(
   result: SeasonResult,
@@ -103,12 +133,19 @@ export function recordSeason(
   const state = loadState()
   const points = result.won * 3 + result.drawn
   const career = state.career
+  const isTournament = TOURNAMENT_LEAGUES.includes(leagueId)
 
   career.seasonsPlayed += 1
   const firstTrophy = result.trophyWon && career.trophies === 0
   if (result.trophyWon) career.trophies += 1
-  if (result.lost === 0 && result.matches.length > 0) career.invincibles += 1
+  const unbeaten = result.lost === 0 && result.matches.length > 0
+  if (unbeaten) career.invincibles += 1
   if (result.isPerfect) career.perfectSeasons += 1
+  career.totalWon += result.won
+  career.totalDrawn += result.drawn
+  career.totalLost += result.lost
+  career.goalsFor += result.goalsFor
+  career.goalsAgainst += result.goalsAgainst
   const newBestPoints = points > career.bestPoints
   if (newBestPoints) {
     career.bestPoints = points
@@ -128,8 +165,64 @@ export function recordSeason(
     .sort((a, b) => b.points - a.points || Number(b.trophyWon) - Number(a.trophyWon))
     .slice(0, 3)
 
+  // Per-league stats
+  const ls: LeagueStats = state.leagues[leagueId] ?? {
+    seasonsPlayed: 0, trophies: 0, invincibles: 0, bestPoints: 0, bestFinish: null, bestTeam: null,
+  }
+  ls.seasonsPlayed += 1
+  if (result.trophyWon) ls.trophies += 1
+  if (unbeaten) ls.invincibles += 1
+  if (!ls.bestTeam || points > ls.bestTeam.points) ls.bestTeam = entry
+  ls.bestPoints = Math.max(ls.bestPoints, points)
+  if (!isTournament && result.finalPosition !== undefined) {
+    ls.bestFinish = ls.bestFinish === null ? result.finalPosition : Math.min(ls.bestFinish, result.finalPosition)
+  } else if (isTournament && result.trophyWon) {
+    ls.bestFinish = 1
+  }
+  state.leagues[leagueId] = ls
+
+  // Achievements — evaluate against post-update cumulative state
+  const leaguesPlayed = Object.values(state.leagues).filter(l => l && l.seasonsPlayed > 0).length
+  const leaguesWon = Object.values(state.leagues).filter(l => l && l.trophies > 0).length
+  const ctx = {
+    format: (isTournament ? 'tournament' : 'league') as 'tournament' | 'league',
+    won: result.won, drawn: result.drawn, lost: result.lost, points,
+    goalsFor: result.goalsFor, goalsAgainst: result.goalsAgainst,
+    trophyWon: result.trophyWon, isPerfect: result.isPerfect, eliminated: result.eliminated,
+    finalPosition: result.finalPosition, teamRating: result.teamRating,
+    topScorerGoals: result.topScorers[0]?.goals ?? 0,
+    perfectDraft: computeDraftReview(team, leagueId).isPerfect,
+    totalSeasons: career.seasonsPlayed, totalTrophies: career.trophies,
+    totalInvincibles: career.invincibles, leaguesPlayed, leaguesWon,
+    dailyStreak: state.streak.best,
+  }
+  const satisfied = evaluateAchievements(ctx)
+  const today = getTodayKey()
+  const newAchievements: Achievement[] = []
+  for (const id of satisfied) {
+    if (!state.achievements[id]) {
+      state.achievements[id] = today
+      const a = getAchievement(id)
+      if (a) newAchievements.push(a)
+    }
+  }
+
   saveState(state)
-  return { career: { ...career }, newBestPoints, firstTrophy }
+  return { career: { ...career }, newBestPoints, firstTrophy, newAchievements }
+}
+
+export function getLeagueStats(): Partial<Record<LeagueId, LeagueStats>> {
+  return loadState().leagues
+}
+
+export function getUnlockedAchievements(): Record<string, string> {
+  return loadState().achievements
+}
+
+// One read for everything the profile / trophy-cabinet screen needs.
+export function getProfile(): Pick<StoredState, 'career' | 'streak' | 'leagues' | 'achievements' | 'hallOfFame'> {
+  const s = loadState()
+  return { career: s.career, streak: s.streak, leagues: s.leagues, achievements: s.achievements, hallOfFame: s.hallOfFame }
 }
 
 // ── Daily challenge ──────────────────────────────────────────────────────────

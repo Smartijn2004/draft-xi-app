@@ -73,11 +73,13 @@ export function DailyChallengeCard() {
       </Link>
 
       {career && (
-        <div className="flex items-center justify-center gap-6 text-center text-xs text-slate-500">
+        <Link href="/profile"
+          className="flex items-center justify-center gap-6 text-center text-xs text-slate-500 hover:text-slate-300 transition-colors">
           <span><span className="font-bold text-slate-300">{career.seasonsPlayed}</span> seasons</span>
           <span><span className="font-bold text-slate-300">{career.trophies}</span> trophies 🏆</span>
           <span><span className="font-bold text-slate-300">{career.bestPoints}</span> best pts</span>
-        </div>
+          <span className="text-slate-600">view all →</span>
+        </Link>
       )}
     </div>
   )

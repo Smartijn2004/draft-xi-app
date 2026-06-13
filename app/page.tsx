@@ -1,9 +1,20 @@
+import Link from 'next/link'
 import { LeagueSelector } from '@/components/LeagueSelector'
 import { DailyChallengeCard } from '@/components/DailyChallengeCard'
 
 export default function HomePage() {
   return (
     <main className="min-h-screen flex flex-col bg-[#0a0a0f] text-slate-100">
+      {/* Top bar */}
+      <div className="absolute top-0 right-0 z-20 p-4">
+        <Link
+          href="/profile"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold text-slate-300 border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white transition-all"
+        >
+          🏆 Career
+        </Link>
+      </div>
+
       {/* Hero */}
       <section className="relative flex flex-col items-center justify-center px-6 pt-20 pb-12 overflow-hidden">
         {/* subtle grid bg */}
