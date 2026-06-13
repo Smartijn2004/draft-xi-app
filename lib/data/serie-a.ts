@@ -456,4 +456,36 @@ export const serieAData: ClubSeason[] = [
       { id: 'scamacca-2324', name: 'Gianluca Scamacca', position: 'FWD', rating: 84, club: 'Atalanta', season: '2023-24', altPositions: ['ST'] },
     ]
   },
+  {
+    id: 'napoli-2017-18', club: 'Napoli', shortName: 'NAP', season: '2017-18', league: 'seriea', color: '#12A0C3',
+    players: [
+      { id: 'reina-1718', name: 'Pepe Reina', position: 'GK', rating: 83, club: 'Napoli', season: '2017-18' },
+      { id: 'hysaj-1718', name: 'Elseid Hysaj', position: 'DEF', rating: 79, club: 'Napoli', season: '2017-18', altPositions: ['RB', 'LB'] },
+      { id: 'koulibaly-1718', name: 'Kalidou Koulibaly', position: 'DEF', rating: 88, club: 'Napoli', season: '2017-18', altPositions: ['CB'] },
+      { id: 'albiol-1718', name: 'Raúl Albiol', position: 'DEF', rating: 83, club: 'Napoli', season: '2017-18', altPositions: ['CB'] },
+      { id: 'ghoulam-1718', name: 'Faouzi Ghoulam', position: 'DEF', rating: 82, club: 'Napoli', season: '2017-18', altPositions: ['LB'] },
+      { id: 'allan-1718', name: 'Allan', position: 'MID', rating: 83, club: 'Napoli', season: '2017-18', altPositions: ['CM', 'DM'] },
+      { id: 'jorginho-1718', name: 'Jorginho', position: 'MID', rating: 84, club: 'Napoli', season: '2017-18', altPositions: ['DM', 'CM'] },
+      { id: 'hamsik-1718', name: 'Marek Hamšík', position: 'MID', rating: 85, club: 'Napoli', season: '2017-18', altPositions: ['CM', 'AM'] },
+      { id: 'callejon-1718', name: 'José Callejón', position: 'FWD', rating: 83, club: 'Napoli', season: '2017-18', altPositions: ['RW', 'RM'] },
+      { id: 'mertens-1718', name: 'Dries Mertens', position: 'FWD', rating: 86, club: 'Napoli', season: '2017-18', altPositions: ['ST', 'AM'] },
+      { id: 'insigne-1718', name: 'Lorenzo Insigne', position: 'FWD', rating: 86, club: 'Napoli', season: '2017-18', altPositions: ['LW', 'AM'] },
+    ]
+  },
+  {
+    id: 'juventus-2019-20', club: 'Juventus', shortName: 'JUV', season: '2019-20', league: 'seriea', color: '#000000',
+    players: [
+      { id: 'szczesny-juv-1920', name: 'Wojciech Szczęsny', position: 'GK', rating: 85, club: 'Juventus', season: '2019-20' },
+      { id: 'danilo-juv-1920', name: 'Danilo', position: 'DEF', rating: 80, club: 'Juventus', season: '2019-20', altPositions: ['RB', 'CB'] },
+      { id: 'bonucci-1920', name: 'Leonardo Bonucci', position: 'DEF', rating: 86, club: 'Juventus', season: '2019-20', altPositions: ['CB'] },
+      { id: 'deligt-1920', name: 'Matthijs de Ligt', position: 'DEF', rating: 85, club: 'Juventus', season: '2019-20', altPositions: ['CB'] },
+      { id: 'alexsandro-1920', name: 'Alex Sandro', position: 'DEF', rating: 82, club: 'Juventus', season: '2019-20', altPositions: ['LB', 'LWB'] },
+      { id: 'pjanic-1920', name: 'Miralem Pjanić', position: 'MID', rating: 84, club: 'Juventus', season: '2019-20', altPositions: ['CM', 'DM'] },
+      { id: 'bentancur-1920', name: 'Rodrigo Bentancur', position: 'MID', rating: 81, club: 'Juventus', season: '2019-20', altPositions: ['CM', 'DM'] },
+      { id: 'ramsey-1920', name: 'Aaron Ramsey', position: 'MID', rating: 80, club: 'Juventus', season: '2019-20', altPositions: ['CM', 'AM'] },
+      { id: 'ronaldo-juv-1920', name: 'Cristiano Ronaldo', position: 'FWD', rating: 93, club: 'Juventus', season: '2019-20', altPositions: ['ST', 'LW'] },
+      { id: 'dybala-1920', name: 'Paulo Dybala', position: 'FWD', rating: 88, club: 'Juventus', season: '2019-20', altPositions: ['AM', 'ST'] },
+      { id: 'higuain-juv-1920', name: 'Gonzalo Higuaín', position: 'FWD', rating: 84, club: 'Juventus', season: '2019-20', altPositions: ['ST'] },
+    ]
+  },
 ]

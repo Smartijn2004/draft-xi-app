@@ -622,4 +622,36 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'mudryk-2324', name: 'Mykhailo Mudryk', position: 'FWD', rating: 79, club: 'Chelsea', season: '2023-24', altPositions: ['LW'] },
     ]
   },
+  {
+    id: 'chelsea-2016-17', club: 'Chelsea', shortName: 'CHE', season: '2016-17', league: 'pl', color: '#034694',
+    players: [
+      { id: 'courtois-1617', name: 'Thibaut Courtois', position: 'GK', rating: 88, club: 'Chelsea', season: '2016-17' },
+      { id: 'azpilicueta-1617', name: 'César Azpilicueta', position: 'DEF', rating: 85, club: 'Chelsea', season: '2016-17', altPositions: ['CB', 'RB'] },
+      { id: 'luiz-d-1617', name: 'David Luiz', position: 'DEF', rating: 85, club: 'Chelsea', season: '2016-17', altPositions: ['CB'] },
+      { id: 'cahill-1617', name: 'Gary Cahill', position: 'DEF', rating: 83, club: 'Chelsea', season: '2016-17', altPositions: ['CB'] },
+      { id: 'moses-1617', name: 'Victor Moses', position: 'MID', rating: 80, club: 'Chelsea', season: '2016-17', altPositions: ['RWB', 'RM'] },
+      { id: 'kante-1617', name: 'N\'Golo Kanté', position: 'MID', rating: 90, club: 'Chelsea', season: '2016-17', altPositions: ['DM', 'CM'] },
+      { id: 'matic-1617', name: 'Nemanja Matić', position: 'MID', rating: 83, club: 'Chelsea', season: '2016-17', altPositions: ['DM', 'CM'] },
+      { id: 'alonso-m-1617', name: 'Marcos Alonso', position: 'MID', rating: 82, club: 'Chelsea', season: '2016-17', altPositions: ['LWB', 'LB'] },
+      { id: 'hazard-1617', name: 'Eden Hazard', position: 'FWD', rating: 91, club: 'Chelsea', season: '2016-17', altPositions: ['LW', 'AM'] },
+      { id: 'pedro-1617', name: 'Pedro', position: 'FWD', rating: 82, club: 'Chelsea', season: '2016-17', altPositions: ['RW', 'LW'] },
+      { id: 'costa-d-1617', name: 'Diego Costa', position: 'FWD', rating: 86, club: 'Chelsea', season: '2016-17', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'newcastle-2023-24', club: 'Newcastle United', shortName: 'NEW', season: '2023-24', league: 'pl', color: '#241F20',
+    players: [
+      { id: 'pope-2324', name: 'Nick Pope', position: 'GK', rating: 83, club: 'Newcastle United', season: '2023-24' },
+      { id: 'trippier-2324', name: 'Kieran Trippier', position: 'DEF', rating: 84, club: 'Newcastle United', season: '2023-24', altPositions: ['RB'] },
+      { id: 'schar-2324', name: 'Fabian Schär', position: 'DEF', rating: 82, club: 'Newcastle United', season: '2023-24', altPositions: ['CB'] },
+      { id: 'botman-2324', name: 'Sven Botman', position: 'DEF', rating: 82, club: 'Newcastle United', season: '2023-24', altPositions: ['CB'] },
+      { id: 'burn-2324', name: 'Dan Burn', position: 'DEF', rating: 79, club: 'Newcastle United', season: '2023-24', altPositions: ['CB', 'LB'] },
+      { id: 'bruno-g-2324', name: 'Bruno Guimarães', position: 'MID', rating: 86, club: 'Newcastle United', season: '2023-24', altPositions: ['CM', 'DM'] },
+      { id: 'tonali-2324', name: 'Sandro Tonali', position: 'MID', rating: 83, club: 'Newcastle United', season: '2023-24', altPositions: ['CM', 'DM'] },
+      { id: 'joelinton-2324', name: 'Joelinton', position: 'MID', rating: 83, club: 'Newcastle United', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'almiron-2324', name: 'Miguel Almirón', position: 'FWD', rating: 80, club: 'Newcastle United', season: '2023-24', altPositions: ['RW', 'RM'] },
+      { id: 'isak-2324', name: 'Alexander Isak', position: 'FWD', rating: 86, club: 'Newcastle United', season: '2023-24', altPositions: ['ST'] },
+      { id: 'gordon-2324', name: 'Anthony Gordon', position: 'FWD', rating: 83, club: 'Newcastle United', season: '2023-24', altPositions: ['LW'] },
+    ]
+  },
 ]

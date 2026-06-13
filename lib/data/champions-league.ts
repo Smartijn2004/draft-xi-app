@@ -393,4 +393,36 @@ export const championsLeagueData: ClubSeason[] = [
       { id: 'barcola-ucl-2425', name: 'Bradley Barcola', position: 'FWD', rating: 84, club: 'Paris Saint-Germain', season: '2024-25', altPositions: ['LW'] },
     ]
   },
+  {
+    id: 'inter-ucl-2009-10', club: 'Inter Milan', shortName: 'INT', season: '2009-10', league: 'ucl', color: '#0068A8',
+    players: [
+      { id: 'juliocesar-ucl-0910', name: 'Júlio César', position: 'GK', rating: 87, club: 'Inter Milan', season: '2009-10' },
+      { id: 'maicon-ucl-0910', name: 'Maicon', position: 'DEF', rating: 86, club: 'Inter Milan', season: '2009-10', altPositions: ['RB', 'RWB'] },
+      { id: 'lucio-ucl-0910', name: 'Lúcio', position: 'DEF', rating: 86, club: 'Inter Milan', season: '2009-10', altPositions: ['CB'] },
+      { id: 'samuel-ucl-0910', name: 'Walter Samuel', position: 'DEF', rating: 85, club: 'Inter Milan', season: '2009-10', altPositions: ['CB'] },
+      { id: 'chivu-ucl-0910', name: 'Cristian Chivu', position: 'DEF', rating: 81, club: 'Inter Milan', season: '2009-10', altPositions: ['CB', 'LB'] },
+      { id: 'zanetti-ucl-0910', name: 'Javier Zanetti', position: 'MID', rating: 87, club: 'Inter Milan', season: '2009-10', altPositions: ['CM', 'RB'] },
+      { id: 'cambiasso-ucl-0910', name: 'Esteban Cambiasso', position: 'MID', rating: 85, club: 'Inter Milan', season: '2009-10', altPositions: ['DM', 'CM'] },
+      { id: 'sneijder-ucl-0910', name: 'Wesley Sneijder', position: 'MID', rating: 89, club: 'Inter Milan', season: '2009-10', altPositions: ['AM', 'CM'] },
+      { id: 'eto-ucl-0910', name: 'Samuel Eto\'o', position: 'FWD', rating: 89, club: 'Inter Milan', season: '2009-10', altPositions: ['ST', 'RW'] },
+      { id: 'milito-ucl-0910', name: 'Diego Milito', position: 'FWD', rating: 87, club: 'Inter Milan', season: '2009-10', altPositions: ['ST'] },
+      { id: 'pandev-ucl-0910', name: 'Goran Pandev', position: 'FWD', rating: 80, club: 'Inter Milan', season: '2009-10', altPositions: ['LW', 'ST'] },
+    ]
+  },
+  {
+    id: 'barcelona-ucl-2014-15', club: 'Barcelona', shortName: 'BAR', season: '2014-15', league: 'ucl', color: '#A50044',
+    players: [
+      { id: 'terstegen-ucl-1415', name: 'Marc-André ter Stegen', position: 'GK', rating: 85, club: 'Barcelona', season: '2014-15' },
+      { id: 'alves-ucl-1415', name: 'Dani Alves', position: 'DEF', rating: 85, club: 'Barcelona', season: '2014-15', altPositions: ['RB', 'RWB'] },
+      { id: 'pique-ucl-1415', name: 'Gerard Piqué', position: 'DEF', rating: 87, club: 'Barcelona', season: '2014-15', altPositions: ['CB'] },
+      { id: 'mascherano-ucl-1415', name: 'Javier Mascherano', position: 'DEF', rating: 85, club: 'Barcelona', season: '2014-15', altPositions: ['CB', 'DM'] },
+      { id: 'alba-ucl-1415', name: 'Jordi Alba', position: 'DEF', rating: 85, club: 'Barcelona', season: '2014-15', altPositions: ['LB'] },
+      { id: 'busquets-ucl-1415', name: 'Sergio Busquets', position: 'MID', rating: 87, club: 'Barcelona', season: '2014-15', altPositions: ['DM', 'CM'] },
+      { id: 'rakitic-ucl-1415', name: 'Ivan Rakitić', position: 'MID', rating: 84, club: 'Barcelona', season: '2014-15', altPositions: ['CM', 'AM'] },
+      { id: 'iniesta-ucl-1415', name: 'Andrés Iniesta', position: 'MID', rating: 89, club: 'Barcelona', season: '2014-15', altPositions: ['CM', 'AM'] },
+      { id: 'messi-ucl-1415', name: 'Lionel Messi', position: 'FWD', rating: 96, club: 'Barcelona', season: '2014-15', altPositions: ['RW', 'AM', 'ST'] },
+      { id: 'suarez-ucl-1415', name: 'Luis Suárez', position: 'FWD', rating: 91, club: 'Barcelona', season: '2014-15', altPositions: ['ST'] },
+      { id: 'neymar-ucl-1415', name: 'Neymar', position: 'FWD', rating: 90, club: 'Barcelona', season: '2014-15', altPositions: ['LW', 'ST'] },
+    ]
+  },
 ]

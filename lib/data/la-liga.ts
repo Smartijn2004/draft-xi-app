@@ -488,4 +488,36 @@ export const laLigaData: ClubSeason[] = [
       { id: 'rodrygo-2425', name: 'Rodrygo', position: 'FWD', rating: 87, club: 'Real Madrid', season: '2024-25', altPositions: ['RW', 'LW'] },
     ]
   },
+  {
+    id: 'barcelona-2008-09', club: 'Barcelona', shortName: 'BAR', season: '2008-09', league: 'laliga', color: '#A50044',
+    players: [
+      { id: 'valdes-0809', name: 'Víctor Valdés', position: 'GK', rating: 86, club: 'Barcelona', season: '2008-09' },
+      { id: 'alves-0809', name: 'Dani Alves', position: 'DEF', rating: 87, club: 'Barcelona', season: '2008-09', altPositions: ['RB', 'RWB'] },
+      { id: 'puyol-0809', name: 'Carles Puyol', position: 'DEF', rating: 88, club: 'Barcelona', season: '2008-09', altPositions: ['CB'] },
+      { id: 'pique-0809', name: 'Gerard Piqué', position: 'DEF', rating: 85, club: 'Barcelona', season: '2008-09', altPositions: ['CB'] },
+      { id: 'abidal-0809', name: 'Éric Abidal', position: 'DEF', rating: 84, club: 'Barcelona', season: '2008-09', altPositions: ['LB', 'CB'] },
+      { id: 'busquets-0809', name: 'Sergio Busquets', position: 'MID', rating: 83, club: 'Barcelona', season: '2008-09', altPositions: ['DM', 'CM'] },
+      { id: 'xavi-0809', name: 'Xavi', position: 'MID', rating: 91, club: 'Barcelona', season: '2008-09', altPositions: ['CM', 'AM'] },
+      { id: 'iniesta-0809', name: 'Andrés Iniesta', position: 'MID', rating: 90, club: 'Barcelona', season: '2008-09', altPositions: ['CM', 'AM'] },
+      { id: 'messi-0809', name: 'Lionel Messi', position: 'FWD', rating: 93, club: 'Barcelona', season: '2008-09', altPositions: ['RW', 'AM', 'ST'] },
+      { id: 'etoo-0809', name: 'Samuel Eto\'o', position: 'FWD', rating: 89, club: 'Barcelona', season: '2008-09', altPositions: ['ST'] },
+      { id: 'henry-bar-0809', name: 'Thierry Henry', position: 'FWD', rating: 87, club: 'Barcelona', season: '2008-09', altPositions: ['LW', 'ST'] },
+    ]
+  },
+  {
+    id: 'girona-2023-24', club: 'Girona', shortName: 'GIR', season: '2023-24', league: 'laliga', color: '#CD2534',
+    players: [
+      { id: 'gazzaniga-2324', name: 'Paulo Gazzaniga', position: 'GK', rating: 79, club: 'Girona', season: '2023-24' },
+      { id: 'couto-2324', name: 'Yan Couto', position: 'DEF', rating: 78, club: 'Girona', season: '2023-24', altPositions: ['RB', 'RWB'] },
+      { id: 'blind-gir-2324', name: 'Daley Blind', position: 'DEF', rating: 78, club: 'Girona', season: '2023-24', altPositions: ['CB', 'LB'] },
+      { id: 'davidlopez-2324', name: 'David López', position: 'DEF', rating: 77, club: 'Girona', season: '2023-24', altPositions: ['CB'] },
+      { id: 'miguel-g-2324', name: 'Miguel Gutiérrez', position: 'DEF', rating: 79, club: 'Girona', season: '2023-24', altPositions: ['LB'] },
+      { id: 'aleix-g-2324', name: 'Aleix García', position: 'MID', rating: 82, club: 'Girona', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'ivanmartin-2324', name: 'Iván Martín', position: 'MID', rating: 78, club: 'Girona', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'herrera-y-2324', name: 'Yangel Herrera', position: 'MID', rating: 79, club: 'Girona', season: '2023-24', altPositions: ['CM', 'DM'] },
+      { id: 'savio-2324', name: 'Sávio', position: 'FWD', rating: 82, club: 'Girona', season: '2023-24', altPositions: ['RW', 'LW'] },
+      { id: 'dovbyk-2324', name: 'Artem Dovbyk', position: 'FWD', rating: 82, club: 'Girona', season: '2023-24', altPositions: ['ST'] },
+      { id: 'tsygankov-gir-2324', name: 'Viktor Tsygankov', position: 'FWD', rating: 81, club: 'Girona', season: '2023-24', altPositions: ['RW', 'AM'] },
+    ]
+  },
 ]
