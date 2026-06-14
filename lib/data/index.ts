@@ -19,6 +19,8 @@ export const LEAGUE_DATA: Record<LeagueId, ClubSeason[]> = {
   seriea: serieAData,
   ucl: championsLeagueData,
   worldcup: worldCupData,
+  // Legends mode drafts from every era and competition at once.
+  legends: ALL_CLUB_SEASONS,
 }
 
 export const LEAGUE_CONFIGS: Record<LeagueId, LeagueConfig> = {
@@ -115,6 +117,24 @@ export const LEAGUE_CONFIGS: Record<LeagueId, LeagueConfig> = {
     tagline: 'Can you win the World Cup?',
     groupStageGames: 3,
     knockoutRounds: ['Round of 16', 'Quarter-Final', 'Semi-Final', 'Final'],
+  },
+  legends: {
+    id: 'legends',
+    name: 'Legends League',
+    shortName: 'LGN',
+    color: '#a855f7',
+    bgColor: '#120a1f',
+    borderColor: 'border-purple-500/30',
+    accentClass: 'text-purple-400',
+    bgClass: 'bg-purple-500',
+    description: 'Draft from every era and beat a league of the greatest XIs ever assembled.',
+    format: 'league',
+    totalGames: 38,
+    perfectLabel: '38-0-0',
+    goalLabel: 'Beat the legends unbeaten',
+    clubs: 157,
+    seasons: 'All eras',
+    tagline: 'Can you beat the legends?',
   },
 }
 

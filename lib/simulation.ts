@@ -121,6 +121,26 @@ const OPP_SQUADS: Record<string, string[]> = {
   'Colombia': ['Luis Díaz', 'James Rodríguez', 'Durán', 'Córdoba', 'Arias'],
   'Senegal': ['Mané', 'Sarr', 'Jackson', 'Ndiaye', 'Gueye'],
   'Morocco': ['Hakimi', 'Ziyech', 'En-Nesyri', 'Ezzalzouli', 'Rahimi'],
+  // Legends League — iconic scorers per legendary XI.
+  'Real Madrid Galácticos': ['Ronaldo', 'Zidane', 'Figo', 'Raúl'],
+  'Barcelona Tiki-Taka': ['Messi', 'Eto\'o', 'Henry', 'Xavi'],
+  'Brazil 1970': ['Pelé', 'Jairzinho', 'Tostão', 'Rivelino'],
+  'Real Madrid 2017': ['Ronaldo', 'Benzema', 'Bale', 'Modrić'],
+  'Brazil 2002': ['Ronaldo', 'Rivaldo', 'Ronaldinho', 'Roberto Carlos'],
+  'AC Milan Immortals': ['Van Basten', 'Gullit', 'Weah', 'Shevchenko'],
+  'Bayern 2013': ['Robben', 'Ribéry', 'Müller', 'Mandžukić'],
+  'Man City Centurions': ['Agüero', 'Sterling', 'Sané', 'Jesus'],
+  'Man Utd Treble': ['Yorke', 'Cole', 'Sheringham', 'Solskjær'],
+  'Spain 2010': ['Villa', 'Iniesta', 'Torres', 'Xavi'],
+  'Argentina 1986': ['Maradona', 'Valdano', 'Burruchaga'],
+  'France 1998': ['Zidane', 'Henry', 'Trezeguet', 'Djorkaeff'],
+  'Liverpool 2019': ['Salah', 'Mané', 'Firmino', 'Origi'],
+  'Arsenal Invincibles': ['Henry', 'Bergkamp', 'Pirès', 'Ljungberg'],
+  'Germany 2014': ['Müller', 'Klose', 'Kroos', 'Götze'],
+  'Inter Grande': ['Milito', 'Eto\'o', 'Sneijder', 'Pandev'],
+  'Ajax 1995': ['Kluivert', 'Litmanen', 'Overmars', 'Finidi'],
+  'Juventus 1996': ['Del Piero', 'Vialli', 'Ravanelli'],
+  'Netherlands 1974': ['Cruyff', 'Neeskens', 'Rep'],
 }
 
 function pickScorer(
@@ -332,9 +352,34 @@ const WC_OPPONENTS = [
   { name: 'Morocco', rating: 82 },
 ]
 
+// Legendary XIs — the Beat-the-Legend boss season. Brutally rated; you draft
+// from every era to stand a chance.
+const LEGENDS_OPPONENTS = [
+  { name: 'Real Madrid Galácticos', rating: 95 },
+  { name: 'Barcelona Tiki-Taka', rating: 95 },
+  { name: 'Brazil 1970', rating: 94 },
+  { name: 'Real Madrid 2017', rating: 94 },
+  { name: 'Brazil 2002', rating: 93 },
+  { name: 'AC Milan Immortals', rating: 93 },
+  { name: 'Bayern 2013', rating: 93 },
+  { name: 'Man City Centurions', rating: 92 },
+  { name: 'Man Utd Treble', rating: 92 },
+  { name: 'Spain 2010', rating: 92 },
+  { name: 'Argentina 1986', rating: 92 },
+  { name: 'France 1998', rating: 91 },
+  { name: 'Liverpool 2019', rating: 91 },
+  { name: 'Arsenal Invincibles', rating: 91 },
+  { name: 'Germany 2014', rating: 91 },
+  { name: 'Inter Grande', rating: 90 },
+  { name: 'Ajax 1995', rating: 90 },
+  { name: 'Juventus 1996', rating: 90 },
+  { name: 'Netherlands 1974', rating: 90 },
+]
+
 function getLeagueOpponents(league: LeagueId) {
   if (league === 'laliga') return LALIGA_OPPONENTS
   if (league === 'seriea') return SERIEA_OPPONENTS
+  if (league === 'legends') return LEGENDS_OPPONENTS
   return PL_OPPONENTS
 }
 

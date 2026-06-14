@@ -1,4 +1,4 @@
-export type LeagueId = 'pl' | 'laliga' | 'seriea' | 'ucl' | 'worldcup'
+export type LeagueId = 'pl' | 'laliga' | 'seriea' | 'ucl' | 'worldcup' | 'legends'
 export type Position = 'GK' | 'DEF' | 'MID' | 'FWD'
 export type Format = 'league' | 'tournament'
 

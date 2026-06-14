@@ -65,11 +65,35 @@ export default function HomePage() {
       </section>
 
       {/* League picker */}
-      <section className="relative z-10 px-6 pb-16">
+      <section className="relative z-10 px-6 pb-8">
         <h2 className="text-center text-sm font-bold text-slate-400 tracking-widest uppercase mb-6">
           Choose your competition
         </h2>
         <LeagueSelector />
+      </section>
+
+      {/* Beat the Legends */}
+      <section className="relative z-10 px-6 pb-16">
+        <Link
+          href="/game?league=legends"
+          className="group relative flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 rounded-2xl border p-5 w-full max-w-4xl mx-auto transition-all duration-200 hover:-translate-y-1 active:scale-[0.99] overflow-hidden"
+          style={{ background: 'linear-gradient(120deg, #a855f71f, #a855f70a 60%, transparent)', borderColor: '#a855f755' }}
+        >
+          <div className="absolute top-0 left-0 right-0 h-px opacity-80"
+            style={{ background: 'linear-gradient(90deg, transparent, #a855f7, transparent)' }} />
+          <div className="text-4xl shrink-0">👑</div>
+          <div className="flex-1 min-w-0">
+            <span className="text-xs font-black uppercase tracking-widest text-purple-400">Boss Mode</span>
+            <h2 className="text-lg font-black text-white leading-tight mt-0.5">Beat the Legends</h2>
+            <p className="text-xs text-slate-400 mt-1">
+              Draft from every era, then survive a 38-game league of the greatest XIs ever — Galácticos, the Invincibles, Brazil 1970 and more.
+            </p>
+          </div>
+          <span className="shrink-0 inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-black text-white transition-transform group-hover:scale-105"
+            style={{ background: '#a855f7', boxShadow: '0 6px 22px #a855f744' }}>
+            Take them on →
+          </span>
+        </Link>
       </section>
 
       {/* How to play */}
