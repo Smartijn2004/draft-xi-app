@@ -2,46 +2,60 @@ import { ALL_CLUB_SEASONS } from './data'
 import { canFillSlotLabel } from './positions'
 import type { DraftedPlayer, LeagueId, Player } from './types'
 
-export type DraftComparison = { player: DraftedPlayer; best: Player | null; missed: number }
-
-// Compares each drafted player against the best alternative who could ACTUALLY
-// have filled the same slot from that club-season — i.e. a player you could
-// genuinely have picked at that moment. Restricting to same-slot-eligible
-// squadmates means the "better pick" is always a real, fieldable option, not
-// a higher-rated player in a different role you had no room for.
-// Shared by the results screen and the "Perfect Draft" achievement.
-export function computeDraftReview(team: DraftedPlayer[], leagueId: LeagueId): {
-  comparisons: DraftComparison[]
-  totalMissed: number
+// ── (1) Per-spin optimality (for the "Perfect Draft" achievement) ────────────
+// Did you pick the best player you COULD have from each club-season you spun?
+// This stays achievable — it's a measure of draft skill, not luck.
+export function computeSquadOptimality(team: DraftedPlayer[], leagueId: LeagueId): {
   optimalCount: number
   isPerfect: boolean
 } {
-  const comparisons: DraftComparison[] = team.map(player => {
-    // Prefer the club-season from this league; fall back to any league (e.g.
-    // legends mode, which draws players from every competition).
+  let optimal = 0
+  for (const player of team) {
     const clubSeason =
       ALL_CLUB_SEASONS.find(cs => cs.club === player.club && cs.season === player.season && cs.league === leagueId) ??
       ALL_CLUB_SEASONS.find(cs => cs.club === player.club && cs.season === player.season)
-    if (!clubSeason) return { player, best: null, missed: 0 }
-
-    // Candidates = squadmates who could fill the exact slot this player took.
+    if (!clubSeason) { optimal++; continue }
     let candidates = player.slotLabel
       ? clubSeason.players.filter(p => canFillSlotLabel(p, player.slotLabel))
       : []
-    if (candidates.length === 0) {
-      // Fallback for older data without a slot label: same broad position.
-      candidates = clubSeason.players.filter(p => p.position === player.position)
-    }
-    if (candidates.length === 0) return { player, best: null, missed: 0 }
-
+    if (candidates.length === 0) candidates = clubSeason.players.filter(p => p.position === player.position)
+    if (candidates.length === 0) { optimal++; continue }
     const best = candidates.reduce((b, p) => (p.rating > b.rating ? p : b), candidates[0])
-    // Compare by name: data may carry duplicate ids, so an id check can pit a
-    // player against himself.
-    const missed = best.name !== player.name ? best.rating - player.rating : 0
-    return { player, best: missed > 0 ? best : null, missed }
-  })
+    if (best.name === player.name || best.rating <= player.rating) optimal++
+  }
+  return { optimalCount: optimal, isPerfect: optimal === team.length }
+}
 
-  const totalMissed = comparisons.reduce((s, c) => s + c.missed, 0)
-  const optimalCount = comparisons.filter(c => c.missed === 0).length
-  return { comparisons, totalMissed, optimalCount, isPerfect: totalMissed === 0 }
+// ── (2) Mode-best XI (for the results "Draft Review" scout report) ───────────
+// For each slot you filled, the highest-rated player available ANYWHERE in this
+// game mode who could play that slot — so even if you couldn't grab him this
+// run, you learn who the best option is for next time.
+export type BestXIRow = {
+  player: DraftedPlayer
+  best: { name: string; rating: number; club: string; season: string } | null
+  gap: number
+}
+
+export function computeModeBestXI(team: DraftedPlayer[], pool: Player[]): {
+  rows: BestXIRow[]
+  gotBest: number
+  totalGap: number
+} {
+  const rows: BestXIRow[] = team.map(player => {
+    let candidates = player.slotLabel
+      ? pool.filter(p => canFillSlotLabel(p, player.slotLabel))
+      : pool.filter(p => p.position === player.position)
+    if (candidates.length === 0) return { player, best: null, gap: 0 }
+    const best = candidates.reduce((b, p) => (p.rating > b.rating ? p : b), candidates[0])
+    // By name: if you already have the player (any season), you have the best.
+    const gap = best.name === player.name ? 0 : Math.max(0, best.rating - player.rating)
+    return {
+      player,
+      best: { name: best.name, rating: best.rating, club: best.club, season: best.season },
+      gap,
+    }
+  })
+  const gotBest = rows.filter(r => r.gap === 0).length
+  const totalGap = rows.reduce((s, r) => s + r.gap, 0)
+  return { rows, gotBest, totalGap }
 }

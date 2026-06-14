@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
-import type { SeasonResult, LeagueConfig, GroupStanding, GoalEvent, LeagueTableEntry, DraftedPlayer, LeagueId } from '@/lib/types'
+import type { SeasonResult, LeagueConfig, GroupStanding, GoalEvent, LeagueTableEntry, DraftedPlayer, Player } from '@/lib/types'
 import type { SeasonRecordOutcome } from '@/lib/storage'
-import { computeDraftReview } from '@/lib/draftReview'
+import { computeModeBestXI } from '@/lib/draftReview'
 import { teamLine } from '@/lib/share'
 
 type Props = {
@@ -12,6 +12,12 @@ type Props = {
   team?: DraftedPlayer[]
   careerOutcome?: SeasonRecordOutcome | null
   daily?: { number: number; streak: number }
+  // Every player eligible in this game mode (constraint-filtered for dailies),
+  // used to show the best available option per slot in the Draft Review.
+  referencePlayers?: Player[]
+  // Label for the pool the Draft Review compares against (league name, or the
+  // daily constraint, e.g. "Underdogs ≤82").
+  modeName?: string
 }
 
 function lastName(name: string) {
@@ -35,7 +41,7 @@ function positionBadge(pos: number, total: number): { color: string; bg: string;
   return { color: '#94a3b8', bg: '#6b728022', border: '#6b728033', label: '' }
 }
 
-export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutcome, daily }: Props) {
+export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutcome, daily, referencePlayers, modeName }: Props) {
   const {
     matches, won, drawn, lost, goalsFor, goalsAgainst, isPerfect, trophyWon,
     teamRating, eliminated, eliminatedAt, groupStandings,
@@ -183,7 +189,7 @@ export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutco
 
       {/* ── Draft Review ── */}
       {team && team.length > 0 && (
-        <DraftCompare team={team} leagueId={league.id} accent={accent} />
+        <DraftCompare team={team} pool={referencePlayers ?? []} modeName={modeName ?? league.name} accent={accent} />
       )}
 
       {/* ── Player of the Season ── */}
@@ -439,45 +445,48 @@ function SquadProfile({ team, accent }: { team: DraftedPlayer[]; accent: string 
 
 // ── Draft Review ─────────────────────────────────────────────────────────────
 
-function DraftCompare({ team, leagueId, accent }: { team: DraftedPlayer[]; leagueId: LeagueId; accent: string }) {
-  const { comparisons, totalMissed, optimalCount } = useMemo(
-    () => computeDraftReview(team, leagueId),
-    [team, leagueId],
+function DraftCompare({ team, pool, modeName, accent }: { team: DraftedPlayer[]; pool: Player[]; modeName: string; accent: string }) {
+  const { rows, gotBest, totalGap } = useMemo(
+    () => computeModeBestXI(team, pool),
+    [team, pool],
   )
 
   return (
     <div className="space-y-2">
-      <div className="flex items-baseline justify-between">
+      <div className="flex items-baseline justify-between gap-2">
         <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Draft Review</h3>
-        <span className="text-xs" style={{ color: totalMissed === 0 ? '#10b981' : '#f59e0b' }}>
-          {totalMissed === 0
-            ? '🎯 Perfect draft!'
-            : `${optimalCount}/11 optimal · +${totalMissed} missed`}
+        <span className="text-xs text-right" style={{ color: totalGap === 0 ? '#10b981' : '#f59e0b' }}>
+          {totalGap === 0
+            ? '🎯 Best XI possible!'
+            : `Best of ${modeName} at ${gotBest}/11 slots`}
         </span>
       </div>
+      <p className="text-[11px] text-slate-500 -mt-1">
+        The top-rated player for each slot in this mode — note them for next time.
+      </p>
       <div className="rounded-xl border border-white/8 divide-y divide-white/5 overflow-hidden">
-        {comparisons.map(({ player, best, missed }) => (
+        {rows.map(({ player, best, gap }) => (
           <div key={player.id} className="flex items-center gap-2 px-3 py-2.5 text-xs">
             <span
-              className="shrink-0 text-[10px] font-black px-1.5 py-0.5 rounded leading-none"
+              className="shrink-0 text-[10px] font-black px-1.5 py-0.5 rounded leading-none w-9 text-center"
               style={{ background: accent + '1a', color: accent }}
             >
-              {player.position}
+              {player.slotLabel || player.position}
             </span>
             <div className="flex-1 min-w-0">
-              <span className="font-semibold text-white">{player.name}</span>
-              <span className="text-slate-600 ml-1.5 text-[10px]">
-                {player.club} {player.season}
-              </span>
+              <span className="font-semibold text-white">{lastName(player.name)}</span>
+              <span className="text-slate-500 ml-1 tabular-nums">{player.rating}</span>
             </div>
-            <span className="font-black text-slate-400 tabular-nums shrink-0">{player.rating}</span>
-            {best && missed > 0 ? (
-              <div className="text-right shrink-0">
-                <span className="text-amber-400 font-black">+{missed}</span>
-                <span className="text-slate-500 ml-1">→ {best.name}</span>
+            {gap > 0 && best ? (
+              <div className="text-right shrink-0 min-w-0 max-w-[55%]">
+                <div className="truncate">
+                  <span className="text-amber-400 font-black">{best.rating}</span>
+                  <span className="text-slate-300 ml-1 font-semibold">{best.name}</span>
+                </div>
+                <div className="text-[10px] text-slate-600 truncate">{best.club} {best.season}</div>
               </div>
             ) : (
-              <span className="text-emerald-400 font-black text-[10px] shrink-0">✓ BEST</span>
+              <span className="text-emerald-400 font-black text-[10px] shrink-0">✓ BEST AVAILABLE</span>
             )}
           </div>
         ))}

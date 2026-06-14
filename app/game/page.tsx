@@ -107,6 +107,22 @@ function GameContent() {
   const filled = team.length
   const hideRatings = difficulty ? DIFFICULTY_CONFIG[difficulty].hideRatings : false
 
+  // Every player eligible in this mode (constraint-filtered for dailies), with
+  // the effective rating for the chosen ratings mode — powers the Draft Review's
+  // "best available per slot" scout report.
+  const referencePlayers = useMemo<Player[]>(() => {
+    const clubSeasons = dailyChallenge ? getDailySpinPool(dailyChallenge) : getClubSeasonsForLeague(leagueId)
+    const out: Player[] = []
+    for (const cs of clubSeasons) {
+      for (const p of cs.players) {
+        if (dailyChallenge && !isPlayerAllowed(dailyChallenge, p)) continue
+        const rating = ratingsMode === 'prime' ? (PRIME_RATINGS.get(p.name) ?? p.rating) : p.rating
+        out.push({ ...p, rating })
+      }
+    }
+    return out
+  }, [dailyChallenge, leagueId, ratingsMode])
+
   const emptyCounts: Record<Position, number> = { GK: 0, DEF: 0, MID: 0, FWD: 0 }
   slots.forEach(s => { emptyCounts[s.position as Position]++ })
   team.forEach(p => { emptyCounts[p.slotPosition as Position]-- })
@@ -412,6 +428,10 @@ function GameContent() {
             team={team}
             careerOutcome={careerOutcome}
             daily={isDaily ? { number: getDailyChallengeNumber(todayKey), streak: dailyStreak?.current ?? 1 } : undefined}
+            referencePlayers={referencePlayers}
+            modeName={dailyChallenge
+              ? (dailyChallenge.constraint.kind === 'league' ? league.name : dailyChallenge.label)
+              : league.name}
           />
         </div>
       </div>

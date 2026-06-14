@@ -1,6 +1,6 @@
 import type { LeagueId, SeasonResult, DraftedPlayer } from './types'
 import { evaluateAchievements, getAchievement, type Achievement } from './achievements'
-import { computeDraftReview } from './draftReview'
+import { computeSquadOptimality } from './draftReview'
 
 // All persistence lives under a single versioned key. Every read/write is
 // guarded: SSR (no window) and private-mode (storage throws) both degrade
@@ -191,7 +191,7 @@ export function recordSeason(
     trophyWon: result.trophyWon, isPerfect: result.isPerfect, eliminated: result.eliminated,
     finalPosition: result.finalPosition, teamRating: result.teamRating,
     topScorerGoals: result.topScorers[0]?.goals ?? 0,
-    perfectDraft: computeDraftReview(team, leagueId).isPerfect,
+    perfectDraft: computeSquadOptimality(team, leagueId).isPerfect,
     totalSeasons: career.seasonsPlayed, totalTrophies: career.trophies,
     totalInvincibles: career.invincibles, leaguesPlayed, leaguesWon,
     dailyStreak: state.streak.best,
