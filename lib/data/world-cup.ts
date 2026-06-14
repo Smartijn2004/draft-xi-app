@@ -345,4 +345,68 @@ export const worldCupData: ClubSeason[] = [
       { id: 'holzenbein-1974', name: 'Bernd Hölzenbein', position: 'FWD', rating: 82, club: 'West Germany', season: 'World Cup 1974', nationality: 'West Germany', altPositions: ['LW', 'ST'] },
     ]
   },
+  {
+    id: 'netherlands-euro-1988', club: 'Netherlands', shortName: 'NED', season: 'Euro 1988', league: 'worldcup', color: '#F36C21',
+    players: [
+      { id: 'vanbreukelen-1988', name: 'Hans van Breukelen', position: 'GK', rating: 85, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands' },
+      { id: 'vanaerle-1988', name: 'Berry van Aerle', position: 'DEF', rating: 80, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands', altPositions: ['RB'] },
+      { id: 'rkoeman-1988', name: 'Ronald Koeman', position: 'DEF', rating: 89, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands', altPositions: ['CB', 'DM'] },
+      { id: 'rijkaard-1988', name: 'Frank Rijkaard', position: 'DEF', rating: 89, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands', altPositions: ['CB', 'DM'] },
+      { id: 'vantiggelen-1988', name: 'Adri van Tiggelen', position: 'DEF', rating: 79, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands', altPositions: ['LB', 'CB'] },
+      { id: 'wouters-1988', name: 'Jan Wouters', position: 'MID', rating: 83, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands', altPositions: ['DM', 'CM'] },
+      { id: 'muhren-1988', name: 'Arnold Mühren', position: 'MID', rating: 84, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands', altPositions: ['CM', 'LM'] },
+      { id: 'vanenburg-1988', name: 'Gerald Vanenburg', position: 'MID', rating: 82, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands', altPositions: ['RM', 'AM'] },
+      { id: 'gullit-1988', name: 'Ruud Gullit', position: 'FWD', rating: 92, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands', altPositions: ['AM', 'ST', 'LW'] },
+      { id: 'vanbasten-1988', name: 'Marco van Basten', position: 'FWD', rating: 94, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands', altPositions: ['ST'] },
+      { id: 'kieft-1988', name: 'Wim Kieft', position: 'FWD', rating: 80, club: 'Netherlands', season: 'Euro 1988', nationality: 'Netherlands', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'brazil-wc-1994', club: 'Brazil', shortName: 'BRA', season: 'World Cup 1994', league: 'worldcup', color: '#FFDF00',
+    players: [
+      { id: 'taffarel-1994', name: 'Cláudio Taffarel', position: 'GK', rating: 84, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil' },
+      { id: 'jorginho-br-1994', name: 'Jorginho', position: 'DEF', rating: 80, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil', altPositions: ['RB'] },
+      { id: 'aldair-1994', name: 'Aldair', position: 'DEF', rating: 84, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil', altPositions: ['CB'] },
+      { id: 'marciosantos-1994', name: 'Márcio Santos', position: 'DEF', rating: 81, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil', altPositions: ['CB'] },
+      { id: 'branco-1994', name: 'Branco', position: 'DEF', rating: 82, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil', altPositions: ['LB'] },
+      { id: 'dunga-1994', name: 'Dunga', position: 'MID', rating: 85, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil', altPositions: ['DM', 'CM'] },
+      { id: 'maurosilva-1994', name: 'Mauro Silva', position: 'MID', rating: 83, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil', altPositions: ['DM', 'CM'] },
+      { id: 'mazinho-1994', name: 'Mazinho', position: 'MID', rating: 80, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil', altPositions: ['CM'] },
+      { id: 'zinho-1994', name: 'Zinho', position: 'MID', rating: 81, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil', altPositions: ['LM', 'AM'] },
+      { id: 'romario-1994', name: 'Romário', position: 'FWD', rating: 92, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil', altPositions: ['ST'] },
+      { id: 'bebeto-1994', name: 'Bebeto', position: 'FWD', rating: 88, club: 'Brazil', season: 'World Cup 1994', nationality: 'Brazil', altPositions: ['ST', 'AM'] },
+    ]
+  },
+  {
+    id: 'france-euro-2000', club: 'France', shortName: 'FRA', season: 'Euro 2000', league: 'worldcup', color: '#002395',
+    players: [
+      { id: 'barthez-2000', name: 'Fabien Barthez', position: 'GK', rating: 84, club: 'France', season: 'Euro 2000', nationality: 'France' },
+      { id: 'thuram-2000', name: 'Lilian Thuram', position: 'DEF', rating: 87, club: 'France', season: 'Euro 2000', nationality: 'France', altPositions: ['RB', 'CB'] },
+      { id: 'desailly-2000', name: 'Marcel Desailly', position: 'DEF', rating: 88, club: 'France', season: 'Euro 2000', nationality: 'France', altPositions: ['CB', 'DM'] },
+      { id: 'blanc-2000', name: 'Laurent Blanc', position: 'DEF', rating: 85, club: 'France', season: 'Euro 2000', nationality: 'France', altPositions: ['CB'] },
+      { id: 'lizarazu-2000', name: 'Bixente Lizarazu', position: 'DEF', rating: 84, club: 'France', season: 'Euro 2000', nationality: 'France', altPositions: ['LB'] },
+      { id: 'vieira-2000', name: 'Patrick Vieira', position: 'MID', rating: 88, club: 'France', season: 'Euro 2000', nationality: 'France', altPositions: ['CM', 'DM'] },
+      { id: 'deschamps-2000', name: 'Didier Deschamps', position: 'MID', rating: 83, club: 'France', season: 'Euro 2000', nationality: 'France', altPositions: ['DM', 'CM'] },
+      { id: 'zidane-fr-2000', name: 'Zinedine Zidane', position: 'MID', rating: 95, club: 'France', season: 'Euro 2000', nationality: 'France', altPositions: ['AM', 'CM'] },
+      { id: 'henry-fr-2000', name: 'Thierry Henry', position: 'FWD', rating: 89, club: 'France', season: 'Euro 2000', nationality: 'France', altPositions: ['ST', 'LW'] },
+      { id: 'trezeguet-2000', name: 'David Trezeguet', position: 'FWD', rating: 86, club: 'France', season: 'Euro 2000', nationality: 'France', altPositions: ['ST'] },
+      { id: 'djorkaeff-2000', name: 'Youri Djorkaeff', position: 'FWD', rating: 85, club: 'France', season: 'Euro 2000', nationality: 'France', altPositions: ['AM', 'ST'] },
+    ]
+  },
+  {
+    id: 'spain-euro-2012', club: 'Spain', shortName: 'ESP', season: 'Euro 2012', league: 'worldcup', color: '#C60B1E',
+    players: [
+      { id: 'casillas-2012', name: 'Iker Casillas', position: 'GK', rating: 90, club: 'Spain', season: 'Euro 2012', nationality: 'Spain' },
+      { id: 'arbeloa-2012', name: 'Álvaro Arbeloa', position: 'DEF', rating: 80, club: 'Spain', season: 'Euro 2012', nationality: 'Spain', altPositions: ['RB'] },
+      { id: 'pique-es-2012', name: 'Gerard Piqué', position: 'DEF', rating: 88, club: 'Spain', season: 'Euro 2012', nationality: 'Spain', altPositions: ['CB'] },
+      { id: 'ramos-es-2012', name: 'Sergio Ramos', position: 'DEF', rating: 89, club: 'Spain', season: 'Euro 2012', nationality: 'Spain', altPositions: ['CB', 'RB'] },
+      { id: 'alba-es-2012', name: 'Jordi Alba', position: 'DEF', rating: 84, club: 'Spain', season: 'Euro 2012', nationality: 'Spain', altPositions: ['LB'] },
+      { id: 'busquets-es-2012', name: 'Sergio Busquets', position: 'MID', rating: 87, club: 'Spain', season: 'Euro 2012', nationality: 'Spain', altPositions: ['DM', 'CM'] },
+      { id: 'xabialonso-2012', name: 'Xabi Alonso', position: 'MID', rating: 87, club: 'Spain', season: 'Euro 2012', nationality: 'Spain', altPositions: ['CM', 'DM'] },
+      { id: 'xavi-es-2012', name: 'Xavi', position: 'MID', rating: 90, club: 'Spain', season: 'Euro 2012', nationality: 'Spain', altPositions: ['CM', 'AM'] },
+      { id: 'iniesta-es-2012', name: 'Andrés Iniesta', position: 'MID', rating: 91, club: 'Spain', season: 'Euro 2012', nationality: 'Spain', altPositions: ['AM', 'CM'] },
+      { id: 'silva-es-2012', name: 'David Silva', position: 'FWD', rating: 88, club: 'Spain', season: 'Euro 2012', nationality: 'Spain', altPositions: ['RW', 'AM'] },
+      { id: 'torres-es-2012', name: 'Fernando Torres', position: 'FWD', rating: 84, club: 'Spain', season: 'Euro 2012', nationality: 'Spain', altPositions: ['ST'] },
+    ]
+  },
 ]
