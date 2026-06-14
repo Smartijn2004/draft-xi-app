@@ -4,6 +4,7 @@ import { laLigaData } from './la-liga'
 import { serieAData } from './serie-a'
 import { championsLeagueData } from './champions-league'
 import { worldCupData } from './world-cup'
+import { worldCup2026Data } from './world-cup-2026'
 
 export const ALL_CLUB_SEASONS: ClubSeason[] = [
   ...premierLeagueData,
@@ -11,6 +12,7 @@ export const ALL_CLUB_SEASONS: ClubSeason[] = [
   ...serieAData,
   ...championsLeagueData,
   ...worldCupData,
+  ...worldCup2026Data,
 ]
 
 export const LEAGUE_DATA: Record<LeagueId, ClubSeason[]> = {
@@ -19,6 +21,7 @@ export const LEAGUE_DATA: Record<LeagueId, ClubSeason[]> = {
   seriea: serieAData,
   ucl: championsLeagueData,
   worldcup: worldCupData,
+  worldcup2026: worldCup2026Data,
   // Legends mode drafts from every era and competition at once.
   legends: ALL_CLUB_SEASONS,
 }
@@ -115,6 +118,26 @@ export const LEAGUE_CONFIGS: Record<LeagueId, LeagueConfig> = {
     clubs: 21,
     seasons: '1966–2022',
     tagline: 'Can you win the World Cup?',
+    groupStageGames: 3,
+    knockoutRounds: ['Round of 16', 'Quarter-Final', 'Semi-Final', 'Final'],
+  },
+  worldcup2026: {
+    id: 'worldcup2026',
+    name: 'World Cup 2026',
+    shortName: 'WC26',
+    color: '#16a34a',
+    bgColor: '#06120a',
+    borderColor: 'border-green-500/30',
+    accentClass: 'text-green-400',
+    bgClass: 'bg-green-500',
+    description: 'Live event — draft the stars of the 2026 World Cup at current form and go for glory.',
+    format: 'tournament',
+    totalGames: 7,
+    perfectLabel: '7-0',
+    goalLabel: 'Win the 2026 World Cup unbeaten',
+    clubs: 14,
+    seasons: '2026',
+    tagline: 'Lift the 2026 World Cup',
     groupStageGames: 3,
     knockoutRounds: ['Round of 16', 'Quarter-Final', 'Semi-Final', 'Final'],
   },

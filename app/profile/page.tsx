@@ -7,7 +7,7 @@ import type { LeagueId } from '@/lib/types'
 import { getProfile, type CareerStats, type LeagueStats, type HallOfFameEntry } from '@/lib/storage'
 import { ACHIEVEMENTS, ACHIEVEMENT_CATEGORIES } from '@/lib/achievements'
 
-const LEAGUE_ORDER: LeagueId[] = ['pl', 'laliga', 'seriea', 'ucl', 'worldcup', 'legends']
+const LEAGUE_ORDER: LeagueId[] = ['pl', 'laliga', 'seriea', 'ucl', 'worldcup', 'worldcup2026', 'legends']
 
 type ProfileData = ReturnType<typeof getProfile>
 

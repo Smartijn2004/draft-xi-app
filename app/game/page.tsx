@@ -13,6 +13,7 @@ import {
   type SeasonRecordOutcome, type DailyRecord, type StoredState,
 } from '@/lib/storage'
 import { getDailyChallenge, getDailySpinPool, isPlayerAllowed } from '@/lib/dailyChallenge'
+import { isWorldCup2026Active } from '@/lib/event'
 import { emojiGrid, dailyStatusLine, dailyShareText } from '@/lib/share'
 import { TeamFormation } from '@/components/TeamFormation'
 import { SeasonSimulator } from '@/components/SeasonSimulator'
@@ -322,6 +323,25 @@ function GameContent() {
     return (
       <div className="min-h-screen flex items-center justify-center text-slate-500" style={leagueAmbience(league.color)}>
         Loading today&apos;s challenge…
+      </div>
+    )
+  }
+
+  // ── World Cup 2026 event window guard ────────────────────────────────────
+  if (leagueId === 'worldcup2026' && !isWorldCup2026Active()) {
+    return (
+      <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
+        <GameHeader league={league} onBack={() => router.push('/')} />
+        <div className="flex-1 flex items-center justify-center px-4 py-8">
+          <div className="w-full max-w-md text-center space-y-3">
+            <div className="text-4xl">🌎</div>
+            <h1 className="text-2xl font-black text-white">The World Cup 2026 event isn&apos;t live</h1>
+            <p className="text-slate-400 text-sm">This event is only playable while the real tournament is on. Check back then!</p>
+            <button onClick={() => router.push('/')} className="inline-block mt-2 px-5 py-2.5 rounded-xl font-bold text-white bg-emerald-500 hover:brightness-110 transition">
+              Back to home →
+            </button>
+          </div>
+        </div>
       </div>
     )
   }

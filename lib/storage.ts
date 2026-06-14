@@ -125,7 +125,7 @@ export type SeasonRecordOutcome = {
   newAchievements: Achievement[]
 }
 
-const TOURNAMENT_LEAGUES: LeagueId[] = ['ucl', 'worldcup']
+const TOURNAMENT_LEAGUES: LeagueId[] = ['ucl', 'worldcup', 'worldcup2026']
 
 export function recordSeason(
   result: SeasonResult,

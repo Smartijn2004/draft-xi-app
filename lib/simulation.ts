@@ -121,6 +121,8 @@ const OPP_SQUADS: Record<string, string[]> = {
   'Colombia': ['Luis Díaz', 'James Rodríguez', 'Durán', 'Córdoba', 'Arias'],
   'Senegal': ['Mané', 'Sarr', 'Jackson', 'Ndiaye', 'Gueye'],
   'Morocco': ['Hakimi', 'Ziyech', 'En-Nesyri', 'Ezzalzouli', 'Rahimi'],
+  'USA': ['Pulisic', 'Balogun', 'Weah', 'McKennie', 'Reyna'],
+  'Mexico': ['Lozano', 'Giménez', 'Vega', 'Pineda', 'Antuna'],
   // Legends League — iconic scorers per legendary XI.
   'Real Madrid Galácticos': ['Ronaldo', 'Zidane', 'Figo', 'Raúl'],
   'Barcelona Tiki-Taka': ['Messi', 'Eto\'o', 'Henry', 'Xavi'],
@@ -399,6 +401,24 @@ const LEGENDS_OPPONENTS = [
   { name: 'Ajax 1995', rating: 90 },
   { name: 'Juventus 1996', rating: 90 },
   { name: 'Netherlands 1974', rating: 90 },
+]
+
+// World Cup 2026 contender field (current team strength).
+const WC2026_OPPONENTS = [
+  { name: 'France', rating: 92 },
+  { name: 'Spain', rating: 91 },
+  { name: 'Argentina', rating: 91 },
+  { name: 'Brazil', rating: 90 },
+  { name: 'England', rating: 89 },
+  { name: 'Portugal', rating: 88 },
+  { name: 'Germany', rating: 87 },
+  { name: 'Netherlands', rating: 86 },
+  { name: 'Uruguay', rating: 84 },
+  { name: 'Belgium', rating: 84 },
+  { name: 'Croatia', rating: 83 },
+  { name: 'Morocco', rating: 82 },
+  { name: 'USA', rating: 79 },
+  { name: 'Mexico', rating: 79 },
 ]
 
 function getLeagueOpponents(league: LeagueId) {
@@ -757,5 +777,6 @@ export function simulateWorldCup(players: DraftedPlayer[], seed?: number, tactic
 export function runSimulation(players: DraftedPlayer[], leagueId: LeagueId, seed?: number, tactic: Tactic = 'balanced'): SeasonResult {
   if (leagueId === 'ucl') return simulateUCL(players, seed, tactic)
   if (leagueId === 'worldcup') return simulateWorldCup(players, seed, tactic)
+  if (leagueId === 'worldcup2026') return simulateWorldCup(players, seed, tactic, WC2026_OPPONENTS)
   return simulateLeagueSeason(players, leagueId, seed, tactic)
 }

@@ -10,11 +10,12 @@ const LEAGUE_ICONS: Record<LeagueId, string> = {
   ucl: '⭐',
   worldcup: '🏆',
   legends: '👑',
+  worldcup2026: '🌎',
 }
 
 export function LeagueSelector() {
-  // Legends has its own dedicated entry point on the home page.
-  const configs = Object.values(LEAGUE_CONFIGS).filter(c => c.id !== 'legends')
+  // Legends and the WC2026 event have their own dedicated home entries.
+  const configs = Object.values(LEAGUE_CONFIGS).filter(c => c.id !== 'legends' && c.id !== 'worldcup2026')
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full max-w-4xl mx-auto">

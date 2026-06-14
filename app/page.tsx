@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { LeagueSelector } from '@/components/LeagueSelector'
 import { DailyChallengeCard } from '@/components/DailyChallengeCard'
+import { WorldCupEventCard } from '@/components/WorldCupEventCard'
 
 export default function HomePage() {
   return (
@@ -58,6 +59,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Live World Cup 2026 event (only during the real tournament) */}
+      <WorldCupEventCard />
 
       {/* Daily challenge */}
       <section className="relative z-10 px-6">
