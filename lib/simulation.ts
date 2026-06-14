@@ -209,7 +209,10 @@ function simulateMatch(
   const effectiveRating = myRating + PLAYER_ADVANTAGE
   const diff = (effectiveRating - oppRating) / 9
   const rawWin = 1 / (1 + Math.exp(-diff))
-  const draw = Math.max(0.05, 0.22 - Math.abs(diff) * 0.05)
+  // Higher draw rate, especially in close games, so a dominant side grinds out
+  // level results against rivals instead of slipping to defeat — the realistic
+  // pattern of an unbeaten season (e.g. Arsenal 03-04: 26W-12D-0L).
+  const draw = Math.max(0.11, 0.28 - Math.abs(diff) * 0.04)
   const win = Math.max(0.05, rawWin * (1 - draw))
 
   const r = rng()
@@ -442,7 +445,8 @@ function simulateMatchWithScore(
 ): { result: 'W' | 'D' | 'L'; goalsA: number; goalsB: number } {
   const diff = (ratingA - ratingB) / 9
   const rawWin = 1 / (1 + Math.exp(-diff))
-  const draw = Math.max(0.05, 0.22 - Math.abs(diff) * 0.05)
+  // Matches the player's model so the AI title race stays balanced.
+  const draw = Math.max(0.11, 0.28 - Math.abs(diff) * 0.04)
   const win = Math.max(0.05, rawWin * (1 - draw))
   const r = rng()
   const result: 'W' | 'D' | 'L' = r < win ? 'W' : r < win + draw ? 'D' : 'L'
