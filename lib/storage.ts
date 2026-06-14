@@ -19,6 +19,7 @@ export type CareerStats = {
   totalLost: number
   goalsFor: number
   goalsAgainst: number
+  longestUnbeatenRun: number
 }
 
 export type HallOfFameEntry = {
@@ -78,6 +79,7 @@ const DEFAULT_STATE: StoredState = {
     totalLost: 0,
     goalsFor: 0,
     goalsAgainst: 0,
+    longestUnbeatenRun: 0,
   },
   streak: { current: 0, best: 0, lastDate: null },
   hallOfFame: [],
@@ -146,6 +148,12 @@ export function recordSeason(
   career.totalLost += result.lost
   career.goalsFor += result.goalsFor
   career.goalsAgainst += result.goalsAgainst
+  // Longest run of consecutive matches without a defeat this season.
+  let run = 0, longestRun = 0
+  for (const m of result.matches) {
+    if (m.result !== 'L') { run++; longestRun = Math.max(longestRun, run) } else run = 0
+  }
+  career.longestUnbeatenRun = Math.max(career.longestUnbeatenRun, longestRun)
   const newBestPoints = points > career.bestPoints
   if (newBestPoints) {
     career.bestPoints = points
@@ -192,6 +200,7 @@ export function recordSeason(
     finalPosition: result.finalPosition, teamRating: result.teamRating,
     topScorerGoals: result.topScorers[0]?.goals ?? 0,
     perfectDraft: computeSquadOptimality(team, leagueId).isPerfect,
+    longestUnbeatenRun: longestRun,
     totalSeasons: career.seasonsPlayed, totalTrophies: career.trophies,
     totalInvincibles: career.invincibles, leaguesPlayed, leaguesWon,
     dailyStreak: state.streak.best,

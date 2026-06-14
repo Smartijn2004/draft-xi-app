@@ -26,6 +26,7 @@ export type AchievementCtx = {
   teamRating: number
   topScorerGoals: number
   perfectDraft: boolean
+  longestUnbeatenRun: number
   // Cumulative (post-update)
   totalSeasons: number
   totalTrophies: number
@@ -46,8 +47,10 @@ const DEFS: Def[] = [
     description: 'Win a league or lift a trophy.', check: c => c.trophyWon },
   { id: 'invincible', name: 'Invincible', emoji: '🛡️', category: 'Performance',
     description: 'Finish a season unbeaten.', check: c => c.lost === 0 && (c.won + c.drawn + c.lost) > 0 },
-  { id: 'perfect', name: 'Perfection', emoji: '💎', category: 'Performance',
-    description: 'Win every single match.', check: c => c.isPerfect },
+  { id: 'unbeaten-run', name: 'On a Tear', emoji: '🚂', category: 'Performance',
+    description: 'String together a 25-match unbeaten run.', check: c => c.longestUnbeatenRun >= 25 },
+  { id: 'perfect', name: 'Immortal', emoji: '👑', category: 'Performance',
+    description: 'The holy grail — win EVERY match, no draws, no defeats.', check: c => c.isPerfect },
   { id: 'centurion', name: 'Centurion', emoji: '💯', category: 'Performance',
     description: 'Reach 100 points in a league season.', check: c => c.format === 'league' && c.points >= 100 },
   { id: 'goal-machine', name: 'Goal Machine', emoji: '🎯', category: 'Performance',

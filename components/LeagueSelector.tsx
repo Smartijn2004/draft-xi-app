@@ -47,6 +47,11 @@ export function LeagueSelector() {
           <div>
             <h2 className="text-lg font-black text-white leading-tight">{league.name}</h2>
             <p className="text-xs text-slate-400 mt-1 leading-relaxed">{league.description}</p>
+            {league.format === 'tournament' && (
+              <p className="text-[11px] font-bold mt-1.5" style={{ color: league.color }}>
+                🛡️ Only {league.totalGames} games — your best shot at an unbeaten trophy
+              </p>
+            )}
           </div>
 
           {/* stats row */}

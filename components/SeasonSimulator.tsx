@@ -73,7 +73,12 @@ export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutco
       {/* ── Banner ── */}
       <div
         className="rounded-2xl p-6 text-center border"
-        style={{
+        style={isPerfect ? {
+          // Immortal: gold–violet treatment, a clear tier above a normal win.
+          background: 'linear-gradient(135deg, #a855f733, #f59e0b22 50%, #a855f70a)',
+          borderColor: '#f59e0b88',
+          boxShadow: '0 0 50px #a855f733, inset 0 0 0 1px #f59e0b44',
+        } : {
           background: `linear-gradient(135deg, ${accent}1e, ${accent}08 55%, transparent)`,
           borderColor: accent + '44',
         }}
@@ -83,12 +88,18 @@ export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutco
             Daily Challenge #{daily.number}{daily.streak > 1 ? ` · 🔥 ${daily.streak}-day streak` : ''}
           </div>
         )}
+        {isPerfect && (
+          <div className="text-xs font-black uppercase tracking-[0.3em] mb-2"
+            style={{ color: '#f59e0b' }}>
+            👑 Immortal 👑
+          </div>
+        )}
         <div className="text-5xl mb-3 animate-pop">
-          {isPerfect ? '🏆' : trophyWon ? '🥇' : eliminated ? '❌' : '📊'}
+          {isPerfect ? '👑' : trophyWon ? '🥇' : eliminated ? '❌' : '📊'}
         </div>
         <h2 className="text-2xl font-black text-white mb-1">
           {isPerfect
-            ? `Perfect ${league.perfectLabel}!`
+            ? `Flawless — won every match!`
             : trophyWon
             ? `Won the ${league.name}!`
             : eliminated

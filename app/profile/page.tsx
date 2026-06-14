@@ -102,15 +102,13 @@ export default function ProfilePage() {
 }
 
 function CareerSummary({ career }: { career: CareerStats }) {
-  const games = career.totalWon + career.totalDrawn + career.totalLost
-  const winPct = games > 0 ? Math.round((career.totalWon / games) * 100) : 0
   const cards = [
     { label: 'Seasons', value: career.seasonsPlayed },
     { label: 'Trophies', value: career.trophies, accent: '#f59e0b' },
     { label: 'Invincible', value: career.invincibles, accent: '#10b981' },
-    { label: 'Perfect', value: career.perfectSeasons, accent: '#3b82f6' },
+    { label: 'Immortal', value: career.perfectSeasons, accent: '#a855f7' },
     { label: 'Best pts', value: career.bestPoints },
-    { label: 'Win %', value: `${winPct}%` },
+    { label: 'Best run', value: career.longestUnbeatenRun ?? 0, accent: '#3b82f6' },
   ]
   return (
     <section className="space-y-3">
