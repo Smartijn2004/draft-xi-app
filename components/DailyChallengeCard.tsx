@@ -3,16 +3,17 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { LEAGUE_CONFIGS } from '@/lib/data'
 import {
-  getDailyChallengeNumber, getDailyLeague, getDailyRecord, getTodayKey,
-  getStreak, getCareer,
+  getDailyRecord, getTodayKey, getStreak, getCareer,
   type DailyRecord, type CareerStats,
 } from '@/lib/storage'
+import { getDailyChallenge } from '@/lib/dailyChallenge'
 import { dailyStatusLine } from '@/lib/share'
 
 export function DailyChallengeCard() {
   const todayKey = getTodayKey()
-  const number = getDailyChallengeNumber(todayKey)
-  const league = LEAGUE_CONFIGS[getDailyLeague(todayKey)]
+  const challenge = getDailyChallenge(todayKey)
+  const number = challenge.number
+  const league = LEAGUE_CONFIGS[challenge.hostLeague]
 
   // localStorage is read after mount so server and client first paint match.
   const [played, setPlayed] = useState<DailyRecord | null>(null)
@@ -50,11 +51,11 @@ export function DailyChallengeCard() {
             )}
           </div>
           <h2 className="text-lg font-black text-white leading-tight mt-0.5">
-            Today: {league.name}
+            {challenge.label}
+            <span className="text-slate-500 font-bold"> · {league.name}</span>
           </h2>
-          <p className="text-xs text-slate-400 mt-1">
-            Same spins for everyone · one attempt per day · normal rules, 4-3-3
-          </p>
+          <p className="text-xs text-slate-400 mt-1">{challenge.description}</p>
+          <p className="text-[11px] text-slate-500 mt-0.5">Same for everyone · one attempt per day</p>
         </div>
         <div className="shrink-0">
           {played ? (

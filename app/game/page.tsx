@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect, useRef, Suspense } from 'react'
+import { useState, useCallback, useEffect, useMemo, useRef, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import type { DraftedPlayer, LeagueId, ClubSeason, Player, Position, Difficulty } from '@/lib/types'
 import { FORMATIONS, FORMATION_DESCRIPTIONS } from '@/lib/types'
@@ -8,10 +8,11 @@ import { LEAGUE_CONFIGS, spinClubSeason, getClubSeasonsForLeague, ALL_CLUB_SEASO
 import { runSimulation } from '@/lib/simulation'
 import { SLOT_ACCEPTS } from '@/lib/positions'
 import {
-  recordSeason, recordDaily, getDailyRecord, getTodayKey, getDailyLeague,
+  recordSeason, recordDaily, getDailyRecord, getTodayKey,
   getDailyChallengeNumber, getStreak, dateSeed, seededRng,
   type SeasonRecordOutcome, type DailyRecord, type StoredState,
 } from '@/lib/storage'
+import { getDailyChallenge, getDailySpinPool, isPlayerAllowed } from '@/lib/dailyChallenge'
 import { emojiGrid, dailyStatusLine, dailyShareText } from '@/lib/share'
 import { TeamFormation } from '@/components/TeamFormation'
 import { SeasonSimulator } from '@/components/SeasonSimulator'
@@ -54,7 +55,8 @@ function GameContent() {
   const router = useRouter()
   const isDaily = params.get('daily') === '1'
   const todayKey = getTodayKey()
-  const leagueId = isDaily ? getDailyLeague(todayKey) : ((params.get('league') ?? 'pl') as LeagueId)
+  const dailyChallenge = useMemo(() => (isDaily ? getDailyChallenge(todayKey) : null), [isDaily, todayKey])
+  const leagueId = dailyChallenge ? dailyChallenge.hostLeague : ((params.get('league') ?? 'pl') as LeagueId)
   const league = LEAGUE_CONFIGS[leagueId] ?? LEAGUE_CONFIGS.pl
 
   const [phase, setPhase] = useState<'setup' | 'draft' | 'simulating' | 'results'>('setup')
@@ -131,8 +133,13 @@ function GameContent() {
     return team.some(t => t.name === player.name)
   }
 
+  // Daily challenges may forbid players (over the underdog cap, wrong decade).
+  function allowedByConstraint(player: Player): boolean {
+    return !dailyChallenge || isPlayerAllowed(dailyChallenge, player)
+  }
+
   function isPickable(player: Player): boolean {
-    return hasAvailableSlot(player) && !isAlreadyDrafted(player)
+    return hasAvailableSlot(player) && !isAlreadyDrafted(player) && allowedByConstraint(player)
   }
 
   // Dead spin: no one in this squad can join the XI → offer a free re-spin.
@@ -156,7 +163,7 @@ function GameContent() {
     setDraftSub('spinning')
     setCurrentSpin(null)
 
-    const pool = getClubSeasonsForLeague(leagueId)
+    const pool = dailyChallenge ? getDailySpinPool(dailyChallenge) : getClubSeasonsForLeague(leagueId)
     const start = Date.now()
     const total = 900 + Math.random() * 500
 
@@ -170,10 +177,11 @@ function GameContent() {
         setTimeout(tick, 60 + Math.pow(progress, 1.8) * 220)
       } else {
         let result: ClubSeason | null
-        if (isDaily) {
-          // Seeded by today's date: every player gets the same spin sequence.
+        if (dailyChallenge) {
+          // Seeded by today's date: every player gets the same spin sequence
+          // from the same constraint-filtered pool.
           if (!dailyRngRef.current) dailyRngRef.current = seededRng(dateSeed(getTodayKey()))
-          const all = getClubSeasonsForLeague(leagueId)
+          const all = pool
           const available = all.filter(cs => !usedSpins.includes(cs.id))
           const from = available.length > 0 ? available : all
           result = from[Math.floor(dailyRngRef.current() * from.length)]
@@ -192,7 +200,7 @@ function GameContent() {
     }
 
     tick()
-  }, [leagueId, usedSpins, isDaily])
+  }, [leagueId, usedSpins, isDaily, dailyChallenge])
 
   const assignToSlot = useCallback((player: Player, slotIndex: number) => {
     const slot = slots[slotIndex]
@@ -430,6 +438,21 @@ function GameContent() {
         />
       )}
 
+      {dailyChallenge && (
+        <div className="max-w-6xl mx-auto w-full px-4 pt-4">
+          <div className="rounded-xl border px-4 py-2.5 flex items-center gap-3"
+            style={{ background: league.color + '12', borderColor: league.color + '44' }}>
+            <span className="text-base">📅</span>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-black uppercase tracking-wider" style={{ color: league.color }}>
+                Daily #{dailyChallenge.number} · {dailyChallenge.label}
+              </span>
+              <span className="text-[11px] text-slate-400">{dailyChallenge.description}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex-1 flex flex-col lg:flex-row gap-6 px-4 py-6 max-w-6xl mx-auto w-full">
         {/* LEFT sidebar */}
         <aside className="w-full lg:w-72 shrink-0 space-y-4">
@@ -652,6 +675,9 @@ function GameContent() {
                                 player={player}
                                 disabled={!isPickable(player)}
                                 alreadyDrafted={isAlreadyDrafted(player)}
+                                blockedReason={!allowedByConstraint(player)
+                                  ? (dailyChallenge?.constraint.kind === 'underdog' ? 'over cap' : 'wrong era')
+                                  : undefined}
                                 hideRatings={hideRatings}
                                 accentColor={league.color}
                                 primeRating={ratingsMode === 'prime' ? (PRIME_RATINGS.get(player.name) ?? player.rating) : undefined}
@@ -743,8 +769,8 @@ function GameContent() {
 
 // ── Player row in pick panel ──────────────────────────────────────────────────
 
-function PlayerRow({ player, disabled, alreadyDrafted, hideRatings, accentColor, primeRating, onDraft }: {
-  player: Player; disabled: boolean; alreadyDrafted?: boolean; hideRatings: boolean; accentColor: string
+function PlayerRow({ player, disabled, alreadyDrafted, blockedReason, hideRatings, accentColor, primeRating, onDraft }: {
+  player: Player; disabled: boolean; alreadyDrafted?: boolean; blockedReason?: string; hideRatings: boolean; accentColor: string
   primeRating?: number; onDraft: (p: Player) => void
 }) {
   const posColor = POS_COLORS[player.position as Position] ?? '#9ca3af'
@@ -779,6 +805,9 @@ function PlayerRow({ player, disabled, alreadyDrafted, hideRatings, accentColor,
       {alreadyDrafted && (
         <span className="text-[10px] font-bold text-slate-500 shrink-0">✓ in your XI</span>
       )}
+      {!alreadyDrafted && blockedReason && (
+        <span className="text-[10px] font-bold text-amber-500/70 shrink-0 whitespace-nowrap">🚫 {blockedReason}</span>
+      )}
       {!hideRatings && (
         <div className="text-sm font-black shrink-0 w-9 h-9 rounded-full flex items-center justify-center"
           style={{ background: accentColor + '22', color: accentColor }}>
@@ -811,6 +840,7 @@ function DailyRecap({ record, league, onHome }: {
 
   const streak = getStreak()
   const n = getDailyChallengeNumber(record.date)
+  const challengeLabel = getDailyChallenge(record.date).label
 
   const utcNow = new Date(now)
   const nextMidnight = Date.UTC(utcNow.getUTCFullYear(), utcNow.getUTCMonth(), utcNow.getUTCDate() + 1)
@@ -835,7 +865,7 @@ function DailyRecap({ record, league, onHome }: {
         <div>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-bold mb-3"
             style={{ background: league.color + '22', color: league.color }}>
-            Daily Challenge #{n} · {league.name}
+            Daily #{n} · {challengeLabel}
           </div>
           <h1 className="text-2xl font-black text-white">✓ Played today</h1>
           <p className="text-slate-500 text-sm mt-1">One attempt per day — come back tomorrow!</p>
