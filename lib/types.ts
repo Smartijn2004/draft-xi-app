@@ -108,6 +108,7 @@ export type LeagueTableEntry = {
 }
 
 export type Difficulty = 'easy' | 'normal' | 'hard'
+export type Tactic = 'attacking' | 'balanced' | 'defensive'
 
 export type SeasonResult = {
   matches: MatchResult[]

@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect, useMemo, useRef, Suspense } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
-import type { DraftedPlayer, LeagueId, ClubSeason, Player, Position, Difficulty } from '@/lib/types'
+import type { DraftedPlayer, LeagueId, ClubSeason, Player, Position, Difficulty, Tactic } from '@/lib/types'
 import { FORMATIONS, FORMATION_DESCRIPTIONS } from '@/lib/types'
 import { LEAGUE_CONFIGS, spinClubSeason, getClubSeasonsForLeague, ALL_CLUB_SEASONS } from '@/lib/data'
 import { runSimulation } from '@/lib/simulation'
@@ -62,6 +62,7 @@ function GameContent() {
   const [phase, setPhase] = useState<'setup' | 'draft' | 'simulating' | 'results'>('setup')
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null)
   const [ratingsMode, setRatingsMode] = useState<RatingsMode>('season')
+  const [tactic, setTactic] = useState<Tactic>('balanced')
   const [formationName, setFormationName] = useState('4-3-3')
   const [team, setTeam] = useState<DraftedPlayer[]>([])
   const [draftSub, setDraftSub] = useState<'idle' | 'spinning' | 'landed' | 'selecting'>('idle')
@@ -91,11 +92,13 @@ function GameContent() {
     setDailyChecked(true)
   }, [isDaily, todayKey])
 
-  // Daily plays under fixed rules: normal difficulty, 4-3-3, season ratings.
+  // Daily plays under fixed rules: normal difficulty, 4-3-3, season ratings,
+  // balanced tactics — identical for everyone.
   useEffect(() => {
     if (!isDaily) return
     setDifficulty('normal')
     setRatingsMode('season')
+    setTactic('balanced')
     setFormationName('4-3-3')
     setRerollsLeft(2)
     setPhase(p => (p === 'setup' ? 'draft' : p))
@@ -260,7 +263,7 @@ function GameContent() {
 
   const handleSimulate = useCallback(() => {
     if (team.length < totalSlots) return
-    const result = runSimulation(team, leagueId, isDaily ? dateSeed(getTodayKey()) : undefined)
+    const result = runSimulation(team, leagueId, isDaily ? dateSeed(getTodayKey()) : undefined, tactic)
     setSeasonResult(result)
     setPhase('simulating')
 
@@ -285,7 +288,7 @@ function GameContent() {
       setDailyStreak(recordDaily(record))
       setDailyDone(record)
     }
-  }, [team, leagueId, totalSlots, isDaily])
+  }, [team, leagueId, totalSlots, isDaily, tactic])
 
   const handlePlayAgain = useCallback(() => {
     if (isDaily) { router.push('/'); return } // one attempt per day
@@ -370,6 +373,27 @@ function GameContent() {
                     style={ratingsMode === key ? { background: league.color + '22', borderColor: league.color + '66' } : {}}>
                     <div className="text-2xl mb-1">{emoji}</div>
                     <div className="text-sm font-black text-white">{label}</div>
+                    <div className="text-[10px] text-slate-500 mt-1 leading-tight">{desc}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Tactics</div>
+              <div className="grid grid-cols-3 gap-3">
+                {([
+                  { key: 'attacking' as Tactic, emoji: '⚔️', label: 'Attacking', desc: 'More goals, more risk' },
+                  { key: 'balanced'  as Tactic, emoji: '⚖️', label: 'Balanced',  desc: 'Even approach' },
+                  { key: 'defensive' as Tactic, emoji: '🛡️', label: 'Defensive', desc: 'Park the bus, chase unbeaten' },
+                ] as const).map(({ key, emoji, label, desc }) => (
+                  <button key={key} onClick={() => setTactic(key)}
+                    className={`rounded-xl border p-3 text-center transition-all hover:scale-[1.02] ${
+                      tactic === key ? 'border-transparent' : 'border-white/10 bg-white/3 hover:bg-white/5'
+                    }`}
+                    style={tactic === key ? { background: league.color + '22', borderColor: league.color + '66' } : {}}>
+                    <div className="text-xl mb-1">{emoji}</div>
+                    <div className="text-xs font-black text-white">{label}</div>
                     <div className="text-[10px] text-slate-500 mt-1 leading-tight">{desc}</div>
                   </button>
                 ))}
@@ -520,6 +544,12 @@ function GameContent() {
                     <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded"
                       style={{ background: league.color + '33', color: league.color }}>
                       ⚡ Prime
+                    </span>
+                  )}
+                  {tactic !== 'balanced' && (
+                    <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded"
+                      style={{ background: league.color + '33', color: league.color }}>
+                      {tactic === 'defensive' ? '🛡️ Defensive' : '⚔️ Attacking'}
                     </span>
                   )}
                 </div>

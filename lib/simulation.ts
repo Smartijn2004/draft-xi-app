@@ -1,5 +1,5 @@
 import type {
-  DraftedPlayer, LeagueId, MatchResult, SeasonResult, GroupStanding, GoalEvent, PlayerStat, Position, LeagueTableEntry
+  DraftedPlayer, LeagueId, MatchResult, SeasonResult, GroupStanding, GoalEvent, PlayerStat, Position, LeagueTableEntry, Tactic
 } from './types'
 
 function seededRandom(seed: number): () => number {
@@ -204,7 +204,8 @@ function simulateMatch(
   oppRating: number,
   rng: () => number,
   players?: DraftedPlayer[],
-  oppName?: string
+  oppName?: string,
+  tactic: Tactic = 'balanced'
 ): { result: 'W' | 'D' | 'L'; myGoals: number; oppGoals: number; scorers: GoalEvent[]; opponentScorers: GoalEvent[] } {
   const effectiveRating = myRating + PLAYER_ADVANTAGE
   const diff = (effectiveRating - oppRating) / 9
@@ -213,12 +214,31 @@ function simulateMatch(
   // level results against rivals instead of slipping to defeat — the realistic
   // pattern of an unbeaten season (e.g. Arsenal 03-04: 26W-12D-0L).
   const draw = Math.max(0.11, 0.28 - Math.abs(diff) * 0.04)
-  const win = Math.max(0.05, rawWin * (1 - draw))
+  let win = Math.max(0.05, rawWin * (1 - draw))
+  let drawP = draw
+  let loss = Math.max(0, 1 - win - drawP)
+
+  // Tactics re-shape the W/D/L split. Defensive "parks the bus": losses are
+  // nearly halved and bleed into draws — the unbeaten-chaser's tool, at the
+  // cost of fewer goals. Attacking trades safety for goals and risk.
+  if (tactic === 'defensive') {
+    const newLoss = loss * 0.55
+    drawP += loss - newLoss
+    loss = newLoss
+  } else if (tactic === 'attacking') {
+    const newLoss = loss * 1.4
+    const newWin = win * 1.08
+    const newDraw = Math.max(0.03, 1 - newWin - newLoss)
+    const total = newWin + newDraw + newLoss
+    win = newWin / total
+    drawP = newDraw / total
+    loss = newLoss / total
+  }
 
   const r = rng()
   let result: 'W' | 'D' | 'L'
   if (r < win) result = 'W'
-  else if (r < win + draw) result = 'D'
+  else if (r < win + drawP) result = 'D'
   else result = 'L'
 
   // Goal expectancy. Base ~0.95 per side widens with the rating gap; attack
@@ -226,9 +246,11 @@ function simulateMatch(
   // the win/draw/loss reconciliation below, a dominant XI averages ~2.3 goals
   // and racks up ~85–95 across a 38-game season, while mid-table sides land
   // around 50–60 — realistic top-flight numbers.
+  const myMul = tactic === 'attacking' ? 1.22 : tactic === 'defensive' ? 0.82 : 1
+  const oppMul = tactic === 'attacking' ? 1.28 : tactic === 'defensive' ? 0.72 : 1
   const effectiveDiff = effectiveRating - oppRating
-  const λMy = 0.95 + effectiveDiff / 15
-  const λOpp = 0.95 - effectiveDiff / 19
+  const λMy = (0.95 + effectiveDiff / 15) * myMul
+  const λOpp = (0.95 - effectiveDiff / 19) * oppMul
   let myGoals = poissonSample(Math.max(0.2, λMy), rng)
   let oppGoals = poissonSample(Math.max(0.18, λOpp), rng)
 
@@ -521,7 +543,8 @@ function buildLeagueTable(
 export function simulateLeagueSeason(
   players: DraftedPlayer[],
   league: LeagueId,
-  seed?: number
+  seed?: number,
+  tactic: Tactic = 'balanced'
 ): SeasonResult {
   const rng = seededRandom(seed ?? Math.floor(Math.random() * 1e9))
   const teamRating = calcTeamRating(players)
@@ -540,7 +563,7 @@ export function simulateLeagueSeason(
   const matches: MatchResult[] = fixtures.map(f => {
     const homeBonus = f.isHome ? 2 : -2
     const { result, myGoals, oppGoals, scorers, opponentScorers } =
-      simulateMatch(teamRating + homeBonus, f.rating, rng, players, f.name)
+      simulateMatch(teamRating + homeBonus, f.rating, rng, players, f.name, tactic)
     return {
       opponent: f.name,
       opponentRating: f.rating,
@@ -587,7 +610,8 @@ function groupSimulate(
   groupOpps: { name: string; rating: number }[],
   rng: () => number,
   matchLabelPrefix: string,
-  players: DraftedPlayer[]
+  players: DraftedPlayer[],
+  tactic: Tactic = 'balanced'
 ): { matches: MatchResult[]; standings: GroupStanding[]; advanced: boolean } {
   const standings: GroupStanding[] = [
     { team: 'Your XI', rating: teamRating, played: 0, won: 0, drawn: 0, lost: 0, gf: 0, ga: 0, points: 0, isPlayer: true },
@@ -598,7 +622,7 @@ function groupSimulate(
 
   groupOpps.forEach((opp, idx) => {
     const { result, myGoals, oppGoals, scorers, opponentScorers } =
-      simulateMatch(teamRating, opp.rating, rng, players, opp.name)
+      simulateMatch(teamRating, opp.rating, rng, players, opp.name, tactic)
     matches.push({
       opponent: opp.name, opponentRating: opp.rating, result, myGoals, oppGoals,
       scorers, opponentScorers,
@@ -635,14 +659,14 @@ function groupSimulate(
   return { matches, standings, advanced }
 }
 
-export function simulateUCL(players: DraftedPlayer[], seed?: number): SeasonResult {
+export function simulateUCL(players: DraftedPlayer[], seed?: number, tactic: Tactic = 'balanced'): SeasonResult {
   const rng = seededRandom(seed ?? Math.floor(Math.random() * 1e9))
   const teamRating = calcTeamRating(players)
   const pool = shuffleOpponents(UCL_OPPONENTS, rng)
   const groupOpps = pool.slice(0, 3)
 
   const { matches: groupMatches, standings, advanced } = groupSimulate(
-    teamRating, groupOpps, rng, 'Group Stage', players
+    teamRating, groupOpps, rng, 'Group Stage', players, tactic
   )
 
   const rounds = ['Round of 16', 'Quarter-Final', 'Semi-Final', 'Final']
@@ -657,7 +681,7 @@ export function simulateUCL(players: DraftedPlayer[], seed?: number): SeasonResu
       const opp = oppPool[i] ?? { name: 'Unknown Opponent', rating: 85 + i * 2 }
       const bonus = i * 1.5
       const { result, myGoals, oppGoals, scorers, opponentScorers } =
-        simulateMatch(teamRating, opp.rating + bonus, rng, players, opp.name)
+        simulateMatch(teamRating, opp.rating + bonus, rng, players, opp.name, tactic)
       allMatches.push({ opponent: opp.name, opponentRating: opp.rating, result, myGoals, oppGoals, scorers, opponentScorers, round })
       if (result !== 'W') { eliminated = true; eliminatedAt = round }
     })
@@ -683,14 +707,14 @@ export function simulateUCL(players: DraftedPlayer[], seed?: number): SeasonResu
   }
 }
 
-export function simulateWorldCup(players: DraftedPlayer[], seed?: number): SeasonResult {
+export function simulateWorldCup(players: DraftedPlayer[], seed?: number, tactic: Tactic = 'balanced', opponents: { name: string; rating: number }[] = WC_OPPONENTS): SeasonResult {
   const rng = seededRandom(seed ?? Math.floor(Math.random() * 1e9))
   const teamRating = calcTeamRating(players)
-  const pool = shuffleOpponents(WC_OPPONENTS, rng)
+  const pool = shuffleOpponents(opponents, rng)
   const groupOpps = pool.slice(0, 3)
 
   const { matches: groupMatches, standings, advanced } = groupSimulate(
-    teamRating, groupOpps, rng, 'Group Stage', players
+    teamRating, groupOpps, rng, 'Group Stage', players, tactic
   )
 
   const rounds = ['Round of 16', 'Quarter-Final', 'Semi-Final', 'Final']
@@ -704,7 +728,7 @@ export function simulateWorldCup(players: DraftedPlayer[], seed?: number): Seaso
       if (eliminated) return
       const opp = oppPool[i] ?? { name: 'Unknown', rating: 83 + i * 2 }
       const { result, myGoals, oppGoals, scorers, opponentScorers } =
-        simulateMatch(teamRating, opp.rating + i * 2, rng, players, opp.name)
+        simulateMatch(teamRating, opp.rating + i * 2, rng, players, opp.name, tactic)
       allMatches.push({ opponent: opp.name, opponentRating: opp.rating, result, myGoals, oppGoals, scorers, opponentScorers, round })
       if (result === 'L') { eliminated = true; eliminatedAt = round }
     })
@@ -730,8 +754,8 @@ export function simulateWorldCup(players: DraftedPlayer[], seed?: number): Seaso
   }
 }
 
-export function runSimulation(players: DraftedPlayer[], leagueId: LeagueId, seed?: number): SeasonResult {
-  if (leagueId === 'ucl') return simulateUCL(players, seed)
-  if (leagueId === 'worldcup') return simulateWorldCup(players, seed)
-  return simulateLeagueSeason(players, leagueId, seed)
+export function runSimulation(players: DraftedPlayer[], leagueId: LeagueId, seed?: number, tactic: Tactic = 'balanced'): SeasonResult {
+  if (leagueId === 'ucl') return simulateUCL(players, seed, tactic)
+  if (leagueId === 'worldcup') return simulateWorldCup(players, seed, tactic)
+  return simulateLeagueSeason(players, leagueId, seed, tactic)
 }
