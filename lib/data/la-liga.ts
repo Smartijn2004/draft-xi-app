@@ -520,4 +520,36 @@ export const laLigaData: ClubSeason[] = [
       { id: 'tsygankov-gir-2324', name: 'Viktor Tsygankov', position: 'FWD', rating: 81, club: 'Girona', season: '2023-24', altPositions: ['RW', 'AM'] },
     ]
   },
+  {
+    id: 'athletic-bilbao-2023-24', club: 'Athletic Bilbao', shortName: 'ATH', season: '2023-24', league: 'laliga', color: '#EE2523',
+    players: [
+      { id: 'unaisimon-2324', name: 'Unai Simón', position: 'GK', rating: 84, club: 'Athletic Bilbao', season: '2023-24' },
+      { id: 'demarcos-2324', name: 'Óscar de Marcos', position: 'DEF', rating: 78, club: 'Athletic Bilbao', season: '2023-24', altPositions: ['RB'] },
+      { id: 'vivian-2324', name: 'Dani Vivian', position: 'DEF', rating: 80, club: 'Athletic Bilbao', season: '2023-24', altPositions: ['CB'] },
+      { id: 'paredes-a-2324', name: 'Aitor Paredes', position: 'DEF', rating: 78, club: 'Athletic Bilbao', season: '2023-24', altPositions: ['CB'] },
+      { id: 'yuri-2324', name: 'Yuri Berchiche', position: 'DEF', rating: 79, club: 'Athletic Bilbao', season: '2023-24', altPositions: ['LB'] },
+      { id: 'vesga-2324', name: 'Mikel Vesga', position: 'MID', rating: 77, club: 'Athletic Bilbao', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'sancet-2324', name: 'Oihan Sancet', position: 'MID', rating: 82, club: 'Athletic Bilbao', season: '2023-24', altPositions: ['AM', 'CM'] },
+      { id: 'herrera-a-2324', name: 'Ander Herrera', position: 'MID', rating: 78, club: 'Athletic Bilbao', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'nicowilliams-2324', name: 'Nico Williams', position: 'FWD', rating: 84, club: 'Athletic Bilbao', season: '2023-24', altPositions: ['LW', 'RW'] },
+      { id: 'guruzeta-2324', name: 'Gorka Guruzeta', position: 'FWD', rating: 79, club: 'Athletic Bilbao', season: '2023-24', altPositions: ['ST'] },
+      { id: 'inakiwilliams-2324', name: 'Iñaki Williams', position: 'FWD', rating: 83, club: 'Athletic Bilbao', season: '2023-24', altPositions: ['RW', 'ST'] },
+    ]
+  },
+  {
+    id: 'real-sociedad-2023-24', club: 'Real Sociedad', shortName: 'RSO', season: '2023-24', league: 'laliga', color: '#0067B1',
+    players: [
+      { id: 'remiro-2324', name: 'Álex Remiro', position: 'GK', rating: 83, club: 'Real Sociedad', season: '2023-24' },
+      { id: 'traore-h-2324', name: 'Hamari Traoré', position: 'DEF', rating: 78, club: 'Real Sociedad', season: '2023-24', altPositions: ['RB'] },
+      { id: 'lenormand-2324', name: 'Robin Le Normand', position: 'DEF', rating: 82, club: 'Real Sociedad', season: '2023-24', altPositions: ['CB'] },
+      { id: 'zubeldia-2324', name: 'Igor Zubeldia', position: 'DEF', rating: 80, club: 'Real Sociedad', season: '2023-24', altPositions: ['CB', 'DM'] },
+      { id: 'aihen-2324', name: 'Aihen Muñoz', position: 'DEF', rating: 77, club: 'Real Sociedad', season: '2023-24', altPositions: ['LB'] },
+      { id: 'zubimendi-2324', name: 'Martín Zubimendi', position: 'MID', rating: 83, club: 'Real Sociedad', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'merino-2324', name: 'Mikel Merino', position: 'MID', rating: 83, club: 'Real Sociedad', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'brais-2324', name: 'Brais Méndez', position: 'MID', rating: 80, club: 'Real Sociedad', season: '2023-24', altPositions: ['AM', 'CM'] },
+      { id: 'kubo-2324', name: 'Takefusa Kubo', position: 'FWD', rating: 83, club: 'Real Sociedad', season: '2023-24', altPositions: ['RW', 'AM'] },
+      { id: 'oyarzabal-2324', name: 'Mikel Oyarzabal', position: 'FWD', rating: 84, club: 'Real Sociedad', season: '2023-24', altPositions: ['ST', 'LW'] },
+      { id: 'barrenetxea-2324', name: 'Ander Barrenetxea', position: 'FWD', rating: 79, club: 'Real Sociedad', season: '2023-24', altPositions: ['LW', 'RW'] },
+    ]
+  },
 ]

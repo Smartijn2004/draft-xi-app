@@ -654,4 +654,36 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'gordon-2324', name: 'Anthony Gordon', position: 'FWD', rating: 83, club: 'Newcastle United', season: '2023-24', altPositions: ['LW'] },
     ]
   },
+  {
+    id: 'aston-villa-2023-24', club: 'Aston Villa', shortName: 'AVL', season: '2023-24', league: 'pl', color: '#670E36',
+    players: [
+      { id: 'martinez-e-2324', name: 'Emiliano Martínez', position: 'GK', rating: 86, club: 'Aston Villa', season: '2023-24' },
+      { id: 'cash-2324', name: 'Matty Cash', position: 'DEF', rating: 79, club: 'Aston Villa', season: '2023-24', altPositions: ['RB'] },
+      { id: 'konsa-2324', name: 'Ezri Konsa', position: 'DEF', rating: 81, club: 'Aston Villa', season: '2023-24', altPositions: ['CB', 'RB'] },
+      { id: 'pautorres-2324', name: 'Pau Torres', position: 'DEF', rating: 82, club: 'Aston Villa', season: '2023-24', altPositions: ['CB'] },
+      { id: 'digne-2324', name: 'Lucas Digne', position: 'DEF', rating: 79, club: 'Aston Villa', season: '2023-24', altPositions: ['LB'] },
+      { id: 'kamara-2324', name: 'Boubacar Kamara', position: 'MID', rating: 82, club: 'Aston Villa', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'douglasluiz-2324', name: 'Douglas Luiz', position: 'MID', rating: 84, club: 'Aston Villa', season: '2023-24', altPositions: ['CM', 'DM'] },
+      { id: 'mcginn-2324', name: 'John McGinn', position: 'MID', rating: 82, club: 'Aston Villa', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'bailey-2324', name: 'Leon Bailey', position: 'FWD', rating: 81, club: 'Aston Villa', season: '2023-24', altPositions: ['RW', 'LW'] },
+      { id: 'watkins-2324', name: 'Ollie Watkins', position: 'FWD', rating: 85, club: 'Aston Villa', season: '2023-24', altPositions: ['ST'] },
+      { id: 'diaby-2324', name: 'Moussa Diaby', position: 'FWD', rating: 81, club: 'Aston Villa', season: '2023-24', altPositions: ['RW', 'LW'] },
+    ]
+  },
+  {
+    id: 'man-utd-2024-25', club: 'Manchester United', shortName: 'MUN', season: '2024-25', league: 'pl', color: '#DA291C',
+    players: [
+      { id: 'onana-2425', name: 'André Onana', position: 'GK', rating: 82, club: 'Manchester United', season: '2024-25' },
+      { id: 'dalot-2425', name: 'Diogo Dalot', position: 'DEF', rating: 80, club: 'Manchester United', season: '2024-25', altPositions: ['RB', 'LB'] },
+      { id: 'deligt-mun-2425', name: 'Matthijs de Ligt', position: 'DEF', rating: 83, club: 'Manchester United', season: '2024-25', altPositions: ['CB'] },
+      { id: 'martinez-l-2425', name: 'Lisandro Martínez', position: 'DEF', rating: 83, club: 'Manchester United', season: '2024-25', altPositions: ['CB', 'LB'] },
+      { id: 'mazraoui-2425', name: 'Noussair Mazraoui', position: 'DEF', rating: 80, club: 'Manchester United', season: '2024-25', altPositions: ['RB', 'LB'] },
+      { id: 'casemiro-mun-2425', name: 'Casemiro', position: 'MID', rating: 82, club: 'Manchester United', season: '2024-25', altPositions: ['DM', 'CM'] },
+      { id: 'mainoo-2425', name: 'Kobbie Mainoo', position: 'MID', rating: 80, club: 'Manchester United', season: '2024-25', altPositions: ['CM', 'DM'] },
+      { id: 'brunof-mun-2425', name: 'Bruno Fernandes', position: 'MID', rating: 87, club: 'Manchester United', season: '2024-25', altPositions: ['AM', 'CM'] },
+      { id: 'garnacho-mun-2425', name: 'Alejandro Garnacho', position: 'FWD', rating: 81, club: 'Manchester United', season: '2024-25', altPositions: ['LW', 'RW'] },
+      { id: 'hojlund-mun-2425', name: 'Rasmus Højlund', position: 'FWD', rating: 80, club: 'Manchester United', season: '2024-25', altPositions: ['ST'] },
+      { id: 'rashford-2425', name: 'Marcus Rashford', position: 'FWD', rating: 82, club: 'Manchester United', season: '2024-25', altPositions: ['LW', 'ST'] },
+    ]
+  },
 ]

@@ -488,4 +488,36 @@ export const serieAData: ClubSeason[] = [
       { id: 'higuain-juv-1920', name: 'Gonzalo Higuaín', position: 'FWD', rating: 84, club: 'Juventus', season: '2019-20', altPositions: ['ST'] },
     ]
   },
+  {
+    id: 'ac-milan-2024-25', club: 'AC Milan', shortName: 'MIL', season: '2024-25', league: 'seriea', color: '#FB090B',
+    players: [
+      { id: 'maignan-2425', name: 'Mike Maignan', position: 'GK', rating: 86, club: 'AC Milan', season: '2024-25' },
+      { id: 'emersonroyal-2425', name: 'Emerson Royal', position: 'DEF', rating: 78, club: 'AC Milan', season: '2024-25', altPositions: ['RB'] },
+      { id: 'tomori-2425', name: 'Fikayo Tomori', position: 'DEF', rating: 82, club: 'AC Milan', season: '2024-25', altPositions: ['CB'] },
+      { id: 'gabbia-2425', name: 'Matteo Gabbia', position: 'DEF', rating: 79, club: 'AC Milan', season: '2024-25', altPositions: ['CB'] },
+      { id: 'theo-2425', name: 'Theo Hernández', position: 'DEF', rating: 85, club: 'AC Milan', season: '2024-25', altPositions: ['LB', 'LWB'] },
+      { id: 'fofana-y-2425', name: 'Youssouf Fofana', position: 'MID', rating: 81, club: 'AC Milan', season: '2024-25', altPositions: ['DM', 'CM'] },
+      { id: 'reijnders-2425', name: 'Tijjani Reijnders', position: 'MID', rating: 83, club: 'AC Milan', season: '2024-25', altPositions: ['CM', 'AM'] },
+      { id: 'loftuscheek-2425', name: 'Ruben Loftus-Cheek', position: 'MID', rating: 80, club: 'AC Milan', season: '2024-25', altPositions: ['CM', 'AM'] },
+      { id: 'pulisic-mil-2425', name: 'Christian Pulisic', position: 'FWD', rating: 84, club: 'AC Milan', season: '2024-25', altPositions: ['RW', 'AM'] },
+      { id: 'leao-2425', name: 'Rafael Leão', position: 'FWD', rating: 86, club: 'AC Milan', season: '2024-25', altPositions: ['LW', 'ST'] },
+      { id: 'morata-mil-2425', name: 'Álvaro Morata', position: 'FWD', rating: 82, club: 'AC Milan', season: '2024-25', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'as-roma-2023-24', club: 'AS Roma', shortName: 'ROM', season: '2023-24', league: 'seriea', color: '#8E1F2F',
+    players: [
+      { id: 'svilar-2324', name: 'Mile Svilar', position: 'GK', rating: 79, club: 'AS Roma', season: '2023-24' },
+      { id: 'celik-2324', name: 'Zeki Çelik', position: 'DEF', rating: 77, club: 'AS Roma', season: '2023-24', altPositions: ['RB'] },
+      { id: 'mancini-2324', name: 'Gianluca Mancini', position: 'DEF', rating: 81, club: 'AS Roma', season: '2023-24', altPositions: ['CB'] },
+      { id: 'smalling-2324', name: 'Chris Smalling', position: 'DEF', rating: 80, club: 'AS Roma', season: '2023-24', altPositions: ['CB'] },
+      { id: 'spinazzola-2324', name: 'Leonardo Spinazzola', position: 'DEF', rating: 79, club: 'AS Roma', season: '2023-24', altPositions: ['LB', 'LWB'] },
+      { id: 'cristante-2324', name: 'Bryan Cristante', position: 'MID', rating: 80, club: 'AS Roma', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'paredes-l-2324', name: 'Leandro Paredes', position: 'MID', rating: 80, club: 'AS Roma', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'pellegrini-l-2324', name: 'Lorenzo Pellegrini', position: 'MID', rating: 82, club: 'AS Roma', season: '2023-24', altPositions: ['AM', 'CM'] },
+      { id: 'dybala-rom-2324', name: 'Paulo Dybala', position: 'FWD', rating: 86, club: 'AS Roma', season: '2023-24', altPositions: ['AM', 'RW'] },
+      { id: 'lukaku-rom-2324', name: 'Romelu Lukaku', position: 'FWD', rating: 85, club: 'AS Roma', season: '2023-24', altPositions: ['ST'] },
+      { id: 'elshaarawy-2324', name: 'Stephan El Shaarawy', position: 'FWD', rating: 78, club: 'AS Roma', season: '2023-24', altPositions: ['LW', 'ST'] },
+    ]
+  },
 ]

@@ -425,4 +425,36 @@ export const championsLeagueData: ClubSeason[] = [
       { id: 'neymar-ucl-1415', name: 'Neymar', position: 'FWD', rating: 90, club: 'Barcelona', season: '2014-15', altPositions: ['LW', 'ST'] },
     ]
   },
+  {
+    id: 'dortmund-ucl-2023-24', club: 'Borussia Dortmund', shortName: 'BVB', season: '2023-24', league: 'ucl', color: '#FDE100',
+    players: [
+      { id: 'kobel-ucl-2324', name: 'Gregor Kobel', position: 'GK', rating: 84, club: 'Borussia Dortmund', season: '2023-24' },
+      { id: 'ryerson-ucl-2324', name: 'Julian Ryerson', position: 'DEF', rating: 78, club: 'Borussia Dortmund', season: '2023-24', altPositions: ['RB', 'LB'] },
+      { id: 'hummels-ucl-2324', name: 'Mats Hummels', position: 'DEF', rating: 83, club: 'Borussia Dortmund', season: '2023-24', altPositions: ['CB'] },
+      { id: 'schlotterbeck-ucl-2324', name: 'Nico Schlotterbeck', position: 'DEF', rating: 82, club: 'Borussia Dortmund', season: '2023-24', altPositions: ['CB'] },
+      { id: 'maatsen-ucl-2324', name: 'Ian Maatsen', position: 'DEF', rating: 78, club: 'Borussia Dortmund', season: '2023-24', altPositions: ['LB', 'LWB'] },
+      { id: 'emrecan-ucl-2324', name: 'Emre Can', position: 'MID', rating: 80, club: 'Borussia Dortmund', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'sabitzer-ucl-2324', name: 'Marcel Sabitzer', position: 'MID', rating: 81, club: 'Borussia Dortmund', season: '2023-24', altPositions: ['CM', 'AM'] },
+      { id: 'brandt-ucl-2324', name: 'Julian Brandt', position: 'MID', rating: 83, club: 'Borussia Dortmund', season: '2023-24', altPositions: ['AM', 'CM'] },
+      { id: 'adeyemi-ucl-2324', name: 'Karim Adeyemi', position: 'FWD', rating: 81, club: 'Borussia Dortmund', season: '2023-24', altPositions: ['LW', 'RW'] },
+      { id: 'fullkrug-ucl-2324', name: 'Niclas Füllkrug', position: 'FWD', rating: 82, club: 'Borussia Dortmund', season: '2023-24', altPositions: ['ST'] },
+      { id: 'malen-ucl-2324', name: 'Donyell Malen', position: 'FWD', rating: 81, club: 'Borussia Dortmund', season: '2023-24', altPositions: ['RW', 'LW'] },
+    ]
+  },
+  {
+    id: 'bayern-ucl-2024-25', club: 'Bayern Munich', shortName: 'BAY', season: '2024-25', league: 'ucl', color: '#DC052D',
+    players: [
+      { id: 'neuer-ucl-2425', name: 'Manuel Neuer', position: 'GK', rating: 87, club: 'Bayern Munich', season: '2024-25' },
+      { id: 'laimer-ucl-2425', name: 'Konrad Laimer', position: 'DEF', rating: 80, club: 'Bayern Munich', season: '2024-25', altPositions: ['RB', 'DM'] },
+      { id: 'upamecano-ucl-2425', name: 'Dayot Upamecano', position: 'DEF', rating: 84, club: 'Bayern Munich', season: '2024-25', altPositions: ['CB'] },
+      { id: 'kim-ucl-2425', name: 'Min-jae Kim', position: 'DEF', rating: 83, club: 'Bayern Munich', season: '2024-25', altPositions: ['CB'] },
+      { id: 'davies-ucl-2425', name: 'Alphonso Davies', position: 'DEF', rating: 85, club: 'Bayern Munich', season: '2024-25', altPositions: ['LB', 'LWB'] },
+      { id: 'kimmich-ucl-2425', name: 'Joshua Kimmich', position: 'MID', rating: 87, club: 'Bayern Munich', season: '2024-25', altPositions: ['DM', 'CM', 'RB'] },
+      { id: 'goretzka-ucl-2425', name: 'Leon Goretzka', position: 'MID', rating: 82, club: 'Bayern Munich', season: '2024-25', altPositions: ['CM', 'DM'] },
+      { id: 'musiala-ucl-2425', name: 'Jamal Musiala', position: 'MID', rating: 88, club: 'Bayern Munich', season: '2024-25', altPositions: ['AM', 'CM'] },
+      { id: 'olise-ucl-2425', name: 'Michael Olise', position: 'FWD', rating: 85, club: 'Bayern Munich', season: '2024-25', altPositions: ['RW', 'AM'] },
+      { id: 'kane-ucl-2425', name: 'Harry Kane', position: 'FWD', rating: 90, club: 'Bayern Munich', season: '2024-25', altPositions: ['ST'] },
+      { id: 'sane-ucl-2425', name: 'Leroy Sané', position: 'FWD', rating: 84, club: 'Bayern Munich', season: '2024-25', altPositions: ['RW', 'LW'] },
+    ]
+  },
 ]
