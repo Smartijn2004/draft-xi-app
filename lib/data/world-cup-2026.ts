@@ -129,7 +129,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'lautaro-martinez-arg', name: "Lautaro Martinez", position: 'FWD', rating: 89, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['ST'] },
       { id: 'thiago-almada-arg', name: "Thiago Almada", position: 'FWD', rating: 86, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['AM', 'LW'] },
       { id: 'julian-alvarez-arg', name: "Julian Alvarez", position: 'FWD', rating: 85, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['ST', 'AM'] },
-      { id: 'lionel-messi-arg', name: "Lionel Messi", position: 'FWD', rating: 87, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['RW', 'AM'] },
+      { id: 'lionel-messi-arg', name: "Lionel Messi", position: 'FWD', rating: 88, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['RW', 'AM'] },
       { id: 'giuliano-simeone-arg', name: "Giuliano Simeone", position: 'FWD', rating: 84, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['RW', 'ST'] },
     ]
   },
