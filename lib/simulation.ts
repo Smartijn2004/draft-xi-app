@@ -403,22 +403,21 @@ const LEGENDS_OPPONENTS = [
   { name: 'Netherlands 1974', rating: 90 },
 ]
 
-// World Cup 2026 contender field (current team strength).
-const WC2026_OPPONENTS = [
-  { name: 'France', rating: 92 },
-  { name: 'Spain', rating: 91 },
-  { name: 'Argentina', rating: 91 },
-  { name: 'Brazil', rating: 90 },
-  { name: 'England', rating: 89 },
-  { name: 'Portugal', rating: 88 },
-  { name: 'Germany', rating: 87 },
-  { name: 'Netherlands', rating: 86 },
-  { name: 'Uruguay', rating: 84 },
-  { name: 'Belgium', rating: 84 },
-  { name: 'Croatia', rating: 83 },
-  { name: 'Morocco', rating: 82 },
-  { name: 'USA', rating: 79 },
-  { name: 'Mexico', rating: 79 },
+// All 48 World Cup 2026 nations, strongest → weakest. Order defines the
+// difficulty pools (top 16 / top 32 / all 48) and seeds the group draw + bracket.
+export const WC2026_NATIONS = [
+  { name: 'France', rating: 92 }, { name: 'Spain', rating: 91 }, { name: 'Argentina', rating: 91 }, { name: 'Brazil', rating: 90 },
+  { name: 'England', rating: 89 }, { name: 'Portugal', rating: 88 }, { name: 'Germany', rating: 87 }, { name: 'Netherlands', rating: 86 },
+  { name: 'Italy', rating: 85 }, { name: 'Belgium', rating: 84 }, { name: 'Uruguay', rating: 84 }, { name: 'Croatia', rating: 83 },
+  { name: 'Colombia', rating: 83 }, { name: 'Morocco', rating: 82 }, { name: 'Japan', rating: 81 }, { name: 'Switzerland', rating: 81 },
+  { name: 'Norway', rating: 81 }, { name: 'Denmark', rating: 80 }, { name: 'USA', rating: 80 }, { name: 'Serbia', rating: 80 },
+  { name: 'Türkiye', rating: 80 }, { name: 'Ukraine', rating: 80 }, { name: 'Nigeria', rating: 80 }, { name: 'Sweden', rating: 80 },
+  { name: 'Egypt', rating: 80 }, { name: 'Poland', rating: 80 }, { name: 'Algeria', rating: 80 }, { name: 'Ecuador', rating: 79 },
+  { name: 'Korea Republic', rating: 79 }, { name: 'Austria', rating: 79 }, { name: 'Mexico', rating: 79 }, { name: 'Ivory Coast', rating: 79 },
+  { name: 'Ghana', rating: 79 }, { name: 'Cameroon', rating: 79 }, { name: 'Scotland', rating: 79 }, { name: 'Czechia', rating: 79 },
+  { name: 'Greece', rating: 78 }, { name: 'Hungary', rating: 78 }, { name: 'Paraguay', rating: 78 }, { name: 'Canada', rating: 78 },
+  { name: 'Iran', rating: 77 }, { name: 'Tunisia', rating: 77 }, { name: 'Australia', rating: 76 }, { name: 'Costa Rica', rating: 76 },
+  { name: 'Panama', rating: 75 }, { name: 'Saudi Arabia', rating: 74 }, { name: 'Qatar', rating: 73 }, { name: 'New Zealand', rating: 73 },
 ]
 
 function getLeagueOpponents(league: LeagueId) {
@@ -774,9 +773,82 @@ export function simulateWorldCup(players: DraftedPlayer[], seed?: number, tactic
   }
 }
 
+// World Cup 2026 — the real format. Your XI is slotted into a random nation's
+// place: a proper 4-team group (one team per seeding pot), then the full
+// knockout path (Round of 32 → Final). Top 2 advance automatically; a 3rd
+// place can sneak through as a best-third.
+export function simulateWorldCup2026(players: DraftedPlayer[], seed?: number, tactic: Tactic = 'balanced'): SeasonResult {
+  const rng = seededRandom(seed ?? Math.floor(Math.random() * 1e9))
+  const teamRating = calcTeamRating(players)
+
+  // Four seeding pots of 12; your group takes one nation from each of the
+  // three pots other than your own seeding band.
+  const pots = [0, 1, 2, 3].map(p => WC2026_NATIONS.slice(p * 12, p * 12 + 12))
+  const yourPot = Math.floor(rng() * 4)
+  const groupOpps = pots
+    .filter((_, p) => p !== yourPot)
+    .map(pot => pot[Math.floor(rng() * pot.length)])
+
+  const { matches: groupMatches, standings } = groupSimulate(
+    teamRating, groupOpps, rng, 'Group Stage', players, tactic
+  )
+
+  // Your finishing position in the group.
+  const myPos = standings.findIndex(s => s.isPlayer) // 0-based
+  const myPoints = standings.find(s => s.isPlayer)?.points ?? 0
+  let advanced = myPos < 2
+  // 3rd place: 8 of 12 thirds advance — likelier with more points.
+  if (!advanced && myPos === 2) {
+    const chance = Math.min(0.9, 0.25 + myPoints * 0.12)
+    advanced = rng() < chance
+  }
+
+  const rounds = ['Round of 32', 'Round of 16', 'Quarter-Final', 'Semi-Final', 'Final']
+  // Knockout opponents get stronger each round (narrowing top slices of the field).
+  const sliceMax = [40, 26, 16, 8, 4]
+  const used = new Set<string>([...groupOpps.map(o => o.name)])
+  const allMatches = [...groupMatches]
+  let eliminated = !advanced
+  let eliminatedAt = advanced ? '' : 'Group Stage'
+
+  if (advanced) {
+    rounds.forEach((round, i) => {
+      if (eliminated) return
+      const slice = WC2026_NATIONS.slice(0, sliceMax[i]).filter(n => !used.has(n.name))
+      const opp = slice.length > 0
+        ? slice[Math.floor(rng() * slice.length)]
+        : { name: 'Finalist', rating: 86 + i }
+      used.add(opp.name)
+      const { result, myGoals, oppGoals, scorers, opponentScorers } =
+        simulateMatch(teamRating, opp.rating + i, rng, players, opp.name, tactic)
+      allMatches.push({ opponent: opp.name, opponentRating: opp.rating, result, myGoals, oppGoals, scorers, opponentScorers, round })
+      if (result === 'L') { eliminated = true; eliminatedAt = round }
+    })
+  }
+
+  const won = allMatches.filter(m => m.result === 'W').length
+  const drawn = allMatches.filter(m => m.result === 'D').length
+  const lost = allMatches.filter(m => m.result === 'L').length
+  const gf = allMatches.reduce((s, m) => s + m.myGoals, 0)
+  const ga = allMatches.reduce((s, m) => s + m.oppGoals, 0)
+  const trophyWon = !eliminated
+
+  const { topScorers, playerOfSeason } = buildStats(allMatches)
+  const achievements = getAchievements(won, drawn, lost, gf, ga, trophyWon, 'worldcup2026')
+
+  return {
+    matches: allMatches, points: won * 3 + drawn, won, drawn, lost,
+    goalsFor: gf, goalsAgainst: ga,
+    isPerfect: lost === 0 && drawn === 0,
+    eliminated, eliminatedAt, trophyWon, teamRating,
+    groupStandings: [standings],
+    topScorers, playerOfSeason, achievements,
+  }
+}
+
 export function runSimulation(players: DraftedPlayer[], leagueId: LeagueId, seed?: number, tactic: Tactic = 'balanced'): SeasonResult {
   if (leagueId === 'ucl') return simulateUCL(players, seed, tactic)
   if (leagueId === 'worldcup') return simulateWorldCup(players, seed, tactic)
-  if (leagueId === 'worldcup2026') return simulateWorldCup(players, seed, tactic, WC2026_OPPONENTS)
+  if (leagueId === 'worldcup2026') return simulateWorldCup2026(players, seed, tactic)
   return simulateLeagueSeason(players, leagueId, seed, tactic)
 }

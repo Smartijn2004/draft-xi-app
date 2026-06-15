@@ -13,7 +13,7 @@ import {
   type SeasonRecordOutcome, type DailyRecord, type StoredState,
 } from '@/lib/storage'
 import { getDailyChallenge, getDailySpinPool, isPlayerAllowed } from '@/lib/dailyChallenge'
-import { isWorldCup2026Active } from '@/lib/event'
+import { isWorldCup2026Active, getWorldCup2026Pool, worldCup2026PoolSize } from '@/lib/event'
 import { emojiGrid, dailyStatusLine, dailyShareText } from '@/lib/share'
 import { TeamFormation } from '@/components/TeamFormation'
 import { SeasonSimulator } from '@/components/SeasonSimulator'
@@ -23,6 +23,20 @@ import { MatchReveal } from '@/components/MatchReveal'
 function leagueAmbience(color: string): React.CSSProperties {
   return {
     background: `radial-gradient(900px 480px at 50% -120px, ${color}14, transparent), #0a0a0f`,
+  }
+}
+
+// World Cup 2026 — a vibrant multi-nation backdrop instead of one accent colour.
+function eventAmbience(): React.CSSProperties {
+  return {
+    background: [
+      'radial-gradient(600px 380px at 12% -8%, #ef444426, transparent)',
+      'radial-gradient(600px 380px at 88% -8%, #3b82f626, transparent)',
+      'radial-gradient(620px 400px at 50% -14%, #eab30822, transparent)',
+      'radial-gradient(700px 420px at 30% 8%, #22c55e1f, transparent)',
+      'radial-gradient(700px 420px at 72% 6%, #a855f71f, transparent)',
+      '#0a0a0f',
+    ].join(', '),
   }
 }
 
@@ -49,16 +63,26 @@ const DIFFICULTY_CONFIG: Record<Difficulty, { label: string; emoji: string; desc
   hard:   { label: 'Hard',   emoji: '🔥', desc: 'No rerolls, ratings hidden', rerolls: 0, hideRatings: true  },
 }
 
+// In the World Cup 2026 event, difficulty instead sizes the pool of nations
+// you can spin (ranked by strength) — a smaller pool means stronger squads.
+const EVENT_DIFFICULTY: Record<Difficulty, { label: string; emoji: string; desc: string }> = {
+  easy:   { label: 'Easy',   emoji: '😌', desc: 'Top 16 nations only' },
+  normal: { label: 'Medium', emoji: '⚽', desc: 'Top 32 nations' },
+  hard:   { label: 'Hard',   emoji: '🔥', desc: 'All 48 nations' },
+}
+
 // ── Main game content ─────────────────────────────────────────────────────────
 
 function GameContent() {
   const params = useSearchParams()
   const router = useRouter()
   const isDaily = params.get('daily') === '1'
+  const isEvent = (params.get('league') === 'worldcup2026')
   const todayKey = getTodayKey()
   const dailyChallenge = useMemo(() => (isDaily ? getDailyChallenge(todayKey) : null), [isDaily, todayKey])
   const leagueId = dailyChallenge ? dailyChallenge.hostLeague : ((params.get('league') ?? 'pl') as LeagueId)
   const league = LEAGUE_CONFIGS[leagueId] ?? LEAGUE_CONFIGS.pl
+  const ambience = isEvent ? eventAmbience() : leagueAmbience(league.color)
 
   const [phase, setPhase] = useState<'setup' | 'draft' | 'simulating' | 'results'>('setup')
   const [difficulty, setDifficulty] = useState<Difficulty | null>(null)
@@ -109,23 +133,29 @@ function GameContent() {
   const slots = formation.slots
   const totalSlots = slots.length
   const filled = team.length
-  const hideRatings = difficulty ? DIFFICULTY_CONFIG[difficulty].hideRatings : false
+  // The event always shows ratings (difficulty there means pool size, not hiding).
+  const hideRatings = isEvent ? false : (difficulty ? DIFFICULTY_CONFIG[difficulty].hideRatings : false)
 
   // Every player eligible in this mode (constraint-filtered for dailies), with
   // the effective rating for the chosen ratings mode — powers the Draft Review's
   // "best available per slot" scout report.
   const referencePlayers = useMemo<Player[]>(() => {
-    const clubSeasons = dailyChallenge ? getDailySpinPool(dailyChallenge) : getClubSeasonsForLeague(leagueId)
+    const clubSeasons = dailyChallenge
+      ? getDailySpinPool(dailyChallenge)
+      : isEvent
+      ? getWorldCup2026Pool(difficulty ?? 'hard')
+      : getClubSeasonsForLeague(leagueId)
     const out: Player[] = []
     for (const cs of clubSeasons) {
       for (const p of cs.players) {
         if (dailyChallenge && !isPlayerAllowed(dailyChallenge, p)) continue
-        const rating = ratingsMode === 'prime' ? (PRIME_RATINGS.get(p.name) ?? p.rating) : p.rating
+        // Event always uses season ratings (no prime option).
+        const rating = (!isEvent && ratingsMode === 'prime') ? (PRIME_RATINGS.get(p.name) ?? p.rating) : p.rating
         out.push({ ...p, rating })
       }
     }
     return out
-  }, [dailyChallenge, leagueId, ratingsMode])
+  }, [dailyChallenge, isEvent, difficulty, leagueId, ratingsMode])
 
   const emptyCounts: Record<Position, number> = { GK: 0, DEF: 0, MID: 0, FWD: 0 }
   slots.forEach(s => { emptyCounts[s.position as Position]++ })
@@ -173,7 +203,8 @@ function GameContent() {
 
   const handleStartDraft = () => {
     if (!difficulty) return
-    setRerollsLeft(DIFFICULTY_CONFIG[difficulty].rerolls)
+    // Event gives a flat 2 rerolls regardless of difficulty (which only sizes the pool).
+    setRerollsLeft(isEvent ? 2 : DIFFICULTY_CONFIG[difficulty].rerolls)
     setPhase('draft')
   }
 
@@ -183,7 +214,11 @@ function GameContent() {
     setDraftSub('spinning')
     setCurrentSpin(null)
 
-    const pool = dailyChallenge ? getDailySpinPool(dailyChallenge) : getClubSeasonsForLeague(leagueId)
+    const pool = dailyChallenge
+      ? getDailySpinPool(dailyChallenge)
+      : isEvent
+      ? getWorldCup2026Pool(difficulty ?? 'hard')
+      : getClubSeasonsForLeague(leagueId)
     const start = Date.now()
     const total = 900 + Math.random() * 500
 
@@ -205,6 +240,11 @@ function GameContent() {
           const available = all.filter(cs => !usedSpins.includes(cs.id))
           const from = available.length > 0 ? available : all
           result = from[Math.floor(dailyRngRef.current() * from.length)]
+        } else if (isEvent) {
+          // Draw from the difficulty-sliced nation pool.
+          const available = pool.filter(cs => !usedSpins.includes(cs.id))
+          const from = available.length > 0 ? available : pool
+          result = from[Math.floor(Math.random() * from.length)]
         } else {
           result = spinClubSeason(leagueId, usedSpins)
         }
@@ -220,7 +260,7 @@ function GameContent() {
     }
 
     tick()
-  }, [leagueId, usedSpins, isDaily, dailyChallenge])
+  }, [leagueId, usedSpins, isDaily, dailyChallenge, isEvent, difficulty])
 
   const assignToSlot = useCallback((player: Player, slotIndex: number) => {
     const slot = slots[slotIndex]
@@ -310,7 +350,7 @@ function GameContent() {
   // ── Daily: already played today → recap ──────────────────────────────────
   if (isDaily && dailyChecked && dailyDone && phase !== 'simulating' && phase !== 'results') {
     return (
-      <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
+      <div className="min-h-screen text-slate-100 flex flex-col" style={ambience}>
         <GameHeader league={league} onBack={() => router.push('/')} />
         <DailyRecap record={dailyDone} league={league} onHome={() => router.push('/')} />
       </div>
@@ -321,7 +361,7 @@ function GameContent() {
   // returning player never flashes a fresh board they can't actually play.
   if (isDaily && !dailyChecked) {
     return (
-      <div className="min-h-screen flex items-center justify-center text-slate-500" style={leagueAmbience(league.color)}>
+      <div className="min-h-screen flex items-center justify-center text-slate-500" style={ambience}>
         Loading today&apos;s challenge…
       </div>
     )
@@ -330,7 +370,7 @@ function GameContent() {
   // ── World Cup 2026 event window guard ────────────────────────────────────
   if (leagueId === 'worldcup2026' && !isWorldCup2026Active()) {
     return (
-      <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
+      <div className="min-h-screen text-slate-100 flex flex-col" style={ambience}>
         <GameHeader league={league} onBack={() => router.push('/')} />
         <div className="flex-1 flex items-center justify-center px-4 py-8">
           <div className="w-full max-w-md text-center space-y-3">
@@ -349,7 +389,7 @@ function GameContent() {
   // ── Setup ────────────────────────────────────────────────────────────────
   if (phase === 'setup') {
     return (
-      <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
+      <div className="min-h-screen text-slate-100 flex flex-col" style={ambience}>
         <GameHeader league={league} onBack={() => router.push('/')} />
         <div className="flex-1 flex items-center justify-center px-4 py-8">
           <div className="w-full max-w-lg space-y-8">
@@ -363,9 +403,11 @@ function GameContent() {
             </div>
 
             <div className="space-y-3">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Difficulty</div>
+              <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                {isEvent ? 'Difficulty — nations you can draft' : 'Difficulty'}
+              </div>
               <div className="grid grid-cols-3 gap-3">
-                {(Object.entries(DIFFICULTY_CONFIG) as [Difficulty, typeof DIFFICULTY_CONFIG[Difficulty]][]).map(([key, cfg]) => (
+                {(Object.entries(isEvent ? EVENT_DIFFICULTY : DIFFICULTY_CONFIG) as [Difficulty, { label: string; emoji: string; desc: string }][]).map(([key, cfg]) => (
                   <button key={key} onClick={() => setDifficulty(key)}
                     className={`rounded-xl border p-4 text-center transition-all hover:scale-[1.02] ${
                       difficulty === key ? 'border-transparent' : 'border-white/10 bg-white/3 hover:bg-white/5'
@@ -379,6 +421,7 @@ function GameContent() {
               </div>
             </div>
 
+            {!isEvent && (
             <div className="space-y-3">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Player Ratings</div>
               <div className="grid grid-cols-2 gap-3">
@@ -398,6 +441,7 @@ function GameContent() {
                 ))}
               </div>
             </div>
+            )}
 
             <div className="space-y-3">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Tactics</div>
@@ -452,7 +496,7 @@ function GameContent() {
   // ── Simulating — sequential match reveal ─────────────────────────────────
   if (phase === 'simulating' && seasonResult) {
     return (
-      <div className="h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
+      <div className="h-screen text-slate-100 flex flex-col" style={ambience}>
         <GameHeader league={league} onBack={() => router.push('/')} />
         <MatchReveal result={seasonResult} league={league} onDone={() => setPhase('results')} />
       </div>
@@ -462,7 +506,7 @@ function GameContent() {
   // ── Results ──────────────────────────────────────────────────────────────
   if (phase === 'results' && seasonResult) {
     return (
-      <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
+      <div className="min-h-screen text-slate-100 flex flex-col" style={ambience}>
         <GameHeader league={league} onBack={() => router.push('/')} />
         <div className="flex-1 px-4 py-8 max-w-2xl mx-auto w-full animate-slide-up">
           <SeasonSimulator
@@ -484,7 +528,7 @@ function GameContent() {
 
   // ── Draft ────────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen text-slate-100 flex flex-col" style={leagueAmbience(league.color)}>
+    <div className="min-h-screen text-slate-100 flex flex-col" style={ambience}>
       <GameHeader league={league} onBack={() => router.push('/')} />
 
       {message && (

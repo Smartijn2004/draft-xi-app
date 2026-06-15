@@ -1,3 +1,5 @@
+import type { LeagueId } from './types'
+
 export type AchievementCategory = 'Performance' | 'Mastery' | 'Drafting' | 'Dedication'
 
 export type Achievement = {
@@ -12,6 +14,7 @@ export type Achievement = {
 // season. Cumulative fields reflect state AFTER this season is recorded.
 export type AchievementCtx = {
   // This season
+  leagueId: LeagueId
   format: 'league' | 'tournament'
   won: number
   drawn: number
@@ -51,6 +54,8 @@ const DEFS: Def[] = [
     description: 'String together a 25-match unbeaten run.', check: c => c.longestUnbeatenRun >= 25 },
   { id: 'perfect', name: 'Immortal', emoji: '👑', category: 'Performance',
     description: 'The holy grail — win EVERY match, no draws, no defeats.', check: c => c.isPerfect },
+  { id: 'wc2026-champion', name: 'World Champions 2026', emoji: '🌎', category: 'Performance',
+    description: 'Win the World Cup 2026 live event.', check: c => c.leagueId === 'worldcup2026' && c.trophyWon },
   { id: 'centurion', name: 'Centurion', emoji: '💯', category: 'Performance',
     description: 'Reach 100 points in a league season.', check: c => c.format === 'league' && c.points >= 100 },
   { id: 'goal-machine', name: 'Goal Machine', emoji: '🎯', category: 'Performance',

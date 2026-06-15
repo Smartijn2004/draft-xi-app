@@ -193,6 +193,7 @@ export function recordSeason(
   const leaguesPlayed = Object.values(state.leagues).filter(l => l && l.seasonsPlayed > 0).length
   const leaguesWon = Object.values(state.leagues).filter(l => l && l.trophies > 0).length
   const ctx = {
+    leagueId,
     format: (isTournament ? 'tournament' : 'league') as 'tournament' | 'league',
     won: result.won, drawn: result.drawn, lost: result.lost, points,
     goalsFor: result.goalsFor, goalsAgainst: result.goalsAgainst,

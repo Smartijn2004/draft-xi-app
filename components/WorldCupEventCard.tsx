@@ -20,10 +20,14 @@ export function WorldCupEventCard() {
       <Link
         href="/game?league=worldcup2026"
         className="group relative flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 rounded-2xl border p-5 w-full max-w-4xl mx-auto transition-all duration-200 hover:-translate-y-1 active:scale-[0.99] overflow-hidden"
-        style={{ background: 'linear-gradient(120deg, #16a34a26, #16a34a0a 60%, transparent)', borderColor: '#16a34a66' }}
+        style={{
+          // Vibrant multi-nation treatment — every flag colour, not just one.
+          background: 'linear-gradient(120deg, #ef444422, #eab30822 22%, #22c55e22 45%, #3b82f622 68%, #a855f722 100%), #0c0c14',
+          borderColor: '#ffffff22',
+        }}
       >
-        <div className="absolute top-0 left-0 right-0 h-px opacity-80"
-          style={{ background: 'linear-gradient(90deg, transparent, #22c55e, transparent)' }} />
+        <div className="absolute top-0 left-0 right-0 h-[3px] opacity-90"
+          style={{ background: 'linear-gradient(90deg, #ef4444, #f59e0b, #eab308, #22c55e, #3b82f6, #a855f7, #ec4899)' }} />
         <div className="text-4xl shrink-0">🌎</div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -35,11 +39,11 @@ export function WorldCupEventCard() {
           </div>
           <h2 className="text-lg font-black text-white leading-tight mt-1">World Cup 2026</h2>
           <p className="text-xs text-slate-400 mt-1">
-            Draft today&apos;s international stars at current form — 14 contenders, knockout to glory. Only here while the tournament is on.
+            Draft today&apos;s international stars at current form — all 48 nations, real groups &amp; bracket to the final. Only here while the tournament is on.
           </p>
         </div>
         <span className="shrink-0 inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-black text-white transition-transform group-hover:scale-105"
-          style={{ background: '#16a34a', boxShadow: '0 6px 22px #16a34a55' }}>
+          style={{ background: 'linear-gradient(90deg, #3b82f6, #a855f7, #ec4899)', boxShadow: '0 6px 22px #a855f755' }}>
           Enter the World Cup →
         </span>
       </Link>

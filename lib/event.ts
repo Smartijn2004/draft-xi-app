@@ -1,3 +1,19 @@
+import { getClubSeasonsForLeague } from './data'
+import { WC2026_NATIONS } from './simulation'
+import type { ClubSeason, Difficulty } from './types'
+
+// Event difficulty controls which nations you can spin (ranked by strength):
+// easy = only the 16 strongest, medium = top 32, hard = all 48.
+export function worldCup2026PoolSize(difficulty: Difficulty): number {
+  return difficulty === 'easy' ? 16 : difficulty === 'normal' ? 32 : 48
+}
+
+export function getWorldCup2026Pool(difficulty: Difficulty): ClubSeason[] {
+  const count = worldCup2026PoolSize(difficulty)
+  const names = new Set(WC2026_NATIONS.slice(0, count).map(n => n.name))
+  return getClubSeasonsForLeague('worldcup2026').filter(cs => names.has(cs.club))
+}
+
 // World Cup 2026 runs 11 June – 19 July 2026. The event is only playable
 // while the real tournament is on; outside that window the home card hides
 // and the route shows an "event ended/not started" message.
