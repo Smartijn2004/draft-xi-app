@@ -257,17 +257,24 @@ function simulateMatch(
   // nearly halved and bleed into draws — the unbeaten-chaser's tool, at the
   // cost of fewer goals. Attacking trades safety for goals and risk.
   if (tactic === 'defensive') {
-    const newLoss = loss * 0.55
-    drawP += loss - newLoss
-    loss = newLoss
+    // Park the bus: nearly half your losses become draws — but the cautious
+    // setup also bleeds some would-be wins into draws. Safe, fewer defeats,
+    // fewer points against weaker sides. The unbeaten-chaser's tool, not the
+    // title-grabber's.
+    const savedLoss = loss * 0.45
+    const shavedWin = win * 0.12
+    loss -= savedLoss
+    win -= shavedWin
+    drawP += savedLoss + shavedWin
   } else if (tactic === 'attacking') {
-    const newLoss = loss * 1.4
-    const newWin = win * 1.08
-    const newDraw = Math.max(0.03, 1 - newWin - newLoss)
-    const total = newWin + newDraw + newLoss
-    win = newWin / total
-    drawP = newDraw / total
-    loss = newLoss / total
+    // Go for the throat: draws collapse into decisive results, split by how
+    // strong you are. More wins AND more losses than balanced — high variance.
+    // Great when you must win, dangerous for an unbeaten run.
+    const fromDraw = drawP * 0.45
+    const winShare = win / (win + loss || 1)
+    win += fromDraw * winShare
+    loss += fromDraw * (1 - winShare)
+    drawP -= fromDraw
   }
 
   const r = rng()
@@ -517,7 +524,7 @@ function getAchievements(
   position?: number
 ): string[] {
   const achievements: string[] = []
-  if (leagueId === 'pl' || leagueId === 'laliga' || leagueId === 'seriea') {
+  if (leagueId === 'pl' || leagueId === 'laliga' || leagueId === 'seriea' || leagueId === 'legends') {
     if (won === 38 && drawn === 0) achievements.push('PERFECT SEASON')
     else if (lost === 0) achievements.push('INVINCIBLE')
     if (trophyWon) achievements.push('CHAMPIONS')
