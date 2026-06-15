@@ -453,6 +453,25 @@ export const WC2026_NATIONS = [
   { name: 'New Zealand', rating: 78 }, { name: 'Iraq', rating: 77 }, { name: 'Uzbekistan', rating: 77 }, { name: 'Jordan', rating: 77 },
 ]
 
+// The actual FIFA World Cup 2026 final-draw groups (A–L). Playoff slots are
+// resolved to the qualified nation in our squad data.
+export const WC2026_GROUPS: Record<string, string[]> = {
+  A: ['Mexico', 'Korea Republic', 'South Africa', 'Czechia'],
+  B: ['Canada', 'Switzerland', 'Qatar', 'Bosnia And Herzegovina'],
+  C: ['Brazil', 'Morocco', 'Scotland', 'Haiti'],
+  D: ['USA', 'Australia', 'Paraguay', 'Türkiye'],
+  E: ['Germany', 'Ecuador', "Côte D'Ivoire", 'Curaçao'],
+  F: ['Netherlands', 'Japan', 'Tunisia', 'Sweden'],
+  G: ['Belgium', 'IR Iran', 'Egypt', 'New Zealand'],
+  H: ['Spain', 'Uruguay', 'Saudi Arabia', 'Cabo Verde'],
+  I: ['France', 'Senegal', 'Norway', 'Iraq'],
+  J: ['Argentina', 'Austria', 'Algeria', 'Jordan'],
+  K: ['Portugal', 'Colombia', 'Uzbekistan', 'Congo DR'],
+  L: ['England', 'Croatia', 'Panama', 'Ghana'],
+}
+
+const WC2026_RATING = new Map(WC2026_NATIONS.map(n => [n.name, n.rating]))
+
 function getLeagueOpponents(league: LeagueId) {
   if (league === 'laliga') return LALIGA_OPPONENTS
   if (league === 'seriea') return SERIEA_OPPONENTS
@@ -814,16 +833,17 @@ export function simulateWorldCup2026(players: DraftedPlayer[], seed?: number, ta
   const rng = seededRandom(seed ?? Math.floor(Math.random() * 1e9))
   const teamRating = calcTeamRating(players)
 
-  // Four seeding pots of 12; your group takes one nation from each of the
-  // three pots other than your own seeding band.
-  const pots = [0, 1, 2, 3].map(p => WC2026_NATIONS.slice(p * 12, p * 12 + 12))
-  const yourPot = Math.floor(rng() * 4)
-  const groupOpps = pots
-    .filter((_, p) => p !== yourPot)
-    .map(pot => pot[Math.floor(rng() * pot.length)])
+  // You replace a random nation in a real WC2026 group, inheriting its three
+  // group opponents from the actual draw.
+  const groupLetters = Object.keys(WC2026_GROUPS)
+  const groupLetter = groupLetters[Math.floor(rng() * groupLetters.length)]
+  const slotIdx = Math.floor(rng() * 4)
+  const groupOpps = WC2026_GROUPS[groupLetter]
+    .filter((_, i) => i !== slotIdx)
+    .map(name => ({ name, rating: WC2026_RATING.get(name) ?? 80 }))
 
   const { matches: groupMatches, standings } = groupSimulate(
-    teamRating, groupOpps, rng, 'Group Stage', players, tactic
+    teamRating, groupOpps, rng, `Group ${groupLetter}`, players, tactic
   )
 
   // Your finishing position in the group.
