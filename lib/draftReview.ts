@@ -41,10 +41,15 @@ export function computeModeBestXI(team: DraftedPlayer[], pool: Player[]): {
   gotBest: number
   totalGap: number
 } {
+  // Names already used elsewhere in the XI can't be a "better pick" for this
+  // slot — you can't field the same player twice. Allow only the slot's own
+  // player plus players not used anywhere else.
+  const teamNames = new Set(team.map(p => p.name))
   const rows: BestXIRow[] = team.map(player => {
-    let candidates = player.slotLabel
-      ? pool.filter(p => canFillSlotLabel(p, player.slotLabel))
-      : pool.filter(p => p.position === player.position)
+    const fits = player.slotLabel
+      ? (p: Player) => canFillSlotLabel(p, player.slotLabel)
+      : (p: Player) => p.position === player.position
+    const candidates = pool.filter(p => fits(p) && (p.name === player.name || !teamNames.has(p.name)))
     if (candidates.length === 0) return { player, best: null, gap: 0 }
     const best = candidates.reduce((b, p) => (p.rating > b.rating ? p : b), candidates[0])
     // By name: if you already have the player (any season), you have the best.

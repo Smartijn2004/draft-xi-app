@@ -141,7 +141,9 @@ export function recordSeason(
   const firstTrophy = result.trophyWon && career.trophies === 0
   if (result.trophyWon) career.trophies += 1
   const unbeaten = result.lost === 0 && result.matches.length > 0
-  if (unbeaten) career.invincibles += 1
+  // Career "invincible" counts full league seasons only — going unbeaten in a
+  // short knockout is its own (Untouchable Champion) achievement.
+  if (unbeaten && !isTournament) career.invincibles += 1
   if (result.isPerfect) career.perfectSeasons += 1
   career.totalWon += result.won
   career.totalDrawn += result.drawn

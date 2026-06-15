@@ -6,13 +6,14 @@ import { championsLeagueData } from './champions-league'
 import { worldCupData } from './world-cup'
 import { worldCup2026Data } from './world-cup-2026'
 
+// NB: worldCup2026Data is intentionally excluded — those current national
+// squads belong only to the WC2026 event, not to Legends or any other spin.
 export const ALL_CLUB_SEASONS: ClubSeason[] = [
   ...premierLeagueData,
   ...laLigaData,
   ...serieAData,
   ...championsLeagueData,
   ...worldCupData,
-  ...worldCup2026Data,
 ]
 
 export const LEAGUE_DATA: Record<LeagueId, ClubSeason[]> = {
