@@ -476,7 +476,7 @@ function DraftCompare({ team, pool, modeName, accent }: { team: DraftedPlayer[];
         The top-rated player for each slot in this mode — note them for next time.
       </p>
       <div className="rounded-xl border border-white/8 divide-y divide-white/5 overflow-hidden">
-        {rows.map(({ player, best, gap }) => (
+        {rows.map(({ player, options, gap }) => (
           <div key={player.id} className="flex items-center gap-2 px-3 py-2.5 text-xs">
             <span
               className="shrink-0 text-[10px] font-black px-1.5 py-0.5 rounded leading-none w-9 text-center"
@@ -488,13 +488,17 @@ function DraftCompare({ team, pool, modeName, accent }: { team: DraftedPlayer[];
               <span className="font-semibold text-white">{lastName(player.name)}</span>
               <span className="text-slate-500 ml-1 tabular-nums">{player.rating}</span>
             </div>
-            {gap > 0 && best ? (
-              <div className="text-right shrink-0 min-w-0 max-w-[55%]">
+            {gap > 0 && options.length > 0 ? (
+              <div className="text-right shrink-0 min-w-0 max-w-[60%]">
                 <div className="truncate">
-                  <span className="text-amber-400 font-black">{best.rating}</span>
-                  <span className="text-slate-300 ml-1 font-semibold">{best.name}</span>
+                  <span className="text-amber-400 font-black">{options[0].rating}</span>
+                  <span className="text-slate-300 ml-1 font-semibold">
+                    {options.map(o => o.name).join(' / ')}
+                  </span>
                 </div>
-                <div className="text-[10px] text-slate-600 truncate">{best.club} {best.season}</div>
+                <div className="text-[10px] text-slate-600 truncate">
+                  {options.length === 1 ? `${options[0].club} ${options[0].season}` : 'same rating — pick any one'}
+                </div>
               </div>
             ) : (
               <span className="text-emerald-400 font-black text-[10px] shrink-0">✓ BEST AVAILABLE</span>

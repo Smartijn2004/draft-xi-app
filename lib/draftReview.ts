@@ -27,12 +27,19 @@ export function computeSquadOptimality(team: DraftedPlayer[], leagueId: LeagueId
 }
 
 // ── (2) Mode-best XI (for the results "Draft Review" scout report) ───────────
-// For each slot you filled, the highest-rated player available ANYWHERE in this
-// game mode who could play that slot — so even if you couldn't grab him this
-// run, you learn who the best option is for next time.
+// For each slot you filled, the highest-rated player available in this game
+// mode who could play it — so even if you couldn't grab him this run, you learn
+// who the best option is for next time. A real draft lets you pick each player
+// only once, so the report does too: players already in your XI are credited to
+// their own slot, and any star suggested for one slot is reserved so it can't
+// be suggested again at an identical slot elsewhere in the formation.
+export type BestPick = { name: string; rating: number; club: string; season: string }
 export type BestXIRow = {
   player: DraftedPlayer
-  best: { name: string; rating: number; club: string; season: string } | null
+  best: BestPick | null
+  // The player(s) tied at the top available rating for this slot (up to 3).
+  // Empty when you already hold the best available — you can pick any one.
+  options: BestPick[]
   gap: number
 }
 
@@ -41,25 +48,53 @@ export function computeModeBestXI(team: DraftedPlayer[], pool: Player[]): {
   gotBest: number
   totalGap: number
 } {
-  // Names already used elsewhere in the XI can't be a "better pick" for this
-  // slot — you can't field the same player twice. Allow only the slot's own
-  // player plus players not used anywhere else.
-  const teamNames = new Set(team.map(p => p.name))
+  // One physical player can be drafted once. Seed the "spent" set with everyone
+  // already in your XI, then add each star as it's credited to a slot below.
+  const used = new Set(team.map(p => p.name))
+
+  // Collapse a player's multiple seasons to his single best-rated entry, so the
+  // same name can't occupy two option slots and ratings reflect his peak.
+  const bestByName = new Map<string, Player>()
+  for (const p of pool) {
+    const cur = bestByName.get(p.name)
+    if (!cur || p.rating > cur.rating) bestByName.set(p.name, p)
+  }
+  const uniquePool = [...bestByName.values()]
+
+  const toPick = (p: Player): BestPick => ({ name: p.name, rating: p.rating, club: p.club, season: p.season })
+
   const rows: BestXIRow[] = team.map(player => {
     const fits = player.slotLabel
       ? (p: Player) => canFillSlotLabel(p, player.slotLabel)
       : (p: Player) => p.position === player.position
-    const candidates = pool.filter(p => fits(p) && (p.name === player.name || !teamNames.has(p.name)))
-    if (candidates.length === 0) return { player, best: null, gap: 0 }
-    const best = candidates.reduce((b, p) => (p.rating > b.rating ? p : b), candidates[0])
-    // By name: if you already have the player (any season), you have the best.
-    const gap = best.name === player.name ? 0 : Math.max(0, best.rating - player.rating)
+
+    // Your own player is always eligible for his own slot; everyone else must
+    // be a player not already in — or credited to — the XI.
+    const candidates = uniquePool
+      .filter(p => fits(p) && (p.name === player.name || !used.has(p.name)))
+      .sort((a, b) => b.rating - a.rating)
+
+    if (candidates.length === 0) return { player, best: null, options: [], gap: 0 }
+
+    const top = candidates[0]
+    // You already hold the best available for this slot (or an equal of it).
+    if (top.name === player.name || top.rating <= player.rating) {
+      return { player, best: null, options: [], gap: 0 }
+    }
+
+    // Surface the player(s) tied at the top rating — up to 3 — and reserve them
+    // all, so an equally-rated star isn't dangled again at the next same slot.
+    const options = candidates.filter(c => c.rating === top.rating).slice(0, 3)
+    for (const o of options) used.add(o.name)
+
     return {
       player,
-      best: { name: best.name, rating: best.rating, club: best.club, season: best.season },
-      gap,
+      best: toPick(top),
+      options: options.map(toPick),
+      gap: Math.max(0, top.rating - player.rating),
     }
   })
+
   const gotBest = rows.filter(r => r.gap === 0).length
   const totalGap = rows.reduce((s, r) => s + r.gap, 0)
   return { rows, gotBest, totalGap }
