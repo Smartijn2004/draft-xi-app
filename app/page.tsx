@@ -31,10 +31,13 @@ export default function HomePage() {
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
             Unofficial Fan Draft Game
           </div>
-          <h1 className="text-7xl md:text-9xl font-black tracking-tighter mb-4 leading-none">
+          <h1 className="text-7xl md:text-9xl font-black tracking-tighter mb-2 leading-none">
             <span className="text-white">Draft</span>
             <span className="text-emerald-400"> XI</span>
           </h1>
+          <p className="text-sm md:text-base font-black uppercase tracking-[0.4em] text-emerald-400/90 mb-5 pl-[0.4em]">
+            Invincibles
+          </p>
           <p className="text-slate-300 text-lg md:text-xl max-w-lg mx-auto mb-3 font-light">
             Build the ultimate XI from five competitions.
             <br />
@@ -47,9 +50,9 @@ export default function HomePage() {
           {/* stat pills */}
           <div className="flex flex-wrap items-center justify-center gap-6 text-center mb-12">
             {[
-              { value: '5', label: 'Leagues' },
-              { value: '1,200+', label: 'Player Seasons' },
-              { value: '1966–2025', label: 'Eras' },
+              { value: '7', label: 'Competitions' },
+              { value: '1,800+', label: 'Player Seasons' },
+              { value: '1966–2026', label: 'Eras' },
             ].map(s => (
               <div key={s.label}>
                 <div className="text-2xl font-bold text-white">{s.value}</div>

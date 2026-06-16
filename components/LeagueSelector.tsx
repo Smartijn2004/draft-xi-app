@@ -1,12 +1,45 @@
 'use client'
 import Link from 'next/link'
+import type { ReactNode } from 'react'
 import { LEAGUE_CONFIGS } from '@/lib/data'
 import type { LeagueId } from '@/lib/types'
 
-const LEAGUE_ICONS: Record<LeagueId, string> = {
-  pl: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
-  laliga: '🇪🇸',
-  seriea: '🇮🇹',
+// Inline SVG flags — flag emoji don't render on Windows/Chrome (they fall back
+// to letter pairs like "ES"/"IT" or an empty box), so we draw them instead for
+// a consistent look on every platform.
+function Flag({ children, label }: { children: ReactNode; label: string }) {
+  return (
+    <span
+      className="inline-block w-7 h-5 rounded-[3px] overflow-hidden ring-1 ring-black/15 shadow-sm align-middle"
+      role="img"
+      aria-label={label}
+    >
+      <svg viewBox="0 0 60 40" width="100%" height="100%" preserveAspectRatio="none">{children}</svg>
+    </span>
+  )
+}
+
+const LEAGUE_ICONS: Record<LeagueId, ReactNode> = {
+  pl: (
+    <Flag label="England">
+      <rect width="60" height="40" fill="#fff" />
+      <rect x="25" width="10" height="40" fill="#ce1124" />
+      <rect y="15" width="60" height="10" fill="#ce1124" />
+    </Flag>
+  ),
+  laliga: (
+    <Flag label="Spain">
+      <rect width="60" height="40" fill="#c60b1e" />
+      <rect y="10" width="60" height="20" fill="#ffc400" />
+    </Flag>
+  ),
+  seriea: (
+    <Flag label="Italy">
+      <rect width="20" height="40" fill="#009246" />
+      <rect x="20" width="20" height="40" fill="#fff" />
+      <rect x="40" width="20" height="40" fill="#ce2b37" />
+    </Flag>
+  ),
   ucl: '⭐',
   worldcup: '🏆',
   legends: '👑',
