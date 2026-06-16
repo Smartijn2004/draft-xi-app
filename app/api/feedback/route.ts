@@ -9,6 +9,8 @@ const RATE_WINDOW_MS = 60_000
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
+  // Bound memory against a flood of unique IPs filling the table.
+  if (recentSubmissions.size > 10_000) recentSubmissions.clear()
   const timestamps = (recentSubmissions.get(ip) ?? []).filter(t => now - t < RATE_WINDOW_MS)
   if (timestamps.length >= RATE_LIMIT) return true
   timestamps.push(now)

@@ -13,6 +13,9 @@ const RATE_WINDOW_MS = 60_000
 
 function isRateLimited(ip: string): boolean {
   const now = Date.now()
+  // Bound memory: drop the whole table if it grows large (a flood of unique
+  // IPs can't accumulate state indefinitely on a warm instance).
+  if (recent.size > 10_000) recent.clear()
   const hits = (recent.get(ip) ?? []).filter(t => now - t < RATE_WINDOW_MS)
   if (hits.length >= RATE_LIMIT) return true
   hits.push(now)
@@ -77,11 +80,13 @@ export async function POST(request: Request) {
   const won = intIn(body.won, 0, 64)
   const drawn = intIn(body.drawn, 0, 64)
   const lost = intIn(body.lost, 0, 64)
-  const points = intIn(body.points, 0, 999)
 
-  if (!date || !playerId || !nickname || won === null || drawn === null || lost === null || points === null) {
+  if (!date || !playerId || !nickname || won === null || drawn === null || lost === null) {
     return Response.json({ error: 'Invalid submission' }, { status: 400 })
   }
+  // Derive points server-side from W/D rather than trusting the client's value,
+  // so a forged `points` can't out-rank legitimate scores.
+  const points = won * 3 + drawn
 
   try {
     await submitScore({
