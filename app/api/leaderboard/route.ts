@@ -43,12 +43,28 @@ export async function GET(request: Request) {
     return Response.json({ error: 'Invalid date' }, { status: 400 })
   }
   const playerId = searchParams.get('playerId')?.slice(0, 64) || null
+  const debug = searchParams.get('debug') === '1'
   try {
     const view = await getLeaderboard(date, playerId)
+    if (debug) {
+      return Response.json({
+        ...view,
+        _debug: { enabled: leaderboardEnabled(), hasUrl: !!process.env.TURSO_DATABASE_URL, hasToken: !!process.env.TURSO_AUTH_TOKEN },
+      })
+    }
     return Response.json(view)
   } catch (err) {
     // Don't 500 the client — hide the board and log for diagnosis instead.
     console.error('[leaderboard] read failed:', err)
+    if (debug) {
+      return Response.json({
+        available: false, total: 0, top: [], you: null,
+        _debug: {
+          error: err instanceof Error ? err.message : String(err),
+          hasUrl: !!process.env.TURSO_DATABASE_URL, hasToken: !!process.env.TURSO_AUTH_TOKEN,
+        },
+      }, { status: 200 })
+    }
     return Response.json({ available: false, total: 0, top: [], you: null })
   }
 }
