@@ -22,7 +22,7 @@ export function WorldCupEventCard() {
         className="group relative flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-5 rounded-2xl border p-5 w-full max-w-4xl mx-auto transition-all duration-200 hover:-translate-y-1 active:scale-[0.99] overflow-hidden"
         style={{
           // Vibrant multi-nation treatment — every flag colour, not just one.
-          background: 'linear-gradient(120deg, #ef444422, #eab30822 22%, #22c55e22 45%, #3b82f622 68%, #a855f722 100%), #0c0c14',
+          background: 'linear-gradient(120deg, #ef444422, #eab30822 22%, #22c55e22 45%, #3b82f622 68%, #a855f722 100%), var(--surface)',
           borderColor: '#ffffff22',
         }}
       >
@@ -42,8 +42,8 @@ export function WorldCupEventCard() {
             Draft today&apos;s international stars at current form — all 48 nations, real groups &amp; bracket to the final. Only here while the tournament is on.
           </p>
         </div>
-        <span className="shrink-0 inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-black text-white transition-transform group-hover:scale-105"
-          style={{ background: 'linear-gradient(90deg, #3b82f6, #a855f7, #ec4899)', boxShadow: '0 6px 22px #a855f755' }}>
+        <span className="shrink-0 inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-black transition-transform group-hover:scale-105"
+          style={{ background: 'linear-gradient(90deg, #3b82f6, #a855f7, #ec4899)', boxShadow: '0 6px 22px #a855f755', color: '#fff' }}>
           Enter the World Cup →
         </span>
       </Link>

@@ -46,7 +46,7 @@ export function TeamFormation({ formation, team, league, compact = false, highli
   return (
     <div
       className={`relative w-full rounded-xl overflow-hidden border border-white/10 ${compact ? 'aspect-[3/4]' : 'aspect-[2/3]'}`}
-      style={{ background: 'linear-gradient(180deg, #0a2e0a 0%, #0d3d0d 50%, #0a2e0a 100%)' }}
+      style={{ background: 'linear-gradient(180deg, var(--pitch-top) 0%, var(--pitch-mid) 50%, var(--pitch-top) 100%)' }}
     >
       {/* Mow stripes */}
       <div

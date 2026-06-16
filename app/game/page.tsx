@@ -22,7 +22,7 @@ import { MatchReveal } from '@/components/MatchReveal'
 // Page background tinted with the league's accent color
 function leagueAmbience(color: string): React.CSSProperties {
   return {
-    background: `radial-gradient(900px 480px at 50% -120px, ${color}14, transparent), #0a0a0f`,
+    background: `radial-gradient(900px 480px at 50% -120px, ${color}14, transparent), var(--background)`,
   }
 }
 
@@ -35,7 +35,7 @@ function eventAmbience(): React.CSSProperties {
       'radial-gradient(620px 400px at 50% -14%, #eab30822, transparent)',
       'radial-gradient(700px 420px at 30% 8%, #22c55e1f, transparent)',
       'radial-gradient(700px 420px at 72% 6%, #a855f71f, transparent)',
-      '#0a0a0f',
+      'var(--background)',
     ].join(', '),
   }
 }
@@ -720,7 +720,7 @@ function GameContent() {
           {draftSub === 'selecting' && currentSpin && (
             <div className={[
               'fixed bottom-0 left-0 right-0 z-50',
-              'bg-[#0e0e1c] border-t border-white/10 rounded-t-2xl',
+              'bg-[var(--surface)] border-t border-white/10 rounded-t-2xl',
               'max-h-[82vh] overflow-y-auto overscroll-contain',
               'lg:static lg:z-auto lg:bg-transparent lg:border-0',
               'lg:rounded-none lg:max-h-none lg:overflow-visible',
@@ -1019,7 +1019,7 @@ function DailyRecap({ record, league, onHome }: {
 
 function GameHeader({ league, onBack }: { league: import('@/lib/types').LeagueConfig; onBack: () => void }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-white/5 px-4 py-3 flex items-center gap-4 backdrop-blur-md bg-[#0a0a0f]/70">
+    <header className="sticky top-0 z-30 border-b border-white/5 px-4 py-3 flex items-center gap-4 backdrop-blur-md bg-[var(--background)]/70">
       <button onClick={onBack} className="text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1">
         ← Back
       </button>
@@ -1040,7 +1040,7 @@ function GameHeader({ league, onBack }: { league: import('@/lib/types').LeagueCo
 export default function GamePage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center text-slate-400">
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center text-slate-400">
         Loading…
       </div>
     }>

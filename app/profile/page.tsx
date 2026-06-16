@@ -20,7 +20,7 @@ export default function ProfilePage() {
 
   if (!data) {
     return (
-      <div className="min-h-screen bg-[#0a0a0f] flex items-center justify-center text-slate-500">
+      <div className="min-h-screen bg-[var(--background)] flex items-center justify-center text-slate-500">
         Loading…
       </div>
     )
@@ -32,8 +32,8 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen text-slate-100 flex flex-col"
-      style={{ background: 'radial-gradient(900px 480px at 50% -120px, #f59e0b10, transparent), #0a0a0f' }}>
-      <header className="sticky top-0 z-30 border-b border-white/5 px-4 py-3 flex items-center gap-4 backdrop-blur-md bg-[#0a0a0f]/70">
+      style={{ background: 'radial-gradient(900px 480px at 50% -120px, #f59e0b10, transparent), var(--background)' }}>
+      <header className="sticky top-0 z-30 border-b border-white/5 px-4 py-3 flex items-center gap-4 backdrop-blur-md bg-[var(--background)]/70">
         <button onClick={() => router.push('/')} className="text-slate-400 hover:text-white transition-colors text-sm">
           ← Back
         </button>

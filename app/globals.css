@@ -1,8 +1,39 @@
 @import "tailwindcss";
 
+/* ── Theme ────────────────────────────────────────────────────────────────
+   Dark is the default. Light mode is opt-in via a `.light` class on <html>.
+   Rather than add a light variant to ~330 utility usages, we flip the few
+   Tailwind colour tokens the whole UI is built on (white + the slate ramp):
+   `text-white`/`bg-white/x`/`border-white/x` and `text-slate-*` all compile to
+   var(--color-*) in Tailwind v4, so overriding those vars re-skins everything.
+   The slate ramp is inverted around 500 so muted text stays muted on light. */
 :root {
   --background: #0a0a0f;
+  --surface: #0e0e1c;
   --foreground: #f1f5f9;
+  /* Football pitch — a grass green deliberately distinct from the emerald
+     (#10b981) used for shirts/accents, so the field reads as turf. */
+  --pitch-top: #2f7d33;
+  --pitch-mid: #276c2c;
+}
+
+.light {
+  --background: #eef1ee;
+  --surface: #ffffff;
+  --foreground: #0f172a;
+
+  --color-white: #0f172a;             /* primary ink + tinted surfaces */
+  --color-slate-100: oklch(20.8% 0.042 265.755);
+  --color-slate-200: oklch(27.9% 0.041 260.031);
+  --color-slate-300: oklch(37.2% 0.044 257.287);
+  --color-slate-400: oklch(44.6% 0.043 257.281);
+  /* slate-500 unchanged — a balanced mid-grey on either background */
+  --color-slate-600: oklch(70.4% 0.04 256.788);
+  --color-slate-700: oklch(86.9% 0.022 252.894);
+
+  /* Pitch stays green in light mode but a touch brighter/cleaner. */
+  --pitch-top: #3a9540;
+  --pitch-mid: #2f8035;
 }
 
 body {
@@ -11,6 +42,13 @@ body {
     radial-gradient(900px 500px at 90% 110%, rgba(59, 130, 246, 0.05), transparent 60%),
     var(--background);
   color: var(--foreground);
+}
+
+.light body {
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(16, 185, 129, 0.10), transparent 60%),
+    radial-gradient(900px 500px at 90% 110%, rgba(59, 130, 246, 0.08), transparent 60%),
+    var(--background);
 }
 
 @keyframes slide-up {
@@ -72,3 +110,5 @@ body {
 ::-webkit-scrollbar       { width: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,.15); border-radius: 2px; }
+.light ::-webkit-scrollbar-thumb { background: rgba(15,23,42,.18); }
+.light :focus-visible { outline-color: rgba(15,23,42,0.45); }

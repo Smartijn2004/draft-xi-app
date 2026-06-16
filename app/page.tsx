@@ -5,7 +5,7 @@ import { WorldCupEventCard } from '@/components/WorldCupEventCard'
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen flex flex-col bg-[#0a0a0f] text-slate-100">
+    <main className="min-h-screen flex flex-col bg-[var(--background)] text-slate-100">
       {/* Top bar */}
       <div className="absolute top-0 right-0 z-20 p-4">
         <Link
@@ -93,8 +93,8 @@ export default function HomePage() {
               Draft from every era, then survive a 38-game league of the greatest XIs ever — Galácticos, the Invincibles, Brazil 1970 and more.
             </p>
           </div>
-          <span className="shrink-0 inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-black text-white transition-transform group-hover:scale-105"
-            style={{ background: '#a855f7', boxShadow: '0 6px 22px #a855f744' }}>
+          <span className="shrink-0 inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-black transition-transform group-hover:scale-105"
+            style={{ background: '#a855f7', boxShadow: '0 6px 22px #a855f744', color: '#fff' }}>
             Take them on →
           </span>
         </Link>
