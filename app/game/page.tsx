@@ -10,6 +10,7 @@ import { SLOT_ACCEPTS } from '@/lib/positions'
 import {
   recordSeason, recordDaily, getDailyRecord, getTodayKey,
   getDailyChallengeNumber, getStreak, dateSeed, seededRng,
+  loadActiveDraft, saveActiveDraft, clearActiveDraft,
   type SeasonRecordOutcome, type DailyRecord, type StoredState,
 } from '@/lib/storage'
 import { getDailyChallenge, getDailySpinPool, isPlayerAllowed } from '@/lib/dailyChallenge'
@@ -128,6 +129,37 @@ function GameContent() {
     setRerollsLeft(2)
     setPhase(p => (p === 'setup' ? 'draft' : p))
   }, [isDaily])
+
+  // ── Resume an in-progress draft ──
+  // Casual/event drafts are persisted per-league so leaving and coming back
+  // drops you straight back into the SAME locked XI — you can't abandon a weak
+  // draft and re-roll a stronger one while still logging just one season.
+  const [activeDraftChecked, setActiveDraftChecked] = useState(false)
+  useEffect(() => {
+    if (isDaily) { setActiveDraftChecked(true); return }
+    const saved = loadActiveDraft(leagueId)
+    if (saved && saved.team.length > 0) {
+      setDifficulty(saved.difficulty)
+      setRatingsMode(saved.ratingsMode)
+      setTactic(saved.tactic)
+      setFormationName(saved.formationName)
+      setTeam(saved.team)
+      setUsedSpins(saved.usedSpins)
+      setRerollsLeft(saved.rerollsLeft)
+      setPhase('draft')
+    }
+    setActiveDraftChecked(true)
+  }, [isDaily, leagueId])
+
+  // Persist the draft on every pick/spin so a refresh or back-navigation can't
+  // discard it. Only while actively drafting with at least one player committed.
+  useEffect(() => {
+    if (isDaily || !difficulty || phase !== 'draft' || team.length === 0) return
+    saveActiveDraft(leagueId, {
+      difficulty, ratingsMode, tactic, formationName,
+      team, usedSpins, rerollsLeft, savedAt: new Date().toISOString(),
+    })
+  }, [isDaily, difficulty, ratingsMode, tactic, formationName, team, usedSpins, rerollsLeft, phase, leagueId])
 
   const formation = FORMATIONS[formationName]
   const slots = formation.slots
@@ -310,6 +342,8 @@ function GameContent() {
 
     // Record once, at simulation time — backing out mid-reveal still counts.
     setCareerOutcome(recordSeason(result, leagueId, team))
+    // Draft is now committed as a season — drop the resume snapshot.
+    if (!isDaily) clearActiveDraft(leagueId)
     if (isDaily) {
       const record: DailyRecord = {
         date: getTodayKey(),
@@ -363,6 +397,16 @@ function GameContent() {
     return (
       <div className="min-h-screen flex items-center justify-center text-slate-500" style={ambience}>
         Loading today&apos;s challenge…
+      </div>
+    )
+  }
+
+  // Casual/event: wait for the resume check so we don't flash the setup screen
+  // before dropping a returning player back into their in-progress draft.
+  if (!isDaily && !activeDraftChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-slate-500" style={ambience}>
+        Loading…
       </div>
     )
   }

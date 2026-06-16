@@ -1,4 +1,4 @@
-import type { LeagueId, SeasonResult, DraftedPlayer } from './types'
+import type { LeagueId, SeasonResult, DraftedPlayer, Difficulty, Tactic } from './types'
 import { evaluateAchievements, getAchievement, type Achievement } from './achievements'
 import { computeSquadOptimality } from './draftReview'
 
@@ -57,6 +57,20 @@ export type LeagueStats = {
   bestTeam: HallOfFameEntry | null // best XI drafted in this competition, by points
 }
 
+// A draft that's been started but not yet simulated. Persisted so that leaving
+// mid-draft and returning resumes the SAME locked XI — you can't bail on a weak
+// draft and start over to stat-pad while still only logging one season.
+export type ActiveDraft = {
+  difficulty: Difficulty
+  ratingsMode: 'season' | 'prime'
+  tactic: Tactic
+  formationName: string
+  team: DraftedPlayer[]
+  usedSpins: string[]
+  rerollsLeft: number
+  savedAt: string
+}
+
 export type StoredState = {
   career: CareerStats
   streak: { current: number; best: number; lastDate: string | null }
@@ -64,6 +78,7 @@ export type StoredState = {
   daily: Record<string, DailyRecord>
   leagues: Partial<Record<LeagueId, LeagueStats>>
   achievements: Record<string, string> // achievementId -> ISO date unlocked
+  activeDrafts: Partial<Record<LeagueId, ActiveDraft>>
 }
 
 const DEFAULT_STATE: StoredState = {
@@ -86,6 +101,7 @@ const DEFAULT_STATE: StoredState = {
   daily: {},
   leagues: {},
   achievements: {},
+  activeDrafts: {},
 }
 
 export function loadState(): StoredState {
@@ -101,6 +117,7 @@ export function loadState(): StoredState {
       daily: parsed.daily && typeof parsed.daily === 'object' ? parsed.daily : {},
       leagues: parsed.leagues && typeof parsed.leagues === 'object' ? parsed.leagues : {},
       achievements: parsed.achievements && typeof parsed.achievements === 'object' ? parsed.achievements : {},
+      activeDrafts: parsed.activeDrafts && typeof parsed.activeDrafts === 'object' ? parsed.activeDrafts : {},
     }
   } catch {
     return structuredClone(DEFAULT_STATE)
@@ -221,6 +238,28 @@ export function recordSeason(
 
   saveState(state)
   return { career: { ...career }, newBestPoints, firstTrophy, newAchievements }
+}
+
+// ── In-progress draft persistence ─────────────────────────────────────────────
+// Keyed per-league: returning to a competition resumes the draft you left, so
+// abandoning a weak XI and re-drafting for a stronger one isn't possible.
+
+export function loadActiveDraft(leagueId: LeagueId): ActiveDraft | null {
+  return loadState().activeDrafts[leagueId] ?? null
+}
+
+export function saveActiveDraft(leagueId: LeagueId, draft: ActiveDraft): void {
+  const state = loadState()
+  state.activeDrafts[leagueId] = draft
+  saveState(state)
+}
+
+export function clearActiveDraft(leagueId: LeagueId): void {
+  const state = loadState()
+  if (state.activeDrafts[leagueId]) {
+    delete state.activeDrafts[leagueId]
+    saveState(state)
+  }
 }
 
 export function getLeagueStats(): Partial<Record<LeagueId, LeagueStats>> {
