@@ -2,6 +2,40 @@ import type { ClubSeason } from '../types'
 
 export const serieAData: ClubSeason[] = [
   {
+    id: 'inter-1997-98', club: 'Inter Milan', shortName: 'INT', season: '1997-98', league: 'seriea', color: '#0068A8',
+    players: [
+      { id: 'pagliuca-9798', name: 'Gianluca Pagliuca', position: 'GK', rating: 84, club: 'Inter Milan', season: '1997-98' },
+      { id: 'bergomi-9798', name: 'Giuseppe Bergomi', position: 'DEF', rating: 83, club: 'Inter Milan', season: '1997-98', altPositions: ['CB'] },
+      { id: 'fresi-9798', name: 'Salvatore Fresi', position: 'DEF', rating: 78, club: 'Inter Milan', season: '1997-98', altPositions: ['CB'] },
+      { id: 'colonnese-9798', name: 'Francesco Colonnese', position: 'DEF', rating: 78, club: 'Inter Milan', season: '1997-98', altPositions: ['LB'] },
+      { id: 'zanetti-9798', name: 'Javier Zanetti', position: 'DEF', rating: 87, club: 'Inter Milan', season: '1997-98', altPositions: ['RB', 'CM'] },
+      { id: 'simeone-9798', name: 'Diego Simeone', position: 'MID', rating: 84, club: 'Inter Milan', season: '1997-98', altPositions: ['CM', 'DM'] },
+      { id: 'djorkaeff-9798', name: 'Youri Djorkaeff', position: 'MID', rating: 86, club: 'Inter Milan', season: '1997-98', altPositions: ['AM'] },
+      { id: 'winter-9798', name: 'Aron Winter', position: 'MID', rating: 81, club: 'Inter Milan', season: '1997-98', altPositions: ['CM'] },
+      { id: 'cauet-9798', name: 'Benoît Cauet', position: 'MID', rating: 79, club: 'Inter Milan', season: '1997-98', altPositions: ['CM'] },
+      { id: 'ronaldo-9798', name: 'Ronaldo', position: 'FWD', rating: 95, club: 'Inter Milan', season: '1997-98', altPositions: ['ST'] },
+      { id: 'zamorano-9798', name: 'Iván Zamorano', position: 'FWD', rating: 83, club: 'Inter Milan', season: '1997-98', altPositions: ['ST'] },
+      { id: 'recoba-9798', name: 'Álvaro Recoba', position: 'FWD', rating: 83, club: 'Inter Milan', season: '1997-98', altPositions: ['AM', 'ST'] },
+    ]
+  },
+  {
+    id: 'juventus-2016-17', club: 'Juventus', shortName: 'JUV', season: '2016-17', league: 'seriea', color: '#000000',
+    players: [
+      { id: 'buffon-1617', name: 'Gianluigi Buffon', position: 'GK', rating: 89, club: 'Juventus', season: '2016-17' },
+      { id: 'sandro-1617', name: 'Alex Sandro', position: 'DEF', rating: 83, club: 'Juventus', season: '2016-17', altPositions: ['LB'] },
+      { id: 'bonucci-1617', name: 'Leonardo Bonucci', position: 'DEF', rating: 88, club: 'Juventus', season: '2016-17', altPositions: ['CB'] },
+      { id: 'chiellini-1617', name: 'Giorgio Chiellini', position: 'DEF', rating: 87, club: 'Juventus', season: '2016-17', altPositions: ['CB'] },
+      { id: 'alves-1617', name: 'Dani Alves', position: 'DEF', rating: 84, club: 'Juventus', season: '2016-17', altPositions: ['RB'] },
+      { id: 'pjanic-1617', name: 'Miralem Pjanić', position: 'MID', rating: 84, club: 'Juventus', season: '2016-17', altPositions: ['CM', 'DM'] },
+      { id: 'khedira-1617', name: 'Sami Khedira', position: 'MID', rating: 83, club: 'Juventus', season: '2016-17', altPositions: ['CM'] },
+      { id: 'marchisio-1617', name: 'Claudio Marchisio', position: 'MID', rating: 83, club: 'Juventus', season: '2016-17', altPositions: ['CM'] },
+      { id: 'dybala-1617', name: 'Paulo Dybala', position: 'MID', rating: 87, club: 'Juventus', season: '2016-17', altPositions: ['AM', 'ST'] },
+      { id: 'higuain-1617', name: 'Gonzalo Higuaín', position: 'FWD', rating: 87, club: 'Juventus', season: '2016-17', altPositions: ['ST'] },
+      { id: 'mandzukic-1617', name: 'Mario Mandžukić', position: 'FWD', rating: 84, club: 'Juventus', season: '2016-17', altPositions: ['ST', 'LW'] },
+      { id: 'cuadrado-1617', name: 'Juan Cuadrado', position: 'MID', rating: 82, club: 'Juventus', season: '2016-17', altPositions: ['RW', 'RM'] },
+    ]
+  },
+  {
     id: 'juventus-2002-03', club: 'Juventus', shortName: 'JUV', season: '2002-03', league: 'seriea', color: '#000000',
     players: [
       { id: 'buffon-0203', name: 'Gianluigi Buffon', position: 'GK', rating: 91, club: 'Juventus', season: '2002-03' },

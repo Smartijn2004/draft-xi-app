@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const laLigaData: ClubSeason[] = [
   {
+    id: 'barcelona-2018-19', club: 'Barcelona', shortName: 'BAR', season: '2018-19', league: 'laliga', color: '#A50044',
+    players: [
+      { id: 'ter-stegen-1819', name: 'Marc-André ter Stegen', position: 'GK', rating: 88, club: 'Barcelona', season: '2018-19' },
+      { id: 'alba-1819', name: 'Jordi Alba', position: 'DEF', rating: 86, club: 'Barcelona', season: '2018-19', altPositions: ['LB'] },
+      { id: 'pique-1819', name: 'Gerard Piqué', position: 'DEF', rating: 87, club: 'Barcelona', season: '2018-19', altPositions: ['CB'] },
+      { id: 'lenglet-1819', name: 'Clément Lenglet', position: 'DEF', rating: 82, club: 'Barcelona', season: '2018-19', altPositions: ['CB'] },
+      { id: 'semedo-1819', name: 'Nélson Semedo', position: 'DEF', rating: 80, club: 'Barcelona', season: '2018-19', altPositions: ['RB'] },
+      { id: 'busquets-1819', name: 'Sergio Busquets', position: 'MID', rating: 87, club: 'Barcelona', season: '2018-19', altPositions: ['DM', 'CM'] },
+      { id: 'rakitic-1819', name: 'Ivan Rakitić', position: 'MID', rating: 84, club: 'Barcelona', season: '2018-19', altPositions: ['CM'] },
+      { id: 'vidal-1819', name: 'Arturo Vidal', position: 'MID', rating: 83, club: 'Barcelona', season: '2018-19', altPositions: ['CM'] },
+      { id: 'coutinho-1819', name: 'Philippe Coutinho', position: 'MID', rating: 84, club: 'Barcelona', season: '2018-19', altPositions: ['AM', 'LW'] },
+      { id: 'messi-1819', name: 'Lionel Messi', position: 'FWD', rating: 96, club: 'Barcelona', season: '2018-19', altPositions: ['RW', 'ST'] },
+      { id: 'suarez-1819', name: 'Luis Suárez', position: 'FWD', rating: 89, club: 'Barcelona', season: '2018-19', altPositions: ['ST'] },
+      { id: 'dembele-1819', name: 'Ousmane Dembélé', position: 'FWD', rating: 83, club: 'Barcelona', season: '2018-19', altPositions: ['RW', 'LW'] },
+    ]
+  },
+  {
     id: 'real-madrid-2003-04', club: 'Real Madrid', shortName: 'RMA', season: '2003-04', league: 'laliga', color: '#FEBE10',
     players: [
       { id: 'casillas-0304', name: 'Iker Casillas', position: 'GK', rating: 90, club: 'Real Madrid', season: '2003-04' },

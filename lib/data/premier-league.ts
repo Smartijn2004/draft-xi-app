@@ -2,6 +2,40 @@ import type { ClubSeason } from '../types'
 
 export const premierLeagueData: ClubSeason[] = [
   {
+    id: 'man-united-1993-94', club: 'Manchester United', shortName: 'MUN', season: '1993-94', league: 'pl', color: '#DA291C',
+    players: [
+      { id: 'schmeichel-9394', name: 'Peter Schmeichel', position: 'GK', rating: 90, club: 'Manchester United', season: '1993-94' },
+      { id: 'irwin-9394', name: 'Denis Irwin', position: 'DEF', rating: 84, club: 'Manchester United', season: '1993-94', altPositions: ['LB'] },
+      { id: 'bruce-9394', name: 'Steve Bruce', position: 'DEF', rating: 83, club: 'Manchester United', season: '1993-94', altPositions: ['CB'] },
+      { id: 'pallister-9394', name: 'Gary Pallister', position: 'DEF', rating: 84, club: 'Manchester United', season: '1993-94', altPositions: ['CB'] },
+      { id: 'parker-9394', name: 'Paul Parker', position: 'DEF', rating: 80, club: 'Manchester United', season: '1993-94', altPositions: ['RB'] },
+      { id: 'keane-9394', name: 'Roy Keane', position: 'MID', rating: 87, club: 'Manchester United', season: '1993-94', altPositions: ['CM'] },
+      { id: 'ince-9394', name: 'Paul Ince', position: 'MID', rating: 85, club: 'Manchester United', season: '1993-94', altPositions: ['DM', 'CM'] },
+      { id: 'giggs-9394', name: 'Ryan Giggs', position: 'MID', rating: 87, club: 'Manchester United', season: '1993-94', altPositions: ['LW', 'LM'] },
+      { id: 'kanchelskis-9394', name: 'Andrei Kanchelskis', position: 'MID', rating: 82, club: 'Manchester United', season: '1993-94', altPositions: ['RM', 'RW'] },
+      { id: 'cantona-9394', name: 'Eric Cantona', position: 'FWD', rating: 90, club: 'Manchester United', season: '1993-94', altPositions: ['ST', 'AM'] },
+      { id: 'hughes-9394', name: 'Mark Hughes', position: 'FWD', rating: 85, club: 'Manchester United', season: '1993-94', altPositions: ['ST'] },
+      { id: 'sharpe-9394', name: 'Lee Sharpe', position: 'MID', rating: 79, club: 'Manchester United', season: '1993-94', altPositions: ['LM'] },
+    ]
+  },
+  {
+    id: 'arsenal-2001-02', club: 'Arsenal', shortName: 'ARS', season: '2001-02', league: 'pl', color: '#EF0107',
+    players: [
+      { id: 'seaman-0102', name: 'David Seaman', position: 'GK', rating: 84, club: 'Arsenal', season: '2001-02' },
+      { id: 'cole-a-0102', name: 'Ashley Cole', position: 'DEF', rating: 84, club: 'Arsenal', season: '2001-02', altPositions: ['LB'] },
+      { id: 'campbell-0102', name: 'Sol Campbell', position: 'DEF', rating: 87, club: 'Arsenal', season: '2001-02', altPositions: ['CB'] },
+      { id: 'adams-0102', name: 'Tony Adams', position: 'DEF', rating: 85, club: 'Arsenal', season: '2001-02', altPositions: ['CB'] },
+      { id: 'lauren-0102', name: 'Lauren', position: 'DEF', rating: 81, club: 'Arsenal', season: '2001-02', altPositions: ['RB'] },
+      { id: 'vieira-0102', name: 'Patrick Vieira', position: 'MID', rating: 91, club: 'Arsenal', season: '2001-02', altPositions: ['DM', 'CM'] },
+      { id: 'pires-0102', name: 'Robert Pires', position: 'MID', rating: 89, club: 'Arsenal', season: '2001-02', altPositions: ['LM', 'AM'] },
+      { id: 'ljungberg-0102', name: 'Freddie Ljungberg', position: 'MID', rating: 85, club: 'Arsenal', season: '2001-02', altPositions: ['RM', 'CM'] },
+      { id: 'parlour-0102', name: 'Ray Parlour', position: 'MID', rating: 80, club: 'Arsenal', season: '2001-02', altPositions: ['CM'] },
+      { id: 'henry-0102', name: 'Thierry Henry', position: 'FWD', rating: 92, club: 'Arsenal', season: '2001-02', altPositions: ['ST', 'LW'] },
+      { id: 'bergkamp-0102', name: 'Dennis Bergkamp', position: 'FWD', rating: 88, club: 'Arsenal', season: '2001-02', altPositions: ['ST', 'AM'] },
+      { id: 'wiltord-0102', name: 'Sylvain Wiltord', position: 'FWD', rating: 82, club: 'Arsenal', season: '2001-02', altPositions: ['ST', 'RW'] },
+    ]
+  },
+  {
     id: 'arsenal-2003-04', club: 'Arsenal', shortName: 'ARS', season: '2003-04', league: 'pl', color: '#EF0107',
     players: [
       { id: 'lehmann-0304', name: 'Jens Lehmann', position: 'GK', rating: 86, club: 'Arsenal', season: '2003-04' },

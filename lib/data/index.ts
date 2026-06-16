@@ -117,7 +117,7 @@ export const LEAGUE_CONFIGS: Record<LeagueId, LeagueConfig> = {
     perfectLabel: '7-0',
     goalLabel: 'Win the World Cup unbeaten',
     clubs: 21,
-    seasons: '1966–2022',
+    seasons: '1966–2024',
     tagline: 'Can you win the World Cup?',
     groupStageGames: 3,
     knockoutRounds: ['Round of 16', 'Quarter-Final', 'Semi-Final', 'Final'],

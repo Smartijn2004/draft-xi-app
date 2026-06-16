@@ -2,6 +2,40 @@ import type { ClubSeason } from '../types'
 
 export const worldCupData: ClubSeason[] = [
   {
+    id: 'spain-euro-2024', club: 'Spain', shortName: 'ESP', season: 'Euro 2024', league: 'worldcup', color: '#C60B1E',
+    players: [
+      { id: 'simon-esp-2024', name: 'Unai Simón', position: 'GK', rating: 84, club: 'Spain', season: 'Euro 2024', nationality: 'Spain' },
+      { id: 'cucurella-esp-2024', name: 'Marc Cucurella', position: 'DEF', rating: 82, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['LB'] },
+      { id: 'laporte-esp-2024', name: 'Aymeric Laporte', position: 'DEF', rating: 84, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['CB'] },
+      { id: 'lenormand-esp-2024', name: 'Robin Le Normand', position: 'DEF', rating: 83, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['CB'] },
+      { id: 'carvajal-esp-2024', name: 'Dani Carvajal', position: 'DEF', rating: 85, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['RB'] },
+      { id: 'rodri-esp-2024', name: 'Rodri', position: 'MID', rating: 90, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['DM', 'CM'] },
+      { id: 'fabian-esp-2024', name: 'Fabián Ruiz', position: 'MID', rating: 84, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['CM'] },
+      { id: 'olmo-esp-2024', name: 'Dani Olmo', position: 'MID', rating: 85, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['AM', 'CM'] },
+      { id: 'yamal-esp-2024', name: 'Lamine Yamal', position: 'FWD', rating: 88, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['RW'] },
+      { id: 'nico-williams-esp-2024', name: 'Nico Williams', position: 'FWD', rating: 85, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['LW'] },
+      { id: 'morata-esp-2024', name: 'Álvaro Morata', position: 'FWD', rating: 83, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['ST'] },
+      { id: 'oyarzabal-esp-2024', name: 'Mikel Oyarzabal', position: 'FWD', rating: 83, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['ST', 'LW'] },
+    ]
+  },
+  {
+    id: 'france-2022', club: 'France', shortName: 'FRA', season: 'World Cup 2022', league: 'worldcup', color: '#0055A4',
+    players: [
+      { id: 'lloris-fra-2022', name: 'Hugo Lloris', position: 'GK', rating: 84, club: 'France', season: 'World Cup 2022', nationality: 'France' },
+      { id: 'theo-fra-2022', name: 'Théo Hernández', position: 'DEF', rating: 84, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['LB'] },
+      { id: 'varane-fra-2022', name: 'Raphaël Varane', position: 'DEF', rating: 85, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['CB'] },
+      { id: 'upamecano-fra-2022', name: 'Dayot Upamecano', position: 'DEF', rating: 82, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['CB'] },
+      { id: 'kounde-fra-2022', name: 'Jules Koundé', position: 'DEF', rating: 83, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['RB', 'CB'] },
+      { id: 'tchouameni-fra-2022', name: 'Aurélien Tchouaméni', position: 'MID', rating: 84, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['DM', 'CM'] },
+      { id: 'rabiot-fra-2022', name: 'Adrien Rabiot', position: 'MID', rating: 82, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['CM'] },
+      { id: 'griezmann-fra-2022', name: 'Antoine Griezmann', position: 'MID', rating: 88, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['AM', 'ST'] },
+      { id: 'mbappe-fra-2022', name: 'Kylian Mbappé', position: 'FWD', rating: 93, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['ST', 'LW'] },
+      { id: 'giroud-fra-2022', name: 'Olivier Giroud', position: 'FWD', rating: 84, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['ST'] },
+      { id: 'dembele-fra-2022', name: 'Ousmane Dembélé', position: 'FWD', rating: 84, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['RW', 'LW'] },
+      { id: 'kolomuani-fra-2022', name: 'Randal Kolo Muani', position: 'FWD', rating: 81, club: 'France', season: 'World Cup 2022', nationality: 'France', altPositions: ['ST'] },
+    ]
+  },
+  {
     id: 'brazil-2002', club: 'Brazil', shortName: 'BRA', season: 'World Cup 2002', league: 'worldcup', color: '#009C3B',
     players: [
       { id: 'marcos-2002', name: 'Marcos', position: 'GK', rating: 85, club: 'Brazil', season: 'World Cup 2002', nationality: 'Brazil' },
