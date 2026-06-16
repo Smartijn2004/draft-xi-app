@@ -49,9 +49,13 @@ let schemaReady: Promise<void> | null = null
 
 function getClient(): Client | null {
   if (client) return client
-  const url = process.env.TURSO_DATABASE_URL
-  const authToken = process.env.TURSO_AUTH_TOKEN
-  if (!url) return null
+  const raw = process.env.TURSO_DATABASE_URL?.trim()
+  if (!raw) return null
+  // The HTTP web client talks over fetch, which only understands http(s).
+  // Turso hands out libsql:// URLs, so map the scheme explicitly rather than
+  // relying on the client to do it (avoids "fetch failed" on serverless).
+  const url = raw.startsWith('libsql://') ? 'https://' + raw.slice('libsql://'.length) : raw
+  const authToken = process.env.TURSO_AUTH_TOKEN?.trim()
   client = createClient({ url, authToken })
   return client
 }
