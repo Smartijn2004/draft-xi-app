@@ -18,6 +18,7 @@ import { isWorldCup2026Active, getWorldCup2026Pool, worldCup2026PoolSize } from 
 import { emojiGrid, dailyStatusLine, dailyShareText } from '@/lib/share'
 import { TeamFormation } from '@/components/TeamFormation'
 import { SeasonSimulator } from '@/components/SeasonSimulator'
+import { DailyLeaderboard } from '@/components/DailyLeaderboard'
 import { MatchReveal } from '@/components/MatchReveal'
 
 // Page background tinted with the league's accent color
@@ -565,6 +566,19 @@ function GameContent() {
               ? (dailyChallenge.constraint.kind === 'league' ? league.name : dailyChallenge.label)
               : league.name}
           />
+          {isDaily && (
+            <div className="mt-6">
+              <DailyLeaderboard
+                date={todayKey}
+                accent={league.color}
+                result={{
+                  points: seasonResult.won * 3 + seasonResult.drawn,
+                  won: seasonResult.won, drawn: seasonResult.drawn, lost: seasonResult.lost,
+                  isPerfect: seasonResult.isPerfect, trophyWon: seasonResult.trophyWon,
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     )
@@ -1031,6 +1045,17 @@ function DailyRecap({ record, league, onHome }: {
 
         <div className="text-sm text-slate-500">
           Next challenge in <span className="text-white font-bold">{hoursLeft}h {minsLeft}m</span>
+        </div>
+
+        <div className="text-left">
+          <DailyLeaderboard
+            date={record.date}
+            accent={league.color}
+            result={{
+              points: record.points, won: record.won, drawn: record.drawn, lost: record.lost,
+              isPerfect: record.isPerfect, trophyWon: record.trophyWon,
+            }}
+          />
         </div>
 
         <div className="flex gap-3">

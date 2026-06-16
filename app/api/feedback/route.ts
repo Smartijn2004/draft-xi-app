@@ -17,11 +17,11 @@ function isRateLimited(ip: string): boolean {
 }
 
 async function forwardToWebhook(url: string, type: string, message: string) {
-  const formatted = `**New feedback** (${type})\n${message}`
-  // Discord expects { content }, Slack expects { text }
-  const payload = url.includes('hooks.slack.com')
-    ? { text: formatted }
-    : { content: formatted }
+  const isSlack = url.includes('hooks.slack.com')
+  // Slack mrkdwn uses *single* asterisks for bold; Discord uses **double**.
+  const payload = isSlack
+    ? { text: `:speech_balloon: *New feedback* (${type})\n${message}` }
+    : { content: `**New feedback** (${type})\n${message}` }
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
