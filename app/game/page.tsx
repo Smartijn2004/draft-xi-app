@@ -835,11 +835,6 @@ function GameContent() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Your XI</h3>
-                <button
-                  onClick={() => { setTeam([]); setCurrentSpin(null); setDraftSub('idle'); setPendingChoice(null) }}
-                  className="text-xs text-red-400/70 hover:text-red-400 transition-colors">
-                  Clear team
-                </button>
               </div>
               <div className="grid gap-1">
                 {team.map(p => (
@@ -855,11 +850,6 @@ function GameContent() {
                         {p.rating}
                       </span>
                     )}
-                    <button
-                      onClick={() => setTeam(prev => prev.filter(x => x.id !== p.id))}
-                      className="text-slate-600 hover:text-red-400 transition-colors text-sm ml-1">
-                      ✕
-                    </button>
                   </div>
                 ))}
               </div>
