@@ -1,6 +1,6 @@
 'use client'
-import { useCallback, useEffect, useRef, useState } from 'react'
-import { getPlayerId, getNickname, setNickname } from '@/lib/playerIdentity'
+import { useEffect, useRef, useState } from 'react'
+import { getPlayerId } from '@/lib/playerIdentity'
 
 type Row = {
   rank: number; nickname: string; points: number
@@ -14,83 +14,58 @@ export type DailyResultForBoard = {
   isPerfect: boolean; trophyWon: boolean
 }
 
-type Phase = 'loading' | 'needName' | 'ready' | 'hidden'
+type Phase = 'loading' | 'noname' | 'ready' | 'hidden'
 
 export function DailyLeaderboard({
-  date, result, accent = '#34d399',
+  date, result, nickname, accent = '#34d399',
 }: {
   date: string
   result: DailyResultForBoard
+  // Username chosen on first finish. When present we auto-submit; when null we
+  // still show the board with a nudge to set one (the prompt lives above us).
+  nickname: string | null
   accent?: string
 }) {
   const [phase, setPhase] = useState<Phase>('loading')
   const [view, setView] = useState<View | null>(null)
-  const [nick, setNick] = useState('')
-  const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const didInit = useRef(false)
+  // Keep the latest result without it being an effect dependency (the parent
+  // passes a fresh object literal each render, which would otherwise loop).
+  const resultRef = useRef(result)
+  resultRef.current = result
 
-  const submit = useCallback(async (nickname: string) => {
-    const playerId = getPlayerId()
-    const res = await fetch('/api/leaderboard', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date, playerId, nickname, ...result }),
-    })
-    if (!res.ok) throw new Error('submit failed')
-    return (await res.json()) as View
-  }, [date, result])
-
-  // On mount: read the board. If we already have a nickname, submit our result
-  // (idempotent server-side) and show the ranked board; otherwise ask for one.
-  // didInit guards against React StrictMode's double-invoke in dev (no second
-  // fetch); we deliberately don't use a cancelled flag, since the only effect
-  // run must be allowed to commit its state.
   useEffect(() => {
-    if (didInit.current) return
-    didInit.current = true
+    let active = true
     ;(async () => {
       try {
         const playerId = getPlayerId()
         const res = await fetch(`/api/leaderboard?date=${date}&playerId=${encodeURIComponent(playerId)}`)
         const v = (await res.json()) as View
+        if (!active) return
         if (!v.available) { setPhase('hidden'); return }
-        const saved = getNickname()
-        if (saved) {
+
+        if (nickname) {
+          // Auto-submit (idempotent server-side: one attempt per day is kept).
           try {
-            const updated = await submit(saved)
-            setView(updated)
+            const r2 = await fetch('/api/leaderboard', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ date, playerId, nickname, ...resultRef.current }),
+            })
+            const updated = (await r2.json()) as View
+            if (active) { setView(updated); setPhase('ready') }
           } catch {
-            setView(v)
+            if (active) { setView(v); setPhase('ready') }
           }
-          setPhase('ready')
         } else {
           setView(v)
-          setPhase('needName')
+          setPhase('noname')
         }
       } catch {
-        setPhase('hidden')
+        if (active) setPhase('hidden')
       }
     })()
-  }, [date, submit])
-
-  async function handleJoin(e: React.FormEvent) {
-    e.preventDefault()
-    const name = nick.trim()
-    if (!name || submitting) return
-    setSubmitting(true)
-    setError(null)
-    try {
-      const updated = await submit(name)
-      setNickname(name)
-      setView(updated)
-      setPhase('ready')
-    } catch {
-      setError('Could not join — try again')
-    } finally {
-      setSubmitting(false)
-    }
-  }
+    return () => { active = false }
+  }, [date, nickname])
 
   if (phase === 'hidden') return null
 
@@ -109,33 +84,14 @@ export function DailyLeaderboard({
         <div className="py-6 text-center text-xs text-slate-500">Loading rankings…</div>
       )}
 
-      {phase === 'needName' && (
-        <form onSubmit={handleJoin} className="flex flex-col gap-3">
-          <p className="text-xs text-slate-400">
-            Pick a name to put your result on today&apos;s global board and see how you rank.
-          </p>
-          <div className="flex gap-2">
-            <input
-              value={nick}
-              onChange={e => setNick(e.target.value)}
-              placeholder="Your nickname"
-              maxLength={24}
-              className="flex-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white placeholder-white/25 outline-none focus:border-white/25"
-            />
-            <button
-              type="submit"
-              disabled={!nick.trim() || submitting}
-              className="rounded-xl px-4 py-2.5 text-sm font-black text-white transition-all disabled:cursor-not-allowed disabled:opacity-40"
-              style={{ background: accent, boxShadow: `0 6px 22px ${accent}44` }}
-            >
-              {submitting ? 'Joining…' : 'Join'}
-            </button>
-          </div>
-          {error && <p className="text-xs text-red-400">{error}</p>}
-        </form>
+      {phase === 'noname' && (
+        <p className="mb-3 rounded-lg px-3 py-2 text-xs font-semibold text-center"
+          style={{ background: accent + '1a', color: accent }}>
+          ☝️ Set a username above to add your score to the board.
+        </p>
       )}
 
-      {phase === 'ready' && view && (
+      {(phase === 'ready' || phase === 'noname') && view && (
         <Board view={view} accent={accent} />
       )}
     </div>

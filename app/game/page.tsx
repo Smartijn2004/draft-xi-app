@@ -19,6 +19,8 @@ import { emojiGrid, dailyStatusLine, dailyShareText } from '@/lib/share'
 import { TeamFormation } from '@/components/TeamFormation'
 import { SeasonSimulator } from '@/components/SeasonSimulator'
 import { DailyLeaderboard } from '@/components/DailyLeaderboard'
+import { UsernamePrompt } from '@/components/UsernamePrompt'
+import { getNickname } from '@/lib/playerIdentity'
 import { MatchReveal } from '@/components/MatchReveal'
 
 // Page background tinted with the league's accent color
@@ -136,6 +138,9 @@ function GameContent() {
   // drops you straight back into the SAME locked XI — you can't abandon a weak
   // draft and re-roll a stronger one while still logging just one season.
   const [activeDraftChecked, setActiveDraftChecked] = useState(false)
+  // Username for the global leaderboard, captured on the first finished draft.
+  const [username, setUsername] = useState<string | null>(null)
+  useEffect(() => { setUsername(getNickname()) }, [])
   useEffect(() => {
     if (isDaily) { setActiveDraftChecked(true); return }
     const saved = loadActiveDraft(leagueId)
@@ -554,6 +559,9 @@ function GameContent() {
       <div className="min-h-screen text-slate-100 flex flex-col" style={ambience}>
         <GameHeader league={league} onBack={() => router.push('/')} />
         <div className="flex-1 px-4 py-8 max-w-2xl mx-auto w-full animate-slide-up">
+          {!username && (
+            <UsernamePrompt accent={league.color} onSaved={setUsername} />
+          )}
           <SeasonSimulator
             result={seasonResult}
             league={league}
@@ -571,6 +579,7 @@ function GameContent() {
               <DailyLeaderboard
                 date={todayKey}
                 accent={league.color}
+                nickname={username}
                 result={{
                   points: seasonResult.won * 3 + seasonResult.drawn,
                   won: seasonResult.won, drawn: seasonResult.drawn, lost: seasonResult.lost,
@@ -993,6 +1002,8 @@ function DailyRecap({ record, league, onHome }: {
   onHome: () => void
 }) {
   const [copied, setCopied] = useState(false)
+  const [username, setUsername] = useState<string | null>(null)
+  useEffect(() => { setUsername(getNickname()) }, [])
   // Re-render every 30s so the countdown stays fresh.
   const [now, setNow] = useState(() => Date.now())
   useEffect(() => {
@@ -1048,9 +1059,13 @@ function DailyRecap({ record, league, onHome }: {
         </div>
 
         <div className="text-left">
+          {!username && (
+            <UsernamePrompt accent={league.color} onSaved={setUsername} />
+          )}
           <DailyLeaderboard
             date={record.date}
             accent={league.color}
+            nickname={username}
             result={{
               points: record.points, won: record.won, drawn: record.drawn, lost: record.lost,
               isPerfect: record.isPerfect, trophyWon: record.trophyWon,
