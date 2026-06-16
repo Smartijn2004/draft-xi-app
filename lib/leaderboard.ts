@@ -1,5 +1,9 @@
 import 'server-only'
-import { createClient, type Client } from '@libsql/client'
+// HTTP-only client (no native bindings) — the default '@libsql/client' entry
+// pulls a platform-specific native module, which breaks on Vercel's Linux
+// runtime when the lockfile was generated on another OS. The web client talks
+// to Turso over HTTPS and works the same with libsql:// URLs.
+import { createClient, type Client } from '@libsql/client/web'
 
 // Daily-challenge leaderboard, backed by Turso (libSQL). The whole feature
 // degrades gracefully: if the env vars aren't set (e.g. local dev before

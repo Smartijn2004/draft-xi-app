@@ -43,8 +43,14 @@ export async function GET(request: Request) {
     return Response.json({ error: 'Invalid date' }, { status: 400 })
   }
   const playerId = searchParams.get('playerId')?.slice(0, 64) || null
-  const view = await getLeaderboard(date, playerId)
-  return Response.json(view)
+  try {
+    const view = await getLeaderboard(date, playerId)
+    return Response.json(view)
+  } catch (err) {
+    // Don't 500 the client — hide the board and log for diagnosis instead.
+    console.error('[leaderboard] read failed:', err)
+    return Response.json({ available: false, total: 0, top: [], you: null })
+  }
 }
 
 export async function POST(request: Request) {
