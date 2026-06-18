@@ -2,6 +2,74 @@ import type { ClubSeason } from '../types'
 
 export const championsLeagueData: ClubSeason[] = [
   {
+    id: 'leverkusen-2001-02', club: 'Bayer Leverkusen', shortName: 'B04', season: '2001-02', league: 'ucl', color: '#E32219',
+    players: [
+      { id: 'butt-lev-0102', name: 'Hans-Jörg Butt', position: 'GK', rating: 82, club: 'Bayer Leverkusen', season: '2001-02' },
+      { id: 'placente-lev-0102', name: 'Diego Placente', position: 'DEF', rating: 80, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['LB'] },
+      { id: 'lucio-lev-0102', name: 'Lúcio', position: 'DEF', rating: 85, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['CB'] },
+      { id: 'nowotny-lev-0102', name: 'Jens Nowotny', position: 'DEF', rating: 84, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['CB'] },
+      { id: 'ze-roberto-lev-0102', name: 'Zé Roberto', position: 'DEF', rating: 84, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['LB', 'LM'] },
+      { id: 'ramelow-lev-0102', name: 'Carsten Ramelow', position: 'MID', rating: 80, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['DM', 'CB'] },
+      { id: 'ballack-lev-0102', name: 'Michael Ballack', position: 'MID', rating: 87, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['CM', 'AM'] },
+      { id: 'basturk-lev-0102', name: 'Yıldıray Baştürk', position: 'MID', rating: 81, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['AM', 'CM'] },
+      { id: 'schneider-lev-0102', name: 'Bernd Schneider', position: 'MID', rating: 83, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['RM', 'RW'] },
+      { id: 'neuville-lev-0102', name: 'Oliver Neuville', position: 'FWD', rating: 82, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['ST'] },
+      { id: 'kirsten-lev-0102', name: 'Ulf Kirsten', position: 'FWD', rating: 81, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['ST'] },
+      { id: 'berbatov-lev-0102', name: 'Dimitar Berbatov', position: 'FWD', rating: 79, club: 'Bayer Leverkusen', season: '2001-02', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'leverkusen-2023-24', club: 'Bayer Leverkusen', shortName: 'B04', season: '2023-24', league: 'ucl', color: '#E32219',
+    players: [
+      { id: 'hradecky-lev-2324', name: 'Lukáš Hrádecký', position: 'GK', rating: 82, club: 'Bayer Leverkusen', season: '2023-24' },
+      { id: 'frimpong-lev-2324', name: 'Jeremie Frimpong', position: 'DEF', rating: 84, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['RB', 'RWB'] },
+      { id: 'tah-lev-2324', name: 'Jonathan Tah', position: 'DEF', rating: 84, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['CB'] },
+      { id: 'tapsoba-lev-2324', name: 'Edmond Tapsoba', position: 'DEF', rating: 83, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['CB'] },
+      { id: 'hincapie-lev-2324', name: 'Piero Hincapié', position: 'DEF', rating: 84, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['CB', 'LB'] },
+      { id: 'grimaldo-lev-2324', name: 'Álex Grimaldo', position: 'DEF', rating: 85, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['LB', 'LWB'] },
+      { id: 'xhaka-lev-2324', name: 'Granit Xhaka', position: 'MID', rating: 86, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['CM', 'DM'] },
+      { id: 'andrich-lev-2324', name: 'Robert Andrich', position: 'MID', rating: 81, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['DM', 'CM'] },
+      { id: 'wirtz-lev-2324', name: 'Florian Wirtz', position: 'MID', rating: 88, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['AM', 'CM'] },
+      { id: 'hofmann-lev-2324', name: 'Jonas Hofmann', position: 'MID', rating: 81, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['RW', 'AM'] },
+      { id: 'boniface-lev-2324', name: 'Victor Boniface', position: 'FWD', rating: 84, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['ST'] },
+      { id: 'schick-lev-2324', name: 'Patrik Schick', position: 'FWD', rating: 83, club: 'Bayer Leverkusen', season: '2023-24', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'psv-1987-88', club: 'PSV Eindhoven', shortName: 'PSV', season: '1987-88', league: 'ucl', color: '#ED1C24',
+    players: [
+      { id: 'van-breukelen-psv-8788', name: 'Hans van Breukelen', position: 'GK', rating: 84, club: 'PSV Eindhoven', season: '1987-88' },
+      { id: 'gerets-psv-8788', name: 'Eric Gerets', position: 'DEF', rating: 83, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['RB'] },
+      { id: 'koeman-psv-8788', name: 'Ronald Koeman', position: 'DEF', rating: 87, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['CB'] },
+      { id: 'nielsen-psv-8788', name: 'Ivan Nielsen', position: 'DEF', rating: 79, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['CB'] },
+      { id: 'van-aerle-psv-8788', name: 'Berry van Aerle', position: 'DEF', rating: 80, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['RB', 'CB'] },
+      { id: 'heintze-psv-8788', name: 'Jan Heintze', position: 'DEF', rating: 79, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['LB'] },
+      { id: 'lerby-psv-8788', name: 'Søren Lerby', position: 'MID', rating: 82, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['CM'] },
+      { id: 'vanenburg-psv-8788', name: 'Gerald Vanenburg', position: 'MID', rating: 83, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['AM', 'RW'] },
+      { id: 'arnesen-psv-8788', name: 'Frank Arnesen', position: 'MID', rating: 82, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['AM'] },
+      { id: 'linskens-psv-8788', name: 'Edward Linskens', position: 'MID', rating: 78, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['CM'] },
+      { id: 'kieft-psv-8788', name: 'Wim Kieft', position: 'FWD', rating: 83, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['ST'] },
+      { id: 'gillhaus-psv-8788', name: 'Hans Gillhaus', position: 'FWD', rating: 81, club: 'PSV Eindhoven', season: '1987-88', altPositions: ['LW', 'ST'] },
+    ]
+  },
+  {
+    id: 'ajax-1972-73', club: 'Ajax', shortName: 'AJA', season: '1972-73', league: 'ucl', color: '#D2122E',
+    players: [
+      { id: 'stuy-ajax-7273', name: 'Heinz Stuy', position: 'GK', rating: 79, club: 'Ajax', season: '1972-73' },
+      { id: 'suurbier-ajax-7273', name: 'Wim Suurbier', position: 'DEF', rating: 81, club: 'Ajax', season: '1972-73', altPositions: ['RB'] },
+      { id: 'blankenburg-ajax-7273', name: 'Horst Blankenburg', position: 'DEF', rating: 82, club: 'Ajax', season: '1972-73', altPositions: ['CB'] },
+      { id: 'hulshoff-ajax-7273', name: 'Barry Hulshoff', position: 'DEF', rating: 81, club: 'Ajax', season: '1972-73', altPositions: ['CB'] },
+      { id: 'krol-ajax-7273', name: 'Ruud Krol', position: 'DEF', rating: 84, club: 'Ajax', season: '1972-73', altPositions: ['LB', 'CB'] },
+      { id: 'neeskens-ajax-7273', name: 'Johan Neeskens', position: 'MID', rating: 86, club: 'Ajax', season: '1972-73', altPositions: ['CM', 'DM'] },
+      { id: 'haan-ajax-7273', name: 'Arie Haan', position: 'MID', rating: 82, club: 'Ajax', season: '1972-73', altPositions: ['CM'] },
+      { id: 'muhren-ajax-7273', name: 'Gerrie Mühren', position: 'MID', rating: 82, club: 'Ajax', season: '1972-73', altPositions: ['CM'] },
+      { id: 'cruyff-ajax-7273', name: 'Johan Cruyff', position: 'FWD', rating: 95, club: 'Ajax', season: '1972-73', altPositions: ['AM', 'ST'] },
+      { id: 'keizer-ajax-7273', name: 'Piet Keizer', position: 'FWD', rating: 84, club: 'Ajax', season: '1972-73', altPositions: ['LW'] },
+      { id: 'rep-ajax-7273', name: 'Johnny Rep', position: 'FWD', rating: 81, club: 'Ajax', season: '1972-73', altPositions: ['RW'] },
+      { id: 'swart-ajax-7273', name: 'Sjaak Swart', position: 'FWD', rating: 80, club: 'Ajax', season: '1972-73', altPositions: ['RW'] },
+    ]
+  },
+  {
     id: 'marseille-1992-93', club: 'Marseille', shortName: 'OM', season: '1992-93', league: 'ucl', color: '#2FAEE0',
     players: [
       { id: 'barthez-om-9293', name: 'Fabien Barthez', position: 'GK', rating: 81, club: 'Marseille', season: '1992-93' },
