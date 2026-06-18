@@ -147,9 +147,9 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'ryan-gravenberch-ned', name: "Ryan Gravenberch", position: 'MID', rating: 85, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['DM', 'CM'] },
       { id: 'tijjani-reijnders-ned', name: "Tijjani Reijnders", position: 'MID', rating: 84, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['CM', 'AM'] },
       { id: 'teun-koopmeiners-ned', name: "Teun Koopmeiners", position: 'MID', rating: 84, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['CM', 'AM'] },
-      { id: 'frenkie-de-jong-ned', name: "Frenkie De Jong", position: 'MID', rating: 84, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['DM', 'CM'] },
+      { id: 'frenkie-de-jong-ned', name: "Frenkie De Jong", position: 'MID', rating: 87, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['DM', 'CM'] },
       { id: 'guus-til-ned', name: "Guus Til", position: 'MID', rating: 83, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['CM', 'AM'] },
-      { id: 'wout-weghorst-ned', name: "Wout Weghorst", position: 'FWD', rating: 86, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['ST'] },
+      { id: 'wout-weghorst-ned', name: "Wout Weghorst", position: 'FWD', rating: 80, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['ST'] },
       { id: 'donyell-malen-ned', name: "Donyell Malen", position: 'FWD', rating: 86, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['RW', 'LW'] },
       { id: 'cody-gakpo-ned', name: "Cody Gakpo", position: 'FWD', rating: 85, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['LW', 'ST'] },
     ]
