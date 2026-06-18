@@ -7,7 +7,13 @@ export default function HomePage() {
   return (
     <main className="min-h-screen flex flex-col bg-[var(--background)] text-slate-100">
       {/* Top bar */}
-      <div className="absolute top-0 right-0 z-20 p-4">
+      <div className="absolute top-0 right-0 z-20 p-4 flex items-center gap-2">
+        <Link
+          href="/clubs"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold text-slate-300 border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white transition-all"
+        >
+          📚 Clubs
+        </Link>
         <Link
           href="/profile"
           className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold text-slate-300 border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white transition-all"
