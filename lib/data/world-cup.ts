@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const worldCupData: ClubSeason[] = [
   {
+    id: 'west-germany-1990', club: 'West Germany', shortName: 'FRG', season: 'World Cup 1990', league: 'worldcup', color: '#000000',
+    players: [
+      { id: 'illgner-frg-1990', name: 'Bodo Illgner', position: 'GK', rating: 82, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany' },
+      { id: 'berthold-frg-1990', name: 'Thomas Berthold', position: 'DEF', rating: 81, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['RB', 'CB'] },
+      { id: 'kohler-frg-1990', name: 'Jürgen Kohler', position: 'DEF', rating: 84, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['CB'] },
+      { id: 'augenthaler-frg-1990', name: 'Klaus Augenthaler', position: 'DEF', rating: 83, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['CB'] },
+      { id: 'buchwald-frg-1990', name: 'Guido Buchwald', position: 'DEF', rating: 83, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['CB', 'DM'] },
+      { id: 'brehme-frg-1990', name: 'Andreas Brehme', position: 'DEF', rating: 85, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['LB', 'RB'] },
+      { id: 'matthaus-frg-1990', name: 'Lothar Matthäus', position: 'MID', rating: 90, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['CM', 'AM'] },
+      { id: 'hassler-frg-1990', name: 'Thomas Häßler', position: 'MID', rating: 82, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['AM', 'RM'] },
+      { id: 'thon-frg-1990', name: 'Olaf Thon', position: 'MID', rating: 80, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['CM'] },
+      { id: 'littbarski-frg-1990', name: 'Pierre Littbarski', position: 'MID', rating: 82, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['RW', 'AM'] },
+      { id: 'klinsmann-frg-1990', name: 'Jürgen Klinsmann', position: 'FWD', rating: 86, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['ST'] },
+      { id: 'voller-frg-1990', name: 'Rudi Völler', position: 'FWD', rating: 85, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany', altPositions: ['ST'] },
+    ]
+  },
+  {
     id: 'argentina-1978', club: 'Argentina', shortName: 'ARG', season: 'World Cup 1978', league: 'worldcup', color: '#75AADB',
     players: [
       { id: 'fillol-arg-1978', name: 'Ubaldo Fillol', position: 'GK', rating: 86, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina' },

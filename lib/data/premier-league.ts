@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const premierLeagueData: ClubSeason[] = [
   {
+    id: 'man-united-1995-96', club: 'Manchester United', shortName: 'MUN', season: '1995-96', league: 'pl', color: '#DA291C',
+    players: [
+      { id: 'schmeichel-9596', name: 'Peter Schmeichel', position: 'GK', rating: 89, club: 'Manchester United', season: '1995-96' },
+      { id: 'irwin-9596', name: 'Denis Irwin', position: 'DEF', rating: 83, club: 'Manchester United', season: '1995-96', altPositions: ['LB'] },
+      { id: 'pallister-9596', name: 'Gary Pallister', position: 'DEF', rating: 84, club: 'Manchester United', season: '1995-96', altPositions: ['CB'] },
+      { id: 'bruce-9596', name: 'Steve Bruce', position: 'DEF', rating: 82, club: 'Manchester United', season: '1995-96', altPositions: ['CB'] },
+      { id: 'g-neville-9596', name: 'Gary Neville', position: 'DEF', rating: 80, club: 'Manchester United', season: '1995-96', altPositions: ['RB'] },
+      { id: 'keane-9596', name: 'Roy Keane', position: 'MID', rating: 86, club: 'Manchester United', season: '1995-96', altPositions: ['CM'] },
+      { id: 'butt-9596', name: 'Nicky Butt', position: 'MID', rating: 78, club: 'Manchester United', season: '1995-96', altPositions: ['CM', 'DM'] },
+      { id: 'beckham-9596', name: 'David Beckham', position: 'MID', rating: 80, club: 'Manchester United', season: '1995-96', altPositions: ['RM', 'RW'] },
+      { id: 'giggs-9596', name: 'Ryan Giggs', position: 'MID', rating: 85, club: 'Manchester United', season: '1995-96', altPositions: ['LW', 'LM'] },
+      { id: 'cantona-9596', name: 'Eric Cantona', position: 'FWD', rating: 90, club: 'Manchester United', season: '1995-96', altPositions: ['ST', 'AM'] },
+      { id: 'cole-9596', name: 'Andy Cole', position: 'FWD', rating: 83, club: 'Manchester United', season: '1995-96', altPositions: ['ST'] },
+      { id: 'scholes-9596', name: 'Paul Scholes', position: 'FWD', rating: 80, club: 'Manchester United', season: '1995-96', altPositions: ['AM', 'CM'] },
+    ]
+  },
+  {
     id: 'man-united-2010-11', club: 'Manchester United', shortName: 'MUN', season: '2010-11', league: 'pl', color: '#DA291C',
     players: [
       { id: 'vandersar-1011', name: 'Edwin van der Sar', position: 'GK', rating: 85, club: 'Manchester United', season: '2010-11' },

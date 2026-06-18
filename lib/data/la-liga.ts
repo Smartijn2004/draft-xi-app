@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const laLigaData: ClubSeason[] = [
   {
+    id: 'real-madrid-1987-88', club: 'Real Madrid', shortName: 'RMA', season: '1987-88', league: 'laliga', color: '#FEBE10',
+    players: [
+      { id: 'buyo-rm-8788', name: 'Francisco Buyo', position: 'GK', rating: 82, club: 'Real Madrid', season: '1987-88' },
+      { id: 'chendo-rm-8788', name: 'Chendo', position: 'DEF', rating: 80, club: 'Real Madrid', season: '1987-88', altPositions: ['RB'] },
+      { id: 'sanchis-rm-8788', name: 'Manolo Sanchís', position: 'DEF', rating: 84, club: 'Real Madrid', season: '1987-88', altPositions: ['CB'] },
+      { id: 'maceda-rm-8788', name: 'Antonio Maceda', position: 'DEF', rating: 81, club: 'Real Madrid', season: '1987-88', altPositions: ['CB'] },
+      { id: 'gordillo-rm-8788', name: 'Rafael Gordillo', position: 'DEF', rating: 83, club: 'Real Madrid', season: '1987-88', altPositions: ['LB', 'LM'] },
+      { id: 'michel-rm-8788', name: 'Míchel', position: 'MID', rating: 85, club: 'Real Madrid', season: '1987-88', altPositions: ['RM', 'AM'] },
+      { id: 'martin-vazquez-rm-8788', name: 'Martín Vázquez', position: 'MID', rating: 83, club: 'Real Madrid', season: '1987-88', altPositions: ['AM', 'CM'] },
+      { id: 'gallego-rm-8788', name: 'Ricardo Gallego', position: 'MID', rating: 80, club: 'Real Madrid', season: '1987-88', altPositions: ['CM', 'DM'] },
+      { id: 'camacho-rm-8788', name: 'José Antonio Camacho', position: 'MID', rating: 81, club: 'Real Madrid', season: '1987-88', altPositions: ['DM', 'LB'] },
+      { id: 'hugo-sanchez-rm-8788', name: 'Hugo Sánchez', position: 'FWD', rating: 88, club: 'Real Madrid', season: '1987-88', altPositions: ['ST'] },
+      { id: 'butragueno-rm-8788', name: 'Emilio Butragueño', position: 'FWD', rating: 86, club: 'Real Madrid', season: '1987-88', altPositions: ['ST', 'AM'] },
+      { id: 'pardeza-rm-8788', name: 'Francisco Pardeza', position: 'FWD', rating: 80, club: 'Real Madrid', season: '1987-88', altPositions: ['ST'] },
+    ]
+  },
+  {
     id: 'atletico-1995-96', club: 'Atletico Madrid', shortName: 'ATM', season: '1995-96', league: 'laliga', color: '#CB3524',
     players: [
       { id: 'molina-atm-9596', name: 'José Francisco Molina', position: 'GK', rating: 82, club: 'Atletico Madrid', season: '1995-96' },

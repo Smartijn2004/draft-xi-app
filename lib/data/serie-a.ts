@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const serieAData: ClubSeason[] = [
   {
+    id: 'juventus-2005-06', club: 'Juventus', shortName: 'JUV', season: '2005-06', league: 'seriea', color: '#000000',
+    players: [
+      { id: 'buffon-juv-0506', name: 'Gianluigi Buffon', position: 'GK', rating: 90, club: 'Juventus', season: '2005-06' },
+      { id: 'zambrotta-juv-0506', name: 'Gianluca Zambrotta', position: 'DEF', rating: 84, club: 'Juventus', season: '2005-06', altPositions: ['RB', 'LB'] },
+      { id: 'cannavaro-juv-0506', name: 'Fabio Cannavaro', position: 'DEF', rating: 88, club: 'Juventus', season: '2005-06', altPositions: ['CB'] },
+      { id: 'thuram-juv-0506', name: 'Lilian Thuram', position: 'DEF', rating: 85, club: 'Juventus', season: '2005-06', altPositions: ['CB', 'RB'] },
+      { id: 'zebina-juv-0506', name: 'Jonathan Zebina', position: 'DEF', rating: 79, club: 'Juventus', season: '2005-06', altPositions: ['RB', 'CB'] },
+      { id: 'emerson-juv-0506', name: 'Emerson', position: 'MID', rating: 83, club: 'Juventus', season: '2005-06', altPositions: ['DM', 'CM'] },
+      { id: 'vieira-juv-0506', name: 'Patrick Vieira', position: 'MID', rating: 86, club: 'Juventus', season: '2005-06', altPositions: ['CM', 'DM'] },
+      { id: 'nedved-juv-0506', name: 'Pavel Nedvěd', position: 'MID', rating: 87, club: 'Juventus', season: '2005-06', altPositions: ['LM', 'AM'] },
+      { id: 'camoranesi-juv-0506', name: 'Mauro Camoranesi', position: 'MID', rating: 82, club: 'Juventus', season: '2005-06', altPositions: ['RM', 'RW'] },
+      { id: 'delpiero-juv-0506', name: 'Alessandro Del Piero', position: 'FWD', rating: 87, club: 'Juventus', season: '2005-06', altPositions: ['ST', 'AM'] },
+      { id: 'ibrahimovic-juv-0506', name: 'Zlatan Ibrahimović', position: 'FWD', rating: 86, club: 'Juventus', season: '2005-06', altPositions: ['ST'] },
+      { id: 'trezeguet-juv-0506', name: 'David Trezeguet', position: 'FWD', rating: 85, club: 'Juventus', season: '2005-06', altPositions: ['ST'] },
+    ]
+  },
+  {
     id: 'ac-milan-2010-11', club: 'AC Milan', shortName: 'MIL', season: '2010-11', league: 'seriea', color: '#FB090B',
     players: [
       { id: 'abbiati-mil-1011', name: 'Christian Abbiati', position: 'GK', rating: 82, club: 'AC Milan', season: '2010-11' },
