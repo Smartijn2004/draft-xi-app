@@ -55,7 +55,7 @@ export function DailyChallengeCard() {
             <span className="text-slate-500 font-bold"> · {league.name}</span>
           </h2>
           <p className="text-xs text-slate-400 mt-1">{challenge.description}</p>
-          <p className="text-[11px] text-slate-500 mt-0.5">Same for everyone · one attempt per day</p>
+          <p className="text-[11px] text-slate-500 mt-0.5">Same rules for everyone · your own spins · one attempt per day</p>
         </div>
         <div className="shrink-0">
           {played ? (
