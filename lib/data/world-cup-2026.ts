@@ -159,7 +159,7 @@ export const worldCup2026Data: ClubSeason[] = [
     id: 'brazil-wc2026', club: "Brazil", shortName: 'BRA', season: 'World Cup 2026', league: 'worldcup2026', color: '#16a34a',
     players: [
       { id: 'alisson-bra', name: "Alisson", position: 'GK', rating: 90, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['GK'] },
-      { id: 'ederson-bra', name: "Ederson", position: 'GK', rating: 88, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['CM', 'DM'] },
+      { id: 'ederson-bra', name: "Ederson", position: 'GK', rating: 88, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['GK'] },
       { id: 'marquinhos-bra', name: "Marquinhos", position: 'DEF', rating: 87, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['CB', 'DM'] },
       { id: 'gabriel-magalhaes-bra', name: "Gabriel Magalhaes", position: 'DEF', rating: 87, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['CB'] },
       { id: 'bremer-bra', name: "Bremer", position: 'DEF', rating: 83, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['CB'] },
@@ -213,7 +213,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'maxi-araujo-uru', name: "Maxi Araujo", position: 'MID', rating: 83, club: "Uruguay", season: 'World Cup 2026', nationality: "Uruguay", altPositions: ['LW', 'LM'] },
       { id: 'nicolas-de-la-cruz-uru', name: "Nicolas De La Cruz", position: 'MID', rating: 82, club: "Uruguay", season: 'World Cup 2026', nationality: "Uruguay", altPositions: ['AM', 'CM'] },
       { id: 'giorgian-de-arrascaeta-uru', name: "Giorgian De Arrascaeta", position: 'MID', rating: 82, club: "Uruguay", season: 'World Cup 2026', nationality: "Uruguay", altPositions: ['AM'] },
-      { id: 'emiliano-martinez-uru', name: "Emiliano Martinez", position: 'MID', rating: 79, club: "Uruguay", season: 'World Cup 2026', nationality: "Uruguay", altPositions: ['GK'] },
+      { id: 'emiliano-martinez-uru', name: "Emiliano Martinez", position: 'MID', rating: 79, club: "Uruguay", season: 'World Cup 2026', nationality: "Uruguay", altPositions: ['CM'] },
       { id: 'joaquin-piquerez-uru', name: "Joaquin Piquerez", position: 'MID', rating: 79, club: "Uruguay", season: 'World Cup 2026', nationality: "Uruguay" },
       { id: 'darwin-nunez-uru', name: "Darwin Nunez", position: 'FWD', rating: 85, club: "Uruguay", season: 'World Cup 2026', nationality: "Uruguay", altPositions: ['ST'] },
       { id: 'brian-rodriguez-uru', name: "Brian Rodriguez", position: 'FWD', rating: 80, club: "Uruguay", season: 'World Cup 2026', nationality: "Uruguay", altPositions: ['RW', 'LW'] },

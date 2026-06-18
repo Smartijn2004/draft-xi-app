@@ -393,6 +393,8 @@ export const premierLeagueData: ClubSeason[] = [
       { id: 'berg-9495', name: 'Henning Berg', position: 'DEF', rating: 82, club: 'Blackburn Rovers', season: '1994-95', altPositions: ['RB', 'CB'] },
       { id: 'hendry-9495', name: 'Colin Hendry', position: 'DEF', rating: 84, club: 'Blackburn Rovers', season: '1994-95', altPositions: ['CB'] },
       { id: 'le-saux-9495', name: 'Graeme Le Saux', position: 'DEF', rating: 84, club: 'Blackburn Rovers', season: '1994-95', altPositions: ['LB'] },
+      { id: 'kenna-9495', name: 'Jeff Kenna', position: 'DEF', rating: 78, club: 'Blackburn Rovers', season: '1994-95', altPositions: ['RB'] },
+      { id: 'pearce-9495', name: 'Ian Pearce', position: 'DEF', rating: 77, club: 'Blackburn Rovers', season: '1994-95', altPositions: ['CB'] },
       { id: 'batty-9495', name: 'David Batty', position: 'MID', rating: 82, club: 'Blackburn Rovers', season: '1994-95', altPositions: ['DM', 'CM'] },
       { id: 'sherwood-9495', name: 'Tim Sherwood', position: 'MID', rating: 79, club: 'Blackburn Rovers', season: '1994-95', altPositions: ['CM'] },
       { id: 'ripley-9495', name: 'Stuart Ripley', position: 'MID', rating: 78, club: 'Blackburn Rovers', season: '1994-95', altPositions: ['RM'] },
