@@ -1,6 +1,7 @@
 import { ALL_CLUB_SEASONS, getClubSeasonsForLeague } from './data'
 import { getDailyChallengeNumber, getTodayKey, dateSeed, DAILY_LEAGUE_ORDER } from './storage'
-import type { ClubSeason, LeagueId, Player } from './types'
+import { FORMATIONS } from './types'
+import type { ClubSeason, Difficulty, LeagueId, Player } from './types'
 
 // One of three themes rotates each day. The host league (rotating separately)
 // always sets the format, opponents and theming; the constraint layers on top.
@@ -13,6 +14,8 @@ export type DailyChallenge = {
   number: number
   hostLeague: LeagueId
   constraint: DailyConstraint
+  formation: string        // deterministic formation everyone plays that day
+  difficulty: Difficulty   // deterministic difficulty everyone plays that day
   label: string        // short chip, e.g. "2010s Only"
   description: string  // one-line rules summary
 }
@@ -21,6 +24,20 @@ export type DailyChallenge = {
 // cross-league decade draft can always fill an XI.
 const DECADES = [2000, 2010, 2020]
 const UNDERDOG_CAPS = [82, 84, 85]
+const FORMATION_NAMES = Object.keys(FORMATIONS)
+const DIFFICULTIES: Difficulty[] = ['easy', 'normal', 'hard']
+
+// Formation and difficulty rotate independently of the theme/league so the same
+// challenge rarely repeats. Different bit-shifts of the seed keep these picks
+// from correlating with the decade/underdog choices (which use the raw seed).
+function dailyFormation(seed: number): string {
+  return FORMATION_NAMES[(seed >>> 5) % FORMATION_NAMES.length]
+}
+function dailyDifficulty(seed: number): Difficulty {
+  return DIFFICULTIES[(seed >>> 11) % DIFFICULTIES.length]
+}
+
+const DIFFICULTY_LABEL: Record<Difficulty, string> = { easy: 'Easy', normal: 'Normal', hard: 'Hard' }
 
 function decadeOf(season: string): number {
   // season like "2008-09" or "1998-99" -> 2000 / 1990
@@ -35,27 +52,31 @@ export function getDailyChallenge(dateKey: string = getTodayKey()): DailyChallen
   // 5-cycle, so host+theme only realign every 15 days — plenty of variety.
   const seed = dateSeed(dateKey)
   const theme = (number - 1) % 3
+  const formation = dailyFormation(seed)
+  const difficulty = dailyDifficulty(seed)
+  // Appended to every description so players see the day's format up front.
+  const rules = `${formation} · ${DIFFICULTY_LABEL[difficulty]}`
 
   if (theme === 1) {
     const decade = DECADES[seed % DECADES.length]
     return {
-      number, hostLeague, constraint: { kind: 'decade', decade },
+      number, hostLeague, constraint: { kind: 'decade', decade }, formation, difficulty,
       label: `${decade}s Only`,
-      description: `Every player must come from the ${decade}s — pick from any club of that era.`,
+      description: `Every player from the ${decade}s · ${rules}.`,
     }
   }
   if (theme === 2) {
     const maxRating = UNDERDOG_CAPS[seed % UNDERDOG_CAPS.length]
     return {
-      number, hostLeague, constraint: { kind: 'underdog', maxRating },
+      number, hostLeague, constraint: { kind: 'underdog', maxRating }, formation, difficulty,
       label: `Underdogs ≤${maxRating}`,
-      description: `No player rated above ${maxRating}. Build a giant-killer from the bargain bin.`,
+      description: `No player rated above ${maxRating} · ${rules}.`,
     }
   }
   return {
-    number, hostLeague, constraint: { kind: 'league' },
+    number, hostLeague, constraint: { kind: 'league' }, formation, difficulty,
     label: 'Single League',
-    description: 'Classic daily — draft from one competition.',
+    description: `Classic daily — one competition · ${rules}.`,
   }
 }
 

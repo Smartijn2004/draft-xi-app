@@ -19,6 +19,7 @@ import { emojiGrid, dailyStatusLine, dailyShareText } from '@/lib/share'
 import { TeamFormation } from '@/components/TeamFormation'
 import { SeasonSimulator } from '@/components/SeasonSimulator'
 import { DailyLeaderboard } from '@/components/DailyLeaderboard'
+import { EventLeaderboard } from '@/components/EventLeaderboard'
 import { UsernamePrompt } from '@/components/UsernamePrompt'
 import { getNickname } from '@/lib/playerIdentity'
 import { MatchReveal } from '@/components/MatchReveal'
@@ -121,17 +122,18 @@ function GameContent() {
     setDailyChecked(true)
   }, [isDaily, todayKey])
 
-  // Daily plays under fixed rules: normal difficulty, 4-3-3, season ratings,
-  // balanced tactics — identical for everyone.
+  // Daily plays under fixed rules — identical for everyone that day. The
+  // formation and difficulty are derived deterministically from the date, so
+  // they vary day to day while staying the same for all players.
   useEffect(() => {
-    if (!isDaily) return
-    setDifficulty('normal')
+    if (!isDaily || !dailyChallenge) return
+    setDifficulty(dailyChallenge.difficulty)
     setRatingsMode('season')
     setTactic('balanced')
-    setFormationName('4-3-3')
-    setRerollsLeft(2)
+    setFormationName(dailyChallenge.formation)
+    setRerollsLeft(DIFFICULTY_CONFIG[dailyChallenge.difficulty].rerolls)
     setPhase(p => (p === 'setup' ? 'draft' : p))
-  }, [isDaily])
+  }, [isDaily, dailyChallenge])
 
   // ── Resume an in-progress draft ──
   // Casual/event drafts are persisted per-league so leaving and coming back
@@ -141,6 +143,9 @@ function GameContent() {
   // Username for the global leaderboard, captured on the first finished draft.
   const [username, setUsername] = useState<string | null>(null)
   useEffect(() => { setUsername(getNickname()) }, [])
+  // Set to a fresh id when the just-simulated event run won the cup — the
+  // EventLeaderboard records exactly one win per such id.
+  const [eventWinRunId, setEventWinRunId] = useState<string | null>(null)
   useEffect(() => {
     if (isDaily) { setActiveDraftChecked(true); return }
     const saved = loadActiveDraft(leagueId)
@@ -350,6 +355,9 @@ function GameContent() {
     setCareerOutcome(recordSeason(result, leagueId, team))
     // Draft is now committed as a season — drop the resume snapshot.
     if (!isDaily) clearActiveDraft(leagueId)
+    // A live-event cup win earns one leaderboard increment, tagged with a unique
+    // run id so the EventLeaderboard records it exactly once.
+    setEventWinRunId(isEvent && result.trophyWon ? `${Date.now()}-${Math.random().toString(36).slice(2)}` : null)
     if (isDaily) {
       const record: DailyRecord = {
         date: getTodayKey(),
@@ -369,7 +377,7 @@ function GameContent() {
       setDailyStreak(recordDaily(record))
       setDailyDone(record)
     }
-  }, [team, leagueId, totalSlots, isDaily, tactic])
+  }, [team, leagueId, totalSlots, isDaily, isEvent, tactic])
 
   const handlePlayAgain = useCallback(() => {
     if (isDaily) { router.push('/'); return } // one attempt per day
@@ -588,6 +596,18 @@ function GameContent() {
               />
             </div>
           )}
+          {isEvent && difficulty && (
+            <div className="mt-6">
+              <EventLeaderboard
+                event={leagueId}
+                difficulty={difficulty}
+                nickname={username}
+                winRunId={eventWinRunId}
+                title={`${league.name} — Cups Won`}
+                accent={league.color}
+              />
+            </div>
+          )}
         </div>
       </div>
     )
@@ -637,7 +657,7 @@ function GameContent() {
               {Object.keys(FORMATIONS).map(f => (
                 <button key={f}
                   onClick={() => {
-                    if (isDaily) { showMessage('Daily challenge is locked to 4-3-3.'); return }
+                    if (isDaily) { showMessage(`Daily challenge is locked to ${formationName}.`); return }
                     if (team.length > 0) { showMessage('Clear your team first to change formation.'); return }
                     setFormationName(f)
                   }}

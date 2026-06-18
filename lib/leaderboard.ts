@@ -68,7 +68,7 @@ function encodeArg(v: SqlArg): { type: string; value?: string } {
 }
 
 type Cell = { type: string; value?: string } | null
-type ExecResult = { cols: { name: string }[]; rows: Cell[][] }
+type ExecResult = { cols: { name: string }[]; rows: Cell[][]; affected_row_count?: number }
 
 function cellValue(c: Cell): string | number | null {
   if (!c || c.type === 'null') return null
@@ -224,6 +224,122 @@ export async function getLeaderboard(
     if (meRows.length > 0) {
       const rank = Number(rowsOf(results[3])[0]?.rank ?? top.length + 1)
       you = toRow(meRows[0], rank)
+    }
+  }
+
+  return { available: true, total, top, you }
+}
+
+// ── Live-event cup-win leaderboard ────────────────────────────────────────────
+// A cumulative count of how many times each player has won a given event's cup,
+// tracked separately per difficulty. Increments are deduplicated by a per-run
+// id so the same finished run can't be counted twice (re-mounts, retries).
+
+export type EventWinRow = { rank: number; nickname: string; wins: number }
+export type EventLeaderboardView = {
+  available: boolean
+  total: number
+  top: EventWinRow[]
+  you: EventWinRow | null
+}
+
+let eventSchemaReady: Promise<void> | null = null
+function ensureEventSchema(): Promise<void> {
+  if (!eventSchemaReady) {
+    eventSchemaReady = pipeline([
+      {
+        sql: `CREATE TABLE IF NOT EXISTS event_wins (
+          event_id    TEXT    NOT NULL,
+          difficulty  TEXT    NOT NULL,
+          player_id   TEXT    NOT NULL,
+          nickname    TEXT    NOT NULL,
+          wins        INTEGER NOT NULL DEFAULT 0,
+          updated_at  TEXT    NOT NULL,
+          PRIMARY KEY (event_id, difficulty, player_id)
+        )`,
+      },
+      { sql: `CREATE INDEX IF NOT EXISTS idx_event_rank ON event_wins (event_id, difficulty, wins DESC, updated_at ASC)` },
+      { sql: `CREATE TABLE IF NOT EXISTS event_win_runs (run_id TEXT PRIMARY KEY, created_at TEXT NOT NULL)` },
+    ]).then(() => undefined).catch(err => { eventSchemaReady = null; throw err })
+  }
+  return eventSchemaReady
+}
+
+export type EventWinSubmission = {
+  event: string
+  difficulty: string
+  playerId: string
+  nickname: string
+  runId: string
+}
+
+// Records one cup win. The runId makes this idempotent: a duplicate runId is
+// ignored, so the same finished run never increments the count twice.
+export async function recordEventWin(s: EventWinSubmission): Promise<void> {
+  if (!httpBase()) return
+  await ensureEventSchema()
+  const now = new Date().toISOString()
+  const claim = await pipeline([{
+    sql: `INSERT INTO event_win_runs (run_id, created_at) VALUES (?, ?) ON CONFLICT(run_id) DO NOTHING`,
+    args: [s.runId, now],
+  }])
+  // Already counted (duplicate run) — nothing to do.
+  if ((claim[0]?.affected_row_count ?? 0) === 0) return
+  await pipeline([{
+    sql: `INSERT INTO event_wins (event_id, difficulty, player_id, nickname, wins, updated_at)
+          VALUES (?, ?, ?, ?, 1, ?)
+          ON CONFLICT(event_id, difficulty, player_id)
+          DO UPDATE SET wins = wins + 1, nickname = excluded.nickname, updated_at = excluded.updated_at`,
+    args: [s.event, s.difficulty, s.playerId, s.nickname, now],
+  }])
+}
+
+export async function getEventLeaderboard(
+  event: string,
+  difficulty: string,
+  playerId: string | null,
+  limit = 20,
+): Promise<EventLeaderboardView> {
+  if (!httpBase()) return { available: false, total: 0, top: [], you: null }
+  await ensureEventSchema()
+
+  const stmts: Stmt[] = [
+    { sql: `SELECT COUNT(*) AS n FROM event_wins WHERE event_id = ? AND difficulty = ?`, args: [event, difficulty] },
+    {
+      sql: `SELECT nickname, wins FROM event_wins
+            WHERE event_id = ? AND difficulty = ? ORDER BY wins DESC, updated_at ASC LIMIT ?`,
+      args: [event, difficulty, limit],
+    },
+  ]
+  if (playerId) {
+    stmts.push({
+      sql: `SELECT nickname, wins FROM event_wins WHERE event_id = ? AND difficulty = ? AND player_id = ?`,
+      args: [event, difficulty, playerId],
+    })
+    stmts.push({
+      sql: `SELECT COUNT(*) + 1 AS rank FROM event_wins o
+            WHERE o.event_id = ? AND o.difficulty = ? AND EXISTS (
+              SELECT 1 FROM event_wins me
+              WHERE me.event_id = ? AND me.difficulty = ? AND me.player_id = ? AND (
+                o.wins > me.wins
+                OR (o.wins = me.wins AND o.updated_at < me.updated_at)
+              ))`,
+      args: [event, difficulty, event, difficulty, playerId],
+    })
+  }
+
+  const results = await pipeline(stmts)
+  const total = Number(rowsOf(results[0])[0]?.n ?? 0)
+  const top = rowsOf(results[1]).map((r, i): EventWinRow => ({
+    rank: i + 1, nickname: String(r.nickname ?? ''), wins: Number(r.wins ?? 0),
+  }))
+
+  let you: EventWinRow | null = null
+  if (playerId && results[2] && results[3]) {
+    const meRows = rowsOf(results[2])
+    if (meRows.length > 0) {
+      const rank = Number(rowsOf(results[3])[0]?.rank ?? top.length + 1)
+      you = { rank, nickname: String(meRows[0].nickname ?? ''), wins: Number(meRows[0].wins ?? 0) }
     }
   }
 
