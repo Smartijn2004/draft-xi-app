@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const championsLeagueData: ClubSeason[] = [
   {
+    id: 'marseille-1992-93', club: 'Marseille', shortName: 'OM', season: '1992-93', league: 'ucl', color: '#2FAEE0',
+    players: [
+      { id: 'barthez-om-9293', name: 'Fabien Barthez', position: 'GK', rating: 81, club: 'Marseille', season: '1992-93' },
+      { id: 'angloma-om-9293', name: 'Jocelyn Angloma', position: 'DEF', rating: 81, club: 'Marseille', season: '1992-93', altPositions: ['RB'] },
+      { id: 'desailly-om-9293', name: 'Marcel Desailly', position: 'DEF', rating: 85, club: 'Marseille', season: '1992-93', altPositions: ['CB', 'DM'] },
+      { id: 'boli-om-9293', name: 'Basile Boli', position: 'DEF', rating: 83, club: 'Marseille', season: '1992-93', altPositions: ['CB'] },
+      { id: 'casoni-om-9293', name: 'Bernard Casoni', position: 'DEF', rating: 80, club: 'Marseille', season: '1992-93', altPositions: ['CB'] },
+      { id: 'dimeco-om-9293', name: 'Eric Di Meco', position: 'DEF', rating: 79, club: 'Marseille', season: '1992-93', altPositions: ['LB'] },
+      { id: 'deschamps-om-9293', name: 'Didier Deschamps', position: 'MID', rating: 84, club: 'Marseille', season: '1992-93', altPositions: ['DM', 'CM'] },
+      { id: 'sauzee-om-9293', name: 'Franck Sauzée', position: 'MID', rating: 82, club: 'Marseille', season: '1992-93', altPositions: ['CM'] },
+      { id: 'eydelie-om-9293', name: 'Jean-Jacques Eydelie', position: 'MID', rating: 77, club: 'Marseille', season: '1992-93', altPositions: ['CM'] },
+      { id: 'abedi-pele-om-9293', name: 'Abedi Pelé', position: 'FWD', rating: 86, club: 'Marseille', season: '1992-93', altPositions: ['AM', 'LW'] },
+      { id: 'voller-om-9293', name: 'Rudi Völler', position: 'FWD', rating: 85, club: 'Marseille', season: '1992-93', altPositions: ['ST'] },
+      { id: 'boksic-om-9293', name: 'Alen Bokšić', position: 'FWD', rating: 83, club: 'Marseille', season: '1992-93', altPositions: ['ST'] },
+    ]
+  },
+  {
     id: 'bayern-2000-01', club: 'Bayern Munich', shortName: 'BAY', season: '2000-01', league: 'ucl', color: '#DC052D',
     players: [
       { id: 'kahn-bay-0001', name: 'Oliver Kahn', position: 'GK', rating: 92, club: 'Bayern Munich', season: '2000-01' },

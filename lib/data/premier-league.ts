@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const premierLeagueData: ClubSeason[] = [
   {
+    id: 'man-united-2010-11', club: 'Manchester United', shortName: 'MUN', season: '2010-11', league: 'pl', color: '#DA291C',
+    players: [
+      { id: 'vandersar-1011', name: 'Edwin van der Sar', position: 'GK', rating: 85, club: 'Manchester United', season: '2010-11' },
+      { id: 'evra-1011', name: 'Patrice Evra', position: 'DEF', rating: 84, club: 'Manchester United', season: '2010-11', altPositions: ['LB'] },
+      { id: 'vidic-1011', name: 'Nemanja Vidić', position: 'DEF', rating: 88, club: 'Manchester United', season: '2010-11', altPositions: ['CB'] },
+      { id: 'ferdinand-1011', name: 'Rio Ferdinand', position: 'DEF', rating: 85, club: 'Manchester United', season: '2010-11', altPositions: ['CB'] },
+      { id: 'rafael-1011', name: 'Rafael', position: 'DEF', rating: 79, club: 'Manchester United', season: '2010-11', altPositions: ['RB'] },
+      { id: 'nani-1011', name: 'Nani', position: 'MID', rating: 84, club: 'Manchester United', season: '2010-11', altPositions: ['RW', 'LW'] },
+      { id: 'carrick-1011', name: 'Michael Carrick', position: 'MID', rating: 83, club: 'Manchester United', season: '2010-11', altPositions: ['CM', 'DM'] },
+      { id: 'fletcher-1011', name: 'Darren Fletcher', position: 'MID', rating: 81, club: 'Manchester United', season: '2010-11', altPositions: ['CM'] },
+      { id: 'giggs-1011', name: 'Ryan Giggs', position: 'MID', rating: 84, club: 'Manchester United', season: '2010-11', altPositions: ['LW', 'CM'] },
+      { id: 'rooney-1011', name: 'Wayne Rooney', position: 'FWD', rating: 87, club: 'Manchester United', season: '2010-11', altPositions: ['ST', 'AM'] },
+      { id: 'berbatov-1011', name: 'Dimitar Berbatov', position: 'FWD', rating: 85, club: 'Manchester United', season: '2010-11', altPositions: ['ST'] },
+      { id: 'hernandez-1011', name: 'Javier Hernández', position: 'FWD', rating: 83, club: 'Manchester United', season: '2010-11', altPositions: ['ST'] },
+    ]
+  },
+  {
     id: 'liverpool-2000-01', club: 'Liverpool', shortName: 'LIV', season: '2000-01', league: 'pl', color: '#C8102E',
     players: [
       { id: 'westerveld-0001', name: 'Sander Westerveld', position: 'GK', rating: 80, club: 'Liverpool', season: '2000-01' },

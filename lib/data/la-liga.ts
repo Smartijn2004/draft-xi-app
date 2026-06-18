@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const laLigaData: ClubSeason[] = [
   {
+    id: 'atletico-1995-96', club: 'Atletico Madrid', shortName: 'ATM', season: '1995-96', league: 'laliga', color: '#CB3524',
+    players: [
+      { id: 'molina-atm-9596', name: 'José Francisco Molina', position: 'GK', rating: 82, club: 'Atletico Madrid', season: '1995-96' },
+      { id: 'geli-atm-9596', name: 'Delfí Geli', position: 'DEF', rating: 78, club: 'Atletico Madrid', season: '1995-96', altPositions: ['RB', 'CB'] },
+      { id: 'solozabal-atm-9596', name: 'Roberto Solozábal', position: 'DEF', rating: 80, club: 'Atletico Madrid', season: '1995-96', altPositions: ['CB'] },
+      { id: 'santi-atm-9596', name: 'Santi Denia', position: 'DEF', rating: 78, club: 'Atletico Madrid', season: '1995-96', altPositions: ['CB'] },
+      { id: 'toni-atm-9596', name: 'Toni Muñoz', position: 'DEF', rating: 78, club: 'Atletico Madrid', season: '1995-96', altPositions: ['LB'] },
+      { id: 'simeone-atm-9596', name: 'Diego Simeone', position: 'MID', rating: 85, club: 'Atletico Madrid', season: '1995-96', altPositions: ['CM', 'DM'] },
+      { id: 'caminero-atm-9596', name: 'José Luis Caminero', position: 'MID', rating: 83, club: 'Atletico Madrid', season: '1995-96', altPositions: ['CM'] },
+      { id: 'vizcaino-atm-9596', name: 'Juan Vizcaíno', position: 'MID', rating: 79, club: 'Atletico Madrid', season: '1995-96', altPositions: ['DM', 'CM'] },
+      { id: 'pantic-atm-9596', name: 'Milinko Pantić', position: 'MID', rating: 83, club: 'Atletico Madrid', season: '1995-96', altPositions: ['AM'] },
+      { id: 'kiko-atm-9596', name: 'Kiko', position: 'FWD', rating: 83, club: 'Atletico Madrid', season: '1995-96', altPositions: ['ST', 'RW'] },
+      { id: 'penev-atm-9596', name: 'Lyuboslav Penev', position: 'FWD', rating: 82, club: 'Atletico Madrid', season: '1995-96', altPositions: ['ST'] },
+      { id: 'esnaider-atm-9596', name: 'Juan Esnáider', position: 'FWD', rating: 79, club: 'Atletico Madrid', season: '1995-96', altPositions: ['ST'] },
+    ]
+  },
+  {
     id: 'real-madrid-2002-03', club: 'Real Madrid', shortName: 'RMA', season: '2002-03', league: 'laliga', color: '#FEBE10',
     players: [
       { id: 'casillas-0203', name: 'Iker Casillas', position: 'GK', rating: 87, club: 'Real Madrid', season: '2002-03' },

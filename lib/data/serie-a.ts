@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const serieAData: ClubSeason[] = [
   {
+    id: 'ac-milan-2010-11', club: 'AC Milan', shortName: 'MIL', season: '2010-11', league: 'seriea', color: '#FB090B',
+    players: [
+      { id: 'abbiati-mil-1011', name: 'Christian Abbiati', position: 'GK', rating: 82, club: 'AC Milan', season: '2010-11' },
+      { id: 'zambrotta-mil-1011', name: 'Gianluca Zambrotta', position: 'DEF', rating: 81, club: 'AC Milan', season: '2010-11', altPositions: ['RB', 'LB'] },
+      { id: 'thiago-silva-mil-1011', name: 'Thiago Silva', position: 'DEF', rating: 89, club: 'AC Milan', season: '2010-11', altPositions: ['CB'] },
+      { id: 'nesta-mil-1011', name: 'Alessandro Nesta', position: 'DEF', rating: 85, club: 'AC Milan', season: '2010-11', altPositions: ['CB'] },
+      { id: 'antonini-mil-1011', name: 'Luca Antonini', position: 'DEF', rating: 77, club: 'AC Milan', season: '2010-11', altPositions: ['LB'] },
+      { id: 'gattuso-mil-1011', name: 'Gennaro Gattuso', position: 'MID', rating: 82, club: 'AC Milan', season: '2010-11', altPositions: ['DM', 'CM'] },
+      { id: 'pirlo-mil-1011', name: 'Andrea Pirlo', position: 'MID', rating: 88, club: 'AC Milan', season: '2010-11', altPositions: ['DM', 'CM'] },
+      { id: 'seedorf-mil-1011', name: 'Clarence Seedorf', position: 'MID', rating: 84, club: 'AC Milan', season: '2010-11', altPositions: ['AM', 'CM'] },
+      { id: 'boateng-mil-1011', name: 'Kevin-Prince Boateng', position: 'MID', rating: 81, club: 'AC Milan', season: '2010-11', altPositions: ['CM', 'AM'] },
+      { id: 'ibrahimovic-mil-1011', name: 'Zlatan Ibrahimović', position: 'FWD', rating: 90, club: 'AC Milan', season: '2010-11', altPositions: ['ST'] },
+      { id: 'robinho-mil-1011', name: 'Robinho', position: 'FWD', rating: 84, club: 'AC Milan', season: '2010-11', altPositions: ['LW', 'ST'] },
+      { id: 'pato-mil-1011', name: 'Alexandre Pato', position: 'FWD', rating: 83, club: 'AC Milan', season: '2010-11', altPositions: ['ST'] },
+    ]
+  },
+  {
     id: 'juventus-1997-98', club: 'Juventus', shortName: 'JUV', season: '1997-98', league: 'seriea', color: '#000000',
     players: [
       { id: 'peruzzi-juv-9798', name: 'Angelo Peruzzi', position: 'GK', rating: 86, club: 'Juventus', season: '1997-98' },
