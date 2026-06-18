@@ -2,6 +2,74 @@ import type { ClubSeason } from '../types'
 
 export const premierLeagueData: ClubSeason[] = [
   {
+    id: 'liverpool-2000-01', club: 'Liverpool', shortName: 'LIV', season: '2000-01', league: 'pl', color: '#C8102E',
+    players: [
+      { id: 'westerveld-0001', name: 'Sander Westerveld', position: 'GK', rating: 80, club: 'Liverpool', season: '2000-01' },
+      { id: 'babbel-0001', name: 'Markus Babbel', position: 'DEF', rating: 82, club: 'Liverpool', season: '2000-01', altPositions: ['RB', 'CB'] },
+      { id: 'hyypia-0001', name: 'Sami Hyypiä', position: 'DEF', rating: 85, club: 'Liverpool', season: '2000-01', altPositions: ['CB'] },
+      { id: 'henchoz-0001', name: 'Stéphane Henchoz', position: 'DEF', rating: 81, club: 'Liverpool', season: '2000-01', altPositions: ['CB'] },
+      { id: 'carragher-0001', name: 'Jamie Carragher', position: 'DEF', rating: 82, club: 'Liverpool', season: '2000-01', altPositions: ['LB', 'CB'] },
+      { id: 'gerrard-0001', name: 'Steven Gerrard', position: 'MID', rating: 87, club: 'Liverpool', season: '2000-01', altPositions: ['CM'] },
+      { id: 'hamann-0001', name: 'Dietmar Hamann', position: 'MID', rating: 83, club: 'Liverpool', season: '2000-01', altPositions: ['DM'] },
+      { id: 'mcallister-0001', name: 'Gary McAllister', position: 'MID', rating: 82, club: 'Liverpool', season: '2000-01', altPositions: ['CM'] },
+      { id: 'murphy-0001', name: 'Danny Murphy', position: 'MID', rating: 80, club: 'Liverpool', season: '2000-01', altPositions: ['CM', 'AM'] },
+      { id: 'owen-0001', name: 'Michael Owen', position: 'FWD', rating: 89, club: 'Liverpool', season: '2000-01', altPositions: ['ST'] },
+      { id: 'heskey-0001', name: 'Emile Heskey', position: 'FWD', rating: 82, club: 'Liverpool', season: '2000-01', altPositions: ['ST'] },
+      { id: 'fowler-0001', name: 'Robbie Fowler', position: 'FWD', rating: 85, club: 'Liverpool', season: '2000-01', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'man-united-2000-01', club: 'Manchester United', shortName: 'MUN', season: '2000-01', league: 'pl', color: '#DA291C',
+    players: [
+      { id: 'barthez-0001', name: 'Fabien Barthez', position: 'GK', rating: 84, club: 'Manchester United', season: '2000-01' },
+      { id: 'irwin-0001', name: 'Denis Irwin', position: 'DEF', rating: 82, club: 'Manchester United', season: '2000-01', altPositions: ['LB'] },
+      { id: 'stam-0001', name: 'Jaap Stam', position: 'DEF', rating: 87, club: 'Manchester United', season: '2000-01', altPositions: ['CB'] },
+      { id: 'brown-0001', name: 'Wes Brown', position: 'DEF', rating: 80, club: 'Manchester United', season: '2000-01', altPositions: ['CB'] },
+      { id: 'g-neville-0001', name: 'Gary Neville', position: 'DEF', rating: 83, club: 'Manchester United', season: '2000-01', altPositions: ['RB'] },
+      { id: 'beckham-0001', name: 'David Beckham', position: 'MID', rating: 88, club: 'Manchester United', season: '2000-01', altPositions: ['RM', 'RW'] },
+      { id: 'keane-0001', name: 'Roy Keane', position: 'MID', rating: 89, club: 'Manchester United', season: '2000-01', altPositions: ['CM'] },
+      { id: 'scholes-0001', name: 'Paul Scholes', position: 'MID', rating: 87, club: 'Manchester United', season: '2000-01', altPositions: ['CM', 'AM'] },
+      { id: 'giggs-0001', name: 'Ryan Giggs', position: 'MID', rating: 87, club: 'Manchester United', season: '2000-01', altPositions: ['LW', 'LM'] },
+      { id: 'yorke-0001', name: 'Dwight Yorke', position: 'FWD', rating: 84, club: 'Manchester United', season: '2000-01', altPositions: ['ST'] },
+      { id: 'cole-a-0001', name: 'Andy Cole', position: 'FWD', rating: 84, club: 'Manchester United', season: '2000-01', altPositions: ['ST'] },
+      { id: 'sheringham-0001', name: 'Teddy Sheringham', position: 'FWD', rating: 85, club: 'Manchester United', season: '2000-01', altPositions: ['ST', 'AM'] },
+    ]
+  },
+  {
+    id: 'chelsea-2005-06', club: 'Chelsea', shortName: 'CHE', season: '2005-06', league: 'pl', color: '#034694',
+    players: [
+      { id: 'cech-0506', name: 'Petr Čech', position: 'GK', rating: 88, club: 'Chelsea', season: '2005-06' },
+      { id: 'bridge-0506', name: 'Wayne Bridge', position: 'DEF', rating: 79, club: 'Chelsea', season: '2005-06', altPositions: ['LB'] },
+      { id: 'terry-0506', name: 'John Terry', position: 'DEF', rating: 89, club: 'Chelsea', season: '2005-06', altPositions: ['CB'] },
+      { id: 'carvalho-0506', name: 'Ricardo Carvalho', position: 'DEF', rating: 86, club: 'Chelsea', season: '2005-06', altPositions: ['CB'] },
+      { id: 'paulo-ferreira-0506', name: 'Paulo Ferreira', position: 'DEF', rating: 80, club: 'Chelsea', season: '2005-06', altPositions: ['RB'] },
+      { id: 'makelele-0506', name: 'Claude Makélélé', position: 'MID', rating: 86, club: 'Chelsea', season: '2005-06', altPositions: ['DM'] },
+      { id: 'lampard-0506', name: 'Frank Lampard', position: 'MID', rating: 90, club: 'Chelsea', season: '2005-06', altPositions: ['CM'] },
+      { id: 'essien-0506', name: 'Michael Essien', position: 'MID', rating: 85, club: 'Chelsea', season: '2005-06', altPositions: ['CM', 'DM'] },
+      { id: 'robben-0506', name: 'Arjen Robben', position: 'MID', rating: 86, club: 'Chelsea', season: '2005-06', altPositions: ['RW', 'LW'] },
+      { id: 'drogba-0506', name: 'Didier Drogba', position: 'FWD', rating: 88, club: 'Chelsea', season: '2005-06', altPositions: ['ST'] },
+      { id: 'crespo-0506', name: 'Hernán Crespo', position: 'FWD', rating: 84, club: 'Chelsea', season: '2005-06', altPositions: ['ST'] },
+      { id: 'duff-0506', name: 'Damien Duff', position: 'FWD', rating: 83, club: 'Chelsea', season: '2005-06', altPositions: ['LW', 'RW'] },
+    ]
+  },
+  {
+    id: 'man-city-2013-14', club: 'Manchester City', shortName: 'MCI', season: '2013-14', league: 'pl', color: '#6CABDD',
+    players: [
+      { id: 'hart-1314', name: 'Joe Hart', position: 'GK', rating: 83, club: 'Manchester City', season: '2013-14' },
+      { id: 'clichy-1314', name: 'Gaël Clichy', position: 'DEF', rating: 81, club: 'Manchester City', season: '2013-14', altPositions: ['LB'] },
+      { id: 'kompany-1314', name: 'Vincent Kompany', position: 'DEF', rating: 87, club: 'Manchester City', season: '2013-14', altPositions: ['CB'] },
+      { id: 'nastasic-1314', name: 'Matija Nastasić', position: 'DEF', rating: 80, club: 'Manchester City', season: '2013-14', altPositions: ['CB'] },
+      { id: 'zabaleta-1314', name: 'Pablo Zabaleta', position: 'DEF', rating: 84, club: 'Manchester City', season: '2013-14', altPositions: ['RB'] },
+      { id: 'yaya-toure-1314', name: 'Yaya Touré', position: 'MID', rating: 88, club: 'Manchester City', season: '2013-14', altPositions: ['CM'] },
+      { id: 'fernandinho-1314', name: 'Fernandinho', position: 'MID', rating: 85, club: 'Manchester City', season: '2013-14', altPositions: ['DM', 'CM'] },
+      { id: 'david-silva-1314', name: 'David Silva', position: 'MID', rating: 89, club: 'Manchester City', season: '2013-14', altPositions: ['AM', 'CM'] },
+      { id: 'nasri-1314', name: 'Samir Nasri', position: 'MID', rating: 83, club: 'Manchester City', season: '2013-14', altPositions: ['LW', 'AM'] },
+      { id: 'navas-1314', name: 'Jesús Navas', position: 'MID', rating: 80, club: 'Manchester City', season: '2013-14', altPositions: ['RW'] },
+      { id: 'aguero-1314', name: 'Sergio Agüero', position: 'FWD', rating: 90, club: 'Manchester City', season: '2013-14', altPositions: ['ST'] },
+      { id: 'dzeko-1314', name: 'Edin Džeko', position: 'FWD', rating: 84, club: 'Manchester City', season: '2013-14', altPositions: ['ST'] },
+    ]
+  },
+  {
     id: 'man-united-1993-94', club: 'Manchester United', shortName: 'MUN', season: '1993-94', league: 'pl', color: '#DA291C',
     players: [
       { id: 'schmeichel-9394', name: 'Peter Schmeichel', position: 'GK', rating: 90, club: 'Manchester United', season: '1993-94' },
