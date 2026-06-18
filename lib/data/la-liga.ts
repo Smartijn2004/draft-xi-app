@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const laLigaData: ClubSeason[] = [
   {
+    id: 'barcelona-1991-92', club: 'Barcelona', shortName: 'BAR', season: '1991-92', league: 'laliga', color: '#A50044',
+    players: [
+      { id: 'zubizarreta-9192', name: 'Andoni Zubizarreta', position: 'GK', rating: 86, club: 'Barcelona', season: '1991-92' },
+      { id: 'ferrer-9192', name: 'Albert Ferrer', position: 'DEF', rating: 80, club: 'Barcelona', season: '1991-92', altPositions: ['RB'] },
+      { id: 'koeman-9192', name: 'Ronald Koeman', position: 'DEF', rating: 88, club: 'Barcelona', season: '1991-92', altPositions: ['CB'] },
+      { id: 'nando-9192', name: 'Nando', position: 'DEF', rating: 79, club: 'Barcelona', season: '1991-92', altPositions: ['CB'] },
+      { id: 'juan-carlos-9192', name: 'Juan Carlos', position: 'DEF', rating: 78, club: 'Barcelona', season: '1991-92', altPositions: ['LB'] },
+      { id: 'guardiola-9192', name: 'Pep Guardiola', position: 'MID', rating: 85, club: 'Barcelona', season: '1991-92', altPositions: ['DM', 'CM'] },
+      { id: 'bakero-9192', name: 'José Mari Bakero', position: 'MID', rating: 83, club: 'Barcelona', season: '1991-92', altPositions: ['CM'] },
+      { id: 'eusebio-9192', name: 'Eusebio Sacristán', position: 'MID', rating: 80, club: 'Barcelona', season: '1991-92', altPositions: ['CM'] },
+      { id: 'laudrup-9192', name: 'Michael Laudrup', position: 'MID', rating: 89, club: 'Barcelona', season: '1991-92', altPositions: ['AM'] },
+      { id: 'stoichkov-9192', name: 'Hristo Stoichkov', position: 'FWD', rating: 90, club: 'Barcelona', season: '1991-92', altPositions: ['LW', 'ST'] },
+      { id: 'salinas-9192', name: 'Julio Salinas', position: 'FWD', rating: 81, club: 'Barcelona', season: '1991-92', altPositions: ['ST'] },
+      { id: 'begiristain-9192', name: 'Txiki Begiristain', position: 'FWD', rating: 82, club: 'Barcelona', season: '1991-92', altPositions: ['RW'] },
+    ]
+  },
+  {
     id: 'barcelona-2018-19', club: 'Barcelona', shortName: 'BAR', season: '2018-19', league: 'laliga', color: '#A50044',
     players: [
       { id: 'ter-stegen-1819', name: 'Marc-André ter Stegen', position: 'GK', rating: 88, club: 'Barcelona', season: '2018-19' },

@@ -2,6 +2,40 @@ import type { ClubSeason } from '../types'
 
 export const championsLeagueData: ClubSeason[] = [
   {
+    id: 'ac-milan-1989-90', club: 'AC Milan', shortName: 'MIL', season: '1989-90', league: 'ucl', color: '#FB090B',
+    players: [
+      { id: 'galli-mil-8990', name: 'Giovanni Galli', position: 'GK', rating: 82, club: 'AC Milan', season: '1989-90' },
+      { id: 'maldini-mil-8990', name: 'Paolo Maldini', position: 'DEF', rating: 90, club: 'AC Milan', season: '1989-90', altPositions: ['LB', 'CB'] },
+      { id: 'baresi-mil-8990', name: 'Franco Baresi', position: 'DEF', rating: 91, club: 'AC Milan', season: '1989-90', altPositions: ['CB'] },
+      { id: 'costacurta-mil-8990', name: 'Alessandro Costacurta', position: 'DEF', rating: 84, club: 'AC Milan', season: '1989-90', altPositions: ['CB'] },
+      { id: 'tassotti-mil-8990', name: 'Mauro Tassotti', position: 'DEF', rating: 82, club: 'AC Milan', season: '1989-90', altPositions: ['RB'] },
+      { id: 'rijkaard-mil-8990', name: 'Frank Rijkaard', position: 'MID', rating: 89, club: 'AC Milan', season: '1989-90', altPositions: ['DM', 'CM'] },
+      { id: 'ancelotti-mil-8990', name: 'Carlo Ancelotti', position: 'MID', rating: 83, club: 'AC Milan', season: '1989-90', altPositions: ['CM'] },
+      { id: 'donadoni-mil-8990', name: 'Roberto Donadoni', position: 'MID', rating: 84, club: 'AC Milan', season: '1989-90', altPositions: ['RM', 'AM'] },
+      { id: 'evani-mil-8990', name: 'Alberigo Evani', position: 'MID', rating: 79, club: 'AC Milan', season: '1989-90', altPositions: ['LM'] },
+      { id: 'van-basten-mil-8990', name: 'Marco van Basten', position: 'FWD', rating: 94, club: 'AC Milan', season: '1989-90', altPositions: ['ST'] },
+      { id: 'gullit-mil-8990', name: 'Ruud Gullit', position: 'FWD', rating: 92, club: 'AC Milan', season: '1989-90', altPositions: ['AM', 'ST'] },
+      { id: 'virdis-mil-8990', name: 'Pietro Paolo Virdis', position: 'FWD', rating: 79, club: 'AC Milan', season: '1989-90', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'dortmund-1996-97', club: 'Borussia Dortmund', shortName: 'BVB', season: '1996-97', league: 'ucl', color: '#FDE100',
+    players: [
+      { id: 'klos-bvb-9697', name: 'Stefan Klos', position: 'GK', rating: 82, club: 'Borussia Dortmund', season: '1996-97' },
+      { id: 'sammer-bvb-9697', name: 'Matthias Sammer', position: 'DEF', rating: 88, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['CB'] },
+      { id: 'kohler-bvb-9697', name: 'Jürgen Kohler', position: 'DEF', rating: 84, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['CB'] },
+      { id: 'reuter-bvb-9697', name: 'Stefan Reuter', position: 'DEF', rating: 82, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['RB'] },
+      { id: 'kree-bvb-9697', name: 'Stéphane Chapuisat', position: 'FWD', rating: 84, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['ST', 'LW'] },
+      { id: 'lambert-bvb-9697', name: 'Paul Lambert', position: 'MID', rating: 80, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['CM', 'DM'] },
+      { id: 'moller-bvb-9697', name: 'Andreas Möller', position: 'MID', rating: 85, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['AM'] },
+      { id: 'sousa-bvb-9697', name: 'Paulo Sousa', position: 'MID', rating: 83, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['CM', 'DM'] },
+      { id: 'ricken-bvb-9697', name: 'Lars Ricken', position: 'MID', rating: 80, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['AM', 'RW'] },
+      { id: 'riedle-bvb-9697', name: 'Karl-Heinz Riedle', position: 'FWD', rating: 84, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['ST'] },
+      { id: 'herrlich-bvb-9697', name: 'Heiko Herrlich', position: 'FWD', rating: 80, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['ST'] },
+      { id: 'zorc-bvb-9697', name: 'Michael Zorc', position: 'MID', rating: 81, club: 'Borussia Dortmund', season: '1996-97', altPositions: ['CM'] },
+    ]
+  },
+  {
     id: 'bayern-2012-13', club: 'Bayern Munich', shortName: 'BAY', season: '2012-13', league: 'ucl', color: '#DC052D',
     players: [
       { id: 'neuer-1213', name: 'Manuel Neuer', position: 'GK', rating: 94, club: 'Bayern Munich', season: '2012-13' },

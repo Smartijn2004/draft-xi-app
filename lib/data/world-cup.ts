@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const worldCupData: ClubSeason[] = [
   {
+    id: 'argentina-1978', club: 'Argentina', shortName: 'ARG', season: 'World Cup 1978', league: 'worldcup', color: '#75AADB',
+    players: [
+      { id: 'fillol-arg-1978', name: 'Ubaldo Fillol', position: 'GK', rating: 86, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina' },
+      { id: 'olguin-arg-1978', name: 'Jorge Olguín', position: 'DEF', rating: 79, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['RB'] },
+      { id: 'passarella-arg-1978', name: 'Daniel Passarella', position: 'DEF', rating: 87, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['CB'] },
+      { id: 'galvan-arg-1978', name: 'Luis Galván', position: 'DEF', rating: 82, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['CB'] },
+      { id: 'tarantini-arg-1978', name: 'Alberto Tarantini', position: 'DEF', rating: 81, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['LB'] },
+      { id: 'ardiles-arg-1978', name: 'Osvaldo Ardiles', position: 'MID', rating: 86, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['CM'] },
+      { id: 'gallego-arg-1978', name: 'Américo Gallego', position: 'MID', rating: 82, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['DM', 'CM'] },
+      { id: 'kempes-arg-1978', name: 'Mario Kempes', position: 'FWD', rating: 89, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['ST', 'AM'] },
+      { id: 'bertoni-arg-1978', name: 'Daniel Bertoni', position: 'MID', rating: 83, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['RW', 'AM'] },
+      { id: 'luque-arg-1978', name: 'Leopoldo Luque', position: 'FWD', rating: 84, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['ST'] },
+      { id: 'ortiz-arg-1978', name: 'Oscar Ortiz', position: 'FWD', rating: 79, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['LW'] },
+      { id: 'houseman-arg-1978', name: 'René Houseman', position: 'FWD', rating: 81, club: 'Argentina', season: 'World Cup 1978', nationality: 'Argentina', altPositions: ['RW'] },
+    ]
+  },
+  {
     id: 'spain-euro-2024', club: 'Spain', shortName: 'ESP', season: 'Euro 2024', league: 'worldcup', color: '#C60B1E',
     players: [
       { id: 'simon-esp-2024', name: 'Unai Simón', position: 'GK', rating: 84, club: 'Spain', season: 'Euro 2024', nationality: 'Spain' },
