@@ -2,6 +2,40 @@ import type { ClubSeason } from '../types'
 
 export const serieAData: ClubSeason[] = [
   {
+    id: 'juventus-1997-98', club: 'Juventus', shortName: 'JUV', season: '1997-98', league: 'seriea', color: '#000000',
+    players: [
+      { id: 'peruzzi-juv-9798', name: 'Angelo Peruzzi', position: 'GK', rating: 86, club: 'Juventus', season: '1997-98' },
+      { id: 'ferrara-juv-9798', name: 'Ciro Ferrara', position: 'DEF', rating: 83, club: 'Juventus', season: '1997-98', altPositions: ['CB'] },
+      { id: 'iuliano-juv-9798', name: 'Mark Iuliano', position: 'DEF', rating: 80, club: 'Juventus', season: '1997-98', altPositions: ['CB'] },
+      { id: 'pessotto-juv-9798', name: 'Gianluca Pessotto', position: 'DEF', rating: 81, club: 'Juventus', season: '1997-98', altPositions: ['LB'] },
+      { id: 'torricelli-juv-9798', name: 'Moreno Torricelli', position: 'DEF', rating: 80, club: 'Juventus', season: '1997-98', altPositions: ['RB'] },
+      { id: 'deschamps-juv-9798', name: 'Didier Deschamps', position: 'MID', rating: 84, club: 'Juventus', season: '1997-98', altPositions: ['DM', 'CM'] },
+      { id: 'davids-juv-9798', name: 'Edgar Davids', position: 'MID', rating: 85, club: 'Juventus', season: '1997-98', altPositions: ['CM'] },
+      { id: 'zidane-juv-9798', name: 'Zinedine Zidane', position: 'MID', rating: 91, club: 'Juventus', season: '1997-98', altPositions: ['AM'] },
+      { id: 'dilivio-juv-9798', name: 'Angelo Di Livio', position: 'MID', rating: 79, club: 'Juventus', season: '1997-98', altPositions: ['RM'] },
+      { id: 'delpiero-juv-9798', name: 'Alessandro Del Piero', position: 'FWD', rating: 89, club: 'Juventus', season: '1997-98', altPositions: ['ST', 'AM'] },
+      { id: 'inzaghi-juv-9798', name: 'Filippo Inzaghi', position: 'FWD', rating: 85, club: 'Juventus', season: '1997-98', altPositions: ['ST'] },
+      { id: 'amoruso-juv-9798', name: 'Nicola Amoruso', position: 'FWD', rating: 78, club: 'Juventus', season: '1997-98', altPositions: ['ST'] },
+    ]
+  },
+  {
+    id: 'sampdoria-1990-91', club: 'Sampdoria', shortName: 'SAM', season: '1990-91', league: 'seriea', color: '#1B459B',
+    players: [
+      { id: 'pagliuca-sam-9091', name: 'Gianluca Pagliuca', position: 'GK', rating: 84, club: 'Sampdoria', season: '1990-91' },
+      { id: 'mannini-sam-9091', name: 'Moreno Mannini', position: 'DEF', rating: 79, club: 'Sampdoria', season: '1990-91', altPositions: ['RB', 'CB'] },
+      { id: 'vierchowod-sam-9091', name: 'Pietro Vierchowod', position: 'DEF', rating: 84, club: 'Sampdoria', season: '1990-91', altPositions: ['CB'] },
+      { id: 'lanna-sam-9091', name: 'Marco Lanna', position: 'DEF', rating: 78, club: 'Sampdoria', season: '1990-91', altPositions: ['RB'] },
+      { id: 'pellegrini-sam-9091', name: 'Luca Pellegrini', position: 'DEF', rating: 78, club: 'Sampdoria', season: '1990-91', altPositions: ['LB'] },
+      { id: 'cerezo-sam-9091', name: 'Toninho Cerezo', position: 'MID', rating: 82, club: 'Sampdoria', season: '1990-91', altPositions: ['CM'] },
+      { id: 'pari-sam-9091', name: 'Fausto Pari', position: 'MID', rating: 78, club: 'Sampdoria', season: '1990-91', altPositions: ['DM'] },
+      { id: 'lombardo-sam-9091', name: 'Attilio Lombardo', position: 'MID', rating: 83, club: 'Sampdoria', season: '1990-91', altPositions: ['RM', 'RW'] },
+      { id: 'katanec-sam-9091', name: 'Srečko Katanec', position: 'MID', rating: 79, club: 'Sampdoria', season: '1990-91', altPositions: ['CM'] },
+      { id: 'mancini-sam-9091', name: 'Roberto Mancini', position: 'FWD', rating: 86, club: 'Sampdoria', season: '1990-91', altPositions: ['AM', 'ST'] },
+      { id: 'vialli-sam-9091', name: 'Gianluca Vialli', position: 'FWD', rating: 87, club: 'Sampdoria', season: '1990-91', altPositions: ['ST'] },
+      { id: 'bonetti-sam-9091', name: 'Ivano Bonetti', position: 'MID', rating: 79, club: 'Sampdoria', season: '1990-91', altPositions: ['AM'] },
+    ]
+  },
+  {
     id: 'inter-1997-98', club: 'Inter Milan', shortName: 'INT', season: '1997-98', league: 'seriea', color: '#0068A8',
     players: [
       { id: 'pagliuca-9798', name: 'Gianluca Pagliuca', position: 'GK', rating: 84, club: 'Inter Milan', season: '1997-98' },

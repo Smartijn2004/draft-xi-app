@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const championsLeagueData: ClubSeason[] = [
   {
+    id: 'bayern-2000-01', club: 'Bayern Munich', shortName: 'BAY', season: '2000-01', league: 'ucl', color: '#DC052D',
+    players: [
+      { id: 'kahn-bay-0001', name: 'Oliver Kahn', position: 'GK', rating: 92, club: 'Bayern Munich', season: '2000-01' },
+      { id: 'lizarazu-bay-0001', name: 'Bixente Lizarazu', position: 'DEF', rating: 84, club: 'Bayern Munich', season: '2000-01', altPositions: ['LB'] },
+      { id: 'kuffour-bay-0001', name: 'Samuel Kuffour', position: 'DEF', rating: 82, club: 'Bayern Munich', season: '2000-01', altPositions: ['CB'] },
+      { id: 'andersson-bay-0001', name: 'Patrik Andersson', position: 'DEF', rating: 81, club: 'Bayern Munich', season: '2000-01', altPositions: ['CB'] },
+      { id: 'sagnol-bay-0001', name: 'Willy Sagnol', position: 'DEF', rating: 81, club: 'Bayern Munich', season: '2000-01', altPositions: ['RB'] },
+      { id: 'effenberg-bay-0001', name: 'Stefan Effenberg', position: 'MID', rating: 86, club: 'Bayern Munich', season: '2000-01', altPositions: ['CM'] },
+      { id: 'jeremies-bay-0001', name: 'Jens Jeremies', position: 'MID', rating: 81, club: 'Bayern Munich', season: '2000-01', altPositions: ['DM'] },
+      { id: 'scholl-bay-0001', name: 'Mehmet Scholl', position: 'MID', rating: 84, club: 'Bayern Munich', season: '2000-01', altPositions: ['AM'] },
+      { id: 'salihamidzic-bay-0001', name: 'Hasan Salihamidžić', position: 'MID', rating: 80, club: 'Bayern Munich', season: '2000-01', altPositions: ['RM', 'CM'] },
+      { id: 'elber-bay-0001', name: 'Giovane Élber', position: 'FWD', rating: 85, club: 'Bayern Munich', season: '2000-01', altPositions: ['ST'] },
+      { id: 'jancker-bay-0001', name: 'Carsten Jancker', position: 'FWD', rating: 80, club: 'Bayern Munich', season: '2000-01', altPositions: ['ST'] },
+      { id: 'paulo-sergio-bay-0001', name: 'Paulo Sérgio', position: 'FWD', rating: 80, club: 'Bayern Munich', season: '2000-01', altPositions: ['AM', 'ST'] },
+    ]
+  },
+  {
     id: 'ac-milan-1989-90', club: 'AC Milan', shortName: 'MIL', season: '1989-90', league: 'ucl', color: '#FB090B',
     players: [
       { id: 'galli-mil-8990', name: 'Giovanni Galli', position: 'GK', rating: 82, club: 'AC Milan', season: '1989-90' },

@@ -2,6 +2,40 @@ import type { ClubSeason } from '../types'
 
 export const laLigaData: ClubSeason[] = [
   {
+    id: 'real-madrid-2002-03', club: 'Real Madrid', shortName: 'RMA', season: '2002-03', league: 'laliga', color: '#FEBE10',
+    players: [
+      { id: 'casillas-0203', name: 'Iker Casillas', position: 'GK', rating: 87, club: 'Real Madrid', season: '2002-03' },
+      { id: 'roberto-carlos-0203', name: 'Roberto Carlos', position: 'DEF', rating: 88, club: 'Real Madrid', season: '2002-03', altPositions: ['LB'] },
+      { id: 'hierro-0203', name: 'Fernando Hierro', position: 'DEF', rating: 85, club: 'Real Madrid', season: '2002-03', altPositions: ['CB'] },
+      { id: 'helguera-0203', name: 'Iván Helguera', position: 'DEF', rating: 83, club: 'Real Madrid', season: '2002-03', altPositions: ['CB', 'DM'] },
+      { id: 'salgado-0203', name: 'Míchel Salgado', position: 'DEF', rating: 82, club: 'Real Madrid', season: '2002-03', altPositions: ['RB'] },
+      { id: 'zidane-rm-0203', name: 'Zinedine Zidane', position: 'MID', rating: 94, club: 'Real Madrid', season: '2002-03', altPositions: ['AM'] },
+      { id: 'figo-0203', name: 'Luís Figo', position: 'MID', rating: 89, club: 'Real Madrid', season: '2002-03', altPositions: ['RW', 'AM'] },
+      { id: 'makelele-0203', name: 'Claude Makélélé', position: 'MID', rating: 85, club: 'Real Madrid', season: '2002-03', altPositions: ['DM'] },
+      { id: 'solari-0203', name: 'Santiago Solari', position: 'MID', rating: 80, club: 'Real Madrid', season: '2002-03', altPositions: ['LM', 'LW'] },
+      { id: 'ronaldo-rm-0203', name: 'Ronaldo', position: 'FWD', rating: 93, club: 'Real Madrid', season: '2002-03', altPositions: ['ST'] },
+      { id: 'raul-0203', name: 'Raúl', position: 'FWD', rating: 88, club: 'Real Madrid', season: '2002-03', altPositions: ['ST', 'AM'] },
+      { id: 'guti-0203', name: 'Guti', position: 'MID', rating: 82, club: 'Real Madrid', season: '2002-03', altPositions: ['AM'] },
+    ]
+  },
+  {
+    id: 'deportivo-1999-00', club: 'Deportivo La Coruña', shortName: 'DEP', season: '1999-00', league: 'laliga', color: '#2E4DA7',
+    players: [
+      { id: 'songoo-dep-9900', name: 'Jacques Songo’o', position: 'GK', rating: 82, club: 'Deportivo La Coruña', season: '1999-00' },
+      { id: 'manuel-pablo-dep-9900', name: 'Manuel Pablo', position: 'DEF', rating: 80, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['RB'] },
+      { id: 'naybet-dep-9900', name: 'Nourredine Naybet', position: 'DEF', rating: 83, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['CB'] },
+      { id: 'donato-dep-9900', name: 'Donato', position: 'DEF', rating: 80, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['CB', 'DM'] },
+      { id: 'romero-dep-9900', name: 'Enrique Romero', position: 'DEF', rating: 79, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['LB'] },
+      { id: 'mauro-silva-dep-9900', name: 'Mauro Silva', position: 'MID', rating: 83, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['DM'] },
+      { id: 'flavio-dep-9900', name: 'Flávio Conceição', position: 'MID', rating: 81, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['CM'] },
+      { id: 'fran-dep-9900', name: 'Fran', position: 'MID', rating: 82, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['CM', 'AM'] },
+      { id: 'djalminha-dep-9900', name: 'Djalminha', position: 'MID', rating: 84, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['AM'] },
+      { id: 'makaay-dep-9900', name: 'Roy Makaay', position: 'FWD', rating: 85, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['ST'] },
+      { id: 'turu-flores-dep-9900', name: 'Turu Flores', position: 'FWD', rating: 79, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['ST'] },
+      { id: 'victor-dep-9900', name: 'Víctor Sánchez', position: 'MID', rating: 80, club: 'Deportivo La Coruña', season: '1999-00', altPositions: ['RW', 'AM'] },
+    ]
+  },
+  {
     id: 'barcelona-1991-92', club: 'Barcelona', shortName: 'BAR', season: '1991-92', league: 'laliga', color: '#A50044',
     players: [
       { id: 'zubizarreta-9192', name: 'Andoni Zubizarreta', position: 'GK', rating: 86, club: 'Barcelona', season: '1991-92' },
