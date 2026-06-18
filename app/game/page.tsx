@@ -9,7 +9,7 @@ import { runSimulation } from '@/lib/simulation'
 import { SLOT_ACCEPTS } from '@/lib/positions'
 import {
   recordSeason, recordDaily, getDailyRecord, getTodayKey,
-  getDailyChallengeNumber, getStreak, dateSeed, seededRng,
+  getDailyChallengeNumber, getStreak, dateSeed,
   loadActiveDraft, saveActiveDraft, clearActiveDraft,
   type SeasonRecordOutcome, type DailyRecord, type StoredState,
 } from '@/lib/storage'
@@ -114,7 +114,6 @@ function GameContent() {
   const [dailyChecked, setDailyChecked] = useState(false)
   const [careerOutcome, setCareerOutcome] = useState<SeasonRecordOutcome | null>(null)
   const [dailyStreak, setDailyStreak] = useState<StoredState['streak'] | null>(null)
-  const dailyRngRef = useRef<(() => number) | null>(null)
 
   useEffect(() => {
     if (!isDaily) return
@@ -276,13 +275,11 @@ function GameContent() {
       } else {
         let result: ClubSeason | null
         if (dailyChallenge) {
-          // Seeded by today's date: every player gets the same spin sequence
-          // from the same constraint-filtered pool.
-          if (!dailyRngRef.current) dailyRngRef.current = seededRng(dateSeed(getTodayKey()))
-          const all = pool
-          const available = all.filter(cs => !usedSpins.includes(cs.id))
-          const from = available.length > 0 ? available : all
-          result = from[Math.floor(dailyRngRef.current() * from.length)]
+          // Same challenge (rules/formation/difficulty) for everyone, but spins
+          // are fully random per player — no shared seeded sequence.
+          const available = pool.filter(cs => !usedSpins.includes(cs.id))
+          const from = available.length > 0 ? available : pool
+          result = from[Math.floor(Math.random() * from.length)]
         } else if (isEvent) {
           // Draw from the difficulty-sliced nation pool.
           const available = pool.filter(cs => !usedSpins.includes(cs.id))
