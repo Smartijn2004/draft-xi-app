@@ -58,7 +58,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'nico-oreilly-eng', name: "Nico O'Reilly", position: 'DEF', rating: 83, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['CM', 'LB'] },
       { id: 'marc-guehi-eng', name: "Marc Guehi", position: 'DEF', rating: 83, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['CB'] },
       { id: 'tino-livramento-eng', name: "Tino Livramento", position: 'DEF', rating: 83, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['RB', 'LB'] },
-      { id: 'jude-bellingham-eng', name: "Jude Bellingham", position: 'MID', rating: 90, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['AM', 'CM'] },
+      { id: 'jude-bellingham-eng', name: "Jude Bellingham", position: 'MID', rating: 88, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['AM', 'CM'] },
       { id: 'declan-rice-eng', name: "Declan Rice", position: 'MID', rating: 88, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['DM', 'CM'] },
       { id: 'morgan-rogers-eng', name: "Morgan Rogers", position: 'MID', rating: 84, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['AM'] },
       { id: 'eberechi-eze-eng', name: "Eberechi Eze", position: 'MID', rating: 84, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['AM', 'LW'] },
