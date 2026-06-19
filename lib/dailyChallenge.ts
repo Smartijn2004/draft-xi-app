@@ -1,4 +1,4 @@
-import { ALL_CLUB_SEASONS, getClubSeasonsForLeague } from './data'
+import { ALL_CLUB_SEASONS, getClubSeasonsForLeague, LEAGUE_CONFIGS } from './data'
 import { getDailyChallengeNumber, getTodayKey, dateSeed, DAILY_LEAGUE_ORDER } from './storage'
 import { FORMATIONS } from './types'
 import type { ClubSeason, Difficulty, LeagueId, Player } from './types'
@@ -38,6 +38,9 @@ function dailyDifficulty(seed: number): Difficulty {
 }
 
 const DIFFICULTY_LABEL: Record<Difficulty, string> = { easy: 'Easy', normal: 'Normal', hard: 'Hard' }
+const LEAGUE_NAMES: Record<LeagueId, string> = Object.fromEntries(
+  Object.values(LEAGUE_CONFIGS).map(c => [c.id, c.name]),
+) as Record<LeagueId, string>
 
 function decadeOf(season: string): number {
   // season like "2008-09" or "1998-99" -> 2000 / 1990
@@ -61,8 +64,8 @@ export function getDailyChallenge(dateKey: string = getTodayKey()): DailyChallen
     const decade = DECADES[seed % DECADES.length]
     return {
       number, hostLeague, constraint: { kind: 'decade', decade }, formation, difficulty,
-      label: `${decade}s Only`,
-      description: `Every player from the ${decade}s · ${rules}.`,
+      label: `${decade}s · Any League`,
+      description: `Draft a ${decade}s XI from ANY competition, then win the ${LEAGUE_NAMES[hostLeague]} · ${rules}.`,
     }
   }
   if (theme === 2) {
@@ -70,13 +73,13 @@ export function getDailyChallenge(dateKey: string = getTodayKey()): DailyChallen
     return {
       number, hostLeague, constraint: { kind: 'underdog', maxRating }, formation, difficulty,
       label: `Underdogs ≤${maxRating}`,
-      description: `No player rated above ${maxRating} · ${rules}.`,
+      description: `Draft from ANY competition, no player above ${maxRating}, then win the ${LEAGUE_NAMES[hostLeague]} · ${rules}.`,
     }
   }
   return {
     number, hostLeague, constraint: { kind: 'league' }, formation, difficulty,
     label: 'Single League',
-    description: `Classic daily — one competition · ${rules}.`,
+    description: `Draft from the ${LEAGUE_NAMES[hostLeague]} only · ${rules}.`,
   }
 }
 

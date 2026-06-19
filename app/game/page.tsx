@@ -983,8 +983,10 @@ function PlayerRow({ player, disabled, alreadyDrafted, blockedReason, hideRating
       </span>
       <div className="flex-1 min-w-0">
         <div className="text-white font-semibold text-sm truncate">{player.name}</div>
-        <div className="text-xs truncate" style={{ color: isBoosted ? accentColor + 'aa' : undefined }}>
-          {isBoosted
+        <div className="text-xs truncate" style={{ color: (isBoosted && !hideRatings) ? accentColor + 'aa' : undefined }}>
+          {/* In hard mode (hideRatings) never reveal the peak rating — show the
+             club/season instead so prime mode can't be used to peek. */}
+          {isBoosted && !hideRatings
             ? <span><span className="text-slate-600">{player.rating}</span> → <span style={{ color: accentColor }}>{primeRating} peak</span></span>
             : <span className="text-slate-500">{player.club} · {player.season}</span>
           }
