@@ -20,6 +20,7 @@ import { TeamFormation } from '@/components/TeamFormation'
 import { SeasonSimulator } from '@/components/SeasonSimulator'
 import { DailyLeaderboard } from '@/components/DailyLeaderboard'
 import { EventLeaderboard } from '@/components/EventLeaderboard'
+import { CompetitionLeaderboard } from '@/components/CompetitionLeaderboard'
 import { UsernamePrompt } from '@/components/UsernamePrompt'
 import { getNickname } from '@/lib/playerIdentity'
 import { MatchReveal } from '@/components/MatchReveal'
@@ -602,6 +603,20 @@ function GameContent() {
                 winRunId={eventWinRunId}
                 title={`${league.name} — Cups Won`}
                 accent={league.color}
+              />
+            </div>
+          )}
+          {!isDaily && !isEvent && (
+            <div className="mt-6">
+              <CompetitionLeaderboard
+                leagueId={leagueId}
+                leagueName={league.name}
+                nickname={username}
+                accent={league.color}
+                result={{
+                  won: seasonResult.won, drawn: seasonResult.drawn, lost: seasonResult.lost,
+                  isPerfect: seasonResult.isPerfect, trophyWon: seasonResult.trophyWon,
+                }}
               />
             </div>
           )}

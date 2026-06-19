@@ -345,3 +345,118 @@ export async function getEventLeaderboard(
 
   return { available: true, total, top, you }
 }
+
+// ── Per-competition best-season leaderboard ───────────────────────────────────
+// One row per (competition, player): the player's single best season in that
+// league, ranked by points. Reuses the daily board's row/view shape.
+
+let compSchemaReady: Promise<void> | null = null
+function ensureCompetitionSchema(): Promise<void> {
+  if (!compSchemaReady) {
+    compSchemaReady = pipeline([
+      {
+        sql: `CREATE TABLE IF NOT EXISTS competition_scores (
+          league_id   TEXT    NOT NULL,
+          player_id   TEXT    NOT NULL,
+          nickname    TEXT    NOT NULL,
+          points      INTEGER NOT NULL,
+          won         INTEGER NOT NULL,
+          drawn       INTEGER NOT NULL,
+          lost        INTEGER NOT NULL,
+          is_perfect  INTEGER NOT NULL DEFAULT 0,
+          trophy_won  INTEGER NOT NULL DEFAULT 0,
+          updated_at  TEXT    NOT NULL,
+          PRIMARY KEY (league_id, player_id)
+        )`,
+      },
+      { sql: `CREATE INDEX IF NOT EXISTS idx_comp_rank ON competition_scores (league_id, points DESC, won DESC, lost ASC, updated_at ASC)` },
+    ]).then(() => undefined).catch(err => { compSchemaReady = null; throw err })
+  }
+  return compSchemaReady
+}
+
+export type CompetitionSubmission = {
+  leagueId: string
+  playerId: string
+  nickname: string
+  points: number
+  won: number
+  drawn: number
+  lost: number
+  isPerfect: boolean
+  trophyWon: boolean
+}
+
+// Records a season, keeping only the player's best (highest points, then wins)
+// for that competition.
+export async function submitCompetitionScore(s: CompetitionSubmission): Promise<void> {
+  if (!httpBase()) return
+  await ensureCompetitionSchema()
+  await pipeline([{
+    sql: `INSERT INTO competition_scores
+            (league_id, player_id, nickname, points, won, drawn, lost, is_perfect, trophy_won, updated_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          ON CONFLICT(league_id, player_id) DO UPDATE SET
+            nickname = excluded.nickname, points = excluded.points, won = excluded.won,
+            drawn = excluded.drawn, lost = excluded.lost, is_perfect = excluded.is_perfect,
+            trophy_won = excluded.trophy_won, updated_at = excluded.updated_at
+          WHERE excluded.points > competition_scores.points
+             OR (excluded.points = competition_scores.points AND excluded.won > competition_scores.won)`,
+    args: [
+      s.leagueId, s.playerId, s.nickname, s.points, s.won, s.drawn, s.lost,
+      s.isPerfect ? 1 : 0, s.trophyWon ? 1 : 0, new Date().toISOString(),
+    ],
+  }])
+}
+
+export async function getCompetitionLeaderboard(
+  leagueId: string,
+  playerId: string | null,
+  limit = 20,
+): Promise<LeaderboardView> {
+  if (!httpBase()) return { available: false, total: 0, top: [], you: null }
+  await ensureCompetitionSchema()
+
+  const stmts: Stmt[] = [
+    { sql: `SELECT COUNT(*) AS n FROM competition_scores WHERE league_id = ?`, args: [leagueId] },
+    {
+      sql: `SELECT nickname, points, won, drawn, lost, is_perfect, trophy_won
+            FROM competition_scores WHERE league_id = ? ORDER BY ${ORDER_BY} LIMIT ?`,
+      args: [leagueId, limit],
+    },
+  ]
+  if (playerId) {
+    stmts.push({
+      sql: `SELECT nickname, points, won, drawn, lost, is_perfect, trophy_won
+            FROM competition_scores WHERE league_id = ? AND player_id = ?`,
+      args: [leagueId, playerId],
+    })
+    stmts.push({
+      sql: `SELECT COUNT(*) + 1 AS rank FROM competition_scores o
+            WHERE o.league_id = ? AND EXISTS (
+              SELECT 1 FROM competition_scores me
+              WHERE me.league_id = ? AND me.player_id = ? AND (
+                o.points > me.points
+                OR (o.points = me.points AND o.won > me.won)
+                OR (o.points = me.points AND o.won = me.won AND o.lost < me.lost)
+                OR (o.points = me.points AND o.won = me.won AND o.lost = me.lost AND o.updated_at < me.updated_at)
+              ))`,
+      args: [leagueId, leagueId, playerId],
+    })
+  }
+
+  const results = await pipeline(stmts)
+  const total = Number(rowsOf(results[0])[0]?.n ?? 0)
+  const top = rowsOf(results[1]).map((r, i) => toRow(r, i + 1))
+
+  let you: LeaderboardRow | null = null
+  if (playerId && results[2] && results[3]) {
+    const meRows = rowsOf(results[2])
+    if (meRows.length > 0) {
+      const rank = Number(rowsOf(results[3])[0]?.rank ?? top.length + 1)
+      you = toRow(meRows[0], rank)
+    }
+  }
+
+  return { available: true, total, top, you }
+}

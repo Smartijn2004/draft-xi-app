@@ -15,6 +15,12 @@ export default function HomePage() {
           📚 Clubs
         </Link>
         <Link
+          href="/leaderboards"
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold text-slate-300 border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white transition-all"
+        >
+          🏆 Leaderboards
+        </Link>
+        <Link
           href="/profile"
           className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold text-slate-300 border border-white/10 bg-white/5 hover:bg-white/10 hover:text-white transition-all"
         >
