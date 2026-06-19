@@ -417,11 +417,13 @@ export async function getCompetitionLeaderboard(
   if (!httpBase()) return { available: false, total: 0, top: [], you: null }
   await ensureCompetitionSchema()
 
+  // competition_scores tiebreaks on updated_at (it has no created_at column).
+  const compOrder = 'points DESC, won DESC, lost ASC, updated_at ASC'
   const stmts: Stmt[] = [
     { sql: `SELECT COUNT(*) AS n FROM competition_scores WHERE league_id = ?`, args: [leagueId] },
     {
       sql: `SELECT nickname, points, won, drawn, lost, is_perfect, trophy_won
-            FROM competition_scores WHERE league_id = ? ORDER BY ${ORDER_BY} LIMIT ?`,
+            FROM competition_scores WHERE league_id = ? ORDER BY ${compOrder} LIMIT ?`,
       args: [leagueId, limit],
     },
   ]

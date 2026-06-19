@@ -45,8 +45,13 @@ export async function GET(request: Request) {
     return Response.json({ error: 'Invalid league' }, { status: 400 })
   }
   const playerId = searchParams.get('playerId')?.slice(0, 64) || null
-  const view = await getCompetitionLeaderboard(leagueId, playerId)
-  return Response.json(view)
+  try {
+    const view = await getCompetitionLeaderboard(leagueId, playerId)
+    return Response.json(view)
+  } catch (err) {
+    console.error('[competition-leaderboard] read failed:', err)
+    return Response.json({ available: false, total: 0, top: [], you: null })
+  }
 }
 
 export async function POST(request: Request) {
