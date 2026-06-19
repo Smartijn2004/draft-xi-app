@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const serieAData: ClubSeason[] = [
   {
+    id: 'lazio-2019-20', club: 'Lazio', shortName: 'LAZ', season: '2019-20', league: 'seriea', color: '#87D8F7',
+    players: [
+      { id: 'strakosha-laz-1920', name: 'Thomas Strakosha', position: 'GK', rating: 80, club: 'Lazio', season: '2019-20' },
+      { id: 'lazzari-laz-1920', name: 'Manuel Lazzari', position: 'DEF', rating: 80, club: 'Lazio', season: '2019-20', altPositions: ['RB', 'RWB'] },
+      { id: 'acerbi-laz-1920', name: 'Francesco Acerbi', position: 'DEF', rating: 83, club: 'Lazio', season: '2019-20', altPositions: ['CB'] },
+      { id: 'luiz-felipe-laz-1920', name: 'Luiz Felipe', position: 'DEF', rating: 80, club: 'Lazio', season: '2019-20', altPositions: ['CB'] },
+      { id: 'radu-laz-1920', name: 'Stefan Radu', position: 'DEF', rating: 80, club: 'Lazio', season: '2019-20', altPositions: ['CB'] },
+      { id: 'marusic-laz-1920', name: 'Adam Marušić', position: 'DEF', rating: 79, club: 'Lazio', season: '2019-20', altPositions: ['LB', 'RWB'] },
+      { id: 'milinkovic-savic-laz-1920', name: 'Sergej Milinković-Savić', position: 'MID', rating: 85, club: 'Lazio', season: '2019-20', altPositions: ['CM', 'AM'] },
+      { id: 'leiva-laz-1920', name: 'Lucas Leiva', position: 'MID', rating: 81, club: 'Lazio', season: '2019-20', altPositions: ['DM'] },
+      { id: 'luis-alberto-laz-1920', name: 'Luis Alberto', position: 'MID', rating: 84, club: 'Lazio', season: '2019-20', altPositions: ['AM', 'CM'] },
+      { id: 'lulic-laz-1920', name: 'Senad Lulić', position: 'MID', rating: 79, club: 'Lazio', season: '2019-20', altPositions: ['LM', 'LB'] },
+      { id: 'immobile-laz-1920', name: 'Ciro Immobile', position: 'FWD', rating: 85, club: 'Lazio', season: '2019-20', altPositions: ['ST'] },
+      { id: 'correa-laz-1920', name: 'Joaquín Correa', position: 'FWD', rating: 82, club: 'Lazio', season: '2019-20', altPositions: ['ST', 'AM'] },
+    ]
+  },
+  {
     id: 'juventus-2005-06', club: 'Juventus', shortName: 'JUV', season: '2005-06', league: 'seriea', color: '#000000',
     players: [
       { id: 'buffon-juv-0506', name: 'Gianluigi Buffon', position: 'GK', rating: 90, club: 'Juventus', season: '2005-06' },

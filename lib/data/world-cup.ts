@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const worldCupData: ClubSeason[] = [
   {
+    id: 'france-euro-1984', club: 'France', shortName: 'FRA', season: 'Euro 1984', league: 'worldcup', color: '#1E3A8A',
+    players: [
+      { id: 'bats-fra-1984', name: 'Joël Bats', position: 'GK', rating: 80, club: 'France', season: 'Euro 1984', nationality: 'France' },
+      { id: 'amoros-fra-1984', name: 'Manuel Amoros', position: 'DEF', rating: 82, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['RB', 'LB'] },
+      { id: 'battiston-fra-1984', name: 'Patrick Battiston', position: 'DEF', rating: 81, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['CB', 'RB'] },
+      { id: 'bossis-fra-1984', name: 'Maxime Bossis', position: 'DEF', rating: 81, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['CB'] },
+      { id: 'le-roux-fra-1984', name: 'Yvon Le Roux', position: 'DEF', rating: 79, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['CB'] },
+      { id: 'fernandez-fra-1984', name: 'Luis Fernández', position: 'MID', rating: 82, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['DM', 'CM'] },
+      { id: 'tigana-fra-1984', name: 'Jean Tigana', position: 'MID', rating: 85, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['CM'] },
+      { id: 'giresse-fra-1984', name: 'Alain Giresse', position: 'MID', rating: 85, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['CM', 'AM'] },
+      { id: 'platini-fra-1984', name: 'Michel Platini', position: 'MID', rating: 92, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['AM'] },
+      { id: 'rocheteau-fra-1984', name: 'Dominique Rocheteau', position: 'FWD', rating: 82, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['ST', 'RW'] },
+      { id: 'lacombe-fra-1984', name: 'Bernard Lacombe', position: 'FWD', rating: 79, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['ST'] },
+      { id: 'bellone-fra-1984', name: 'Bruno Bellone', position: 'FWD', rating: 79, club: 'France', season: 'Euro 1984', nationality: 'France', altPositions: ['LW', 'ST'] },
+    ]
+  },
+  {
     id: 'west-germany-1990', club: 'West Germany', shortName: 'FRG', season: 'World Cup 1990', league: 'worldcup', color: '#000000',
     players: [
       { id: 'illgner-frg-1990', name: 'Bodo Illgner', position: 'GK', rating: 82, club: 'West Germany', season: 'World Cup 1990', nationality: 'Germany' },

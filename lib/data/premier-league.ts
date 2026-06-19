@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const premierLeagueData: ClubSeason[] = [
   {
+    id: 'tottenham-2012-13', club: 'Tottenham Hotspur', shortName: 'TOT', season: '2012-13', league: 'pl', color: '#132257',
+    players: [
+      { id: 'lloris-1213', name: 'Hugo Lloris', position: 'GK', rating: 84, club: 'Tottenham Hotspur', season: '2012-13' },
+      { id: 'walker-1213', name: 'Kyle Walker', position: 'DEF', rating: 80, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['RB'] },
+      { id: 'vertonghen-1213', name: 'Jan Vertonghen', position: 'DEF', rating: 84, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['CB', 'LB'] },
+      { id: 'dawson-1213', name: 'Michael Dawson', position: 'DEF', rating: 80, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['CB'] },
+      { id: 'assou-ekotto-1213', name: 'Benoît Assou-Ekotto', position: 'DEF', rating: 79, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['LB'] },
+      { id: 'dembele-1213', name: 'Mousa Dembélé', position: 'MID', rating: 83, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['CM', 'DM'] },
+      { id: 'sandro-1213', name: 'Sandro', position: 'MID', rating: 81, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['DM', 'CM'] },
+      { id: 'lennon-1213', name: 'Aaron Lennon', position: 'MID', rating: 80, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['RM', 'RW'] },
+      { id: 'sigurdsson-1213', name: 'Gylfi Sigurðsson', position: 'MID', rating: 80, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['AM', 'CM'] },
+      { id: 'bale-1213', name: 'Gareth Bale', position: 'FWD', rating: 89, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['LW', 'AM'] },
+      { id: 'defoe-1213', name: 'Jermain Defoe', position: 'FWD', rating: 82, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['ST'] },
+      { id: 'dempsey-1213', name: 'Clint Dempsey', position: 'FWD', rating: 80, club: 'Tottenham Hotspur', season: '2012-13', altPositions: ['AM', 'ST'] },
+    ]
+  },
+  {
     id: 'man-united-1995-96', club: 'Manchester United', shortName: 'MUN', season: '1995-96', league: 'pl', color: '#DA291C',
     players: [
       { id: 'schmeichel-9596', name: 'Peter Schmeichel', position: 'GK', rating: 89, club: 'Manchester United', season: '1995-96' },

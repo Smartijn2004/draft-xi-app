@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const championsLeagueData: ClubSeason[] = [
   {
+    id: 'porto-2010-11', club: 'FC Porto', shortName: 'POR', season: '2010-11', league: 'ucl', color: '#0028A0',
+    players: [
+      { id: 'helton-por-1011', name: 'Helton', position: 'GK', rating: 80, club: 'FC Porto', season: '2010-11' },
+      { id: 'fucile-por-1011', name: 'Jorge Fucile', position: 'DEF', rating: 79, club: 'FC Porto', season: '2010-11', altPositions: ['RB', 'LB'] },
+      { id: 'otamendi-por-1011', name: 'Nicolás Otamendi', position: 'DEF', rating: 81, club: 'FC Porto', season: '2010-11', altPositions: ['CB'] },
+      { id: 'rolando-por-1011', name: 'Rolando', position: 'DEF', rating: 80, club: 'FC Porto', season: '2010-11', altPositions: ['CB'] },
+      { id: 'alvaro-pereira-por-1011', name: 'Álvaro Pereira', position: 'DEF', rating: 80, club: 'FC Porto', season: '2010-11', altPositions: ['LB', 'LM'] },
+      { id: 'fernando-por-1011', name: 'Fernando', position: 'MID', rating: 80, club: 'FC Porto', season: '2010-11', altPositions: ['DM', 'CM'] },
+      { id: 'moutinho-por-1011', name: 'João Moutinho', position: 'MID', rating: 84, club: 'FC Porto', season: '2010-11', altPositions: ['CM'] },
+      { id: 'guarin-por-1011', name: 'Fredy Guarín', position: 'MID', rating: 81, club: 'FC Porto', season: '2010-11', altPositions: ['CM', 'AM'] },
+      { id: 'hulk-por-1011', name: 'Hulk', position: 'FWD', rating: 85, club: 'FC Porto', season: '2010-11', altPositions: ['RW', 'ST'] },
+      { id: 'falcao-por-1011', name: 'Radamel Falcao', position: 'FWD', rating: 86, club: 'FC Porto', season: '2010-11', altPositions: ['ST'] },
+      { id: 'varela-por-1011', name: 'Silvestre Varela', position: 'FWD', rating: 79, club: 'FC Porto', season: '2010-11', altPositions: ['LW', 'RW'] },
+      { id: 'james-por-1011', name: 'James Rodríguez', position: 'MID', rating: 78, club: 'FC Porto', season: '2010-11', altPositions: ['AM', 'LW'] },
+    ]
+  },
+  {
     id: 'leverkusen-2001-02', club: 'Bayer Leverkusen', shortName: 'B04', season: '2001-02', league: 'ucl', color: '#E32219',
     players: [
       { id: 'butt-lev-0102', name: 'Hans-Jörg Butt', position: 'GK', rating: 82, club: 'Bayer Leverkusen', season: '2001-02' },

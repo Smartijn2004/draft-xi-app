@@ -2,6 +2,23 @@ import type { ClubSeason } from '../types'
 
 export const laLigaData: ClubSeason[] = [
   {
+    id: 'villarreal-2021-22', club: 'Villarreal', shortName: 'VIL', season: '2021-22', league: 'laliga', color: '#FFE667',
+    players: [
+      { id: 'rulli-vil-2122', name: 'Gerónimo Rulli', position: 'GK', rating: 82, club: 'Villarreal', season: '2021-22' },
+      { id: 'foyth-vil-2122', name: 'Juan Foyth', position: 'DEF', rating: 82, club: 'Villarreal', season: '2021-22', altPositions: ['RB', 'CB'] },
+      { id: 'albiol-vil-2122', name: 'Raúl Albiol', position: 'DEF', rating: 81, club: 'Villarreal', season: '2021-22', altPositions: ['CB'] },
+      { id: 'pau-torres-vil-2122', name: 'Pau Torres', position: 'DEF', rating: 84, club: 'Villarreal', season: '2021-22', altPositions: ['CB'] },
+      { id: 'pedraza-vil-2122', name: 'Alfonso Pedraza', position: 'DEF', rating: 79, club: 'Villarreal', season: '2021-22', altPositions: ['LB', 'LM'] },
+      { id: 'capoue-vil-2122', name: 'Étienne Capoue', position: 'MID', rating: 82, club: 'Villarreal', season: '2021-22', altPositions: ['DM', 'CM'] },
+      { id: 'parejo-vil-2122', name: 'Dani Parejo', position: 'MID', rating: 84, club: 'Villarreal', season: '2021-22', altPositions: ['CM'] },
+      { id: 'coquelin-vil-2122', name: 'Francis Coquelin', position: 'MID', rating: 80, club: 'Villarreal', season: '2021-22', altPositions: ['CM', 'DM'] },
+      { id: 'lo-celso-vil-2122', name: 'Giovani Lo Celso', position: 'MID', rating: 82, club: 'Villarreal', season: '2021-22', altPositions: ['AM', 'CM'] },
+      { id: 'chukwueze-vil-2122', name: 'Samuel Chukwueze', position: 'MID', rating: 81, club: 'Villarreal', season: '2021-22', altPositions: ['RW'] },
+      { id: 'gerard-moreno-vil-2122', name: 'Gerard Moreno', position: 'FWD', rating: 85, club: 'Villarreal', season: '2021-22', altPositions: ['ST'] },
+      { id: 'danjuma-vil-2122', name: 'Arnaut Danjuma', position: 'FWD', rating: 83, club: 'Villarreal', season: '2021-22', altPositions: ['LW', 'ST'] },
+    ]
+  },
+  {
     id: 'real-madrid-1987-88', club: 'Real Madrid', shortName: 'RMA', season: '1987-88', league: 'laliga', color: '#FEBE10',
     players: [
       { id: 'buyo-rm-8788', name: 'Francisco Buyo', position: 'GK', rating: 82, club: 'Real Madrid', season: '1987-88' },
