@@ -61,6 +61,7 @@ export const worldCupData: ClubSeason[] = [
       { id: 'lenormand-esp-2024', name: 'Robin Le Normand', position: 'DEF', rating: 83, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['CB'] },
       { id: 'carvajal-esp-2024', name: 'Dani Carvajal', position: 'DEF', rating: 85, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['RB'] },
       { id: 'rodri-esp-2024', name: 'Rodri', position: 'MID', rating: 90, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['DM', 'CM'] },
+      { id: 'pedri-esp-2024', name: 'Pedri', position: 'MID', rating: 89, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['CM', 'AM'] },
       { id: 'fabian-esp-2024', name: 'Fabián Ruiz', position: 'MID', rating: 84, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['CM'] },
       { id: 'olmo-esp-2024', name: 'Dani Olmo', position: 'MID', rating: 85, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['AM', 'CM'] },
       { id: 'yamal-esp-2024', name: 'Lamine Yamal', position: 'FWD', rating: 88, club: 'Spain', season: 'Euro 2024', nationality: 'Spain', altPositions: ['RW'] },
