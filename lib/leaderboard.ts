@@ -462,3 +462,71 @@ export async function getCompetitionLeaderboard(
 
   return { available: true, total, top, you }
 }
+
+// ── Team of the Week — most-drafted players this week ─────────────────────────
+// Every finished draft (any mode) increments a pick count per player for the
+// current week; the community XI is the most-drafted player per slot. Anonymous
+// and aggregate — no nickname needed.
+
+export type TotwRow = { name: string; position: string; picks: number }
+export type TeamOfWeek = { available: boolean; week: string; total: number; xi: TotwRow[] }
+
+// UTC Monday of the current week, as a YYYY-MM-DD key. Server-authoritative so
+// reads and writes always target the same window.
+export function currentWeekKey(): string {
+  const d = new Date()
+  const mondayOffset = (d.getUTCDay() + 6) % 7 // Mon = 0
+  const monday = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() - mondayOffset))
+  return monday.toISOString().slice(0, 10)
+}
+
+let totwSchemaReady: Promise<void> | null = null
+function ensureTotwSchema(): Promise<void> {
+  if (!totwSchemaReady) {
+    totwSchemaReady = pipeline([
+      {
+        sql: `CREATE TABLE IF NOT EXISTS player_picks (
+          week     TEXT    NOT NULL,
+          name     TEXT    NOT NULL,
+          position TEXT    NOT NULL,
+          picks    INTEGER NOT NULL DEFAULT 0,
+          PRIMARY KEY (week, name)
+        )`,
+      },
+      { sql: `CREATE INDEX IF NOT EXISTS idx_totw ON player_picks (week, position, picks DESC)` },
+    ]).then(() => undefined).catch(err => { totwSchemaReady = null; throw err })
+  }
+  return totwSchemaReady
+}
+
+export async function recordPicks(players: { name: string; position: string }[]): Promise<void> {
+  if (!httpBase() || players.length === 0) return
+  await ensureTotwSchema()
+  const week = currentWeekKey()
+  await pipeline(players.map(p => ({
+    sql: `INSERT INTO player_picks (week, name, position, picks) VALUES (?, ?, ?, 1)
+          ON CONFLICT(week, name) DO UPDATE SET picks = picks + 1`,
+    args: [week, p.name, p.position],
+  })))
+}
+
+export async function getTeamOfWeek(): Promise<TeamOfWeek> {
+  if (!httpBase()) return { available: false, week: '', total: 0, xi: [] }
+  await ensureTotwSchema()
+  const week = currentWeekKey()
+  const want: [string, number][] = [['GK', 1], ['DEF', 4], ['MID', 3], ['FWD', 3]]
+  const stmts: Stmt[] = [
+    { sql: `SELECT COUNT(*) AS n FROM player_picks WHERE week = ?`, args: [week] },
+    ...want.map(([pos, lim]) => ({
+      sql: `SELECT name, position, picks FROM player_picks WHERE week = ? AND position = ? ORDER BY picks DESC, name LIMIT ?`,
+      args: [week, pos, lim] as SqlArg[],
+    })),
+  ]
+  const res = await pipeline(stmts)
+  const total = Number(rowsOf(res[0])[0]?.n ?? 0)
+  const xi: TotwRow[] = []
+  for (let i = 1; i < res.length; i++) {
+    for (const r of rowsOf(res[i])) xi.push({ name: String(r.name ?? ''), position: String(r.position ?? ''), picks: Number(r.picks ?? 0) })
+  }
+  return { available: true, week, total, xi }
+}

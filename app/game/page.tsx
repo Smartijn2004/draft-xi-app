@@ -383,6 +383,11 @@ function GameContent() {
     // A live-event cup win earns one leaderboard increment, tagged with a unique
     // run id so the EventLeaderboard records it exactly once.
     setEventWinRunId(isEvent && result.trophyWon ? `${Date.now()}-${Math.random().toString(36).slice(2)}` : null)
+    // Feed the community Team of the Week (anonymous, fire-and-forget).
+    fetch('/api/team-of-week', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ players: team.map(p => ({ name: p.name, position: p.slotPosition })) }),
+    }).catch(() => {})
     if (isDaily) {
       const record: DailyRecord = {
         date: getTodayKey(),

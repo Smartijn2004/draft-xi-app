@@ -6,9 +6,10 @@ import { PointsBoard, type PointsView } from '@/components/PointsBoard'
 
 // League display info kept local (not imported from lib/data) so the whole
 // player database isn't pulled into this client bundle.
-type Tab = { kind: 'comp' | 'daily' | 'event'; key: string; label: string; color: string }
+type Tab = { kind: 'comp' | 'daily' | 'event' | 'totw'; key: string; label: string; color: string }
 const TABS: Tab[] = [
   { kind: 'daily', key: 'daily', label: 'Daily', color: '#34d399' },
+  { kind: 'totw', key: 'totw', label: '⭐ Team of the Week', color: '#f472b6' },
   { kind: 'comp', key: 'pl', label: 'Premier League', color: '#10b981' },
   { kind: 'comp', key: 'laliga', label: 'La Liga', color: '#ef4444' },
   { kind: 'comp', key: 'seriea', label: 'Serie A', color: '#3b82f6' },
@@ -20,6 +21,8 @@ const TABS: Tab[] = [
 
 type WinsRow = { rank: number; nickname: string; wins: number }
 type WinsView = { available: boolean; total: number; top: WinsRow[]; you: WinsRow | null }
+type TotwRow = { name: string; position: string; picks: number }
+type TotwView = { available: boolean; week: string; total: number; xi: TotwRow[] }
 type Difficulty = 'easy' | 'normal' | 'hard'
 
 export default function LeaderboardsPage() {
@@ -27,6 +30,7 @@ export default function LeaderboardsPage() {
   const [difficulty, setDifficulty] = useState<Difficulty>('hard')
   const [points, setPoints] = useState<PointsView | null>(null)
   const [wins, setWins] = useState<WinsView | null>(null)
+  const [totw, setTotw] = useState<TotwView | null>(null)
   const [loading, setLoading] = useState(true)
 
   const tab = TABS[active]
@@ -36,24 +40,27 @@ export default function LeaderboardsPage() {
     setLoading(true)
     setPoints(null)
     setWins(null)
+    setTotw(null)
     const pid = getPlayerId()
     const today = new Date().toISOString().slice(0, 10)
     const url =
       tab.kind === 'comp' ? `/api/competition-leaderboard?league=${tab.key}&playerId=${encodeURIComponent(pid)}`
         : tab.kind === 'daily' ? `/api/leaderboard?date=${today}&playerId=${encodeURIComponent(pid)}`
-          : `/api/event-leaderboard?event=worldcup2026&difficulty=${difficulty}&playerId=${encodeURIComponent(pid)}`
+          : tab.kind === 'totw' ? `/api/team-of-week`
+            : `/api/event-leaderboard?event=worldcup2026&difficulty=${difficulty}&playerId=${encodeURIComponent(pid)}`
     fetch(url)
       .then(r => r.json())
-      .then(v => { if (!alive) return; if (tab.kind === 'event') setWins(v); else setPoints(v) })
+      .then(v => { if (!alive) return; if (tab.kind === 'event') setWins(v); else if (tab.kind === 'totw') setTotw(v); else setPoints(v) })
       .catch(() => {})
       .finally(() => { if (alive) setLoading(false) })
     return () => { alive = false }
   }, [active, difficulty, tab.kind, tab.key])
 
-  const view = tab.kind === 'event' ? wins : points
+  const view = tab.kind === 'event' ? wins : tab.kind === 'totw' ? totw : points
   const subtitle =
     tab.kind === 'comp' ? 'All-time best seasons' :
-      tab.kind === 'daily' ? "Today's challenge" : 'Cups won'
+      tab.kind === 'daily' ? "Today's challenge" :
+        tab.kind === 'totw' ? 'Most-drafted XI this week' : 'Cups won'
 
   return (
     <main className="min-h-screen bg-[var(--background)] text-slate-100">
@@ -87,7 +94,9 @@ export default function LeaderboardsPage() {
               <p className="text-xs text-slate-500">{subtitle}</p>
             </div>
             {view && view.available && view.total > 0 && (
-              <span className="text-xs font-semibold text-slate-400">{view.total} player{view.total !== 1 ? 's' : ''}</span>
+              <span className="text-xs font-semibold text-slate-400">
+                {view.total} {tab.kind === 'totw' ? `draft${view.total !== 1 ? 's' : ''}` : `player${view.total !== 1 ? 's' : ''}`}
+              </span>
             )}
           </div>
 
@@ -120,6 +129,10 @@ export default function LeaderboardsPage() {
 
           {!loading && tab.kind === 'event' && wins && wins.available && (
             <WinsBoard view={wins} accent={tab.color} />
+          )}
+
+          {!loading && tab.kind === 'totw' && totw && totw.available && (
+            <TotwBoard view={totw} accent={tab.color} />
           )}
         </div>
 
@@ -164,6 +177,30 @@ function WinsBoard({ view, accent }: { view: WinsView; accent: string }) {
           <Row r={you} isYou />
         </>
       )}
+    </div>
+  )
+}
+
+const POS_COLOR: Record<string, string> = { GK: '#eab308', DEF: '#3b82f6', MID: '#22c55e', FWD: '#ef4444' }
+function TotwBoard({ view, accent }: { view: TotwView; accent: string }) {
+  if (view.xi.length === 0) {
+    return <p className="py-4 text-center text-xs text-slate-500">No drafts yet this week — play a game to seed it!</p>
+  }
+  const order = ['FWD', 'MID', 'DEF', 'GK']
+  const byPos = order.map(pos => ({ pos, players: view.xi.filter(p => p.position === pos) })).filter(g => g.players.length > 0)
+  return (
+    <div className="flex flex-col gap-3">
+      {byPos.map(({ pos, players }) => (
+        <div key={pos} className="flex flex-col gap-1">
+          <span className="text-[10px] font-black uppercase tracking-widest" style={{ color: POS_COLOR[pos] }}>{pos}</span>
+          {players.map((p, i) => (
+            <div key={p.name + i} className="flex items-center gap-3 rounded-lg px-3 py-2 bg-white/3">
+              <span className="flex-1 min-w-0 truncate text-sm font-bold text-slate-100">{p.name}</span>
+              <span className="shrink-0 text-xs font-semibold" style={{ color: accent }}>{p.picks} pick{p.picks !== 1 ? 's' : ''}</span>
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
   )
 }
