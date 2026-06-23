@@ -242,7 +242,17 @@ function simulateMatch(
   oppName?: string,
   tactic: Tactic = 'balanced'
 ): { result: 'W' | 'D' | 'L'; myGoals: number; oppGoals: number; scorers: GoalEvent[]; opponentScorers: GoalEvent[] } {
-  const effectiveRating = myRating + PLAYER_ADVANTAGE
+  // Star-power edge: each genuine superstar (≥95) in the XI lends a tiny extra
+  // edge. Normal teams have none, so this is silent for ordinary play; only a
+  // legend-stacked side gets a meaningful (still small, capped) boost — one of
+  // the two levers that make a Perfect Season barely possible.
+  const STAR_THRESHOLD = 95
+  const STAR_PER = 0.4
+  const STAR_CAP = 2.5
+  const starBonus = players
+    ? Math.min(STAR_CAP, players.filter(p => p.rating >= STAR_THRESHOLD).length * STAR_PER)
+    : 0
+  const effectiveRating = myRating + PLAYER_ADVANTAGE + starBonus
   const diff = (effectiveRating - oppRating) / 9
   const rawWin = 1 / (1 + Math.exp(-diff))
   // Higher draw rate, especially in close games, so a dominant side grinds out
@@ -275,6 +285,17 @@ function simulateMatch(
     win += fromDraw * winShare
     loss += fromDraw * (1 - winShare)
     drawP -= fromDraw
+  } else if (tactic === 'total') {
+    // Total Football: throw everyone forward. Draws collapse into decisive
+    // results even harder than attacking, and the split is skewed toward wins
+    // for a dominant side (winShare^0.6 → close to 1) but toward losses for an
+    // ordinary one. The only route to 34W-0L with a legend-stacked XI; a
+    // gamble that batters a weak side. Pairs with the star-power edge above.
+    const fromDraw = drawP * 0.6
+    const winShare = Math.pow(win / (win + loss || 1), 0.6)
+    win += fromDraw * winShare
+    loss += fromDraw * (1 - winShare)
+    drawP -= fromDraw
   }
 
   const r = rng()
@@ -288,8 +309,8 @@ function simulateMatch(
   // the win/draw/loss reconciliation below, a dominant XI averages ~2.3 goals
   // and racks up ~85–95 across a 38-game season, while mid-table sides land
   // around 50–60 — realistic top-flight numbers.
-  const myMul = tactic === 'attacking' ? 1.22 : tactic === 'defensive' ? 0.82 : 1
-  const oppMul = tactic === 'attacking' ? 1.28 : tactic === 'defensive' ? 0.72 : 1
+  const myMul = tactic === 'attacking' ? 1.22 : tactic === 'total' ? 1.25 : tactic === 'defensive' ? 0.82 : 1
+  const oppMul = tactic === 'attacking' ? 1.28 : tactic === 'total' ? 1.15 : tactic === 'defensive' ? 0.72 : 1
   const effectiveDiff = effectiveRating - oppRating
   const λMy = (0.95 + effectiveDiff / 15) * myMul
   const λOpp = (0.95 - effectiveDiff / 19) * oppMul

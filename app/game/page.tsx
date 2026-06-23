@@ -501,11 +501,12 @@ function GameContent() {
 
             <div className="space-y-3">
               <div className="text-xs font-bold text-slate-400 uppercase tracking-widest">Tactics</div>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 {([
                   { key: 'attacking' as Tactic, emoji: '⚔️', label: 'Attacking', desc: 'More goals, more risk' },
                   { key: 'balanced'  as Tactic, emoji: '⚖️', label: 'Balanced',  desc: 'Even approach' },
                   { key: 'defensive' as Tactic, emoji: '🛡️', label: 'Defensive', desc: 'Park the bus, chase unbeaten' },
+                  { key: 'total'     as Tactic, emoji: '⚡', label: 'Total Football', desc: 'Overwhelm everyone — only an elite XI survives it' },
                 ] as const).map(({ key, emoji, label, desc }) => (
                   <button key={key} onClick={() => setTactic(key)}
                     className={`rounded-xl border p-3 text-center transition-all hover:scale-[1.02] ${
@@ -712,7 +713,7 @@ function GameContent() {
                   {tactic !== 'balanced' && (
                     <span className="ml-2 text-[10px] font-bold px-1.5 py-0.5 rounded"
                       style={{ background: league.color + '33', color: league.color }}>
-                      {tactic === 'defensive' ? '🛡️ Defensive' : '⚔️ Attacking'}
+                      {tactic === 'defensive' ? '🛡️ Defensive' : tactic === 'attacking' ? '⚔️ Attacking' : '⚡ Total Football'}
                     </span>
                   )}
                 </div>
