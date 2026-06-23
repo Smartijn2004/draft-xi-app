@@ -166,9 +166,39 @@ export function getClubSeasonsForLeague(leagueId: LeagueId): ClubSeason[] {
   return LEAGUE_DATA[leagueId] ?? []
 }
 
+// Mean player rating of a club-season, cached. Used to weight Legends spins.
+const CLUB_QUALITY = new Map<string, number>()
+export function clubQuality(cs: ClubSeason): number {
+  let q = CLUB_QUALITY.get(cs.id)
+  if (q === undefined) {
+    q = cs.players.reduce((s, p) => s + p.rating, 0) / (cs.players.length || 1)
+    CLUB_QUALITY.set(cs.id, q)
+  }
+  return q
+}
+
+// Legends draws from the whole all-era pool, so adding mid-tier club-seasons
+// dilutes the elite density and makes it harder to build a squad on par with
+// the 90-95 legendary opponents. For Legends only, weight the spin toward
+// stronger club-seasons (∝ (mean − 74)^3) so you land on greats more often,
+// without changing the "every season equally likely" feel of the single
+// leagues.
+function weightedSpin(pool: ClubSeason[]): ClubSeason {
+  const weights = pool.map(cs => Math.pow(Math.max(1, clubQuality(cs) - 74), 3))
+  const total = weights.reduce((a, b) => a + b, 0)
+  let r = Math.random() * total
+  for (let i = 0; i < pool.length; i++) {
+    r -= weights[i]
+    if (r <= 0) return pool[i]
+  }
+  return pool[pool.length - 1]
+}
+
 export function spinClubSeason(leagueId: LeagueId, usedIds: string[]): ClubSeason | null {
   const all = getClubSeasonsForLeague(leagueId)
   const available = all.filter(cs => !usedIds.includes(cs.id))
-  if (available.length === 0) return all[Math.floor(Math.random() * all.length)]
-  return available[Math.floor(Math.random() * available.length)]
+  const pool = available.length > 0 ? available : all
+  if (pool.length === 0) return null
+  if (leagueId === 'legends') return weightedSpin(pool)
+  return pool[Math.floor(Math.random() * pool.length)]
 }

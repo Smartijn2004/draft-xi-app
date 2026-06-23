@@ -36,7 +36,18 @@ function toDrafted(p: Player, i: number, prime: boolean): DraftedPlayer {
   return { ...p, rating: rOf(p, prime), slotPosition: p.position, slotIndex: i, slotLabel: p.position }
 }
 
-function draft(pool: ClubSeason[], rerolls: number, threshold: number, prime: boolean, r: () => number): DraftedPlayer[] {
+const meanRating = (cs: ClubSeason) => cs.players.reduce((s, p) => s + p.rating, 0) / (cs.players.length || 1)
+// Mirror of lib/data weightedSpin: bias toward stronger club-seasons.
+function pickClub(avail: ClubSeason[], weighted: boolean, r: () => number): ClubSeason {
+  if (!weighted) return avail[Math.floor(r() * avail.length)]
+  const w = avail.map(cs => Math.pow(Math.max(1, meanRating(cs) - 74), 3))
+  const total = w.reduce((a, b) => a + b, 0)
+  let x = r() * total
+  for (let i = 0; i < avail.length; i++) { x -= w[i]; if (x <= 0) return avail[i] }
+  return avail[avail.length - 1]
+}
+
+function draft(pool: ClubSeason[], rerolls: number, threshold: number, prime: boolean, r: () => number, weighted = false): DraftedPlayer[] {
   const need: Record<Position, number> = { ...NEED }
   const used = new Set<string>()
   const team: DraftedPlayer[] = []
@@ -45,7 +56,7 @@ function draft(pool: ClubSeason[], rerolls: number, threshold: number, prime: bo
   while (team.length < 11 && guard++ < 800) {
     const avail = pool.filter(cs => !used.has(cs.id))
     if (avail.length === 0) break
-    const club = avail[Math.floor(r() * avail.length)]
+    const club = pickClub(avail, weighted, r)
     used.add(club.id)
     let best: Player | null = null
     for (const p of club.players) {
@@ -130,6 +141,21 @@ function flatXI(rating: number): DraftedPlayer[] {
     slotPosition: pos, slotIndex: i, slotLabel: pos,
   }))
 }
+// Legends spin weighting: does biasing toward stronger club-seasons make it
+// easier to build an on-par squad (player feedback), without trivialising it?
+console.log('Legends spin: uniform vs weighted (smart draft, defensive), 300×25:')
+for (const weighted of [false, true]) {
+  let ratingSum = 0, starSum = 0, unbeaten = 0, n = 0
+  for (let d = 0; d < 300; d++) {
+    const xi = draft(LEAGUE_DATA.legends, 2, 86, false, r, weighted)
+    if (xi.length < 11) continue
+    ratingSum += teamRating(xi); starSum += stars(xi)
+    for (let s = 0; s < 25; s++) { const res = runSimulation(xi, 'legends', Math.floor(r() * 1e9), 'defensive'); n++; if (res.lost === 0) unbeaten++ }
+  }
+  console.log(`  ${weighted ? 'weighted' : 'uniform '}  avgXI=${(ratingSum / 300).toFixed(1)} stars95=${(starSum / 300).toFixed(1)}  unbeaten=${pct(unbeaten, n)}`)
+}
+console.log('')
+
 // Tournament tactic comparison: is Total Football actually ABOVE the existing
 // best knockout tactic? (Defensive is the worst for UCL — draws eliminate.)
 console.log('Tournament Immortal (unbeaten-cup) by tactic, smart season-rating draft:')
