@@ -13,7 +13,7 @@ import {
   loadActiveDraft, saveActiveDraft, clearActiveDraft,
   type SeasonRecordOutcome, type DailyRecord, type StoredState,
 } from '@/lib/storage'
-import { getDailyChallenge, getDailySpinPool, isPlayerAllowed } from '@/lib/dailyChallenge'
+import { getDailyChallenge, getDailySpinPool, isPlayerAllowed, playerCost } from '@/lib/dailyChallenge'
 import { isWorldCup2026Active, getWorldCup2026Pool, worldCup2026PoolSize } from '@/lib/event'
 import { emojiGrid, dailyStatusLine, dailyShareText } from '@/lib/share'
 import { TeamFormation } from '@/components/TeamFormation'
@@ -231,8 +231,35 @@ function GameContent() {
     return !dailyChallenge || isPlayerAllowed(dailyChallenge, player)
   }
 
+  // Budget daily: each player costs by rating; you can only pick within the
+  // remaining cap. Uses the drafted (season) ratings.
+  const budgetCap = dailyChallenge?.constraint.kind === 'budget' ? dailyChallenge.constraint.cap : null
+  const budgetSpent = budgetCap != null ? team.reduce((s, t) => s + playerCost(t.rating), 0) : 0
+  const budgetLeft = budgetCap != null ? budgetCap - budgetSpent : 0
+  // Cheapest player cost per position, so we can always reserve enough to
+  // complete the XI — you can never overspend into a dead end.
+  const minCostByPos = useMemo(() => {
+    const m: Partial<Record<Position, number>> = {}
+    if (budgetCap == null) return m
+    for (const p of referencePlayers) {
+      const c = playerCost(p.rating)
+      if (m[p.position as Position] === undefined || c < (m[p.position as Position] as number)) m[p.position as Position] = c
+    }
+    return m
+  }, [budgetCap, referencePlayers])
+  function affordable(player: Player): boolean {
+    if (budgetCap == null) return true
+    const cost = playerCost(player.rating)
+    if (cost > budgetLeft) return false
+    // Reserve the cheapest fill for every OTHER still-open slot.
+    const openPos = slots.filter((_, i) => !usedSlotIndexes.includes(i)).map(s => s.position as Position)
+    const drop = openPos.indexOf(player.position as Position)
+    const reserve = openPos.reduce((s, pos, k) => (k === drop ? s : s + (minCostByPos[pos] ?? 1)), 0)
+    return cost + reserve <= budgetLeft
+  }
+
   function isPickable(player: Player): boolean {
-    return hasAvailableSlot(player) && !isAlreadyDrafted(player) && allowedByConstraint(player)
+    return hasAvailableSlot(player) && !isAlreadyDrafted(player) && allowedByConstraint(player) && affordable(player)
   }
 
   // Dead spin: no one in this squad can join the XI → offer a free re-spin.
@@ -656,6 +683,12 @@ function GameContent() {
                 Daily #{dailyChallenge.number} · {dailyChallenge.label}
               </span>
               <span className="text-[11px] text-slate-400">{dailyChallenge.description}</span>
+              {budgetCap != null && (
+                <span className="text-[11px] font-black px-2 py-0.5 rounded-full whitespace-nowrap"
+                  style={{ background: league.color + '22', color: league.color }}>
+                  💰 £{budgetLeft}m left of £{budgetCap}m
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -891,9 +924,10 @@ function GameContent() {
                                 alreadyDrafted={isAlreadyDrafted(player)}
                                 blockedReason={!allowedByConstraint(player)
                                   ? (dailyChallenge?.constraint.kind === 'underdog' ? 'over cap' : 'wrong era')
-                                  : undefined}
+                                  : (!affordable(player) ? 'over budget' : undefined)}
                                 hideRatings={hideRatings}
                                 accentColor={league.color}
+                                cost={budgetCap != null ? playerCost(player.rating) : undefined}
                                 primeRating={ratingsMode === 'prime' ? (PRIME_RATINGS.get(player.name) ?? player.rating) : undefined}
                                 onDraft={handleDraftPlayer}
                               />
@@ -973,9 +1007,9 @@ function GameContent() {
 
 // ── Player row in pick panel ──────────────────────────────────────────────────
 
-function PlayerRow({ player, disabled, alreadyDrafted, blockedReason, hideRatings, accentColor, primeRating, onDraft }: {
+function PlayerRow({ player, disabled, alreadyDrafted, blockedReason, hideRatings, accentColor, primeRating, cost, onDraft }: {
   player: Player; disabled: boolean; alreadyDrafted?: boolean; blockedReason?: string; hideRatings: boolean; accentColor: string
-  primeRating?: number; onDraft: (p: Player) => void
+  primeRating?: number; cost?: number; onDraft: (p: Player) => void
 }) {
   const posColor = POS_COLORS[player.position as Position] ?? '#9ca3af'
   const posLabel = player.altPositions?.length ? player.altPositions.join('/') : player.position
@@ -1013,6 +1047,9 @@ function PlayerRow({ player, disabled, alreadyDrafted, blockedReason, hideRating
       )}
       {!alreadyDrafted && blockedReason && (
         <span className="text-[10px] font-bold text-amber-500/70 shrink-0 whitespace-nowrap">🚫 {blockedReason}</span>
+      )}
+      {cost !== undefined && (
+        <span className="text-[11px] font-black shrink-0 px-1.5 py-0.5 rounded text-emerald-300 bg-emerald-500/15 whitespace-nowrap">£{cost}m</span>
       )}
       {!hideRatings && (
         <div className="text-sm font-black shrink-0 w-9 h-9 rounded-full flex items-center justify-center"

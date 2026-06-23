@@ -9,6 +9,14 @@ export type DailyConstraint =
   | { kind: 'league' }
   | { kind: 'decade'; decade: number }
   | { kind: 'underdog'; maxRating: number }
+  | { kind: 'budget'; cap: number }
+
+// Transfer-budget cost of a player by rating — rises steeply so a single
+// superstar eats a big chunk of the cap while squad players are cheap.
+// 96≈85, 90≈59, 84≈37, 80≈24, 75≈12, 70≈4.
+export function playerCost(rating: number): number {
+  return Math.max(1, Math.round(Math.pow(Math.max(0, rating - 64), 1.8) / 6))
+}
 
 export type DailyChallenge = {
   number: number
@@ -24,6 +32,9 @@ export type DailyChallenge = {
 // cross-league decade draft can always fill an XI.
 const DECADES = [2000, 2010, 2020]
 const UNDERDOG_CAPS = [82, 84, 85]
+// Transfer-budget caps. Cheapest XI is ~130, so always fillable; the cap binds
+// at the top end — you can afford only ~3 stars plus bargains.
+const BUDGET_CAPS = [320, 350, 380]
 const FORMATION_NAMES = Object.keys(FORMATIONS)
 const DIFFICULTIES: Difficulty[] = ['easy', 'normal', 'hard']
 
@@ -54,7 +65,7 @@ export function getDailyChallenge(dateKey: string = getTodayKey()): DailyChallen
   // Even three-day cycle (league → decade → underdog). The league rotates on a
   // 5-cycle, so host+theme only realign every 15 days — plenty of variety.
   const seed = dateSeed(dateKey)
-  const theme = (number - 1) % 3
+  const theme = (number - 1) % 4
   const formation = dailyFormation(seed)
   const difficulty = dailyDifficulty(seed)
   // Appended to every description so players see the day's format up front.
@@ -76,6 +87,14 @@ export function getDailyChallenge(dateKey: string = getTodayKey()): DailyChallen
       description: `Draft from ANY competition, no player above ${maxRating}, then win the ${LEAGUE_NAMES[hostLeague]} · ${rules}.`,
     }
   }
+  if (theme === 3) {
+    const cap = BUDGET_CAPS[seed % BUDGET_CAPS.length]
+    return {
+      number, hostLeague, constraint: { kind: 'budget', cap }, formation, difficulty,
+      label: `Budget £${cap}m`,
+      description: `Build an XI from ANY competition under a £${cap}m cap (stars cost more), then win the ${LEAGUE_NAMES[hostLeague]} · ${rules}.`,
+    }
+  }
   return {
     number, hostLeague, constraint: { kind: 'league' }, formation, difficulty,
     label: 'Single League',
@@ -94,6 +113,9 @@ export function getDailySpinPool(challenge: DailyChallenge): ClubSeason[] {
       // Cross-league so there are always enough sub-cap players to fill an XI.
       return ALL_CLUB_SEASONS.filter(cs =>
         cs.players.some(p => p.rating <= (challenge.constraint as { maxRating: number }).maxRating))
+    case 'budget':
+      // Draft from anywhere — the cap (enforced at pick time) is the limiter.
+      return ALL_CLUB_SEASONS
     case 'league':
     default:
       return getClubSeasonsForLeague(challenge.hostLeague)
