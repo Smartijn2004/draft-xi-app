@@ -1,68 +1,70 @@
 /**
- * Difficulty / dilution probe.
+ * Difficulty / dilution + Perfect-Season-reachability probe.
  *
  *   npx tsx scripts/sim-difficulty.ts
  *
- * Models a realistic draft (random club spins + a reroll budget, greedily
- * picking the best player for a still-needed slot) over the CURRENT pool, then
- * runs the real season engine on each XI. Reports the achievable team rating
- * and how often a well-drafted side goes unbeaten / immortal — so we can see
- * whether adding clubs has diluted the pool back toward "impossible".
+ * Models realistic drafts over the CURRENT pool, then runs the real season
+ * engine. Two jobs:
+ *   1. Confirm the pool isn't diluted to "impossible" (baseline unbeaten rates).
+ *   2. Tune the Perfect Season (34W-0L) lever: a "chaser" build (prime ratings,
+ *      max rerolls, hunts 95+ stars) on the new Total Football tactic should hit
+ *      ~1%, while ordinary teams on Total Football are NOT better off (control).
  */
 import { LEAGUE_DATA } from '../lib/data'
 import { runSimulation } from '../lib/simulation'
-import type { ClubSeason, DraftedPlayer, LeagueId, Player, Position } from '../lib/types'
+import type { ClubSeason, DraftedPlayer, LeagueId, Player, Position, Tactic } from '../lib/types'
 
 function rng(seed: number) {
   let s = seed >>> 0
   return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 0xffffffff }
 }
 
-// 4-3-3 broad-position needs.
 const NEED: Record<Position, number> = { GK: 1, DEF: 4, MID: 3, FWD: 3 }
 
-function toDrafted(p: Player, i: number): DraftedPlayer {
-  return { ...p, slotPosition: p.position, slotIndex: i, slotLabel: p.position }
+// Prime rating = a player's peak across every dataset (mirrors the game's
+// derived prime). Used to model a prime-ratings draft.
+const PRIME = new Map<string, number>()
+for (const id of Object.keys(LEAGUE_DATA) as LeagueId[]) {
+  if (id === 'legends') continue // legends is the union; avoid double counting
+  for (const cs of LEAGUE_DATA[id]) for (const p of cs.players) {
+    if (p.rating > (PRIME.get(p.name) ?? 0)) PRIME.set(p.name, p.rating)
+  }
+}
+const rOf = (p: Player, prime: boolean) => prime ? (PRIME.get(p.name) ?? p.rating) : p.rating
+
+function toDrafted(p: Player, i: number, prime: boolean): DraftedPlayer {
+  return { ...p, rating: rOf(p, prime), slotPosition: p.position, slotIndex: i, slotLabel: p.position }
 }
 
-// Greedy draft: spin random unused clubs; from the landed club take the best
-// player that fills a still-needed slot. With rerolls left, skip a club whose
-// best fit is below `threshold` (a player hunting elite talent). 0 threshold or
-// 0 rerolls = take whatever lands.
-function draft(pool: ClubSeason[], rerolls: number, threshold: number, r: () => number): DraftedPlayer[] {
+function draft(pool: ClubSeason[], rerolls: number, threshold: number, prime: boolean, r: () => number): DraftedPlayer[] {
   const need: Record<Position, number> = { ...NEED }
   const used = new Set<string>()
   const team: DraftedPlayer[] = []
   let rr = rerolls
   let guard = 0
-  while (team.length < 11 && guard++ < 500) {
+  while (team.length < 11 && guard++ < 800) {
     const avail = pool.filter(cs => !used.has(cs.id))
     if (avail.length === 0) break
     const club = avail[Math.floor(r() * avail.length)]
     used.add(club.id)
     let best: Player | null = null
     for (const p of club.players) {
-      if (need[p.position] > 0 && (!best || p.rating > best.rating)) best = p
+      if (need[p.position] > 0 && (!best || rOf(p, prime) > rOf(best, prime))) best = p
     }
-    if (!best) continue // nothing we need here; effectively a wasted spin
-    if (rr > 0 && best.rating < threshold) { rr--; continue } // skip, hunt better
-    team.push(toDrafted(best, team.length))
+    if (!best) continue
+    if (rr > 0 && rOf(best, prime) < threshold) { rr--; continue }
+    team.push(toDrafted(best, team.length, prime))
     need[best.position]--
   }
   return team
 }
 
-// Cherry-picked ceiling: the best 11 players (by 4-3-3 needs) in the whole pool.
-function bestXI(pool: ClubSeason[]): DraftedPlayer[] {
-  const byPos: Record<Position, Player[]> = { GK: [], DEF: [], MID: [], FWD: [] }
-  for (const cs of pool) for (const p of cs.players) byPos[p.position].push(p)
-  for (const k of Object.keys(byPos) as Position[]) byPos[k].sort((a, b) => b.rating - a.rating)
-  const team: DraftedPlayer[] = []
-  ;(Object.keys(NEED) as Position[]).forEach(pos => {
-    for (let i = 0; i < NEED[pos]; i++) if (byPos[pos][i]) team.push(toDrafted(byPos[pos][i], team.length))
-  })
-  return team
+function teamRating(t: DraftedPlayer[]): number {
+  const w: Record<string, number> = { GK: 0.9, DEF: 1.0, MID: 1.05, FWD: 1.1 }
+  return t.reduce((s, p) => s + p.rating * (w[p.position] ?? 1), 0) / (t.length || 1)
 }
+const stars = (t: DraftedPlayer[]) => t.filter(p => p.rating >= 95).length
+function pct(n: number, d: number) { return d ? (100 * n / d).toFixed(2) + '%' : '—' }
 
 const LEAGUES: { id: LeagueId; name: string; tournament: boolean }[] = [
   { id: 'pl', name: 'Premier League', tournament: false },
@@ -73,71 +75,84 @@ const LEAGUES: { id: LeagueId; name: string; tournament: boolean }[] = [
   { id: 'worldcup', name: 'World Cup', tournament: true },
 ]
 
-const DRAFTS = 400      // distinct drafted XIs per scenario
-const SIMS = 25         // season sims per XI
-const r = rng(12345)
+const DRAFTS = 400
+const SIMS = 25
+const r = rng(987654)
 
-function teamRating(t: DraftedPlayer[]): number {
-  const w: Record<string, number> = { GK: 0.9, DEF: 1.0, MID: 1.05, FWD: 1.1 }
-  return t.reduce((s, p) => s + p.rating * (w[p.position] ?? 1), 0) / (t.length || 1)
-}
+type Profile = { label: string; rerolls: number; threshold: number; prime: boolean; tactic: Tactic }
+const PROFILES: Profile[] = [
+  // Baseline "rest of the game" — must stay hard (unchanged from before).
+  { label: 'baseline (smart, defensive)  ', rerolls: 2, threshold: 86, prime: false, tactic: 'defensive' },
+  // Perfect-season chaser: prime ratings + max rerolls hunting 95+, Total Football.
+  { label: 'chaser  (prime, TOTAL)       ', rerolls: 5, threshold: 95, prime: true, tactic: 'total' },
+  // CONTROL: ordinary season-rating team on Total Football — should NOT beat
+  // the baseline's unbeaten rate (Total Football must not be a free buff).
+  { label: 'control (smart, TOTAL)       ', rerolls: 2, threshold: 86, prime: false, tactic: 'total' },
+]
 
-function pct(n: number, d: number) { return d ? (100 * n / d).toFixed(1) + '%' : '—' }
-
-console.log(`\nDifficulty probe — ${DRAFTS} drafts × ${SIMS} sims each, normal rerolls (2), defensive tactic.\n`)
+console.log(`\nPerfect-Season probe — ${DRAFTS} drafts × ${SIMS} sims.\n`)
 
 for (const L of LEAGUES) {
   const pool = LEAGUE_DATA[L.id]
-  const clubCount = pool.length
-
-  // Ceiling: best possible XI in the pool.
-  const ceiling = bestXI(pool)
-  const ceilRating = teamRating(ceiling)
-
-  // Two drafter profiles.
-  for (const prof of [
-    { label: 'smart  (skip <86)', rerolls: 2, threshold: 86 },
-    { label: 'casual (take best)', rerolls: 2, threshold: 0 },
-  ]) {
-    let ratingSum = 0
-    let unbeaten = 0, immortal = 0, perfect = 0, trophy = 0, unbeatenTrophy = 0
-    let totalSeasons = 0
-    let ratingMax = 0
-
+  for (const prof of PROFILES) {
+    let ratingSum = 0, starSum = 0
+    let unbeaten = 0, perfect = 0, trophy = 0, unbeatenCup = 0, totalSeasons = 0
     for (let d = 0; d < DRAFTS; d++) {
-      const xi = draft(pool, prof.rerolls, prof.threshold, r)
+      const xi = draft(pool, prof.rerolls, prof.threshold, prof.prime, r)
       if (xi.length < 11) continue
-      const tr = teamRating(xi)
-      ratingSum += tr
-      ratingMax = Math.max(ratingMax, tr)
+      ratingSum += teamRating(xi); starSum += stars(xi)
       for (let s = 0; s < SIMS; s++) {
-        const res = runSimulation(xi, L.id, Math.floor(r() * 1e9), 'defensive')
+        const res = runSimulation(xi, L.id, Math.floor(r() * 1e9), prof.tactic)
         totalSeasons++
         if (L.tournament) {
           if (res.trophyWon) trophy++
-          if (res.trophyWon && res.lost === 0) unbeatenTrophy++
+          if (res.trophyWon && res.lost === 0) unbeatenCup++
         } else {
           if (res.lost === 0) unbeaten++
-          if (res.lost === 0 && res.won >= 34) immortal++
-          if (res.won === 38 && res.drawn === 0) perfect++
+          if (res.lost === 0 && res.won >= 34) perfect++
         }
       }
     }
-
-    const avgRating = ratingSum / DRAFTS
-    if (L.tournament) {
-      console.log(
-        `${L.name.padEnd(18)} ${prof.label}  clubs=${String(clubCount).padStart(3)}  ` +
-        `avgXI=${avgRating.toFixed(1)} maxXI=${ratingMax.toFixed(1)} ceiling=${ceilRating.toFixed(1)}  ` +
-        `trophy=${pct(trophy, totalSeasons)}  unbeaten-cup=${pct(unbeatenTrophy, totalSeasons)}`,
-      )
-    } else {
-      console.log(
-        `${L.name.padEnd(18)} ${prof.label}  clubs=${String(clubCount).padStart(3)}  ` +
-        `avgXI=${avgRating.toFixed(1)} maxXI=${ratingMax.toFixed(1)} ceiling=${ceilRating.toFixed(1)}  ` +
-        `unbeaten=${pct(unbeaten, totalSeasons)}  immortal(34W+0L)=${pct(immortal, totalSeasons)}  perfect=${pct(perfect, totalSeasons)}`,
-      )
-    }
+    const tail = L.tournament
+      ? `trophy=${pct(trophy, totalSeasons)} unbeaten-cup=${pct(unbeatenCup, totalSeasons)}`
+      : `unbeaten=${pct(unbeaten, totalSeasons)} PERFECT(34W-0L)=${pct(perfect, totalSeasons)}`
+    console.log(`${L.name.padEnd(17)} ${prof.label} avgXI=${(ratingSum / DRAFTS).toFixed(1)} stars95=${(starSum / DRAFTS).toFixed(1)}  ${tail}`)
   }
   console.log('')
 }
+
+// Hard control: a flat ordinary XI (all 88, zero stars) on Total Football vs
+// Defensive — Total Football must be WORSE for an ordinary side, never a buff.
+function flatXI(rating: number): DraftedPlayer[] {
+  const slots: Position[] = ['GK', 'DEF', 'DEF', 'DEF', 'DEF', 'MID', 'MID', 'MID', 'FWD', 'FWD', 'FWD']
+  return slots.map((pos, i) => ({
+    id: `flat-${i}`, name: `P${i}`, position: pos, rating, club: 'X', season: 'X',
+    slotPosition: pos, slotIndex: i, slotLabel: pos,
+  }))
+}
+// Tournament tactic comparison: is Total Football actually ABOVE the existing
+// best knockout tactic? (Defensive is the worst for UCL — draws eliminate.)
+console.log('Tournament Immortal (unbeaten-cup) by tactic, smart season-rating draft:')
+for (const L of [{ id: 'ucl' as LeagueId, name: 'UCL' }, { id: 'worldcup' as LeagueId, name: 'World Cup' }]) {
+  const parts: string[] = []
+  for (const t of ['balanced', 'attacking', 'defensive', 'total'] as Tactic[]) {
+    let cup = 0, n = 0
+    for (let d = 0; d < 200; d++) {
+      const xi = draft(LEAGUE_DATA[L.id], 2, 86, false, r)
+      if (xi.length < 11) continue
+      for (let s = 0; s < 25; s++) { const res = runSimulation(xi, L.id, Math.floor(r() * 1e9), t); n++; if (res.trophyWon && res.lost === 0) cup++ }
+    }
+    parts.push(`${t}=${pct(cup, n)}`)
+  }
+  console.log(`  ${L.name.padEnd(10)} ${parts.join('  ')}`)
+}
+console.log('')
+
+console.log('Control — ordinary 88-rated XI (0 stars), PL, 4000 sims:')
+for (const t of ['defensive', 'balanced', 'total'] as Tactic[]) {
+  let ub = 0, n = 0
+  const xi = flatXI(88)
+  for (let s = 0; s < 4000; s++) { const res = runSimulation(xi, 'pl', Math.floor(r() * 1e9), t); n++; if (res.lost === 0) ub++ }
+  console.log(`  ${t.padEnd(10)} unbeaten=${pct(ub, n)}`)
+}
+console.log('')
