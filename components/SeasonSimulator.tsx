@@ -4,6 +4,7 @@ import type { SeasonResult, LeagueConfig, GroupStanding, GoalEvent, LeagueTableE
 import type { SeasonRecordOutcome } from '@/lib/storage'
 import { computeModeBestXI } from '@/lib/draftReview'
 import { teamLine } from '@/lib/share'
+import { shareSeasonCard, type SeasonCard } from '@/lib/seasonCard'
 
 type Props = {
   result: SeasonResult
@@ -588,6 +589,7 @@ function ShareButton({ result, league, daily, team }: {
   team?: DraftedPlayer[]
 }) {
   const [copied, setCopied] = useState(false)
+  const [imgState, setImgState] = useState<'idle' | 'working' | 'done'>('idle')
 
   const buildText = () => {
     const { won, drawn, lost, goalsFor, goalsAgainst, trophyWon, isPerfect, eliminated, eliminatedAt, playerOfSeason, leagueTable } = result
@@ -630,13 +632,48 @@ function ShareButton({ result, league, daily, team }: {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  const handleImage = async () => {
+    if (imgState === 'working') return
+    setImgState('working')
+    try {
+      const { won, drawn, lost, goalsFor, goalsAgainst, trophyWon, isPerfect, eliminated, eliminatedAt, playerOfSeason, leagueTable, teamRating } = result
+      const pts = won * 3 + drawn
+      const tablePos = leagueTable?.find(e => e.isPlayer)?.position
+      const headline = isPerfect ? 'PERFECT SEASON'
+        : trophyWon ? 'CHAMPIONS'
+        : eliminated ? `OUT · ${(eliminatedAt ?? '').toUpperCase()}`
+        : tablePos ? `${ordinal(tablePos).toUpperCase()} PLACE`
+        : `${pts} POINTS`
+      const card: SeasonCard = {
+        modeLabel: (daily ? `DAILY #${daily.number} · ${league.name}` : league.name).toUpperCase(),
+        headline, accent: league.color, pts, won, drawn, lost,
+        gd: goalsFor - goalsAgainst, teamRating,
+        pots: playerOfSeason?.name,
+        team: (team ?? []).map(p => ({ name: p.name, rating: p.rating, position: p.slotPosition })),
+      }
+      await shareSeasonCard(card, buildText())
+      setImgState('done')
+      setTimeout(() => setImgState('idle'), 2000)
+    } catch {
+      setImgState('idle')
+    }
+  }
+
   return (
-    <button
-      onClick={handleShare}
-      className="px-6 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
-    >
-      {copied ? '✓ Copied!' : '↑ Share'}
-    </button>
+    <>
+      <button
+        onClick={handleImage}
+        className="px-5 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
+      >
+        {imgState === 'working' ? '…' : imgState === 'done' ? '✓ Image' : '📸 Image'}
+      </button>
+      <button
+        onClick={handleShare}
+        className="px-5 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
+      >
+        {copied ? '✓ Copied!' : '↑ Text'}
+      </button>
+    </>
   )
 }
 
