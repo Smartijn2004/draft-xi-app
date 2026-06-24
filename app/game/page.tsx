@@ -247,16 +247,25 @@ function GameContent() {
     }
     return m
   }, [budgetCap, referencePlayers])
+  // Most you can spend on ONE pick of `pos` while still reserving the cheapest
+  // fill for every other still-open slot — i.e. "what's possible for this pick".
+  // Returns 0 when no slot of that position is open. This is the single number
+  // the budget feedback said was missing.
+  function maxForPosition(pos: Position): number {
+    if (budgetCap == null) return Infinity
+    const openPos = slots.filter((_, i) => !usedSlotIndexes.includes(i)).map(s => s.position as Position)
+    const drop = openPos.indexOf(pos)
+    if (drop === -1) return 0
+    const reserve = openPos.reduce((s, p, k) => (k === drop ? s : s + (minCostByPos[p] ?? 1)), 0)
+    return budgetLeft - reserve
+  }
   function affordable(player: Player): boolean {
     if (budgetCap == null) return true
-    const cost = playerCost(player.rating)
-    if (cost > budgetLeft) return false
-    // Reserve the cheapest fill for every OTHER still-open slot.
-    const openPos = slots.filter((_, i) => !usedSlotIndexes.includes(i)).map(s => s.position as Position)
-    const drop = openPos.indexOf(player.position as Position)
-    const reserve = openPos.reduce((s, pos, k) => (k === drop ? s : s + (minCostByPos[pos] ?? 1)), 0)
-    return cost + reserve <= budgetLeft
+    return playerCost(player.rating) <= maxForPosition(player.position as Position)
   }
+  // Squad-progress readout for the budget banner.
+  const slotsLeft = budgetCap != null ? slots.length - usedSlotIndexes.length : 0
+  const perSlotLeft = budgetCap != null && slotsLeft > 0 ? Math.floor(budgetLeft / slotsLeft) : 0
 
   function isPickable(player: Player): boolean {
     return hasAvailableSlot(player) && !isAlreadyDrafted(player) && allowedByConstraint(player) && affordable(player)
@@ -689,9 +698,18 @@ function GameContent() {
               </span>
               <span className="text-[11px] text-slate-400">{dailyChallenge.description}</span>
               {budgetCap != null && (
-                <span className="text-[11px] font-black px-2 py-0.5 rounded-full whitespace-nowrap"
-                  style={{ background: league.color + '22', color: league.color }}>
-                  💰 £{budgetLeft}m left of £{budgetCap}m
+                <span className="flex items-center gap-1.5">
+                  <span className="text-[11px] font-black px-2 py-0.5 rounded-full whitespace-nowrap"
+                    style={{ background: league.color + '22', color: league.color }}>
+                    💰 £{budgetLeft}m left of £{budgetCap}m
+                  </span>
+                  {slotsLeft > 0 ? (
+                    <span className="text-[11px] text-slate-400 whitespace-nowrap">
+                      {usedSlotIndexes.length}/{slots.length} picked · ~£{perSlotLeft}m per remaining slot
+                    </span>
+                  ) : (
+                    <span className="text-[11px] font-bold text-emerald-400 whitespace-nowrap">XI complete ✓</span>
+                  )}
                 </span>
               )}
             </div>
@@ -918,7 +936,13 @@ function GameContent() {
                               style={{ background: POS_COLORS[pos] + '22', color: POS_COLORS[pos] }}>
                               {pos}
                             </span>
-                            {allDisabled && <span className="text-xs text-slate-500">no slots available</span>}
+                            {allDisabled
+                              ? <span className="text-xs text-slate-500">no slots available</span>
+                              : budgetCap != null && maxForPosition(pos) > 0 && (
+                                  <span className="text-[11px] text-emerald-300/80 font-bold whitespace-nowrap">
+                                    up to £{maxForPosition(pos)}m for this pick
+                                  </span>
+                                )}
                           </div>
                           <div className="grid gap-2">
                             {posPlayers.map(player => (
@@ -929,7 +953,9 @@ function GameContent() {
                                 alreadyDrafted={isAlreadyDrafted(player)}
                                 blockedReason={!allowedByConstraint(player)
                                   ? (dailyChallenge?.constraint.kind === 'underdog' ? 'over cap' : 'wrong era')
-                                  : (!affordable(player) ? 'over budget' : undefined)}
+                                  : (hasAvailableSlot(player) && !affordable(player)
+                                      ? `£${playerCost(player.rating) - maxForPosition(player.position as Position)}m over`
+                                      : undefined)}
                                 hideRatings={hideRatings}
                                 accentColor={league.color}
                                 cost={budgetCap != null ? playerCost(player.rating) : undefined}
