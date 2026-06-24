@@ -5,6 +5,7 @@ import type { SeasonRecordOutcome } from '@/lib/storage'
 import { computeModeBestXI } from '@/lib/draftReview'
 import { teamLine } from '@/lib/share'
 import { shareSeasonCard, type SeasonCard } from '@/lib/seasonCard'
+import { getNickname } from '@/lib/playerIdentity'
 
 type Props = {
   result: SeasonResult
@@ -309,7 +310,7 @@ export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutco
       </div>
 
       {/* ── Share + Play Again ── */}
-      <div className="flex gap-3">
+      <div className="flex flex-wrap gap-3">
         <ShareButton result={result} league={league} daily={daily} team={team} />
         <button
           onClick={onPlayAgain}
@@ -590,6 +591,35 @@ function ShareButton({ result, league, daily, team }: {
 }) {
   const [copied, setCopied] = useState(false)
   const [imgState, setImgState] = useState<'idle' | 'working' | 'done'>('idle')
+  const [chState, setChState] = useState<'idle' | 'working' | 'shared'>('idle')
+
+  const handleChallenge = async () => {
+    if (chState === 'working' || !team || team.length < 11) return
+    setChState('working')
+    try {
+      const res = await fetch('/api/h2h', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nickname: getNickname() ?? 'Anonymous',
+          mode: daily ? `Daily #${daily.number} · ${league.name}` : league.name,
+          rating: result.teamRating,
+          team: team.map(p => ({ name: p.name, rating: p.rating, position: p.slotPosition })),
+        }),
+      })
+      const data = await res.json()
+      if (!res.ok || !data.id) throw new Error('create failed')
+      const url = `${window.location.origin}/h2h/${data.id}`
+      const text = `⚔️ I dare you to beat my Draft XI (${league.name}). Build your XI and duel mine:`
+      if (navigator.share) {
+        try { await navigator.share({ text, url }); setChState('idle'); return } catch { /* fall through */ }
+      }
+      await navigator.clipboard.writeText(`${text}\n${url}`)
+      setChState('shared')
+      setTimeout(() => setChState('idle'), 2500)
+    } catch {
+      setChState('idle')
+    }
+  }
 
   const buildText = () => {
     const { won, drawn, lost, goalsFor, goalsAgainst, trophyWon, isPerfect, eliminated, eliminatedAt, playerOfSeason, leagueTable } = result
@@ -663,16 +693,24 @@ function ShareButton({ result, league, daily, team }: {
     <>
       <button
         onClick={handleImage}
-        className="px-5 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
+        className="px-4 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
       >
         {imgState === 'working' ? '…' : imgState === 'done' ? '✓ Image' : '📸 Image'}
       </button>
       <button
         onClick={handleShare}
-        className="px-5 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
+        className="px-4 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
       >
         {copied ? '✓ Copied!' : '↑ Text'}
       </button>
+      {team && team.length >= 11 && (
+        <button
+          onClick={handleChallenge}
+          className="px-4 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
+        >
+          {chState === 'working' ? '…' : chState === 'shared' ? '✓ Link!' : '⚔️ Challenge'}
+        </button>
+      )}
     </>
   )
 }

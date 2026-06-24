@@ -530,3 +530,51 @@ export async function getTeamOfWeek(): Promise<TeamOfWeek> {
   }
   return { available: true, week, total, xi }
 }
+
+// ── Head-to-head challenges ───────────────────────────────────────────────────
+// A saved XI under a short id, so a friend can open a link and duel it.
+
+export type H2HTeamPlayer = { name: string; rating: number; position: string }
+export type H2HChallenge = { id: string; nickname: string; mode: string; rating: number; team: H2HTeamPlayer[] }
+
+let h2hSchemaReady: Promise<void> | null = null
+function ensureH2HSchema(): Promise<void> {
+  if (!h2hSchemaReady) {
+    h2hSchemaReady = pipeline([{
+      sql: `CREATE TABLE IF NOT EXISTS h2h_challenges (
+        id         TEXT PRIMARY KEY,
+        nickname   TEXT NOT NULL,
+        mode       TEXT NOT NULL,
+        rating     REAL NOT NULL,
+        team_json  TEXT NOT NULL,
+        created_at TEXT NOT NULL
+      )`,
+    }]).then(() => undefined).catch(err => { h2hSchemaReady = null; throw err })
+  }
+  return h2hSchemaReady
+}
+
+export async function createChallenge(c: Omit<H2HChallenge, 'id'>): Promise<string | null> {
+  if (!httpBase()) return null
+  await ensureH2HSchema()
+  const id = Math.random().toString(36).slice(2, 10)
+  await pipeline([{
+    sql: `INSERT INTO h2h_challenges (id, nickname, mode, rating, team_json, created_at) VALUES (?, ?, ?, ?, ?, ?)`,
+    args: [id, c.nickname, c.mode, c.rating, JSON.stringify(c.team), new Date().toISOString()],
+  }])
+  return id
+}
+
+export async function getChallenge(id: string): Promise<H2HChallenge | null> {
+  if (!httpBase()) return null
+  await ensureH2HSchema()
+  const res = await pipeline([{
+    sql: `SELECT id, nickname, mode, rating, team_json FROM h2h_challenges WHERE id = ?`,
+    args: [id],
+  }])
+  const r = rowsOf(res[0])[0]
+  if (!r) return null
+  let team: H2HTeamPlayer[] = []
+  try { team = JSON.parse(String(r.team_json ?? '[]')) } catch { /* keep empty */ }
+  return { id: String(r.id), nickname: String(r.nickname ?? ''), mode: String(r.mode ?? ''), rating: Number(r.rating ?? 0), team }
+}
