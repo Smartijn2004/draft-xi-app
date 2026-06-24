@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import FeedbackButton from "@/components/FeedbackButton";
 import ThemeToggle from "@/components/ThemeToggle";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Runs before first paint to set the theme class, preventing a light/dark flash.
 const themeInit = `(function(){try{var t=localStorage.getItem('draftxi-theme');if(!t){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}if(t==='light')document.documentElement.classList.add('light');}catch(e){}})();`;
@@ -55,6 +56,7 @@ export default function RootLayout({
         {children}
         <ThemeToggle />
         <FeedbackButton />
+        <SpeedInsights />
       </body>
     </html>
   );
