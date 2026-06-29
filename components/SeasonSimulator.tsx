@@ -6,6 +6,7 @@ import { computeModeBestXI } from '@/lib/draftReview'
 import { teamLine } from '@/lib/share'
 import { shareSeasonCard, type SeasonCard } from '@/lib/seasonCard'
 import { getNickname } from '@/lib/playerIdentity'
+import { teamChemistry } from '@/lib/chemistry'
 
 type Props = {
   result: SeasonResult
@@ -50,6 +51,7 @@ export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutco
     topScorers, playerOfSeason, achievements, leagueTable,
   } = result
   const points = won * 3 + drawn
+  const chem = useMemo(() => (team && team.length > 0 ? teamChemistry(team) : null), [team])
   const accent = league.color
   const gd = goalsFor - goalsAgainst
 
@@ -189,6 +191,25 @@ export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutco
           <div className="text-xs text-slate-500">Goals conceded</div>
         </div>
       </div>
+
+      {/* ── Squad chemistry ── */}
+      {chem && chem.score > 0 && (
+        <div className="bg-white/3 border border-white/8 rounded-xl p-3 flex items-center gap-3">
+          <span className="text-sm font-black tabular-nums w-9 text-center"
+            style={{ color: chem.score >= 50 ? '#34d399' : '#fbbf24' }}>{chem.score}</span>
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-bold text-slate-300 mb-1">🔗 Squad chemistry{chem.score >= 70 ? ' — your XI clicked' : ''}</div>
+            <div className="h-1.5 rounded-full bg-white/8 overflow-hidden">
+              <div className="h-full rounded-full" style={{ width: `${chem.score}%`, background: chem.score >= 50 ? '#34d399' : '#fbbf24' }} />
+            </div>
+          </div>
+          {chem.links.length > 0 && (
+            <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-white/6 text-slate-300 shrink-0 hidden sm:inline">
+              {chem.links[0].label} ×{chem.links[0].count}
+            </span>
+          )}
+        </div>
+      )}
 
       {/* ── Career strip ── */}
       {careerOutcome && (

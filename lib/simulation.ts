@@ -253,9 +253,14 @@ function simulateMatch(
   const starBonus = players
     ? Math.min(STAR_CAP, players.filter(p => p.rating >= STAR_THRESHOLD).length * STAR_PER)
     : 0
-  // Squad chemistry: a small edge for an XI built around shared-club / national
-  // links. A rainbow XI scores 0 here; only a deliberately cohesive side gains.
-  const chemBonus = players ? teamChemistry(players).bonus : 0
+  // Squad chemistry: an XI built around shared-club / national links clicks.
+  // A rainbow XI scores 0 here. The small `bonus` nudges win probability (kept
+  // tiny so the Perfect-Season balance holds), but most of the *felt* effect is
+  // routed into goals below — a cohesive side visibly batters teams and keeps
+  // clean sheets, which doesn't change the W/D/L counts a Perfect Season needs.
+  const chem = players ? teamChemistry(players) : null
+  const chemBonus = chem ? chem.bonus : 0
+  const chem01 = chem ? chem.score / 100 : 0
   const effectiveRating = myRating + PLAYER_ADVANTAGE + starBonus + chemBonus
   const diff = (effectiveRating - oppRating) / 9
   const rawWin = 1 / (1 + Math.exp(-diff))
@@ -315,9 +320,14 @@ function simulateMatch(
   // around 50–60 — realistic top-flight numbers.
   const myMul = tactic === 'attacking' ? 1.22 : tactic === 'total' ? 1.25 : tactic === 'defensive' ? 0.82 : 1
   const oppMul = tactic === 'attacking' ? 1.28 : tactic === 'total' ? 1.15 : tactic === 'defensive' ? 0.72 : 1
+  // Chemistry's visible payoff: a cohesive XI's attack clicks (more goals) and
+  // its defence is more settled (fewer conceded). Scorelines only — the W/D/L
+  // result was already decided above, so this never inflates the win count.
+  const CHEM_ATTACK = 0.25  // up to +25% goal threat at full chemistry
+  const CHEM_DEF = 0.12     // up to −12% conceded at full chemistry
   const effectiveDiff = effectiveRating - oppRating
-  const λMy = (0.95 + effectiveDiff / 15) * myMul
-  const λOpp = (0.95 - effectiveDiff / 19) * oppMul
+  const λMy = (0.95 + effectiveDiff / 15) * myMul * (1 + chem01 * CHEM_ATTACK)
+  const λOpp = (0.95 - effectiveDiff / 19) * oppMul * (1 - chem01 * CHEM_DEF)
   let myGoals = poissonSample(Math.max(0.2, λMy), rng)
   let oppGoals = poissonSample(Math.max(0.18, λOpp), rng)
 
