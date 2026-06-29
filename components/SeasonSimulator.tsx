@@ -198,7 +198,8 @@ export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutco
           <span className="text-sm font-black tabular-nums w-9 text-center"
             style={{ color: chem.score >= 50 ? '#34d399' : '#fbbf24' }}>{chem.score}</span>
           <div className="flex-1 min-w-0">
-            <div className="text-xs font-bold text-slate-300 mb-1">🔗 Squad chemistry{chem.score >= 70 ? ' — your XI clicked' : ''}</div>
+            <div className="text-xs font-bold text-slate-300">🔗 Squad chemistry{chem.score >= 70 ? ' — your XI clicked' : ''}</div>
+            <div className="text-[10px] text-slate-500 mb-1">Same-club &amp; national links sharpen your attack</div>
             <div className="h-1.5 rounded-full bg-white/8 overflow-hidden">
               <div className="h-full rounded-full" style={{ width: `${chem.score}%`, background: chem.score >= 50 ? '#34d399' : '#fbbf24' }} />
             </div>

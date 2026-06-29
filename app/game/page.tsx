@@ -772,6 +772,16 @@ function GameContent() {
               ) : (
                 <p className="text-[10px] text-slate-500">Draft from the same club or nation to build links.</p>
               )}
+              <details className="group">
+                <summary className="text-[10px] text-slate-500 hover:text-slate-300 cursor-pointer list-none select-none">
+                  ⓘ What is chemistry?
+                </summary>
+                <p className="text-[10px] text-slate-400 leading-relaxed mt-1">
+                  Players from the same club — or the same country in World Cup modes — link up. A connected
+                  XI plays together and <span className="text-emerald-400">scores more goals</span>. It's a
+                  bonus on top of ratings, never a penalty — picking your highest-rated players always works too.
+                </p>
+              </details>
             </div>
           )}
 
