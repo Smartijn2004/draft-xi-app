@@ -309,16 +309,16 @@ export function SeasonSimulator({ result, league, onPlayAgain, team, careerOutco
         <MatchList matches={matches} accent={accent} />
       </div>
 
-      {/* ── Share + Play Again ── */}
-      <div className="flex flex-wrap gap-3">
-        <ShareButton result={result} league={league} daily={daily} team={team} />
+      {/* ── Play Again + Share ── */}
+      <div className="space-y-3">
         <button
           onClick={onPlayAgain}
-          className="flex-1 py-4 rounded-xl font-bold text-white text-lg transition-all hover:scale-[1.02] hover:brightness-110 active:scale-[0.98]"
+          className="w-full py-4 rounded-xl font-bold text-white text-lg transition-all hover:scale-[1.02] hover:brightness-110 active:scale-[0.98]"
           style={{ background: accent, boxShadow: `0 8px 30px ${accent}33` }}
         >
           Play Again →
         </button>
+        <ShareButton result={result} league={league} daily={daily} team={team} />
       </div>
     </div>
   )
@@ -689,29 +689,26 @@ function ShareButton({ result, league, daily, team }: {
     }
   }
 
+  const showChallenge = !!(team && team.length >= 11)
+  const btnClass = 'flex items-center justify-center gap-1.5 py-3 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300'
+
   return (
-    <>
-      <button
-        onClick={handleImage}
-        className="px-4 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
-      >
-        {imgState === 'working' ? '…' : imgState === 'done' ? '✓ Image' : '📸 Image'}
-      </button>
-      <button
-        onClick={handleShare}
-        className="px-4 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
-      >
-        {copied ? '✓ Copied!' : '↑ Text'}
-      </button>
-      {team && team.length >= 11 && (
-        <button
-          onClick={handleChallenge}
-          className="px-4 py-4 rounded-xl font-bold text-sm transition-all hover:scale-[1.02] border border-white/10 bg-white/5 hover:bg-white/8 text-slate-300 shrink-0"
-        >
-          {chState === 'working' ? '…' : chState === 'shared' ? '✓ Link!' : '⚔️ Challenge'}
+    <div>
+      <div className="text-[11px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">Share your season</div>
+      <div className={`grid gap-2 ${showChallenge ? 'grid-cols-3' : 'grid-cols-2'}`}>
+        <button onClick={handleImage} className={btnClass}>
+          {imgState === 'working' ? '…' : imgState === 'done' ? '✓ Saved' : '📸 Image'}
         </button>
-      )}
-    </>
+        <button onClick={handleShare} className={btnClass}>
+          {copied ? '✓ Copied' : '↑ Text'}
+        </button>
+        {showChallenge && (
+          <button onClick={handleChallenge} className={btnClass}>
+            {chState === 'working' ? '…' : chState === 'shared' ? '✓ Link!' : '⚔️ Challenge'}
+          </button>
+        )}
+      </div>
+    </div>
   )
 }
 
