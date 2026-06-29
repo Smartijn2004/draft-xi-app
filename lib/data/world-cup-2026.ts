@@ -4,6 +4,11 @@ import type { ClubSeason } from '../types'
 // ratings (source: FIFA squad-list PDF + EA FC 26 calibration). Auto-generated
 // from the official squad document. Used ONLY by the WC2026 event; deliberately
 // NOT in ALL_CLUB_SEASONS so these nations don't leak into other modes.
+//
+// Post-group-stage form pass (2026-06-29): nudged a dozen players for actual
+// group-stage form — Messi/Haaland (+ to 92), Dembélé/Vinícius (+1), breakouts
+// Manzambi/Saibari/Balogun/Gakpo/Havertz/Larin (+1–3); Rodri (−2) and Kane (−1)
+// for labored showings. Revisit after the knockouts.
 export const worldCup2026Data: ClubSeason[] = [
   {
     id: 'spain-wc2026', club: "Spain", shortName: 'ESP', season: 'World Cup 2026', league: 'worldcup2026', color: '#16a34a',
@@ -14,7 +19,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'eric-garcia-esp', name: "Eric Garcia", position: 'DEF', rating: 85, club: "Spain", season: 'World Cup 2026', nationality: "Spain", altPositions: ['CB', 'RB'] },
       { id: 'marcos-llorente-esp', name: "Marcos Llorente", position: 'DEF', rating: 84, club: "Spain", season: 'World Cup 2026', nationality: "Spain", altPositions: ['CM', 'RW'] },
       { id: 'pedro-porro-esp', name: "Pedro Porro", position: 'DEF', rating: 84, club: "Spain", season: 'World Cup 2026', nationality: "Spain", altPositions: ['RB', 'RWB'] },
-      { id: 'rodri-esp', name: "Rodri", position: 'MID', rating: 90, club: "Spain", season: 'World Cup 2026', nationality: "Spain", altPositions: ['DM', 'CM'] },
+      { id: 'rodri-esp', name: "Rodri", position: 'MID', rating: 88, club: "Spain", season: 'World Cup 2026', nationality: "Spain", altPositions: ['DM', 'CM'] },
       { id: 'pedri-esp', name: "Pedri", position: 'MID', rating: 91, club: "Spain", season: 'World Cup 2026', nationality: "Spain", altPositions: ['CM', 'AM'] },
       { id: 'fabian-ruiz-esp', name: "Fabian Ruiz", position: 'MID', rating: 86, club: "Spain", season: 'World Cup 2026', nationality: "Spain", altPositions: ['CM', 'AM'] },
       { id: 'mikel-merino-esp', name: "Mikel Merino", position: 'MID', rating: 85, club: "Spain", season: 'World Cup 2026', nationality: "Spain", altPositions: ['CM', 'AM'] },
@@ -41,7 +46,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'adrien-rabiot-fra', name: "Adrien Rabiot", position: 'MID', rating: 85, club: "France", season: 'World Cup 2026', nationality: "France", altPositions: ['CM'] },
       { id: 'warren-zaire-emery-fra', name: "Warren Zaïre-Emery", position: 'MID', rating: 83, club: "France", season: 'World Cup 2026', nationality: "France", altPositions: ['CM', 'DM'] },
       { id: 'kylian-mbappe-fra', name: "Kylian Mbappe", position: 'FWD', rating: 92, club: "France", season: 'World Cup 2026', nationality: "France", altPositions: ['ST', 'LW'] },
-      { id: 'ousmane-dembele-fra', name: "Ousmane Dembele", position: 'FWD', rating: 90, club: "France", season: 'World Cup 2026', nationality: "France", altPositions: ['ST', 'RW'] },
+      { id: 'ousmane-dembele-fra', name: "Ousmane Dembele", position: 'FWD', rating: 91, club: "France", season: 'World Cup 2026', nationality: "France", altPositions: ['ST', 'RW'] },
       { id: 'michael-olise-fra', name: "Michael Olise", position: 'FWD', rating: 87, club: "France", season: 'World Cup 2026', nationality: "France", altPositions: ['RW', 'AM'] },
       { id: 'marcus-thuram-fra', name: "Marcus Thuram", position: 'FWD', rating: 86, club: "France", season: 'World Cup 2026', nationality: "France", altPositions: ['ST', 'LW'] },
       { id: 'bradley-barcola-fra', name: "Bradley Barcola", position: 'FWD', rating: 84, club: "France", season: 'World Cup 2026', nationality: "France", altPositions: ['LW'] },
@@ -62,7 +67,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'declan-rice-eng', name: "Declan Rice", position: 'MID', rating: 88, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['DM', 'CM'] },
       { id: 'morgan-rogers-eng', name: "Morgan Rogers", position: 'MID', rating: 84, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['AM'] },
       { id: 'eberechi-eze-eng', name: "Eberechi Eze", position: 'MID', rating: 84, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['AM', 'LW'] },
-      { id: 'harry-kane-eng', name: "Harry Kane", position: 'FWD', rating: 90, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['ST'] },
+      { id: 'harry-kane-eng', name: "Harry Kane", position: 'FWD', rating: 89, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['ST'] },
       { id: 'bukayo-saka-eng', name: "Bukayo Saka", position: 'FWD', rating: 89, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['RW'] },
       { id: 'marcus-rashford-eng', name: "Marcus Rashford", position: 'FWD', rating: 84, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['LW', 'ST'] },
       { id: 'anthony-gordon-eng', name: "Anthony Gordon", position: 'FWD', rating: 84, club: "England", season: 'World Cup 2026', nationality: "England", altPositions: ['LW'] },
@@ -107,7 +112,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'felix-nmecha-ger', name: "Felix Nmecha", position: 'MID', rating: 83, club: "Germany", season: 'World Cup 2026', nationality: "Germany", altPositions: ['CM'] },
       { id: 'assan-ouedraogo-ger', name: "Assan Ouedraogo", position: 'MID', rating: 83, club: "Germany", season: 'World Cup 2026', nationality: "Germany", altPositions: ['CM'] },
       { id: 'nick-woltemade-ger', name: "Nick Woltemade", position: 'FWD', rating: 82, club: "Germany", season: 'World Cup 2026', nationality: "Germany", altPositions: ['ST'] },
-      { id: 'kai-havertz-ger', name: "Kai Havertz", position: 'FWD', rating: 84, club: "Germany", season: 'World Cup 2026', nationality: "Germany", altPositions: ['AM', 'ST'] },
+      { id: 'kai-havertz-ger', name: "Kai Havertz", position: 'FWD', rating: 85, club: "Germany", season: 'World Cup 2026', nationality: "Germany", altPositions: ['AM', 'ST'] },
       { id: 'maximilian-beier-ger', name: "Maximilian Beier", position: 'FWD', rating: 83, club: "Germany", season: 'World Cup 2026', nationality: "Germany", altPositions: ['ST', 'RW'] },
     ]
   },
@@ -129,7 +134,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'lautaro-martinez-arg', name: "Lautaro Martinez", position: 'FWD', rating: 87, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['ST'] },
       { id: 'thiago-almada-arg', name: "Thiago Almada", position: 'FWD', rating: 83, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['AM', 'LW'] },
       { id: 'julian-alvarez-arg', name: "Julian Alvarez", position: 'FWD', rating: 88, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['ST', 'AM'] },
-      { id: 'lionel-messi-arg', name: "Lionel Messi", position: 'FWD', rating: 89, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['RW', 'AM'] },
+      { id: 'lionel-messi-arg', name: "Lionel Messi", position: 'FWD', rating: 92, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['RW', 'AM'] },
       { id: 'giuliano-simeone-arg', name: "Giuliano Simeone", position: 'FWD', rating: 84, club: "Argentina", season: 'World Cup 2026', nationality: "Argentina", altPositions: ['RW', 'ST'] },
     ]
   },
@@ -151,7 +156,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'guus-til-ned', name: "Guus Til", position: 'MID', rating: 83, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['CM', 'AM'] },
       { id: 'wout-weghorst-ned', name: "Wout Weghorst", position: 'FWD', rating: 80, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['ST'] },
       { id: 'donyell-malen-ned', name: "Donyell Malen", position: 'FWD', rating: 84, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['RW', 'LW'] },
-      { id: 'cody-gakpo-ned', name: "Cody Gakpo", position: 'FWD', rating: 85, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['LW', 'ST'] },
+      { id: 'cody-gakpo-ned', name: "Cody Gakpo", position: 'FWD', rating: 86, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['LW', 'ST'] },
       { id: 'memphis-depay-ned', name: "Memphis Depay", position: 'FWD', rating: 83, club: "Netherlands", season: 'World Cup 2026', nationality: "Netherlands", altPositions: ['ST', 'AM'] },
     ]
   },
@@ -168,7 +173,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'bruno-guimaraes-bra', name: "Bruno Guimaraes", position: 'MID', rating: 86, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['CM', 'DM'] },
       { id: 'lucas-paqueta-bra', name: "Lucas Paqueta", position: 'MID', rating: 82, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['AM', 'CM'] },
       { id: 'ederson-silva-bra', name: "Ederson Silva", position: 'MID', rating: 80, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['DM', 'CM'] },
-      { id: 'vinicius-junior-bra', name: "Vinicius Junior", position: 'FWD', rating: 89, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['LW'] },
+      { id: 'vinicius-junior-bra', name: "Vinicius Junior", position: 'FWD', rating: 90, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['LW'] },
       { id: 'raphinha-bra', name: "Raphinha", position: 'FWD', rating: 89, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['RW', 'LW'] },
       { id: 'matheus-cunha-bra', name: "Matheus Cunha", position: 'FWD', rating: 86, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['ST', 'AM'] },
       { id: 'gabriel-martinelli-bra', name: "Gabriel Martinelli", position: 'FWD', rating: 84, club: "Brazil", season: 'World Cup 2026', nationality: "Brazil", altPositions: ['LW'] },
@@ -280,7 +285,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'ricardo-pepi-usa', name: "Ricardo Pepi", position: 'FWD', rating: 82, club: "USA", season: 'World Cup 2026', nationality: "USA", altPositions: ['ST'] },
       { id: 'christian-pulisic-usa', name: "Christian Pulisic", position: 'FWD', rating: 85, club: "USA", season: 'World Cup 2026', nationality: "USA", altPositions: ['RW', 'AM'] },
       { id: 'brenden-aaronson-usa', name: "Brenden Aaronson", position: 'FWD', rating: 82, club: "USA", season: 'World Cup 2026', nationality: "USA", altPositions: ['AM', 'RW'] },
-      { id: 'folarin-balogun-usa', name: "Folarin Balogun", position: 'FWD', rating: 81, club: "USA", season: 'World Cup 2026', nationality: "USA", altPositions: ['ST'] },
+      { id: 'folarin-balogun-usa', name: "Folarin Balogun", position: 'FWD', rating: 83, club: "USA", season: 'World Cup 2026', nationality: "USA", altPositions: ['ST'] },
       { id: 'timothy-weah-usa', name: "Timothy Weah", position: 'FWD', rating: 80, club: "USA", season: 'World Cup 2026', nationality: "USA", altPositions: ['RW', 'RWB'] },
     ]
   },
@@ -297,7 +302,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'ardon-jashari-sui', name: "Ardon Jashari", position: 'MID', rating: 82, club: "Switzerland", season: 'World Cup 2026', nationality: "Switzerland", altPositions: ['CM', 'DM'] },
       { id: 'denis-zakaria-sui', name: "Denis Zakaria", position: 'MID', rating: 81, club: "Switzerland", season: 'World Cup 2026', nationality: "Switzerland", altPositions: ['DM', 'CM'] },
       { id: 'remo-freuler-sui', name: "Remo Freuler", position: 'MID', rating: 81, club: "Switzerland", season: 'World Cup 2026', nationality: "Switzerland", altPositions: ['CM', 'DM'] },
-      { id: 'johan-manzambi-sui', name: "Johan Manzambi", position: 'MID', rating: 79, club: "Switzerland", season: 'World Cup 2026', nationality: "Switzerland" },
+      { id: 'johan-manzambi-sui', name: "Johan Manzambi", position: 'MID', rating: 82, club: "Switzerland", season: 'World Cup 2026', nationality: "Switzerland" },
       { id: 'breel-embolo-sui', name: "Breel Embolo", position: 'FWD', rating: 83, club: "Switzerland", season: 'World Cup 2026', nationality: "Switzerland", altPositions: ['ST'] },
       { id: 'dan-ndoye-sui', name: "Dan Ndoye", position: 'FWD', rating: 82, club: "Switzerland", season: 'World Cup 2026', nationality: "Switzerland", altPositions: ['RW', 'LW'] },
       { id: 'ruben-vargas-sui', name: "Ruben Vargas", position: 'FWD', rating: 79, club: "Switzerland", season: 'World Cup 2026', nationality: "Switzerland" },
@@ -379,7 +384,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'issa-diop-mar', name: "Issa Diop", position: 'DEF', rating: 78, club: "Morocco", season: 'World Cup 2026', nationality: "Morocco" },
       { id: 'chadi-riad-mar', name: "Chadi Riad", position: 'DEF', rating: 78, club: "Morocco", season: 'World Cup 2026', nationality: "Morocco" },
       { id: 'youssef-belammari-mar', name: "Youssef Belammari", position: 'DEF', rating: 78, club: "Morocco", season: 'World Cup 2026', nationality: "Morocco" },
-      { id: 'ismael-saibari-mar', name: "Ismael Saibari", position: 'MID', rating: 84, club: "Morocco", season: 'World Cup 2026', nationality: "Morocco", altPositions: ['AM', 'CM'] },
+      { id: 'ismael-saibari-mar', name: "Ismael Saibari", position: 'MID', rating: 86, club: "Morocco", season: 'World Cup 2026', nationality: "Morocco", altPositions: ['AM', 'CM'] },
       { id: 'neil-el-aynaoui-mar', name: "Neil El Aynaoui", position: 'MID', rating: 83, club: "Morocco", season: 'World Cup 2026', nationality: "Morocco", altPositions: ['CM'] },
       { id: 'sofyan-amrabat-mar', name: "Sofyan Amrabat", position: 'MID', rating: 81, club: "Morocco", season: 'World Cup 2026', nationality: "Morocco", altPositions: ['DM', 'CM'] },
       { id: 'azzedine-ounahi-mar', name: "Azzedine Ounahi", position: 'MID', rating: 80, club: "Morocco", season: 'World Cup 2026', nationality: "Morocco", altPositions: ['CM', 'AM'] },
@@ -470,7 +475,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'morten-thorsby-nor', name: "Morten Thorsby", position: 'MID', rating: 79, club: "Norway", season: 'World Cup 2026', nationality: "Norway" },
       { id: 'thelo-aasgaard-nor', name: "Thelo Aasgaard", position: 'MID', rating: 79, club: "Norway", season: 'World Cup 2026', nationality: "Norway" },
       { id: 'oscar-bobb-nor', name: "Oscar Bobb", position: 'MID', rating: 78, club: "Norway", season: 'World Cup 2026', nationality: "Norway" },
-      { id: 'erling-haaland-nor', name: "Erling Haaland", position: 'FWD', rating: 91, club: "Norway", season: 'World Cup 2026', nationality: "Norway", altPositions: ['ST'] },
+      { id: 'erling-haaland-nor', name: "Erling Haaland", position: 'FWD', rating: 92, club: "Norway", season: 'World Cup 2026', nationality: "Norway", altPositions: ['ST'] },
       { id: 'alexander-sorloth-nor', name: "Alexander Sorloth", position: 'FWD', rating: 84, club: "Norway", season: 'World Cup 2026', nationality: "Norway", altPositions: ['ST'] },
       { id: 'antonio-nusa-nor', name: "Antonio Nusa", position: 'FWD', rating: 84, club: "Norway", season: 'World Cup 2026', nationality: "Norway", altPositions: ['LW', 'RW'] },
       { id: 'julian-ryerson-nor', name: "Julian Ryerson", position: 'FWD', rating: 84, club: "Norway", season: 'World Cup 2026', nationality: "Norway", altPositions: ['RB', 'LB'] },
@@ -535,7 +540,7 @@ export const worldCup2026Data: ClubSeason[] = [
       { id: 'liam-millar-can', name: "Liam Millar", position: 'MID', rating: 79, club: "Canada", season: 'World Cup 2026', nationality: "Canada" },
       { id: 'jacob-shaffelburg-can', name: "Jacob Shaffelburg", position: 'MID', rating: 79, club: "Canada", season: 'World Cup 2026', nationality: "Canada" },
       { id: 'jonathan-david-can', name: "Jonathan David", position: 'FWD', rating: 85, club: "Canada", season: 'World Cup 2026', nationality: "Canada", altPositions: ['ST'] },
-      { id: 'cyle-larin-can', name: "Cyle Larin", position: 'FWD', rating: 80, club: "Canada", season: 'World Cup 2026', nationality: "Canada", altPositions: ['ST'] },
+      { id: 'cyle-larin-can', name: "Cyle Larin", position: 'FWD', rating: 81, club: "Canada", season: 'World Cup 2026', nationality: "Canada", altPositions: ['ST'] },
       { id: 'tajon-buchanan-can', name: "Tajon Buchanan", position: 'FWD', rating: 80, club: "Canada", season: 'World Cup 2026', nationality: "Canada", altPositions: ['RW', 'RWB'] },
       { id: 'tani-oluwaseyi-can', name: "Tani Oluwaseyi", position: 'FWD', rating: 79, club: "Canada", season: 'World Cup 2026', nationality: "Canada" },
       { id: 'promise-david-can', name: "Promise David", position: 'FWD', rating: 79, club: "Canada", season: 'World Cup 2026', nationality: "Canada" },
