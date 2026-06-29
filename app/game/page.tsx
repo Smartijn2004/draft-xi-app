@@ -6,6 +6,7 @@ import type { DraftedPlayer, LeagueId, ClubSeason, Player, Position, Difficulty,
 import { FORMATIONS, FORMATION_DESCRIPTIONS } from '@/lib/types'
 import { LEAGUE_CONFIGS, spinClubSeason, getClubSeasonsForLeague, ALL_CLUB_SEASONS } from '@/lib/data'
 import { runSimulation } from '@/lib/simulation'
+import { teamChemistry } from '@/lib/chemistry'
 import { SLOT_ACCEPTS } from '@/lib/positions'
 import {
   recordSeason, recordDaily, getDailyRecord, getTodayKey,
@@ -266,6 +267,9 @@ function GameContent() {
   // Squad-progress readout for the budget banner.
   const slotsLeft = budgetCap != null ? slots.length - usedSlotIndexes.length : 0
   const perSlotLeft = budgetCap != null && slotsLeft > 0 ? Math.floor(budgetLeft / slotsLeft) : 0
+
+  // Squad chemistry — live as you draft, so picks can be link-aware.
+  const chemistry = useMemo(() => teamChemistry(team), [team])
 
   function isPickable(player: Player): boolean {
     return hasAvailableSlot(player) && !isAlreadyDrafted(player) && allowedByConstraint(player) && affordable(player)
@@ -744,6 +748,32 @@ function GameContent() {
               <span style={{ color: league.color }}>{posNeeds || '✓ XI complete'}</span>
             </div>
           </div>
+
+          {team.length >= 2 && (
+            <div className="bg-white/3 border border-white/8 rounded-xl p-4 space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">🔗 Chemistry</span>
+                <span className="text-sm font-black tabular-nums" style={{ color: chemistry.score >= 50 ? '#34d399' : chemistry.score > 0 ? '#fbbf24' : '#64748b' }}>
+                  {chemistry.score}
+                </span>
+              </div>
+              <div className="h-1.5 rounded-full bg-white/8 overflow-hidden">
+                <div className="h-full rounded-full transition-all duration-500"
+                  style={{ width: `${chemistry.score}%`, background: chemistry.score >= 50 ? '#34d399' : '#fbbf24' }} />
+              </div>
+              {chemistry.links.length > 0 ? (
+                <div className="flex flex-wrap gap-1">
+                  {chemistry.links.map(l => (
+                    <span key={l.kind + l.label} className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-white/6 text-slate-300">
+                      {l.label} ×{l.count}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[10px] text-slate-500">Draft from the same club or nation to build links.</p>
+              )}
+            </div>
+          )}
 
           <TeamFormation
             formation={formation}

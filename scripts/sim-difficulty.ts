@@ -12,6 +12,7 @@
  */
 import { LEAGUE_DATA } from '../lib/data'
 import { runSimulation } from '../lib/simulation'
+import { teamChemistry } from '../lib/chemistry'
 import type { ClubSeason, DraftedPlayer, LeagueId, Player, Position, Tactic } from '../lib/types'
 
 function rng(seed: number) {
@@ -47,15 +48,22 @@ function pickClub(avail: ClubSeason[], weighted: boolean, r: () => number): Club
   return avail[avail.length - 1]
 }
 
-function draft(pool: ClubSeason[], rerolls: number, threshold: number, prime: boolean, r: () => number, weighted = false): DraftedPlayer[] {
+function draft(pool: ClubSeason[], rerolls: number, threshold: number, prime: boolean, r: () => number, weighted = false, chemChase = false): DraftedPlayer[] {
   const need: Record<Position, number> = { ...NEED }
   const used = new Set<string>()
   const team: DraftedPlayer[] = []
   let rr = rerolls
   let guard = 0
   while (team.length < 11 && guard++ < 800) {
-    const avail = pool.filter(cs => !used.has(cs.id))
+    let avail = pool.filter(cs => !used.has(cs.id))
     if (avail.length === 0) break
+    // Chem-chaser: prefer club-seasons sharing a club name already in the XI,
+    // to model a player deliberately stacking one squad for chemistry.
+    if (chemChase && team.length > 0) {
+      const have = new Set(team.map(p => p.club))
+      const linked = avail.filter(cs => have.has(cs.club))
+      if (linked.length > 0) avail = linked
+    }
     const club = pickClub(avail, weighted, r)
     used.add(club.id)
     let best: Player | null = null
@@ -90,12 +98,15 @@ const DRAFTS = 400
 const SIMS = 25
 const r = rng(987654)
 
-type Profile = { label: string; rerolls: number; threshold: number; prime: boolean; tactic: Tactic }
+type Profile = { label: string; rerolls: number; threshold: number; prime: boolean; tactic: Tactic; chemChase?: boolean }
 const PROFILES: Profile[] = [
   // Baseline "rest of the game" — must stay hard (unchanged from before).
   { label: 'baseline (smart, defensive)  ', rerolls: 2, threshold: 86, prime: false, tactic: 'defensive' },
   // Perfect-season chaser: prime ratings + max rerolls hunting 95+, Total Football.
   { label: 'chaser  (prime, TOTAL)       ', rerolls: 5, threshold: 95, prime: true, tactic: 'total' },
+  // CHEM-CHASER: prime + Total Football + deliberately stacks one club for max
+  // chemistry. The upper bound on how much chemistry can help a Perfect Season.
+  { label: 'chem    (prime, TOTAL, stack)', rerolls: 5, threshold: 90, prime: true, tactic: 'total', chemChase: true },
   // CONTROL: ordinary season-rating team on Total Football — should NOT beat
   // the baseline's unbeaten rate (Total Football must not be a free buff).
   { label: 'control (smart, TOTAL)       ', rerolls: 2, threshold: 86, prime: false, tactic: 'total' },
@@ -106,12 +117,12 @@ console.log(`\nPerfect-Season probe — ${DRAFTS} drafts × ${SIMS} sims.\n`)
 for (const L of LEAGUES) {
   const pool = LEAGUE_DATA[L.id]
   for (const prof of PROFILES) {
-    let ratingSum = 0, starSum = 0
+    let ratingSum = 0, starSum = 0, chemSum = 0
     let unbeaten = 0, perfect = 0, trophy = 0, unbeatenCup = 0, totalSeasons = 0
     for (let d = 0; d < DRAFTS; d++) {
-      const xi = draft(pool, prof.rerolls, prof.threshold, prof.prime, r)
+      const xi = draft(pool, prof.rerolls, prof.threshold, prof.prime, r, false, prof.chemChase)
       if (xi.length < 11) continue
-      ratingSum += teamRating(xi); starSum += stars(xi)
+      ratingSum += teamRating(xi); starSum += stars(xi); chemSum += teamChemistry(xi).score
       for (let s = 0; s < SIMS; s++) {
         const res = runSimulation(xi, L.id, Math.floor(r() * 1e9), prof.tactic)
         totalSeasons++
@@ -127,7 +138,7 @@ for (const L of LEAGUES) {
     const tail = L.tournament
       ? `trophy=${pct(trophy, totalSeasons)} unbeaten-cup=${pct(unbeatenCup, totalSeasons)}`
       : `unbeaten=${pct(unbeaten, totalSeasons)} PERFECT(34W-0L)=${pct(perfect, totalSeasons)}`
-    console.log(`${L.name.padEnd(17)} ${prof.label} avgXI=${(ratingSum / DRAFTS).toFixed(1)} stars95=${(starSum / DRAFTS).toFixed(1)}  ${tail}`)
+    console.log(`${L.name.padEnd(17)} ${prof.label} avgXI=${(ratingSum / DRAFTS).toFixed(1)} stars95=${(starSum / DRAFTS).toFixed(1)} chem=${(chemSum / DRAFTS).toFixed(0)}  ${tail}`)
   }
   console.log('')
 }

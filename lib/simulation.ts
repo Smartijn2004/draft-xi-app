@@ -1,6 +1,7 @@
 import type {
   DraftedPlayer, LeagueId, MatchResult, SeasonResult, GroupStanding, GoalEvent, PlayerStat, Position, LeagueTableEntry, Tactic
 } from './types'
+import { teamChemistry } from './chemistry'
 
 function seededRandom(seed: number): () => number {
   let s = seed
@@ -252,7 +253,10 @@ function simulateMatch(
   const starBonus = players
     ? Math.min(STAR_CAP, players.filter(p => p.rating >= STAR_THRESHOLD).length * STAR_PER)
     : 0
-  const effectiveRating = myRating + PLAYER_ADVANTAGE + starBonus
+  // Squad chemistry: a small edge for an XI built around shared-club / national
+  // links. A rainbow XI scores 0 here; only a deliberately cohesive side gains.
+  const chemBonus = players ? teamChemistry(players).bonus : 0
+  const effectiveRating = myRating + PLAYER_ADVANTAGE + starBonus + chemBonus
   const diff = (effectiveRating - oppRating) / 9
   const rawWin = 1 / (1 + Math.exp(-diff))
   // Higher draw rate, especially in close games, so a dominant side grinds out
